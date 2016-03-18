@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Raspi:</strong>
+  <%= @setting.raspi_id %>
+</p>
+
+<p>
+  <strong>Min tmpr:</strong>
+  <%= @setting.min_tmpr %>
+</p>
+
+<p>
+  <strong>Max tmpr:</strong>
+  <%= @setting.max_tmpr %>
+</p>
+
+<%= link_to 'Edit', edit_setting_path(@setting) %> |
+<%= link_to 'Back', settings_path %>

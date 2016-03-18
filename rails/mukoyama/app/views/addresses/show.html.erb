@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Raspi:</strong>
+  <%= @address.raspi_id %>
+</p>
+
+<p>
+  <strong>Mail:</strong>
+  <%= @address.mail %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @address.active %>
+</p>
+
+<%= link_to 'Edit', edit_address_path(@address) %> |
+<%= link_to 'Back', addresses_path %>
