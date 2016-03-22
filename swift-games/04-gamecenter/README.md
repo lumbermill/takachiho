@@ -1,0 +1,2 @@
+# sandbox-game05
+GameCenterにLeaderboardを作る手順だけを抜き出したシンプルなサンプルです。

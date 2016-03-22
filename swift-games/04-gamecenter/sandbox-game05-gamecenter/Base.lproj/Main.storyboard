@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="sandbox_game05_gamecenter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqF-HZ-hmF">
+                                <rect key="frame" x="20" y="28" width="560" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imn-Jq-MPo">
+                                <rect key="frame" x="20" y="75" width="560" height="30"/>
+                                <state key="normal" title="Add score"/>
+                                <connections>
+                                    <action selector="addScore:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0pP-2r-VgI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0I-aH-yiX">
+                                <rect key="frame" x="20" y="113" width="560" height="30"/>
+                                <state key="normal" title="Report score"/>
+                                <connections>
+                                    <action selector="reportScore:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SO6-Zb-s0A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="su8-nE-Vgm">
+                                <rect key="frame" x="20" y="151" width="560" height="30"/>
+                                <state key="normal" title="Show leaderboard"/>
+                                <connections>
+                                    <action selector="showScore:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CJm-mY-N6f"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oqF-HZ-hmF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="1Wl-bD-Miv"/>
+                            <constraint firstItem="oqF-HZ-hmF" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8uN-42-ykG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O0I-aH-yiX" secondAttribute="trailing" id="GO8-xa-Dba"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="su8-nE-Vgm" secondAttribute="trailing" id="GmT-Ks-dw4"/>
+                            <constraint firstItem="imn-Jq-MPo" firstAttribute="top" secondItem="oqF-HZ-hmF" secondAttribute="bottom" constant="8" id="Iil-Kh-XI3"/>
+                            <constraint firstItem="O0I-aH-yiX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="LN2-LG-uMj"/>
+                            <constraint firstItem="su8-nE-Vgm" firstAttribute="top" secondItem="O0I-aH-yiX" secondAttribute="bottom" constant="8" id="Yoh-nF-UgZ"/>
+                            <constraint firstItem="su8-nE-Vgm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="clJ-Ff-Jbh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="imn-Jq-MPo" secondAttribute="trailing" id="dHS-Cw-040"/>
+                            <constraint firstItem="oqF-HZ-hmF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="hAw-d9-Seg"/>
+                            <constraint firstItem="imn-Jq-MPo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="r7r-Sd-uVE"/>
+                            <constraint firstItem="O0I-aH-yiX" firstAttribute="top" secondItem="imn-Jq-MPo" secondAttribute="bottom" constant="8" id="w00-m1-ZV3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scoreLabel" destination="oqF-HZ-hmF" id="CH4-hb-eyi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="387"/>
+        </scene>
+    </scenes>
+</document>
