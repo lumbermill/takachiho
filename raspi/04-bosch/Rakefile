@@ -1,0 +1,23 @@
+
+desc 'Check if the raspi is alive.'
+task :ping do
+  ip = ENV["IP"]
+  unless ip
+    puts "Determine IP variable."
+    exit 1
+  end
+  puts "TARGET="+ip
+  `ping -t 1 #{ip}`
+  exit 1 unless $? == 0
+end
+
+# sudo mkdir -p /opt/bosch-bme280/{bin,etc,logs}
+# sudo chown -R pi:pi /opt/bosch-bme280
+desc 'Install to raspberry.'
+task :deploy => [:ping] do
+  ip = ENV["IP"]
+  `rsync -avz ./ pi@#{ip}:/opt/bosch-bme280/bin/`
+  puts "Move bin/record.conf to etc/ folder to initialize settings."
+end
+
+# */10 * * * * /opt/bosch-bme280/bin/record.sh

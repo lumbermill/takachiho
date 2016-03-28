@@ -1,0 +1,17 @@
+$ sudo rpi-update
+$ sudo raspi-config Enable I2C
+
+$ sudo vi /etc/modules
+i2c-dev
+
+$ sudo apt-get install python-smbus
+
+$ i2cdetect -y 1
+# Confirm that 76 is on
+# See http://qiita.com/masato/items/16bf8b17ee4881179462#bme280 for details.
+
+$ wget https://raw.githubusercontent.com/SWITCHSCIENCE/BME280/master/Python27/bme280_sample.py
+$ sudo python bme280_sample.py 
+temp : 26.84  ℃
+pressure :  974.36 hPa
+hum :  72.45 ％
