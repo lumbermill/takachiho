@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  raspi_id: 1
+  min_tmpr: 1.5
+  max_tmpr: 1.5
+
+two:
+  raspi_id: 1
+  min_tmpr: 1.5
+  max_tmpr: 1.5

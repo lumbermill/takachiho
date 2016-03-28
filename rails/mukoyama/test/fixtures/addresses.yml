@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  raspi_id: 1
+  mail: MyString
+  active: false
+
+two:
+  raspi_id: 1
+  mail: MyString
+  active: false

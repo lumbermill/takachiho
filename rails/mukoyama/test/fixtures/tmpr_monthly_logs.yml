@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  raspi_id: 1
+  year_month: 1
+  temperature: 1.5
+  pressure: 1.5
+  humidity: 1.5
+
+two:
+  raspi_id: 1
+  year_month: 1
+  temperature: 1.5
+  pressure: 1.5
+  humidity: 1.5

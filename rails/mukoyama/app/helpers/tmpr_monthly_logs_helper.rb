@@ -1,0 +1,2 @@
+module TmprMonthlyLogsHelper
+end

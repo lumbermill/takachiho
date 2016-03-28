@@ -1,0 +1,32 @@
+<div id="chart_t" class="col-md-4"></div>
+<script>
+	$.getJSON('graph_data.json?src=temperature', <%= @p %> ,function (data) {
+		$('#chart_t').highcharts({
+				chart: {
+						type: 'line'
+				},
+				title: {
+						text: '気温 (°C)',
+				},
+				xAxis: {
+						type: 'datetime'
+				},
+				yAxis: {
+						title: {
+								text: ''
+						},
+						plotBands: [{
+								from: <%= @min_tmpr %>,
+								to: <%= @max_tmpr %>,
+								color: 'rgba(68, 170, 213, .2)'
+						}]
+				},
+				series: [{
+						name: "気温",
+						color: Highcharts.getOptions().colors[3],
+						showInLegend: false,
+						data: data
+				}]
+		});
+	});
+</script>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tmpr Monthly Logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Raspi</th>
+      <th>Year month</th>
+      <th>Temperature</th>
+      <th>Pressure</th>
+      <th>Humidity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tmpr_monthly_logs.each do |tmpr_monthly_log| %>
+      <tr>
+        <td><%= tmpr_monthly_log.raspi_id %></td>
+        <td><%= tmpr_monthly_log.year_month %></td>
+        <td><%= tmpr_monthly_log.temperature %></td>
+        <td><%= tmpr_monthly_log.pressure %></td>
+        <td><%= tmpr_monthly_log.humidity %></td>
+        <td><%= link_to 'Show', tmpr_monthly_log %></td>
+        <td><%= link_to 'Edit', edit_tmpr_monthly_log_path(tmpr_monthly_log) %></td>
+        <td><%= link_to 'Destroy', tmpr_monthly_log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tmpr monthly log', new_tmpr_monthly_log_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Raspi:</strong>
+  <%= @tmpr_log.raspi_id %>
+</p>
+
+<p>
+  <strong>Time stamp:</strong>
+  <%= @tmpr_log.time_stamp %>
+</p>
+
+<p>
+  <strong>Temperature:</strong>
+  <%= @tmpr_log.temperature %>
+</p>
+
+<p>
+  <strong>Pressure:</strong>
+  <%= @tmpr_log.pressure %>
+</p>
+
+<p>
+  <strong>Humidity:</strong>
+  <%= @tmpr_log.humidity %>
+</p>
+
+<%= link_to 'Edit', edit_tmpr_log_path(@tmpr_log) %> |
+<%= link_to 'Back', tmpr_logs_path %>
