@@ -5,17 +5,18 @@
 rsync -avz ./ pi@id:/opt/lmlab.net/01-detector
 ```
 
-`/etc/rc.local`に下記を追加します。
-
+`/etc/rc.local`に下記を追加します。PROJECT_PATHは任意に設定してください。
 ```
-python PROJECT_PATH/01-detector/bin/slack.py  
-python PROJECT_PATH/01-detector/bin/start_rec.py
+PROJECT_PATH=/opt/lmlab.net/01-detector
+python ${PROJECT_PATH}/01-detector/bin/slack.py  
+python ${PROJECT_PATH}/01-detector/bin/start_rec.py
 ```
 
+ファイルを外部に定期送信する場合は、`upload.sh`を参考にしてください（現在の値は環境に依存します）。
 `crontab -e`コマンドを実行し、下記を追加します。
-```bash
-00 00 * * * sudo find PROJECT_PATH/01-detector/storage/picture -type f -daystart -mtime +7 |xargs /bin/rm -f  
-*/05 * * * * rsync -aze "ssh -p SSH_PORT" PROJECT_PATH/01-detector/storage/picture/* lmuser@sakura15:/opt/webcamlogs/raspi1
+```
+*/5 * * * * /opt/lmlab.net/01-detector/bin/disk_management.py
+*/1 * * * * /bin/sh /opt/lmlab.net/01-detector/bin/upload.sh &>> /tmp/upload.log
 ```
 
 公開鍵をsakura15に登録します。
