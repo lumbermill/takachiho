@@ -21,6 +21,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor, GPIO.IN, GPIO.PUD_DOWN)
 current_state = False
 cam = picamera.PiCamera()
+cam.resolution = (960, 540)  # (1920, 1080)
 
 while True:
     time.sleep(1.0)
