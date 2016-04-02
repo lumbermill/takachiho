@@ -15,7 +15,7 @@ python PROJECT_PATH/01-detector/bin/start_rec.py
 `crontab -e`コマンドを実行し、下記を追加します。
 ```bash
 00 00 * * * sudo find PROJECT_PATH/01-detector/storage/picture -type f -daystart -mtime +7 |xargs /bin/rm -f  
-*/05 * * * * rsync -aze "ssh -p SSH_PORT" PROJECT_PATH/01-detector/storage/picture/* lmuser@160.16.118.143:/opt/webcamlogs/raspi1
+*/05 * * * * rsync -aze "ssh -p SSH_PORT" PROJECT_PATH/01-detector/storage/picture/* lmuser@sakura15:/opt/webcamlogs/raspi1
 ```
 
 公開鍵をsakura15に登録します。
