@@ -1,0 +1,39 @@
+Subversion
+@background-color: rgb(192, 192, 192)
+@font-size: 12px
+
+== Components ==
+svn
+svnlook
+svnadmin
+svnserve
+svnsync
+
+== Protocols ==
+file://
+http://
+https://
+svn://
+svn+ssh://
+
+== Admin ==
+svnadmin create /path/to/repo
+svnadmin setlog /path -r 7 mes.txt
+svnadmin dump /path > file
+svnadmin load /path < file
+
+== 
+svn import folder/ /repopath
+svn co /repopath/ folder/
+svn up
+svn add *
+svn del file
+svn copy 
+
+
+--
+== B ==
+
+--
+== C ==
+

@@ -1,0 +1,25 @@
+Python
+
+== what's next? ==
+#! /usr/bin/python -u
+
+== mySQLdb ==
+db = MySQLdb.connect(host,user,pass,db)
+cur = db.cursor()
+cur.execute(sql)
+res = cur.fetchall()
+cur.close()
+db.close()
+
+
+== For CentOS ==
+MySQL-python
+python-imaging
+python-argparse
+
+== Date ==
+datetime.date(y,m,d)
+datetime.timedelta(u=v)
+time.time()
+
+

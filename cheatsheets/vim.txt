@@ -1,0 +1,19 @@
+Vim
+
+== file ==
+:e file
+:w
+:buffers
+:bn
+:bdelete
+:q
+:x
+
+== search ==
+:%s/foo/bar/gc
+
+== window ==
+:sp
+:vs
+:close
+Ctrl + w w

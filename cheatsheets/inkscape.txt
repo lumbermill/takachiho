@@ -1,0 +1,85 @@
+Inkscape
+@background-color: rgb(144, 144, 144)
+@font-size: 12px
+
+== File ==
+Ctrl + N            新規（デフォルト）
+Ctrl + O            開く
+Ctrl + S            保存
+Shift + Ctrl + S    名前を付けて保存
+Shift + Ctrl + Alt + S  コピーを保存
+Ctrl + I            Import..
+Shift + Ctrl + E       Export Bitmap..
+Shift + Ctrl + D    Document Properties..
+Ctrl + P            印刷
+Shift + Ctrl + P    inkscapeの設定
+Ctrl + W            閉じる
+Ctrl + Q            終了
+== Edit
+Ctrl + Z            元に戻す
+Shift + Ctrl + Z    やり直す
+Shift + Ctrl + H    アンドゥ履歴
+Ctrl + X            切り取り
+Ctrl + C            コピー
+Ctrl + V            貼付け
+Ctrl + Alt + V      同じ場所に貼り付け
+Shift + Ctrl + V    スタイルを貼り付け
+Ctrl + F            検索
+Ctrl + D            複製
+Alt + D             クローンを作成
+Shift + Alt + D     クローンのリンク解除
+Shift + D           オリジナルを選択
+Alt + B             ビットマップのコピーを作成
+Ctrl + A            全て選択
+Ctrl + Alt + A      全レイヤーの全オブジェクトを選択
+
+== View ==
++   Zoom In（ズームイン）
+-   Zoom Out（ズームアウト）
+1   Zoom 1:1
+2   Zoom 1:2
+3   Selection（選択オブジェクト表示）
+4   Drawing（描画全体表示）
+5   Page（ページ全体表示）
+6   Page Width（ページ幅で表示）
+#   グリッド表示
+Ctrl + R   定規表示
+Ctrl + B   スクロールバー表示
+
+==レイヤー==
+Shift + Ctrl + N    新規レイヤー
+Shift + Ctrl + L    レイヤー
+
+
+== Object ==
+Ctrl + G            グループ化
+Shift + Ctrl + G    グループ解除
+Shift + G           オブジェクトをガイドに
+[                   左に15°回転
+]                   右に15°回転
+Command + [         左に90°回転（五角形、スターツールには適用しない）
+Command + ]         右に90°回転（五角形、スターツールには適用しない）        
+Ctrl + Shift + A    Align and Distribute（整列と配置）
+
+== パス ==
+Ctrl + +            統合（オブジェクトとオブジェクトを統合　分解不可）
+Ctrl + -            差分（奥のオブジェクトを手前のオブジェクトで分割）
+Ctrl + *            交差（重なり合うオブジェクトの交差する部分だけを残して分割）
+Ctrl + /            分割（重なりあうオブジェクトの奥のオブジェクトと重なった部分を分割）
+Ctrl + K            連結（後で分解可能）
+Ctrl + Shift + K    分解（連結したオブジェクトに使用）
+
+＝＝ストロークがある場合のみ使用するショートカット＝＝
+Ctrl + (            インセット（ストローク（枠線）を内側に）
+Ctrl + )            アウトセット（ストローク（枠線）を外側に）
+Ctrl + J            ダイナミックオフセット（直接ストロークを操作）
+Ctrl + Alt + J      リンクオフセット（ストロークをリンクしてコピー）
+
+==テキスト＝＝
+Ctrl + Shift + T    テキストボックスを表示
+
+==便利なキー操作==
+Shiftを押しながらオブジェクトを選択 →　複数オブジェクト選択（イラレの場合はドラッグで触れたオブジェクトを選択するが、inkscapeでは囲ったオブジェクトのみが選択される（選択したいオブジェクトを全て囲わないと選択されない））
+Optionを押しながら選択　→　背面オブジェクト選択
+>  1pxずつ拡大
+<  1pxずつ縮小　

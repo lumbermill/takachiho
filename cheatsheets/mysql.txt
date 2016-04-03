@@ -1,0 +1,39 @@
+MySQL
+
+== what's next? ==
+
+== Functions(string) ==
+concat(s1,s2,..)
+format(x,d)
+left(str,len)
+length(str)
+load_file(file)
+lower(str)
+lpad(str,len,pad)
+ltrim(str)
+replace(str,from,to)
+right(str,len)
+
+
+== Functions(date) ==
+date(ts)
+time(ts)
+date_add(ts,INTERVAL expr)
+extract(unit FROM ts)
+now()
+sec_to_time(sec)
+unix_timestamp()
+
+== SQL ==
+SHOW CREATE TABLE tbl;
+SHOW FIELDS FROM t/l;
+DESCRIBE tbl;
+SHOW PROCESSLIST;
+SHOW TABLE STATUS;
+
+CREATE TABLE t (
+id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+v VARCHAR(255) NOT NULL DEFAULT '',
+visible BOOL NOT NULL DEFAULT true,
+modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+

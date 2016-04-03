@@ -1,0 +1,127 @@
+PHP
+@background-color: rgb(153,153,204)
+@font-size: 12px
+# comment line.
+
+== Array ==
+array_merge(arr1,arr2..)
+array_pop(arr)
+array_push(arr,var1[,var2..])
+asort(arr[,sort_flags])
+count($var[,$mode])
+in_array(needle,haystack)
+
+== String ==
+crypt(str,salt)
+explode(sep,str)
+implode(glue,arr)
+htmlspecialchars(str)
+nl2br(str)
+strip_tags(str,allowed_tags)
+str_replace(search,replace,str)
+strpos(haystack,needle)
+substr(str,start,len)
+trim(str)
+
+== Filesystem ==
+copy(src,dst)
+fclose(handle)
+fgets(handle,len)
+file(file)
+file_exists(file)
+file_get_contents(file)
+file_put_contents(file)
+filemtime(file)
+filesize(file)
+fopen(file,mode)
+fread(handle,len)
+fwrite(handle,str)
+is_dir(flie)
+is_file(file)
+readfile(file) // Outputs a file
+tmpfile()
+unlink(file)
+
+--
+== Template ==
+&lt;?php<br/>require_once(<br/>&nbsp; __DIR__ . "/../sys/init.php");<br/><br/>echo "Hello, world!";<br/>
+
+== Regex ==
+preg_match(pat,str)
+preg_replace(pat,replace,str)
+preg_split(pat,str)
+split(pat,str)
+
+== Regex Syntax ==
+^	Start of string
+$	End of string
+.	Any single character
+(a|b)	a or b
+(…)	Group
+[abc]	a, b or c
+[^abc]	not a, b or c
+a?	Zero or one of a
+a*	Zero or more of a
+a*?	Zero or more of a, un-greedy
+a+	One or more of a
+a+?	One or more of a, un-greedy
+a{3,}	Three or more of a
+a{,6}	Up to 6 of a
+[:blank:]	Space or tab
+
+== Regex Modifier ==
+i	Case-insensitive
+s	Period matches newline
+m	^ and $ match lines
+U	Un-greedy matching
+
+== JSON ==
+json_decode(str)
+json_encode(arr)
+
+
+
+--
+== Date ==
+date(fmt[,time])
+date_default_timezone_set(tz);<br/>// Use "Asia/Tokyo" in Japan.
+date_parse_from_format(fmt,str)
+mktime(h,mi,s,mo,d,y)
+time()
+
+== Date Formatting ==
+Y	4 digit year(2013)
+y	2 digit year(13)
+m	Month (01 to 12)
+d	Day (01 to 31)
+H	24 Hour (00 to 23)
+i	Minutes (00 to 59)
+s	Seconds (00 to 59)
+w	Day of week (0 to 6)<br/>// 0 is Sun, 6 is Sat
+W	Week of year (1 to 53)
+t	Days in month (28 to 31)
+L	Leap year (1 or 0)
+U       Seconds since Epoch(=1970.01.01)
+
+== PDO ==
+PDO::__construct(dsn,user,pass)<br/>// mysql:host=..;dbname=..
+PDO::exec(sql)
+PDO::lastInsertId()
+PDO::prepare(sql)
+PDO::query(sql)
+PDOStatement::closeCursor()
+PDOStatement::errorInfo()
+PDOStatement::execute()
+PDOStatement::fetch()
+PDOStatement::fetchAll()
+PDOStatement::setFetchMode(m)
+
+
+# setlocale(?)
+# header(str)
+# ini_set(name,val)
+# __DIR__
+
+== References ==
+http://php.net/manual/en/
+http://www.addedbytes.com/

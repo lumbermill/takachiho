@@ -1,0 +1,74 @@
+Git
+@background-color: rgb(192, 192, 192)
+@font-size: 12px
+
+== Admin ==
+init      
+clone     
+fsck
+gc
+
+== Remote ==
+pull
+push
+
+== Inspect ==
+diff      
+diff --cached
+diff HEAD
+grep      
+log       
+show      
+status    
+
+== Handle ==
+add
+add -u
+add -A       
+branch    
+checkout  
+commit
+commit -a
+commit -v
+commit --amend    
+merge     
+mv        
+rebase    
+reset    
+revert 
+rm        
+stash
+tag       
+
+== what? ==
+bisect    
+fetch     
+
+
+== Initialize ==
+<code>git config --global n v</code>
+<code>git config -l</code>
+
+user.name
+user.email
+alias.co
+alias.st
+alias.ci
+
+== diff ==
+git diff
+git diff --cached
+git diff HEAD
+git diff ...otherbranch
+
+--
+== Create repo ==
+<code>$ git init<br/>$ vi hello.c<br/>$ git add hello.c<br/>$ git commit -m "first commit."</code>
+
+.gitignore
+log --oneline
+
+
+--
+==  ==
+

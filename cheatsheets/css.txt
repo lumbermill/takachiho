@@ -1,0 +1,112 @@
+CSS
+@background-color: rgb(37, 144, 45)
+@font-size: 12px
+
+== Syntax ==
+<code>/* Comment */<br/>@media type{<br/>&nbsp; selector{<br/>&nbsp; &nbsp; property: values;<br/>&nbsp; }<br/>}<br/></code>
+
+== Selectors ==
+*           All elements
+div         &lt;div&gt;
+div *       Elements within div
+div span        span within div
+div,span        div and span
+div > span      span with div as parent
+div + span      span preceded by div
+.cls        Elements of class "cls"
+div.cls     div of class "cls"
+#i          Element with id "i"
+div#i       div widh id "i"
+div[class]    div with class attribute
+div[class='x']      div when class is "x"
+div[class~='x']     div when class is a list of space-separated values and one of those is "x"
+div[lang|='en']     div when lang begins with "en"
+
+== Pseudo-Selectors ==
+:first-child
+:first-line
+:first-letter
+:nth-child(even|odd)   
+
+:active
+:focus
+:hover
+:link
+:visited
+
+:lang(lng)  Element with text of language "lang"
+
+--
+
+== Media Types ==
+all         projection
+braille     screen
+embossed    speech
+handheld    tty
+print       tv
+
+== Box Model ==
+<img src="css_boxmodel.png" alt="" />
+
+
+== Units ==
+px  Pixels
+em  1em equal to front size of parent(same as 100%)
+ex  Height of lower case "x"
+%
+in
+cm
+mm
+pt
+pc
+
+#789abc
+#acf
+rgb(0,25,50)
+0
+
+== Font family ==
+sans-serif
+serif
+cursive
+fantasy
+monospace
+
+--
+
+== Tables ==
+caption-side    top,bottom,left,right
+border-collapse
+border-spacing
+
+== Positioning ==
+display         none,block,inline,..
+position        static,relatice,<br/>absolute,fixed
+top
+right
+bottom
+left
+float
+clear
+z-index
+overflow        visible,scroll,hidden
+visibility      visible,hidden
+width
+height
+vertical-align
+
+== Text ==
+text-indent
+text-align
+text-decoration
+text-shadow
+text-spacing
+word-spacing
+text-transform   none,capitalize,..
+white-space     normal,pre,nowrap
+font
+font-family
+font-style
+font-weight     normal,bold,..
+font-size
+color

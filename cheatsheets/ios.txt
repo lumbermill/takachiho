@@ -1,0 +1,131 @@
+iOS
+@background-color: rgb(168, 168, 168)
+@font-size: 12px
+
+== Data(basic) ==
+NSObject
+NSString    NSMutableString
+NSArray     NSMutableArray
+NSDictionary    NSMutableDictionary
+NSSet       NSMutableSet
+NSData      NSMutableData
+
+== Data(other) ==
+NSTimer
+NSDate
+NSBundle
+NSUserDefaults
+NSCoder
+NSKeyedArchiver
+NSKeyedUnarchiver
+NSScanner
+NSRegularExpression
+NSFormatter
+NSDateFormatter
+NSNumberFormatter
+
+== Thread (useful?) ==
+NSThread
+NSOperation
+NSBlockOperation
+NSInvocationOperator
+NSOperationQueue
+UIImage
+UIResponder
+
+== Media ==
+EAGLContext
+EAGLSharegroup
+AVPlayer
+AVAudioRecorder
+AVAudioPlayer
+
+--
+
+== UI ==
+UIBotton
+UISlider
+UIDatePicker
+UISegmentedControl
+UIPageControl
+UITextField
+UISwitch
+
+UIAlertView
+
+UIScreen
+UIWindows
+
+UIWebView
+UISearchBar
+UIActionSheet
+UIImageView
+UIActivityIndicatorView
+UIProgressView
+UITabBar
+UINavigationBar
+UIToolbar
+UILabel
+
+UIControl
+
+UIScrollView
+UITableView
+UITableViewCell
+UITextView
+
+ADBannerView
+MKMapView
+
+== UIView ==
+addSubview:
+drawRect:       
+setNeedsDisplay:
+frame       center
+backgroundColor
+hidden      alpha
+transform   subviews
+superview
+
+--
+
+== Controller ==
+UIViewController
+UIMenuController
+UINavigationController
+UIPopoverController
+UITabBarController
+UIVideoEditorController
+
+== Censor ==
+UIDevice
+UIAcceleration
+UIAccelerometer
+CLLocation
+CLLocationManager
+
+== Other ==
+UIColor
+UIFont
+UIBarItem
+UITabBarItem
+UIBarButtonItem
+
+UINavigationItem
+UIMenuItem
+
+== Network ==
+NSURL
+NSURLRequest
+NSMutableURLRequest
+NSURLConnection
+NSURLResponse
+NSHTTPURLResponse
+NSXMLParser
+NSJSONSerialization
+NSUbiquitousKeyValueStore
+
+== References ==
+https://developer.apple.com/
+
+

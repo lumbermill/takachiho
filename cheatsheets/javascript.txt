@@ -1,0 +1,125 @@
+JavaScript and jQuery
+@background-color: rgb(45, 133, 191)
+@font-size: 12px
+
+== Object ==
+var obj = {"a":"b"};<br/>obj.a = "c";
+obj.isPrototypeOf(object)
+obj.toString()
+
+== Array ==
+var array = ["a","b","c"];
+array.length
+array.pop()
+array.push(v)
+array.shift()
+array.unshift(v)
+
+== String ==
+var str = "abc";
+str.indexOf(str)
+str.lastIndexOf(str)
+str.match(regex)
+str.replace(regex,newstr)
+str.search(regex)
+str.split(sep)
+str.substr(start[,len])
+str.substring(start,end)
+
+== Number ==
+Number.MAX_VALUE
+Number.MIN_VALUE
+Number.NaN
+var n = new Number(1);
+n.toExponential(fraction)
+n.toFixed([digits])
+
+== Built-in ==
+decodeURI(encoded_uri)
+encodeURI(uri)
+isFinite(n)
+isNaN(n)
+parseFloat(str)
+parseInt(str)
+
+--
+== Template In HTML ==
+&lt;script src="(jsfile)"&gt;&lt;/script&gt;<br/>&lt;script&gt;<br/> &nbsp; console.log("Hello, World!");<br/>&lt;/script&gt;
+
+== Regex ==
+var regex = /pattern/modifier;
+regex.match(str)
+
+== Regex Syntax ==
+^	Start of string
+$	End of string
+.	Any single character
+(a|b)	a or b
+(…)	Group
+[abc]	a, b or c
+[^abc]	not a, b or c
+a?	Zero or one of a
+a*	Zero or more of a
+a+	One or more of a
+a{3,}	Three or more of a
+a{,6}	Up to 6 of a
+
+== Regex Modifier ==
+i	Case-insensitive
+s	Single line mode
+m	Multi line mode
+
+== Canvas ==
+&lt;canvas id="a"<br/> width="10" height="10"&gt;&lt/canvas&gt;
+var canvas<br/>&nbsp; = document.getElementById("a");
+var ctx = canvas.getContext("2d");
+ctx.clearRect(x,y,w,h)
+ctx.drawImage(img,x,y)
+ctx.fillStyle // = "rgb(r,g,b)"
+ctx.fillRect(x,y,w,h)
+ctx.fillText(str,x,y)
+ctx.strokeRect(x,y,w,h)
+
+
+--
+== DOM Window ==
+window.history
+window.navigator
+window.location
+window.open(url,name[,features])
+window.setTimeout(func,delay)
+
+== Date ==
+var d = new Date();
+d.getDate()
+d.getFullYear()
+d.getMonth() // Jan is 0
+d.toDateString()
+d.toISOString()
+d.toTimeString()
+
+== jQuery ==
+var obj = $("#foo");
+obj.css()
+obj.is(selector)
+obj.load(url,data,callback)
+obj.on(e[,sel,data],handler)
+
+$.get(url[,data,success,type])
+$.parseJSON(json)
+
+== jQuery Events ==
+blur	hover	mouseout
+change	keydown	mouseover
+click	keypress	mouseup
+dblclick	keyup	ready
+error	mousedown	resize
+focus	mouseenter	scroll
+focusin	mouseleave	select
+focusout	mousemove	submit
+
+
+== References ==
+http://jquery.com/
+https://developer.mozilla.org/<br/>&nbsp; en-US/docs/JavaScript
+http://www.addedbytes.com/

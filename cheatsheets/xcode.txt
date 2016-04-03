@@ -1,0 +1,7 @@
+Xcode
+
+== what's next? ==
+Cmd + Shift + O
+Ctrl + 1
+Ctrl + 6
+

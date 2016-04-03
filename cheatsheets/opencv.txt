@@ -1,0 +1,63 @@
+OpenCV(2.4.3)
+@background-color: rgb(90, 200, 22)
+@font-size: 12px
+
+== core_c.h(drawing) ==
+cvFont(scale,thickness)
+cvLine(img,pt1,pt2,c,t,lt,s)
+cvPutText(img,text,org,font,color)
+cvRectangle(img,pt1,pt2,c,t,lt,s)
+
+== core_c.h(image) ==
+cvCloneImage(img)
+cvCopy(src,dst,mask)
+cvCreateImage(size,depth,chs)
+cvCvtColor(src,dst,code)
+cvGet1D(arr,idx0)
+cvGet2D(arr,idx0,idx1)
+cvGetSize(arr)
+cvSet(arr,val,mask)
+cvSet1D(arr,idx0,val)
+cvSet2D(arr,idx0,idx1,val)
+cvSetZero(arr) // = cvZero
+cvSmooth(src,dst,st,s1,s2,sg1,sg2)
+
+== core_c.h(logical) ==
+cvAnd(src1,src2,dst,mask)
+cvNot(src,dst)
+cvOr(src1,src2,dst,mask)
+
+== types_c.h ==
+CvArr
+CvPoint<br/>&nbsp; p = cvPoint(x,y)
+CvScalar<br/>&nbsp; s = cvScalar(v0,v1,v2,v3)<br/> s = cvScalarAll(v)
+CvSize<br/>&nbsp; s = cvSize(w,h)
+CvSeq
+IplConvKernel
+IplImage
+
+
+--
+== Template ==
+<code>#include "opencv/cv.h"<br/>#include "opencv/highgui.h"<br/><br/>int main(int argc,char** argv){<br/> &nbsp; IplImage *image <br/> &nbsp;&nbsp; = cvLoadImage("foo.jpg",1);<br/> &nbsp; // your code<br/>}</code>
+
+== highgui.h ==
+cvCreateTrackbar(n,wn,v,c,on_c)
+cvLoadImage(file,iscolor)
+cvSaveImage(file,img,params)
+cvShowImage(name,img)
+cvNamedWindows(name,flags)
+cvWaitKey(delay)
+
+== imgproc_c.h ==
+cvDilate(src,dst,kernel,s)
+cvErode(src,dst,kernel,s)
+cvFindContours(img,s,fc,hs,m,mt,o)
+cvFloodFill(img,sp,nv,ld,ud,c,f,m)
+cvCanny(img,edges,t1,t2,asize)
+cvCreateHist(dims,ss,t,rs,uni)
+cvCalcHist(img,hist,accum,mask)
+cvMatchTemplate(img,tmpl,res,mthd)
+
+--
+== What's next? ==

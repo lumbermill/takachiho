@@ -1,0 +1,116 @@
+OpenCV(2.4.4,C++)
+@background-color: rgb(90, 200, 22)
+@font-size: 12px
+
+== core(data) ==
+InputArray
+Mat
+Mat_
+Matx
+OutputArray
+Point
+Ptr
+Range
+Rect
+RotatedRect
+Scalar
+Size
+Vec
+
+== core(drawing) ==
+circle
+ellipse
+fillPoly
+InitFont
+line
+rectangle
+putText
+
+== Mat ==
+locateROI
+adjustROI
+create
+clone
+copyTo
+convertTo
+t
+isCountinuous
+channels
+inv
+zeros
+ones
+size
+
+--
+
+== Template ==
+<code>#include &lt;opencv2/opencv.hpp&gt;<br/><br/>int main(int argc,char** argv){<br/> &nbsp; cv::Mat m(640,480,CV_8UC4);<br/> &nbsp; // your code<br/>}</code>
+
+== Mat_ ==
+<code>Mat_<Vec3b>& M_ = (Mat_<Vec3b>&)M;<br/>for(int i = 0; i < M_.rows; i++)<br/>&nbsp;for(int j = 0; j < M_.cols; j++)<br/>&nbsp;&nbsp;M_(i,j) = cv::Vec3b(0,255,0);</code>
+
+== core(arrays) ==
+abs
+absdiff
+add
+bitwize_and
+bitwize_or
+max
+min
+pow
+solve
+sqrt
+subtract
+sum
+
+
+== imageproc(filter) ==
+blur
+dilate
+erode
+pyrDown
+pryUp
+Sobel
+
+== imageproc(geo,trans) ==
+resize
+
+adaptiveThreshold
+cvtColor
+floodFill
+threshold
+watershed
+
+
+--
+== imageproc(features) ==
+Canny
+HoughCircles
+HoughLines
+HoughLinesP
+matchTemplate
+
+findContours
+drawContours
+arcLength
+boundingRect
+contourArea
+convexHull
+fitEllipse
+fitLine
+matchShapes
+
+== hist ==
+calcHist
+calcBackProject
+compareHist
+equalizeHist
+
+== features2d ==
+
+== gpu ==
+HogDescriptor
+
+== References ==
+http://docs.opencv.org/
+http://opencv.jp/reference_manual/

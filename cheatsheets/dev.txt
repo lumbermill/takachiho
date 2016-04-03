@@ -1,0 +1,60 @@
+LM専用開発メモ
+@background-color: rgb(192, 192, 192)
+@font-size: 12px
+
+== Ratios ==
+Golden ratio: 1:1.618
+iPhone5: 640x1136 (1.775)
+iPhone4: 640x960 (1.5)
+ (Status bar height: 20 px)
+iPad(Retina): 1536x2048 (1.333)
+iPad mini: 768x1024
+ (Status bar height: 40 px)
+MacBook Air(11-inch):<br/> 768x1366 (1.779) 
+A4(Paper): 210x297 mm (1.414)
+Hagaki: 100x148 mm (1.480)
+
+== Sizes for iPhone ==
+icon     1024x1024 120 80 58
+image    320x480 640x960 640x1136<br/>(Same as fullscreen)
+
+== Sizes for iPad ==
+icon       76x76
+image      768x1004 1536x2008<br/>1024x748 2048x1496<br/>(Status bar excluded)
+
+--
+== Fonts ==
+monospace       (family for Web)
+<span style="font-family: Courier New">Courier New</span>   for code
+<span style="font-family: Georgea">Georgea</span>
+<span style="font-family: Monaco">Monaco</span>     for code
+<span style="font-family: Verdana">Verdana</span>
+
+== Colors ==
+c0c0c0  gray
+890C08  red
+f4f5e7  brown
+ff6600	orange
+
+http://paletta.mrk1869.com/
+
+--
+== cheats ==
+<code>$ cheat.py</code>
+
+CSS
+iOS
+JavaScript
+OpenCV
+PHP
+Python
+
+== notes ==
+<code>$ note.py</code>
+
+== books ==
+<code>$ book.py create new.book/<br/>$ cd new.book/<br/>$ ls<br/>_index.json _logs.json _index.html book_index.json index.html<br/>$ book.py create new.book/01_h.html<br/>$ open -t new.book/01_h.html</code>
+
+== Links ==
+http://www.lumber-mill.co.jp/notes/link/index.html
+

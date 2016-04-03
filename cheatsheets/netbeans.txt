@@ -1,0 +1,40 @@
+Netbeans
+@background-color: rgb(144, 144, 144)
+@font-size: 12px
+
+== Searching ==
+Cmd + F		Find in File
+Cmd + Shift + F		Find in Project
+Ctrl + H	Replace in File
+Ctrl + Shift + H	Replace in Project
+Cmd + G		Find Next in File
+Cmd + Shift + G		Find Previous in File
+Cmd + R		Find and Replace in File
+Ctrl + F7	Find Usages
+
+== Edit ==
+Ctrl + R	Rename
+Ctrl + Shift + F	Format
+
+== Navigating ==
+Cmd + B		Go to Source
+Ctrl + G	Go to Line
+
+== Source ==
+Cmd + \     Code completion
+Tab         Insert Template
+Opt + Enter     Fix code
+
+== Window ==
+Cmd + 0		Editor
+Cmd + 1		Project
+Cmd + 3		Favorites
+Cmd + W 	Close Currently Selected Window
+Shift + Cmd + W		Close All Windows
+
+== Running ==
+F6		Run Main Project
+
+
+--
+== What's next? ==
