@@ -14,40 +14,33 @@ def get_file_name():
 
 sensor = 4
 
-created_high = 0
-created_low = 0
+interval = max(config.INTERVAL_HIGH,config.INTERVAL_LOW) # Interval from last take.
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor, GPIO.IN, GPIO.PUD_DOWN)
 current_state = False
 cam = picamera.PiCamera()
 cam.resolution = (960, 540)  # (1920, 1080)
+cam.led = False
+
+# Take a photo and reset the interval.
+def take_a_photo():
+    fileName = get_file_name()
+    cam.led = True
+    cam.capture(fileName)
+    cam.led = False
+    print("A photo taken. %s" % (fileName))
+    global interval
+    interval = 0
 
 while True:
     time.sleep(1.0)
     current_state = GPIO.input(sensor)
-    new_state = "HIGH" if current_state else "LOW"
-    print("GPIO pin %s is %s" % (sensor, new_state))
     if current_state:
-        created_low = 0
-        if created_high == 0:
-            cam.led = True
-            fileName = get_file_name()
-            cam.capture(fileName)
-            # cam.led = False
-        created_high += 1
-        if created_high >= config.INTERVAL_HIGH:
-            created_high = 0
-        print(created_high)
-    else:
-        cam.led = False
-        created_high = 0
-        if created_low == 0:
-            cam.led = True
-            fileName = get_file_name()
-            cam.capture(fileName)
-            cam.led = False
-        created_low += 1
-        if created_low >= config.INTERVAL_LOW:
-            created_low = 0
-        print(created_low)
+        print("Something moved.")
+        if interval >= config.INTERVAL_HIGH:
+            take_a_photo()
+    elif interval >= config.INTERVAL_LOW:
+        take_a_photo()
+    interval += 1
+    print("%d" % (interval))
