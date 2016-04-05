@@ -17,3 +17,9 @@ Vim
 :vs
 :close
 Ctrl + w w
+
+== .vimrc ==
+syntax on
+autocmd FileType python setl tabstop=4 shiftwidth=4 expandtab
+autocmd FileType ruby setl tabstop=2 shiftwidth=2 expandtab
+autocmd FileType eruby setl tabstop=2 shiftwidth=2 expandtab
