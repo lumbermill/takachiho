@@ -52,3 +52,9 @@ production:
   database: mukoyama_production
   username: mukoyama
   password: <%= ENV['MUKOYAMA_DATABASE_PASSWORD'] %>
+
+staging:
+  <<: *default
+  database: kanepo_staging
+  username: mukoyama
+  password: <%= ENV['MUKOYAMA_DATABASE_PASSWORD'] %>
