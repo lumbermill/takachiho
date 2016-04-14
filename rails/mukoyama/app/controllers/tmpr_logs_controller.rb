@@ -78,7 +78,7 @@ class TmprLogsController < ApplicationController
       end
     else # 10min
       @data = []
-      results = TmprLog.all()
+      results = TmprLog.all().order(:time_stamp)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
         @data += [[(row.time_stamp.to_i + 9 * 60 * 60) * 1000,row.send(src)]]
