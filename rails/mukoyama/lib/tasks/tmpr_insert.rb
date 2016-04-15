@@ -17,12 +17,6 @@ opt.parse!(ARGV)
 env = OPTS[:e] || "development"
 @client = Mysql2::Client.new(host:"localhost",username:"root",database:"mukoyama_#{env}")
 
-def to_jst(ts)
-  t = DateTime.parse(ts).to_time
-  # t += 9 * 60 * 60
-  return t.strftime("%F %T")
-end
-
 def get_id_from_dirname(dir)
   b = File.basename(dir)
   # DIR/id_name/yymmdd.log
@@ -38,10 +32,10 @@ def parsefile(f,id)
     temp = row[0]
     press = row[1]
     humid = row[2]
-    ts = to_jst(row[3])
+    ts = row[3]
     sql = "INSERT IGNORE INTO tmpr_logs"
-    sql += " (raspi_id,time_stamp,temperature,pressure,humidity)"
-    sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid})"
+    sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,modified_at)"
+    sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid},now(),now())"
     @client.query(sql)
     n += @client.affected_rows
   end
