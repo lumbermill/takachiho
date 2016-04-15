@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Settings</h1>
+<h1>設定</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Raspi</th>
@@ -18,9 +18,9 @@
         <td><%= setting.raspi_id %></td>
         <td><%= setting.min_tmpr %></td>
         <td><%= setting.max_tmpr %></td>
-        <td><%= link_to 'Show', setting %></td>
-        <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
-        <td><%= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '表示', setting, class: "btn btn-sm btn-default" %></td>
+        <td><%= link_to '編集', edit_setting_path(setting), class: "btn btn-sm btn-default" %></td>
+        <td><%= link_to '削除', setting, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-sm btn-danger"%></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Setting', new_setting_path %>
+<%= link_to '新しい設定', new_setting_path, class: "btn btn-sm btn-primary" %>

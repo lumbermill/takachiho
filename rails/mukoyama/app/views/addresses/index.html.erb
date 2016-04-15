@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Addresses</h1>
+<h1>送信先アドレス</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Raspi</th>
-      <th>Mail</th>
-      <th>Active</th>
+      <th>Raspi ID</th>
+      <th>メール</th>
+      <th>有効</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,9 +18,9 @@
         <td><%= address.raspi_id %></td>
         <td><%= address.mail %></td>
         <td><%= address.active %></td>
-        <td><%= link_to 'Show', address %></td>
-        <td><%= link_to 'Edit', edit_address_path(address) %></td>
-        <td><%= link_to 'Destroy', address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '表示', address, class: "btn btn-sm btn-default" %></td>
+        <td><%= link_to '編集', edit_address_path(address), class: "btn btn-sm btn-default" %></td>
+        <td><%= link_to '削除', address, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Address', new_address_path %>
+<%= link_to '新しいアドレス', new_address_path, class: "btn btn-primary" %>
