@@ -67,7 +67,8 @@ class TmprLogsController < ApplicationController
     unit = params[:unit] || "10min"
     if unit == "day" # 1day
       @data = {avg: [], max: [], min: [], diff: []}
-      sql = "SELECT ts,#{src}_avg,#{src}_max,#{src}_min FROM bme280_logs_dailies WHERE raspi_id = #{id} ORDER BY ts"
+      sql = "SELECT ts,#{src}_avg,#{src}_max,#{src}_min FROM bme280_logs_dailies "
+      sql += "WHERE raspi_id = #{id} AND ts > date_add(now(),interval -1 day) ORDER BY ts"
       results = db.query(sql)
       results.each do |row|
         ts = (row["ts"].to_time.to_i + 9 * 60 * 60) * 1000

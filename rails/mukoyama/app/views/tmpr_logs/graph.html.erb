@@ -1,4 +1,6 @@
-<div id="chart_t" class="col-md-4"></div>
+<div id="chart_t" class="col-md-12">
+Loading..
+</div>
 <script>
 	$.getJSON('graph_data.json?src=temperature', <%= @p %> ,function (data) {
 		$('#chart_t').highcharts({
