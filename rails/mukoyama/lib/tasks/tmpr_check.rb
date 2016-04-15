@@ -12,16 +12,18 @@ class TmprCheck
     logs = tmpr_logs.order(:time_stamp).last
 
     puts logs.temperature
-    if setting.first.max_tmpr < logs.temperature || setting.first.min_tmpr > logs.temperature
-      send_mail(id, logs.temperature)
+    if setting.first.max_tmpr < logs.temperature
+      send_mail(id, "xx時xx分 #{logs.temperature}°Cです。設定値を上回りました。")
+    elsif setting.first.min_tmpr > logs.temperature
+      send_mail(id, "xx時xx分 #{logs.temperature}°Cです。設定値を下回りました。")
     end
   end
 
-  def self.send_mail(id, tmpr)
+  def self.send_mail(id, msg)
     addresses = Address.where(raspi_id: id)
     addresses.each do |address|
       next if (address.active != true)
-      cmd = "echo '現在#{tmpr}°Cです。' | sendmail #{address.mail}"
+      cmd = "echo '#{msg}' | sendmail #{address.mail}"
       puts cmd
       system(cmd)
     end

@@ -34,7 +34,7 @@ def parsefile(f,id)
     humid = row[2]
     ts = row[3]
     sql = "INSERT IGNORE INTO tmpr_logs"
-    sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,modified_at)"
+    sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,updated_at)"
     sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid},now(),now())"
     @client.query(sql)
     n += @client.affected_rows
