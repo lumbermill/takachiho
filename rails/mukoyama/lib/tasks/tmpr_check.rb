@@ -1,3 +1,5 @@
+require 'time'
+
 class TmprCheck
 
   def self.execute
@@ -11,11 +13,12 @@ class TmprCheck
     tmpr_logs = TmprLog.where(raspi_id: id)
     logs = tmpr_logs.order(:time_stamp).last
 
+    now = Time.now
     puts logs.temperature
     if setting.first.max_tmpr < logs.temperature
-      send_mail(id, "xx時xx分 #{logs.temperature}°Cです。設定値を上回りました。")
+      send_mail(id, "#{now.hour}時#{now.min}分 #{logs.temperature}°Cです。設定値を上回りました。")
     elsif setting.first.min_tmpr > logs.temperature
-      send_mail(id, "xx時xx分 #{logs.temperature}°Cです。設定値を下回りました。")
+      send_mail(id, "#{now.hour}時#{now.min}分 #{logs.temperature}°Cです。設定値を下回りました。")
     end
   end
 
