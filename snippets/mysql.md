@@ -8,10 +8,20 @@ UNIQUE KEY (v)
 FOREIGN KEY v REFERENCES tt(v)
 )ENGINE=InnoDB, CHARACTER SET=utf8;
 ```
+
+
+## GRANT
 ```
+GRANT SELECT ON db.* TO 'user'@'%';
 GRANT ALL ON db.* TO 'user'@'%' IDENTIFIED BY 'pass';
 GRANT REPLICATION SLAVE ON *.* TO 'user'@'host' IDENTIFIED BY 'pass';
 ```
+
+# Load and save
 ```
-LOAD DATA INFILE '/tmp/.csv' REPLACE INTO TABLE journals_raw IGNORE 1 LINES;
+LOAD DATA INFILE '/tmp/t.csv' REPLACE INTO TABLE t IGNORE 1 LINES;
+```
+
+```
+SELECT * INTO OUTFILE '/tmp/t.csv' FROM t;
 ```
