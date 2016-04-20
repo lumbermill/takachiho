@@ -1,7 +1,3 @@
-require "#{Rails.root}/app/models/tmpr_logs"
-require "#{Rails.root}/app/models/setting"
-require "#{Rails.root}/app/models/address"
-
 class TmprCheck
 
   def self.execute
