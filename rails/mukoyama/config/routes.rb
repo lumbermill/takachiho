@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'tmpr_logs/graph'
   get 'tmpr_logs/graph_data'
 
