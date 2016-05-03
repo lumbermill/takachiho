@@ -18,10 +18,11 @@ $ rails new sandbox-rails --database=mysql
 
 ```Gemfile
 gem 'therubyracer', platforms: :ruby
+gem 'devise', '~> 4.0'
+gem 'rmagick', '~> 2.15'
 ```
 
 http://www.lumber-mill.co.jp/notes/tips/141006_ruby.html
-
 
 
 ```

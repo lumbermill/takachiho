@@ -57,3 +57,19 @@ SSLCryptoDevice builtin
     php_value display_errors 1
 </VirtualHost>
 ```
+
+BASIC認証
+```
+<VirtualHost ..:80>
+  ServerName lmlab.net
+  DocumentRoot /var/www/html
+
+  <Directory /var/www/html>
+    AuthType Basic
+    AuthName "Protected Area"
+    AuthUserFile /var/www/htpasswd
+    AuthGroupFile /dev/null
+    Require valid-user
+  </Directory>
+</VirtualHost>
+```
