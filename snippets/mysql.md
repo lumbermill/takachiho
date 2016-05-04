@@ -17,6 +17,12 @@ GRANT ALL ON db.* TO 'user'@'%' IDENTIFIED BY 'pass';
 GRANT REPLICATION SLAVE ON *.* TO 'user'@'host' IDENTIFIED BY 'pass';
 ```
 
+```
+SELECT host,db,user FROM mysql.db;
+SELECT DISTINCT user FROM mysql.user;
+SHOW GRANTS FOR user;
+```
+
 # Load and save
 ```
 LOAD DATA INFILE '/tmp/t.csv' REPLACE INTO TABLE t IGNORE 1 LINES;
