@@ -16,4 +16,5 @@ git push -u origin branch_name
 git checkout --track origin/branch_name
 # 削除
 git branch -r -d origin/branch_name
+git push origin :branch_name
 ```
