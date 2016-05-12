@@ -5,19 +5,22 @@ NOOBSからOSのインストールをした場合、電源投入時に虹色の�
 ```sh
 $ df
 Filesystem    512-blocks      Used Available Capacity  iused    ifree %iused  Mounted on
-/dev/disk1     974716928 207824184 766380744    22% 26042021 95797593   21%   /
-devfs                366       366         0   100%      634        0  100%   /dev
+/dev/disk1     974716928 207832504 766372424    22% 26043061 95796553   21%   /
+devfs                379       379         0   100%      657        0  100%   /dev
 map -hosts             0         0         0   100%        0        0  100%   /net
 map auto_home          0         0         0   100%        0        0  100%   /home
-/dev/disk2s1              7.3Gi  992Ki  7.3Gi     1%        0          0  100%   /Volumes/UNTITLED
+/dev/disk2s1    15511552      5056  15506496     1%       79   242289    0%   /Volumes/Untitled
 
-$ sudo diskutil umount /dev/disk2s1 # or $ sudo diskutil umount /volumes/UNTITLED
-Volume UNTITLED on disk2s1 unmounted
+$ sudo diskutil umount /dev/disk2s1 # or $ sudo diskutil umount /Volumes/Untitled
+Volume Untitled on disk2s1 unmounted
 
 $ sudo dd bs=1m if="./raspbian.img" of="/dev/rdisk2"
-3125+0 records in
-3125+0 records out
-3276800000 bytes transferred in 471.302287 secs (6952650 bytes/sec)
+3847+0 records in
+3847+0 records out
+4033871872 bytes transferred in 375.941411 secs (10730055 bytes/sec)
+
+$ sudo diskutil umount /dev/disk2s1
+Volume boot on disk2s1 unmounted
 ```
 
 ### ddコマンド引数解説 ###
