@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'tmpr_logs/graph'
   get 'tmpr_logs/graph_data'
 
+  get 'about' => "pages#about"
+
   resources :settings
   resources :addresses
   resources :tmpr_monthly_logs
