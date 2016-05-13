@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429104804) do
+ActiveRecord::Schema.define(version: 20160512115052) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -27,16 +27,25 @@ ActiveRecord::Schema.define(version: 20160429104804) do
     t.float    "max_tmpr",   limit: 24
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "user_id",    limit: 4
   end
 
+  add_index "settings", ["raspi_id"], name: "index_settings_on_raspi_id", unique: true, using: :btree
+
   create_table "tmpr_daily_logs", force: :cascade do |t|
-    t.integer  "raspi_id",    limit: 4
+    t.integer  "raspi_id",            limit: 4
     t.date     "time_stamp"
-    t.float    "temperature", limit: 24
-    t.float    "pressure",    limit: 24
-    t.float    "humidity",    limit: 24
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.float    "temperature_average", limit: 24
+    t.float    "pressure_average",    limit: 24
+    t.float    "humidity_average",    limit: 24
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.float    "temperature_max",     limit: 24
+    t.float    "pressure_max",        limit: 24
+    t.float    "humidity_max",        limit: 24
+    t.float    "temperature_min",     limit: 24
+    t.float    "pressure_min",        limit: 24
+    t.float    "humidity_min",        limit: 24
   end
 
   create_table "tmpr_logs", force: :cascade do |t|
@@ -50,13 +59,19 @@ ActiveRecord::Schema.define(version: 20160429104804) do
   end
 
   create_table "tmpr_monthly_logs", force: :cascade do |t|
-    t.integer  "raspi_id",    limit: 4
-    t.integer  "year_month",  limit: 4
-    t.float    "temperature", limit: 24
-    t.float    "pressure",    limit: 24
-    t.float    "humidity",    limit: 24
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "raspi_id",            limit: 4
+    t.integer  "year_month",          limit: 4
+    t.float    "temperature_average", limit: 24
+    t.float    "pressure_average",    limit: 24
+    t.float    "humidity_average",    limit: 24
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.float    "temperature_max",     limit: 24
+    t.float    "pressure_max",        limit: 24
+    t.float    "humidity_max",        limit: 24
+    t.float    "temperature_min",     limit: 24
+    t.float    "pressure_min",        limit: 24
+    t.float    "humidity_min",        limit: 24
   end
 
   create_table "users", force: :cascade do |t|

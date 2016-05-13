@@ -1,16 +1,21 @@
 Rails.application.routes.draw do
+  get 'about' => 'pages#about'
+
   devise_for :users
-  get 'tmpr_logs/graph'
-  get 'tmpr_logs/graph_data'
 
-  get 'about' => "pages#about"
+  authenticate :user do
+    get 'dashboard' => 'pages#dashboard'
 
-  resources :settings
-  resources :addresses
-  resources :tmpr_monthly_logs
-  resources :tmpr_daily_logs
-  resources :tmpr_logs
-  root 'settings#root'
+    get 'tmpr_logs/graph'
+    get 'tmpr_logs/graph_data'
+
+    resources :settings
+    resources :addresses
+    resources :tmpr_monthly_logs
+    resources :tmpr_daily_logs
+    resources :tmpr_logs
+  end
+  root 'pages#root'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
