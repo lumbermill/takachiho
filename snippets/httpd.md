@@ -1,5 +1,11 @@
 # Apache httpd
 
+## CentOS7のの注意事項
+- NameVirtualHostは必要ありません。
+- "Require all granted" という変な構文があります。
+
+
+## バーチャルホスト
 ```
 NameVirtualHost *:80
 
@@ -21,6 +27,7 @@ NameVirtualHost *:80
 </VirtualHost>
 ```
 
+## SSL接続
 ```
 Listen 443
 LoadModule ssl_module modules/mod_ssl.so
@@ -58,7 +65,7 @@ SSLCryptoDevice builtin
 </VirtualHost>
 ```
 
-BASIC認証
+## BASIC認証
 ```
 <VirtualHost ..:80>
   ServerName lmlab.net
@@ -72,4 +79,16 @@ BASIC認証
     Require valid-user
   </Directory>
 </VirtualHost>
+```
+
+## リダイレクト
+```
+Redirect permanent /one http://foo.com/two
+```
+
+## .htaccess有効化
+```
+<Directory /var/www/html>
+  AllowOverride All
+</Directory>
 ```

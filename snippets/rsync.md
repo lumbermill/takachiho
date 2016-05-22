@@ -11,3 +11,8 @@ http://tech.nitoyon.com/ja/blog/2013/03/26/rsync-include-exclude/
 ```
 rsync -crlpgoDv foo/ bar/
 ```
+
+特定のディレクトリ(pub,sys)だけ転送する。
+```
+rsync -avz ./{pub,sys} host:foo/
+```
