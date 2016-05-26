@@ -1,0 +1,29 @@
+
+
+desc 'Create blank ruby files.'
+task :blank do
+  Dir.glob("**/*.java") do |e|
+    java = File.basename(e)
+    rb = java.downcase.sub(".java",".rb")
+    rbp = e.sub(java,rb)
+    `touch #{rbp}`
+  end
+end
+
+desc 'Pick up TODOs.'
+task :notes do
+  Dir.glob("**/*.rb") do |e|
+    todos = []
+    i = 1
+    open(e).each do |line|
+      if line.match /TODO:/
+        todos += [("%03d: " % i) + line]
+      end
+      i += 1
+    end
+    if todos.count > 0
+      puts e
+      todos.each { |todo| puts todo}
+    end
+  end
+end
