@@ -4,7 +4,8 @@ class AddressesController < ApplicationController
   # GET /addresses
   # GET /addresses.json
   def index
-    @addresses = Address.all
+    # TODO: アドレスはsettingsにぶら下げる？
+    @addresses = current_user.settings.addresses
   end
 
   # GET /addresses/1

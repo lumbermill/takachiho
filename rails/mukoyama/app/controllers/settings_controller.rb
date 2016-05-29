@@ -4,7 +4,7 @@ class SettingsController < ApplicationController
   # GET /settings
   # GET /settings.json
   def index
-    @settings = Setting.all
+    @settings = current_user.settings
   end
 
   # GET /settings/1
@@ -62,7 +62,7 @@ class SettingsController < ApplicationController
   end
 
   def root
-    
+
   end
 
   private

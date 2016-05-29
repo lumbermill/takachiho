@@ -1,1 +1,53 @@
-<% content_for :title, "トップページ" %>
+<% content_for :title, t("root") %>
+<div class="root1">
+  <div class="container">
+    <h1>Project Mukoyama</h1>
+    <p>Raspberry Piでビニールハウスの温度監視システムを構築するプロジェクト。</p>
+  </div>
+</div>
+<div class="root2">
+  <div class="container">
+    <p></p>
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>概要</h3>
+        <p>
+        Raspberry Piに温度センサと3G通信モジュールをつけて、ビニールハウスの温度変化を記録し、
+        異常を検知したらハウス管理者のところへメールでお知らせする仕組みを構築しています。
+        他の仕組みに比べると、部品代が安いところ（全部で1万円ちょっとくらい）と、
+        拡張性が高いところ（GPIOのピンが沢山余ってます、の意）が特徴です。
+        </p>
+        <h3>課題</h3>
+        <ul>
+          <li>防水・防塵が不十分です。タッパに入れてるだけ…。</li>
+          <li>安定入手できる3G通信モジュールが見つかっていません。今はL-05Aを使ってます。</li>
+        </ul>
+        <h3>ゴール</h3>
+        <p>
+        まずはルールベースの異常検知とデータの可視化で実績を作ります。
+        気象データや周辺のセンサからの情報なども統合を進め（ビッグデータ化）、
+        最終的にはAIによるインテリジェントな異常判断や自律的な制御(温度を直接操作するなど)までいけたら面白そうですね。
+        </p>
+      </div>
+      <div class="col-sm-6">
+        <%= image_tag 'graph.png', class: 'img img-responsive img-rounded' %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="root3">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>開発者向け</h3>
+        <p>
+          プロジェクトのコードは全てGitHubで公開しています。…とはいえ、まだ「気軽に使ってください」
+          と言えるほど綺麗にまとまっておりません…。不明な点などあれば、お気軽にお問い合わせください。
+        </p>
+        <p>
+          <a href="https://github.com/lumbermill/takachiho">https://github.com/lumbermill/takachiho</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

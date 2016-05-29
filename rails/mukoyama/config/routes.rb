@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'about' => 'pages#about'
-
   devise_for :users
 
   authenticate :user do
