@@ -1,8 +1,6 @@
 class PagesController < ApplicationController
   def root
-  end
-
-  def about
+    render layout: 'root'
   end
 
   def dashboard

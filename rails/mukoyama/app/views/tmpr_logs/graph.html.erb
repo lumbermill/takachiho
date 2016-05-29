@@ -1,8 +1,9 @@
 <div id="chart_t" class="col-md-12">
 Loading..
 </div>
+<p><small><%= @notice %></small></p>
 <script>
-	$.getJSON('graph_data.json?src=temperature', <%= @p %> ,function (data) {
+	$.getJSON('../graph_data.json', <%= @p.html_safe %> ,function (data) {
 		$('#chart_t').highcharts({
 				chart: {
 						type: 'line'

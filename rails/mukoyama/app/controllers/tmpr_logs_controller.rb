@@ -65,6 +65,7 @@ class TmprLogsController < ApplicationController
     raspi_id = params[:raspi_id] || "1"
     src = params[:src] || "temperature"
     unit = params[:unit] || "10min"
+    limit = params[:limit] || "-7 day"
     if unit == "day" # 1day
       @data = {avg: [], max: [], min: [], diff: []}
       sql = "SELECT ts,#{src}_avg,#{src}_max,#{src}_min FROM bme280_logs_dailies "
@@ -79,7 +80,7 @@ class TmprLogsController < ApplicationController
       end
     else # 10min
       @data = []
-      results = TmprLog.all().order(:time_stamp)
+      results = TmprLog.all().where("time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
         @data += [[(row.time_stamp.to_i + 9 * 60 * 60) * 1000,row.send(src)]]
@@ -91,10 +92,11 @@ class TmprLogsController < ApplicationController
   end
 
   def graph
-    @p = "{}"
-    setting = Setting.find_by(raspi_id: 1)
+    @p = "{raspi_id: #{params[:raspi_id]},src: 'temperature',limit: '-7 day'}"
+    setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     @min_tmpr = setting.min_tmpr
     @max_tmpr = setting.max_tmpr
+    @notice = '直近7日間のデータを表示しています。'
   end
 
   private

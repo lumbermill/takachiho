@@ -4,8 +4,9 @@ class AddressesController < ApplicationController
   # GET /addresses
   # GET /addresses.json
   def index
-    # TODO: アドレスはsettingsにぶら下げる？
-    @addresses = current_user.settings.addresses
+    setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
+    raise 'Setting not found for current user.' unless setting
+    @addresses = setting.addresses
   end
 
   # GET /addresses/1

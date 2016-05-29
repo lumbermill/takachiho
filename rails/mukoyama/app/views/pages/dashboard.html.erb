@@ -1,14 +1,12 @@
-<div class="list-group">
-  <%= link_to 'グラフ', '/tmpr_logs/graph', class: "list-group-item" %>
-  <%= link_to '送信先アドレス', '/addresses', class: "list-group-item" %>
-  <%= link_to '設定', '/settings', class: "list-group-item" %>
-</div>
+<% content_for :title, 'ダッシュボード' %>
+<p>Welcome, <%= current_user.id %></p>
 <table class="table">
   <thead>
     <tr>
-      <th>raspi id</th>
+      <th>ID</th>
       <th>下限</th>
       <th>上限</th>
+      <th>グラフ</th>
       <th>連絡先</th>
     </tr>
   </thead>
@@ -18,8 +16,12 @@
         <td><%= r.raspi_id %></td>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
-        <td><%= r.addresses.count %>件</td>
+        <td><%= link_to 'グラフ', tmpr_logs_graph_path(r.raspi_id), class: "btn btn-default btn-sm" %></td>
+        <td><%= link_to "#{r.addresses.count}件", addresses_path(raspi_id: r.raspi_id), class: "btn btn-default btn-sm" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<p>
+<%= link_to '設定の編集', settings_path, class: "btn btn-default" %>
+</p>
