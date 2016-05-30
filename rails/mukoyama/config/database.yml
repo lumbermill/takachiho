@@ -50,8 +50,6 @@ test:
 production:
   <<: *default
   database: mukoyama_production
-  username: mukoyama
-  password: <%= ENV['MUKOYAMA_DATABASE_PASSWORD'] %>
 
 staging:
   <<: *default
