@@ -1,9 +1,10 @@
 <% content_for :title, 'ダッシュボード' %>
-<p>Welcome, <%= current_user.id %></p>
+<p>Welcome, <%= current_user.name %></p>
 <table class="table">
   <thead>
     <tr>
       <th>ID</th>
+      <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
       <th>下限</th>
       <th>上限</th>
       <th>グラフ</th>
@@ -14,6 +15,7 @@
     <% @raspi_list.each do |r| %>
       <tr>
         <td><%= r.raspi_id %></td>
+        <td><%= r.name %></td>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
         <td><%= link_to 'グラフ', tmpr_logs_graph_path(r.raspi_id), class: "btn btn-default btn-sm" %></td>
@@ -24,4 +26,5 @@
 </table>
 <p>
 <%= link_to '設定の編集', settings_path, class: "btn btn-default" %>
+TODO: ユーザ情報の編集
 </p>

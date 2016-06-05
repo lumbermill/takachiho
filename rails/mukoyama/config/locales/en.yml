@@ -22,3 +22,12 @@
 en:
   hello: "Hello world"
   root: 'Top'
+  activerecord:
+    models:
+      user: 'User'
+      setting: 'Setting'
+    attributes:
+      setting:
+        name: 'Name'
+        min_tmpr: 'Minumum Tempareture'
+        max_tmpr: 'Max Tempareture'

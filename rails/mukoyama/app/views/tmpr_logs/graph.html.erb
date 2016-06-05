@@ -1,10 +1,31 @@
-<div id="chart_t" class="col-md-12">
+<div id="chart_latest" class="col-md-12">
 Loading..
 </div>
 <p><small><%= @notice %></small></p>
+
+<div id="chart_daily" class="col-md-12">
+Loading.. #TODO: 日次のグラフ
+</div>
+
+<div id="chart_monthly" class="col-md-12">
+Loading.. #TODO: 月次のグラフ
+</div>
+
+#TODO: 統計情報
+
+<table class="table">
+	<tr>
+		<th>記録開始日</th>
+		<td></td>
+	</tr>
+	<tr>
+		<th>閾値を超えた回数</th>
+		<td></td>
+	</tr>
+</table>
 <script>
 	$.getJSON('../graph_data.json', <%= @p.html_safe %> ,function (data) {
-		$('#chart_t').highcharts({
+		$('#chart_latest').highcharts({
 				chart: {
 						type: 'line'
 				},

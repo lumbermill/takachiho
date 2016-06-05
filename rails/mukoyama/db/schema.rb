@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512115052) do
+ActiveRecord::Schema.define(version: 20160605122114) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(version: 20160512115052) do
     t.integer  "raspi_id",   limit: 4
     t.float    "min_tmpr",   limit: 24
     t.float    "max_tmpr",   limit: 24
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "user_id",    limit: 4
+    t.string   "name",       limit: 255
   end
 
   add_index "settings", ["raspi_id"], name: "index_settings_on_raspi_id", unique: true, using: :btree
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160512115052) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.string   "name",                   limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

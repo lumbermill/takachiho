@@ -10,7 +10,10 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.number_field :name, class: "form-control" %>
+  </div>
   <div class="field">
     <%= f.label :raspi_id %><br>
     <%= f.number_field :raspi_id %>
@@ -19,11 +22,9 @@
     <%= f.label :min_tmpr %><br>
     <%= f.text_field :min_tmpr %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :max_tmpr %><br>
-    <%= f.text_field :max_tmpr %>
+    <%= f.text_field :max_tmpr, class: "form-control" %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.submit nil, class: "btn btn-primary" %>
 <% end %>
