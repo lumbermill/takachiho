@@ -28,3 +28,25 @@ http://www.lumber-mill.co.jp/notes/tips/141006_ruby.html
 ```
 raise ActionController::RoutingError.new('Not Found')
 ```
+
+## 列の定義を修正する
+```
+rails g migration ChangeColInTbl
+```
+
+```
+change_column :tbl, :col, :string, null: false, default: "", limit: 2000
+```
+
+## 言語リソース
+```
+en:
+  hello: "Hello world"
+  activerecord:
+    models:
+      user: 'User'
+      setting: 'Setting'
+    attributes:
+      user:
+        name: 'Name'
+```
