@@ -8,8 +8,8 @@
 
 import Foundation
 
-// for IBM Watson Developer Cloud Visual Recognition
-// http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/visual-recognition.html
+// for IBM Watson Developer Cloud Speech to Text
+// http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/speech-to-text.html
 
 class WATSON_S2TAPI: NSObject {
     var result = ""
