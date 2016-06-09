@@ -13,11 +13,14 @@ class ViewController: UIViewController {
     let fileManager = NSFileManager()
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
+    
     var now_recording = false
     let fileName = "sample.wav"
+    let watson = WATSON_S2TAPI()
 
     @IBOutlet weak var recordButton: UIBarButtonItem!
     @IBOutlet weak var playButton: UIBarButtonItem!
+    @IBOutlet weak var sendButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,15 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // 再生ボタンを押した時の挙動
+    @IBAction func pushPlayButton(sender: AnyObject) {
+        if (audioPlayer!.playing) {
+            audioPlayer!.stop()
+        } else {
+            audioPlayer!.play()
+        }
     }
     
     // 録音ボタンを押した時の挙動
@@ -46,13 +58,11 @@ class ViewController: UIViewController {
         }
     }
     
-    // 再生ボタンを押した時の挙動
-    @IBAction func pushPlayButton(sender: AnyObject) {
-        if (audioPlayer!.playing) {
-            audioPlayer!.stop()
-        } else {
-            audioPlayer!.play()
-        }
+    // 送信ボタンを押した時の挙動
+    @IBAction func pushSendButton(sender: AnyObject) {
+        watson.send(self.documentFilePath(), callback: {_,_,_ in
+            print(self.watson.result)
+        })
     }
     
     func setUpPlayer() {

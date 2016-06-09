@@ -13,6 +13,7 @@
 		E71A40231D07B12900378D7F /* WATSON_speech_to_text_Tester.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E71A40211D07B12900378D7F /* WATSON_speech_to_text_Tester.xcdatamodeld */; };
 		E71A40251D07B12900378D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71A40241D07B12900378D7F /* Assets.xcassets */; };
 		E71A40281D07B12900378D7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71A40261D07B12900378D7F /* LaunchScreen.storyboard */; };
+		E79C56F91D091236009186E1 /* WATSON_S2TAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79C56F81D091236009186E1 /* WATSON_S2TAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E71A40241D07B12900378D7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E71A40271D07B12900378D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E71A40291D07B12900378D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E79C56F81D091236009186E1 /* WATSON_S2TAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WATSON_S2TAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				E71A401A1D07B12900378D7F /* AppDelegate.swift */,
 				E71A401C1D07B12900378D7F /* ViewController.swift */,
+				E79C56F81D091236009186E1 /* WATSON_S2TAPI.swift */,
 				E71A401E1D07B12900378D7F /* Main.storyboard */,
 				E71A40241D07B12900378D7F /* Assets.xcassets */,
 				E71A40261D07B12900378D7F /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E79C56F91D091236009186E1 /* WATSON_S2TAPI.swift in Sources */,
 				E71A401D1D07B12900378D7F /* ViewController.swift in Sources */,
 				E71A40231D07B12900378D7F /* WATSON_speech_to_text_Tester.xcdatamodeld in Sources */,
 				E71A401B1D07B12900378D7F /* AppDelegate.swift in Sources */,
@@ -290,6 +294,7 @@
 				E71A402E1D07B12900378D7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
