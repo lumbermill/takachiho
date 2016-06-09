@@ -22,10 +22,15 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     @IBOutlet weak var playButton: UIBarButtonItem!
     @IBOutlet weak var sendButton: UIBarButtonItem!
     @IBOutlet weak var msgLabel: UILabel!
+    @IBOutlet weak var jsonText: UITextView!
+    @IBOutlet weak var transcriptText: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.enabled = false
+        msgLabel.text = ""
+        jsonText.text = ""
+        transcriptText.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,7 +73,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         msgLabel.text = "APIに送信中です"
         watson.send(self.documentFilePath(), callback: {_,_,_ in
             dispatch_async(dispatch_get_main_queue(),{
-                print(self.watson.result)
+                self.jsonText.text = self.watson.result
                 self.msgLabel.text = ""
             })
         })

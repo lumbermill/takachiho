@@ -13,12 +13,11 @@ import Foundation
 
 class WATSON_S2TAPI: NSObject {
     var result = ""
-    var result_dict = NSDictionary()
+    var transcript = ""
     
     func send(audiofile_path:NSURL, callback:(data:NSData?, response:NSURLResponse?, error:NSError?)->()) {
         result = ""
-        result_dict = NSDictionary()
-        
+        transcript = ""
         let request = createRequest()
         let audio = NSData(contentsOfURL: audiofile_path)
         self.sendRequest(request, audio: audio!,
@@ -35,22 +34,18 @@ class WATSON_S2TAPI: NSObject {
             data, response, error -> Void in
             let response_time = abs(Float(start_time.timeIntervalSinceNow))
             self.result = "Response Time:" + String.init(response_time) + "s\n"
-            callback(data: data,response: response, error: error)
             if (data != nil && error == nil) {
-                do {
-                    self.result_dict = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
-                    self.result += self.result_dict.description
-                } catch {
-                    self.result += "WATSON API JSON Parse Error.\n" + String.init(data: data!, encoding: NSUTF8StringEncoding)!
-                }
+                self.result += String.init(data: data!, encoding: NSUTF8StringEncoding)!
                 NSLog("WATSON:%@",String.init(data: data!, encoding: NSUTF8StringEncoding)!)
             } else {
                 NSLog("WATSON:%@",error!)
                 self.result += "WATSON API Error." + error!.localizedDescription
             }
+            callback(data: data,response: response, error: error)
         })
         task.resume()
     }
+    
     
     func createRequest()->NSMutableURLRequest {
         let uname    = "3b88583b-b848-4206-85cb-8714da955aaa"
