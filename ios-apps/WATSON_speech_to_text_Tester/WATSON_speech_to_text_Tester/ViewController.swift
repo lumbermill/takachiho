@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,AVAudioPlayerDelegate {
     let fileManager = NSFileManager()
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var recordButton: UIBarButtonItem!
     @IBOutlet weak var playButton: UIBarButtonItem!
     @IBOutlet weak var sendButton: UIBarButtonItem!
+    @IBOutlet weak var msgLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +37,10 @@ class ViewController: UIViewController {
     @IBAction func pushPlayButton(sender: AnyObject) {
         if (audioPlayer!.playing) {
             audioPlayer!.stop()
+            msgLabel.text = ""
         } else {
             audioPlayer!.play()
+            msgLabel.text = "音声を再生中です"
         }
     }
     
@@ -49,25 +52,32 @@ class ViewController: UIViewController {
             recordButton.title = "録音"
             self.setUpPlayer()
             playButton.enabled = true
+            msgLabel.text = ""
         } else {
             setupAudioRecorder()
             audioRecorder?.record()
             now_recording = true
             recordButton.title = "停止"
             playButton.enabled = false
+            msgLabel.text = "録音中です"
         }
     }
     
     // 送信ボタンを押した時の挙動
     @IBAction func pushSendButton(sender: AnyObject) {
+        msgLabel.text = "APIに送信中です"
         watson.send(self.documentFilePath(), callback: {_,_,_ in
-            print(self.watson.result)
+            dispatch_async(dispatch_get_main_queue(),{
+                print(self.watson.result)
+                self.msgLabel.text = ""
+            })
         })
     }
     
     func setUpPlayer() {
         do {
             try audioPlayer = AVAudioPlayer(contentsOfURL: self.documentFilePath())
+            audioPlayer!.delegate = self
             audioPlayer!.prepareToPlay()
         } catch {
             print("AVAudioPlayerの作成に失敗")
@@ -75,7 +85,6 @@ class ViewController: UIViewController {
     }
     
     // 録音するために必要な設定を行う
-    // viewDidLoad時に行う
     func setupAudioRecorder() {
         // 再生と録音機能をアクティブにする
         let session = AVAudioSession.sharedInstance()
@@ -106,6 +115,10 @@ class ViewController: UIViewController {
         return dirURL.URLByAppendingPathComponent(fileName)
     }
 
-
+    // 音声の再生が終了すると呼ばれる
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer,
+                                       successfully flag: Bool) {
+        msgLabel.text = ""
+    }
 }
 

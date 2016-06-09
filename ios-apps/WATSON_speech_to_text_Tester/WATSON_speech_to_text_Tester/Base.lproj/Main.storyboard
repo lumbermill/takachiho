@@ -42,15 +42,25 @@
                                     <barButtonItem title="設定" id="mTb-UW-B2b"/>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK8-JA-C2M">
+                                <rect key="frame" x="20" y="535" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="wbP-4y-wyp" secondAttribute="trailing" constant="-20" id="8py-cz-9aN"/>
+                            <constraint firstItem="gK8-JA-C2M" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BzY-ej-5Se"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="wbP-4y-wyp" secondAttribute="bottom" id="btG-Sc-5PV"/>
+                            <constraint firstItem="wbP-4y-wyp" firstAttribute="top" secondItem="gK8-JA-C2M" secondAttribute="bottom" id="i9k-AD-5lQ"/>
                             <constraint firstItem="wbP-4y-wyp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="oLC-8c-Rav"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gK8-JA-C2M" secondAttribute="trailing" id="xCf-pm-Q6v"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="msgLabel" destination="gK8-JA-C2M" id="XfH-Dc-309"/>
                         <outlet property="playButton" destination="PQx-hd-QZT" id="wk9-h6-M98"/>
                         <outlet property="recordButton" destination="vcc-G9-qEY" id="qWw-Jm-gli"/>
                         <outlet property="sendButton" destination="KUo-hM-U2X" id="IQy-bQ-YQr"/>
