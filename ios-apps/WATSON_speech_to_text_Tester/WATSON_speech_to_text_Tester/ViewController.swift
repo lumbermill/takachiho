@@ -56,12 +56,8 @@ class ViewController: UIViewController {
     }
     
     func setUpPlayer() {
-        let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(AVAudioSessionCategorySoloAmbient)
-        try! session.setActive(true)
         do {
             try audioPlayer = AVAudioPlayer(contentsOfURL: self.documentFilePath())
-            audioPlayer?.channelAssignments
             audioPlayer!.prepareToPlay()
         } catch {
             print("AVAudioPlayerの作成に失敗")
@@ -74,6 +70,7 @@ class ViewController: UIViewController {
         // 再生と録音機能をアクティブにする
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        try! session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
         try! session.setActive(true)
         let recordSetting : [String : AnyObject] = [
             AVFormatIDKey:Int(kAudioFormatLinearPCM),
