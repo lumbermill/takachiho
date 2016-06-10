@@ -28,6 +28,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.enabled = false
+        sendButton.enabled = false
         msgLabel.text = ""
         jsonText.text = ""
         transcriptText.text = ""
@@ -58,6 +59,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
             recordButton.title = "録音"
             self.setUpPlayer()
             playButton.enabled = true
+            sendButton.enabled = true
             msgLabel.text = ""
         } else {
             setupAudioRecorder()
@@ -65,6 +67,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
             now_recording = true
             recordButton.title = "停止"
             playButton.enabled = false
+            sendButton.enabled = false
             msgLabel.text = "録音中です"
         }
     }
