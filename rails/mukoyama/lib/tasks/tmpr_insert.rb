@@ -44,11 +44,6 @@ def parsefile(f,id)
   return n
 end
 
-@daily_sql = <<EOT
-INSERT IGNORE INTO tmpr_daily_logs (raspi_id,time_stamp,temperature,pressure,humidity,created_at)
-SELECT raspi_id,date(time_stamp),avg(temperature),avg(pressure),avg(humidity),now()
-FROM tmpr_logs GROUP BY raspi_id,date(time_stamp);
-EOT
 
 def parsedir(dir)
   id = get_id_from_dirname(dir)
@@ -66,11 +61,12 @@ def parsedir(dir)
       n_files += 1
     end
     puts "%d files scanned, %d rows added." % [n_files,n_rows]
-    @client.query(@daily_sql)
+    insert_daily(nil)
   elsif OPTS[:daily]
     # Expected to run the first of the day.
     n_rows = parsefile(dir+"/"+files[-2],id)
-    @client.query(@daily_sql)
+    yesterday = Date.today - 1
+    insert_daily(yesterday)
   else
     n_rows = parsefile(dir+"/"+files[-1],id)
   end
@@ -82,6 +78,48 @@ def parsedir(dir)
   end
 end
 
+def insert_daily(date)
+  where = date.nil? ? "" : "WHERE DATE(time_stamp) = '#{date}'"
+  daily_sql = <<EOT
+  INSERT IGNORE INTO tmpr_daily_logs
+    (raspi_id,time_stamp,
+    temperature_average,pressure_average,humidity_average,
+    temperature_max,pressure_max,humidity_max,
+    temperature_min,pressure_min,humidity_min,
+    created_at,updated_at)
+  SELECT raspi_id,date(time_stamp),
+  avg(temperature),avg(pressure),avg(humidity),
+  max(temperature),max(pressure),max(humidity),
+  min(temperature),min(pressure),min(humidity),
+  now(),now()
+  FROM tmpr_logs #{where} GROUP BY raspi_id,date(time_stamp);
+EOT
+
+  @client.query(daily_sql)
+end
+
+def insert_monthly(date)
+  begin_date = Date.new(date.year,date.month,1) - 1.month
+  end_date = begin_date + 1.month - 1.day
+  where = year_month.nil? ? "" : "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
+  daily_sql = <<EOT
+  INSERT IGNORE INTO tmpr_monthly_logs
+    (raspi_id,`year_month`,
+    temperature_average,pressure_average,humidity_average,
+    temperature_max,pressure_max,humidity_max,
+    temperature_min,pressure_min,humidity_min,
+    created_at,updated_at)
+  SELECT raspi_id,year(time_stamp)*100 + month(time_stamp),
+  avg(temperature_average),avg(pressure_average),avg(humidity_average),
+  max(temperature_max),max(pressure_max),max(humidity_max),
+  min(temperature_min),min(pressure_min),min(humidity_min),
+  now(),now()
+  FROM tmpr_daily_logs #{where} GROUP BY raspi_id,year(time_stamp),month(time_stamp);
+EOT
+
+  @client.query(daily_sql)
+end
+
 def main
   Dir.entries(DIR).sort.each do |d|
     next if d.start_with? "."
@@ -90,6 +128,7 @@ def main
     next unless d == "1_greenhouse"
     # next unless File.exists? DIR+"/"+d
     parsedir(DIR+"/"+d)
+
   end
 end
 
