@@ -67,20 +67,17 @@ class TmprLogsController < ApplicationController
     unit = params[:unit] || "10min"
     limit = params[:limit] || "-7 day"
     if unit == "day" # 1day
-      @data = {avg: [], max: [], min: [], diff: []}
-      sql = "SELECT ts,#{src}_avg,#{src}_max,#{src}_min FROM bme280_logs_dailies "
-      sql += "WHERE raspi_id = #{id} AND ts > date_add(now(),interval -1 day) ORDER BY ts"
-      results = db.query(sql)
+      @data = {avg: [], minmax: []}
+      sql = "raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})"
+      results = TmprDailyLog.where(sql).order(:time_stamp)
       results.each do |row|
-        ts = (row["ts"].to_time.to_i + 9 * 60 * 60) * 1000
-        @data[:avg] += [[ts,row[src+"_avg"]]]
-        @data[:max] += [[ts,row[src+"_max"]]]
-        @data[:min] += [[ts,row[src+"_min"]]]
-        @data[:diff] += [[ts,row[src+"_max"] - row[src+"_min"]]]
+        ts = (row["time_stamp"].to_time.to_i + 9 * 60 * 60) * 1000
+        @data[:avg] += [[ts,row[src+"_average"]]]
+        @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
       end
     else # 10min
       @data = []
-      results = TmprLog.all().where("time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
+      results = TmprLog.where("raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
         @data += [[(row.time_stamp.to_i + 9 * 60 * 60) * 1000,row.send(src)]]
@@ -92,7 +89,7 @@ class TmprLogsController < ApplicationController
   end
 
   def graph
-    @p = "{raspi_id: #{params[:raspi_id]},src: 'temperature',limit: '-7 day'}"
+    @p = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
     setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     @min_tmpr = setting.min_tmpr
     @max_tmpr = setting.max_tmpr

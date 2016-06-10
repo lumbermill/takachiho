@@ -53,4 +53,49 @@ Loading.. #TODO: 月次のグラフ
 				}]
 		});
 	});
+
+	$.getJSON('../graph_data.json?unit=day&limit=-30%20day', <%= @p.html_safe %> ,function (data) {
+		$('#chart_daily').highcharts({
+				chart: {
+						type: 'line'
+				},
+				title: {
+						text: '気温 (°C)',
+				},
+				xAxis: {
+						type: 'datetime'
+				},
+				yAxis: {
+						title: {
+								text: ''
+						},
+						plotBands: [{
+								from: <%= @min_tmpr %>,
+								to: <%= @max_tmpr %>,
+								color: 'rgba(68, 170, 213, .2)'
+						}]
+				},
+				tooltip: {
+						crosshairs: true,
+						shared: true,
+						valueSuffix: '°C'
+				},
+				legend: {
+				},
+				series: [{
+						name: "平均",
+						data: data["avg"],
+						zIndex: 1
+				},{
+						name: "高低",
+						data: data["minmax"],
+						type: 'arearange',
+						lineWidth: 0,
+						linkedTo: ':previous',
+						color: Highcharts.getOptions().colors[0],
+						fillOpacity: 0.3,
+						zIndex: 0
+				}]
+		});
+	});
 </script>
