@@ -15,6 +15,29 @@ class WATSON_S2TAPI: NSObject {
     var result = ""
     var transcript = ""
     
+    static let ud = NSUserDefaults.standardUserDefaults()
+    static var IBMUname:String  = ""
+    static var IBMPass:String   = ""
+
+    static func LoadKeySettings() {
+        IBMUname  = ZeroLenTextIfNil(ud.objectForKey("IBMUname"))
+        IBMPass   = ZeroLenTextIfNil(ud.objectForKey("IBMPass"))
+    }
+
+    static func upateKeySettings() {
+        ud.setObject(IBMUname, forKey: "IBMUname")
+        ud.setObject(IBMPass, forKey: "IBMPass")
+        ud.synchronize()
+    }
+
+    private static func ZeroLenTextIfNil(udobj:AnyObject?) -> String{
+        if (udobj == nil) {
+            return ""
+        } else {
+            return udobj as! String
+        }
+    }
+
     func send(audiofile_path:NSURL, callback:(data:NSData?, response:NSURLResponse?, error:NSError?)->()) {
         result = ""
         transcript = ""
@@ -48,8 +71,8 @@ class WATSON_S2TAPI: NSObject {
     
     
     func createRequest()->NSMutableURLRequest {
-        let uname    = "3b88583b-b848-4206-85cb-8714da955aaa"
-        let password = "GYTvmqHwpxHg"
+        let uname    = WATSON_S2TAPI.IBMUname
+        let password = WATSON_S2TAPI.IBMPass
 
         let userPasswordString = "\(uname):\(password)"
         let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)

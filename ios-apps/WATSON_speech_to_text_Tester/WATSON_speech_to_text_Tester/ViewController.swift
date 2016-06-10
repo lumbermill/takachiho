@@ -31,6 +31,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         msgLabel.text = ""
         jsonText.text = ""
         transcriptText.text = ""
+        WATSON_S2TAPI.LoadKeySettings()
     }
 
     override func didReceiveMemoryWarning() {
@@ -125,5 +126,8 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
                                        successfully flag: Bool) {
         msgLabel.text = ""
     }
+    
+    @IBAction func unwindToTop(segue:UIStoryboardSegue) {} // 別画面からの戻り用
+
 }
 
