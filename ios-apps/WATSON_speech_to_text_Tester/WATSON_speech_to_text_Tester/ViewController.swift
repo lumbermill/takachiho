@@ -75,6 +75,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         watson.send(self.documentFilePath(), callback: {_,_,_ in
             dispatch_async(dispatch_get_main_queue(),{
                 self.jsonText.text = self.watson.result
+                self.transcriptText.text = self.watson.transcript
                 self.msgLabel.text = ""
             })
         })

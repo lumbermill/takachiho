@@ -59,6 +59,9 @@ class WATSON_S2TAPI: NSObject {
             self.result = "Response Time:" + String.init(response_time) + "s\n"
             if (data != nil && error == nil) {
                 self.result += String.init(data: data!, encoding: NSUTF8StringEncoding)!
+                let ret_obj = WATSON_response(json: data!)
+                let mcafr = ret_obj.most_confident_alternative_in_final_result()
+                self.transcript = mcafr["transcript"] as! String
                 NSLog("WATSON:%@",String.init(data: data!, encoding: NSUTF8StringEncoding)!)
             } else {
                 NSLog("WATSON:%@",error!)
@@ -86,4 +89,54 @@ class WATSON_S2TAPI: NSObject {
         return request
     }
 
+}
+
+class WATSON_response :NSObject {
+    var result_dict:NSDictionary
+    
+    init(json:NSData) {
+        do {
+            self.result_dict = try NSJSONSerialization.JSONObjectWithData(json, options: .MutableContainers) as! NSDictionary
+        } catch {
+            result_dict = [:]
+        }
+    }
+    
+    func results() -> NSArray {
+        return result_dict["results"] as! NSArray
+    }
+    
+    func final_result() -> NSDictionary {
+        let results = self.results()
+        for r in results {
+            let r_dict = r as! NSDictionary
+            if (r_dict["final"] != nil) {
+                return r_dict
+            }
+        }
+        return [:]
+    }
+    
+    func alternatives_in_final_result() -> NSArray {
+        let f_r = final_result()
+        let alternatives = f_r["alternatives"] as! NSArray
+        return alternatives
+    }
+    
+    func most_confident_alternative_in_final_result() -> NSDictionary {
+        let alts = alternatives_in_final_result()
+        var max_confidence = 0.0
+        var return_alt:NSDictionary?
+        
+        for a in alts {
+            let a_dict = a as! NSDictionary
+            let confidence = a_dict["confidence"] as! Double
+            print(confidence)
+            if (confidence > max_confidence) {
+                max_confidence = confidence
+                return_alt = a_dict
+            }
+        }
+        return return_alt!
+    }
 }
