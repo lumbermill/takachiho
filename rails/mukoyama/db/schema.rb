@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605122114) do
+ActiveRecord::Schema.define(version: 20160610104052) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20160605122114) do
     t.float    "humidity_min",        limit: 24
   end
 
+  add_index "tmpr_daily_logs", ["raspi_id", "time_stamp"], name: "index_tmpr_daily_logs_on_raspi_id_and_time_stamp", unique: true, using: :btree
+
   create_table "tmpr_logs", force: :cascade do |t|
     t.integer  "raspi_id",    limit: 4
     t.datetime "time_stamp"
@@ -58,6 +60,8 @@ ActiveRecord::Schema.define(version: 20160605122114) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "tmpr_logs", ["raspi_id", "time_stamp"], name: "index_tmpr_logs_on_raspi_id_and_time_stamp", unique: true, using: :btree
 
   create_table "tmpr_monthly_logs", force: :cascade do |t|
     t.integer  "raspi_id",            limit: 4
@@ -74,6 +78,8 @@ ActiveRecord::Schema.define(version: 20160605122114) do
     t.float    "pressure_min",        limit: 24
     t.float    "humidity_min",        limit: 24
   end
+
+  add_index "tmpr_monthly_logs", ["raspi_id", "year_month"], name: "index_tmpr_monthly_logs_on_raspi_id_and_year_month", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
