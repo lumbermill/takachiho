@@ -1,10 +1,3 @@
-<style>
-img {
-  border: 1px solid black;
-  width: auto;
-  max-height: 500px;
-}
-</style>
 # WATSON_speech_to_text_Tester
 IBMからリリースされている音声認識API 「Watson Speech To Text」 (https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/speech-to-text.html) を簡単に試すことができるiOSアプリです。(日本語にのみ対応しています)
 
@@ -24,21 +17,21 @@ Xcodeでプロジェクトを開き、ビルドします
 
 ### ユーザ名・パスワードの設定
 1. アプリを開き「設定」をタップします
-<br>![設定_初期状態](doc/img/readme/setting/screen_init.jpg)
+<br>![設定_初期状態](doc/img/readme/setting/screen_init_s.jpg)
 1. 設定画面が開くので取得したユーザ名とパスワードを入力し、「完了」をタップします。
-<br>![設定_設定](doc/img/readme/setting/screen_setting.jpg)
+<br>![設定_設定](doc/img/readme/setting/screen_setting_s.jpg)
 
 ### 録音して音声をWATSONに送信
 1. 「録音」をタップすると録音が始まります。（「録音」が「停止」に変わり、「録音中です」と表示されます）
-<br>![初期状態](doc/img/readme/main/screen_init.jpg)
+<br>![初期状態](doc/img/readme/main/screen_init_s.jpg)
 1. 適当な音声をマイクから録音して下さい。録音が終わったら「停止」をタップします。
-<br>![録音](doc/img/readme/main/screen_rec.jpg)
+<br>![録音](doc/img/readme/main/screen_rec_s.jpg)
 1. ▷をタップすると録音した音声を確認できます。
-<br>![録音後](doc/img/readme/main/screen_after_rec.jpg)
+<br>![録音後](doc/img/readme/main/screen_after_rec_s.jpg)
 1. 「送信」をタップすると録音した音声がWATSONに送信されます。（「APIに送信中です」と表示されます）
-<br>![送信中](doc/img/readme/main/screen_sending.jpg)
+<br>![送信中](doc/img/readme/main/screen_sending_s.jpg)
 1. しばらく待つとAPIの認識結果がグレーのエリアに表示されます。（上がWATSONが返してきたJSON、下が認識結果の文章です）
-<br>![結果](doc/img/readme/main/screen_result.jpg)
+<br>![結果](doc/img/readme/main/screen_result_s.jpg)
 
 ## 参考
 ### Speech To Text の概要
