@@ -12,4 +12,3 @@ fh.each do |line|
   node.parse(Context.new(line))
   puts "node = #{node}"
 end
-# TODO: 書きかけ！ここから6/16
