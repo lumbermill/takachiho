@@ -22,7 +22,7 @@ sudo apt-get install epiphany-browser x11-xserver-utils xautomation unclutter
 vi ~/fullscreen.sh
 
 # 下記を記入
-sudo -u pi epiphany-browser -a -i --profile ~/.config http://360.lmlab.net --display=:0 &
+sudo -u pi epiphany-browser -a -i --profile ~/.config http://360.lmlab.net/for-raspi --display=:0 &
 sleep 15s;
 xte "key F11" -x:0
 ```
