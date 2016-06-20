@@ -11,8 +11,11 @@ class BigString
   end
 
   def print
-    @bigchars.each do |b|
-      b.print
+    5.times do |i|
+      @bigchars.each do |b|
+        Kernel.print b.fontdata[i]+"."
+      end
+      Kernel.print "\n"
     end
   end
 end

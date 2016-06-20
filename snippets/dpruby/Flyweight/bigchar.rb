@@ -1,10 +1,7 @@
 class BigChar
+  attr_reader :fontdata
   def initialize(ch)
     @ch = ch
-    @fontdata = open("big#{ch}.txt").read
-  end
-
-  def print
-    puts @fontdata
+    @fontdata = open("big#{ch}.txt").readlines.map { |line| line.strip }
   end
 end
