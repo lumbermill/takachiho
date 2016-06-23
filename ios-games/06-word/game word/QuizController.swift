@@ -21,6 +21,7 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var mainView: UIView!
     
     var data = [Array<String>]() // 問題データ
+    var ans_data = Array<Bool>()
     var answer = "" // 正解
     
     var view_state = 0 // viewの状態を保持
@@ -41,11 +42,13 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
             self.view.bringSubviewToFront(ansImageView)
             if t == answer{
                 view_state = 1
+                ans_data.append(true)
                 ansImageView.image = UIImage(named: "true.png")
                 sound_correct.play()
                 print("正解！")
             }else{
                 view_state = 2
+                ans_data.append(false)
                 ansImageView.image = UIImage(named: "false.png")
                 sound_wrong.play()
                 print("不正解〜！！")
@@ -199,6 +202,7 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
             checkAnswerController.ans = self.correct_ans
             checkAnswerController.data = self.data
             checkAnswerController.time = end_time
+            checkAnswerController.ans_data = self.ans_data
         }
     }
 }
