@@ -64,17 +64,17 @@
 		130079F81C5B067F00420CAB /* animals1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = animals1.txt; sourceTree = "<group>"; };
 		13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_chime13.mp3; sourceTree = "<group>"; };
 		13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_onepoint33.mp3; sourceTree = "<group>"; };
-		13EBAD231C1ADEF300A3F596 /* game word.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "game word.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Englishoose.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBAD261C1ADEF300A3F596 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13EBAD281C1ADEF300A3F596 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13EBAD2B1C1ADEF300A3F596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		13EBAD2D1C1ADEF300A3F596 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		13EBAD2D1C1ADEF300A3F596 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Englishoose/Assets.xcassets; sourceTree = "<group>"; };
 		13EBAD301C1ADEF300A3F596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13EBAD321C1ADEF300A3F596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13EBAD371C1ADEF300A3F596 /* game wordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "game wordTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13EBAD371C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Englishoose.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBAD3B1C1ADEF400A3F596 /* game_wordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = game_wordTests.swift; sourceTree = "<group>"; };
 		13EBAD3D1C1ADEF400A3F596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13EBAD421C1ADEF400A3F596 /* game wordUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "game wordUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13EBAD421C1ADEF400A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Englishoose.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBAD461C1ADEF400A3F596 /* game_wordUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = game_wordUITests.swift; sourceTree = "<group>"; };
 		13EBAD481C1ADEF400A3F596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EBAD541C1AE94300A3F596 /* QuizController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizController.swift; sourceTree = "<group>"; };
@@ -128,9 +128,9 @@
 		13EBAD1A1C1ADEF300A3F596 = {
 			isa = PBXGroup;
 			children = (
-				13EBAD251C1ADEF300A3F596 /* game word */,
-				13EBAD3A1C1ADEF300A3F596 /* game wordTests */,
-				13EBAD451C1ADEF400A3F596 /* game wordUITests */,
+				13EBAD251C1ADEF300A3F596 /* Englishoose */,
+				13EBAD3A1C1ADEF300A3F596 /* EnglishooseTests */,
+				13EBAD451C1ADEF400A3F596 /* EnglishooseUITests */,
 				13EBAD241C1ADEF300A3F596 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,14 +138,14 @@
 		13EBAD241C1ADEF300A3F596 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13EBAD231C1ADEF300A3F596 /* game word.app */,
-				13EBAD371C1ADEF300A3F596 /* game wordTests.xctest */,
-				13EBAD421C1ADEF400A3F596 /* game wordUITests.xctest */,
+				13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */,
+				13EBAD371C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
+				13EBAD421C1ADEF400A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13EBAD251C1ADEF300A3F596 /* game word */ = {
+		13EBAD251C1ADEF300A3F596 /* Englishoose */ = {
 			isa = PBXGroup;
 			children = (
 				130079F71C5B064D00420CAB /* data */,
@@ -160,33 +160,33 @@
 				13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */,
 				13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */,
 			);
-			path = "game word";
+			path = Englishoose;
 			sourceTree = "<group>";
 		};
-		13EBAD3A1C1ADEF300A3F596 /* game wordTests */ = {
+		13EBAD3A1C1ADEF300A3F596 /* EnglishooseTests */ = {
 			isa = PBXGroup;
 			children = (
 				13EBAD3B1C1ADEF400A3F596 /* game_wordTests.swift */,
 				13EBAD3D1C1ADEF400A3F596 /* Info.plist */,
 			);
-			path = "game wordTests";
+			path = EnglishooseTests;
 			sourceTree = "<group>";
 		};
-		13EBAD451C1ADEF400A3F596 /* game wordUITests */ = {
+		13EBAD451C1ADEF400A3F596 /* EnglishooseUITests */ = {
 			isa = PBXGroup;
 			children = (
 				13EBAD461C1ADEF400A3F596 /* game_wordUITests.swift */,
 				13EBAD481C1ADEF400A3F596 /* Info.plist */,
 			);
-			path = "game wordUITests";
+			path = EnglishooseUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13EBAD221C1ADEF300A3F596 /* game word */ = {
+		13EBAD221C1ADEF300A3F596 /* Englishoose */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13EBAD4B1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game word" */;
+			buildConfigurationList = 13EBAD4B1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "Englishoose" */;
 			buildPhases = (
 				13EBAD1F1C1ADEF300A3F596 /* Sources */,
 				13EBAD201C1ADEF300A3F596 /* Frameworks */,
@@ -196,14 +196,14 @@
 			);
 			dependencies = (
 			);
-			name = "game word";
+			name = Englishoose;
 			productName = "game word";
-			productReference = 13EBAD231C1ADEF300A3F596 /* game word.app */;
+			productReference = 13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
-		13EBAD361C1ADEF300A3F596 /* game wordTests */ = {
+		13EBAD361C1ADEF300A3F596 /* EnglishooseTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13EBAD4E1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game wordTests" */;
+			buildConfigurationList = 13EBAD4E1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "EnglishooseTests" */;
 			buildPhases = (
 				13EBAD331C1ADEF300A3F596 /* Sources */,
 				13EBAD341C1ADEF300A3F596 /* Frameworks */,
@@ -214,14 +214,14 @@
 			dependencies = (
 				13EBAD391C1ADEF300A3F596 /* PBXTargetDependency */,
 			);
-			name = "game wordTests";
+			name = EnglishooseTests;
 			productName = "game wordTests";
-			productReference = 13EBAD371C1ADEF300A3F596 /* game wordTests.xctest */;
+			productReference = 13EBAD371C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13EBAD411C1ADEF400A3F596 /* game wordUITests */ = {
+		13EBAD411C1ADEF400A3F596 /* EnglishooseUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13EBAD511C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game wordUITests" */;
+			buildConfigurationList = 13EBAD511C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "EnglishooseUITests" */;
 			buildPhases = (
 				13EBAD3E1C1ADEF400A3F596 /* Sources */,
 				13EBAD3F1C1ADEF400A3F596 /* Frameworks */,
@@ -232,9 +232,9 @@
 			dependencies = (
 				13EBAD441C1ADEF400A3F596 /* PBXTargetDependency */,
 			);
-			name = "game wordUITests";
+			name = EnglishooseUITests;
 			productName = "game wordUITests";
-			productReference = 13EBAD421C1ADEF400A3F596 /* game wordUITests.xctest */;
+			productReference = 13EBAD421C1ADEF400A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -261,7 +261,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "game word" */;
+			buildConfigurationList = 13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "Englishoose" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -274,9 +274,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13EBAD221C1ADEF300A3F596 /* game word */,
-				13EBAD361C1ADEF300A3F596 /* game wordTests */,
-				13EBAD411C1ADEF400A3F596 /* game wordUITests */,
+				13EBAD221C1ADEF300A3F596 /* Englishoose */,
+				13EBAD361C1ADEF300A3F596 /* EnglishooseTests */,
+				13EBAD411C1ADEF400A3F596 /* EnglishooseUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -355,12 +355,12 @@
 /* Begin PBXTargetDependency section */
 		13EBAD391C1ADEF300A3F596 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13EBAD221C1ADEF300A3F596 /* game word */;
+			target = 13EBAD221C1ADEF300A3F596 /* Englishoose */;
 			targetProxy = 13EBAD381C1ADEF300A3F596 /* PBXContainerItemProxy */;
 		};
 		13EBAD441C1ADEF400A3F596 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13EBAD221C1ADEF300A3F596 /* game word */;
+			target = 13EBAD221C1ADEF300A3F596 /* Englishoose */;
 			targetProxy = 13EBAD431C1ADEF400A3F596 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -474,10 +474,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "game word/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Englishoose/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.lumber-mill.Englishoose";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -488,10 +488,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "game word/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Englishoose/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.lumber-mill.Englishoose";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -503,8 +503,8 @@
 				INFOPLIST_FILE = "game wordTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.game-wordTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/game word.app/game word";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Englishoose.temp_caseinsensitive_rename.app/Englishoose.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -515,8 +515,8 @@
 				INFOPLIST_FILE = "game wordTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.game-wordTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/game word.app/game word";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Englishoose.temp_caseinsensitive_rename.app/Englishoose.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
@@ -526,7 +526,7 @@
 				INFOPLIST_FILE = "game wordUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.game-wordUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = "game word";
 				USES_XCTRUNNER = YES;
 			};
@@ -538,7 +538,7 @@
 				INFOPLIST_FILE = "game wordUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.game-wordUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = "game word";
 				USES_XCTRUNNER = YES;
 			};
@@ -547,7 +547,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "game word" */ = {
+		13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "Englishoose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13EBAD491C1ADEF400A3F596 /* Debug */,
@@ -556,7 +556,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13EBAD4B1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game word" */ = {
+		13EBAD4B1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "Englishoose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13EBAD4C1C1ADEF400A3F596 /* Debug */,
@@ -565,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13EBAD4E1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game wordTests" */ = {
+		13EBAD4E1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "EnglishooseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13EBAD4F1C1ADEF400A3F596 /* Debug */,
@@ -574,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13EBAD511C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "game wordUITests" */ = {
+		13EBAD511C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "EnglishooseUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13EBAD521C1ADEF400A3F596 /* Debug */,

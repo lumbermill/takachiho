@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:game word.xcodeproj">
+      location = "self:/Users/kaishouya/workspace/rails/takachiho/ios-games/06-word/Englishoose.xcodeproj">
    </FileRef>
 </Workspace>
