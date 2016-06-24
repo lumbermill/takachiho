@@ -64,7 +64,7 @@
 		130079F81C5B067F00420CAB /* animals1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = animals1.txt; sourceTree = "<group>"; };
 		13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_chime13.mp3; sourceTree = "<group>"; };
 		13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_onepoint33.mp3; sourceTree = "<group>"; };
-		13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Englishoose.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13EBAD231C1ADEF300A3F596 /* Englishoose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Englishoose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EBAD261C1ADEF300A3F596 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13EBAD281C1ADEF300A3F596 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13EBAD2B1C1ADEF300A3F596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		13EBAD241C1ADEF300A3F596 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */,
+				13EBAD231C1ADEF300A3F596 /* Englishoose.app */,
 				13EBAD371C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
 				13EBAD421C1ADEF400A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
 			);
@@ -198,7 +198,7 @@
 			);
 			name = Englishoose;
 			productName = "game word";
-			productReference = 13EBAD231C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.app */;
+			productReference = 13EBAD231C1ADEF300A3F596 /* Englishoose.app */;
 			productType = "com.apple.product-type.application";
 		};
 		13EBAD361C1ADEF300A3F596 /* EnglishooseTests */ = {
@@ -477,7 +477,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Englishoose/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.lumber-mill.Englishoose";
-				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
+				PRODUCT_NAME = Englishoose;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -491,7 +491,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Englishoose/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.lumber-mill.Englishoose";
-				PRODUCT_NAME = Englishoose.temp_caseinsensitive_rename;
+				PRODUCT_NAME = Englishoose;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

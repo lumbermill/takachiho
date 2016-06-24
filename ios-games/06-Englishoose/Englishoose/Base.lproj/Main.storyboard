@@ -9,7 +9,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="game_word" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Englishoose" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -48,7 +48,7 @@
         <!--Quiz Controller-->
         <scene sceneID="v2Q-D6-3bh">
             <objects>
-                <viewController id="seo-EU-vYh" customClass="QuizController" customModule="game_word" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="seo-EU-vYh" customClass="QuizController" customModule="Englishoose" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IIO-MJ-TKJ"/>
                         <viewControllerLayoutGuide type="bottom" id="6Fi-1z-VBq"/>
@@ -184,7 +184,7 @@
         <!--Check Answer Controller-->
         <scene sceneID="byh-0E-6yk">
             <objects>
-                <viewController id="B2M-ec-nnF" customClass="CheckAnswerController" customModule="game_word" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="B2M-ec-nnF" customClass="CheckAnswerController" customModule="Englishoose" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ztT-F2-k4c"/>
                         <viewControllerLayoutGuide type="bottom" id="thn-Ro-pTB"/>
