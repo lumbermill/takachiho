@@ -1,0 +1,12 @@
+stag beetle,iron beetle,scarab beetle,ladybug
+butterfly,dragonfly,mantis,shrimp
+beetle,ladybug,mole,python
+mantis,python,cow,ant
+ant,butterfly,leopard,weasel
+bee,firefly,grasshopper,goat
+grasshopper,dragonfly,bat,bear
+dragonfly,tuna,weasel,bat
+spider,
+ladybug,
+mosquito,
+fly,

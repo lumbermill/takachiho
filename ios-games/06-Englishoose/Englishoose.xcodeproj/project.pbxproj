@@ -21,6 +21,8 @@
 		130079F91C5B067F00420CAB /* animals1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 130079F81C5B067F00420CAB /* animals1.txt */; };
 		13779AED1D1E1FCD004011FF /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13779AEC1D1E1FCD004011FF /* iAd.framework */; };
 		13779AEF1D1E207B004011FF /* fruits1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13779AEE1D1E207B004011FF /* fruits1.txt */; };
+		13779AF11D1E27D9004011FF /* insects1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13779AF01D1E27D9004011FF /* insects1.txt */; };
+		13779AF31D1E280F004011FF /* vechiles1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13779AF21D1E280F004011FF /* vechiles1.txt */; };
 		13C854F01C5CCC8500354117 /* se_maoudamashii_chime13.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */; };
 		13C854F11C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */; };
 		13EBAD271C1ADEF300A3F596 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD261C1ADEF300A3F596 /* AppDelegate.swift */; };
@@ -66,6 +68,8 @@
 		130079F81C5B067F00420CAB /* animals1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = animals1.txt; sourceTree = "<group>"; };
 		13779AEC1D1E1FCD004011FF /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		13779AEE1D1E207B004011FF /* fruits1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fruits1.txt; sourceTree = "<group>"; };
+		13779AF01D1E27D9004011FF /* insects1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insects1.txt; sourceTree = "<group>"; };
+		13779AF21D1E280F004011FF /* vechiles1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vechiles1.txt; sourceTree = "<group>"; };
 		13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_chime13.mp3; sourceTree = "<group>"; };
 		13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = se_maoudamashii_onepoint33.mp3; sourceTree = "<group>"; };
 		13EBAD231C1ADEF300A3F596 /* Englishoose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Englishoose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +131,8 @@
 				130079EB1C5B064600420CAB /* tuna.png */,
 				130079F81C5B067F00420CAB /* animals1.txt */,
 				13779AEE1D1E207B004011FF /* fruits1.txt */,
+				13779AF01D1E27D9004011FF /* insects1.txt */,
+				13779AF21D1E280F004011FF /* vechiles1.txt */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 				130079F31C5B064600420CAB /* mantis.png in Resources */,
 				13EBAD311C1ADEF300A3F596 /* LaunchScreen.storyboard in Resources */,
 				130079ED1C5B064600420CAB /* bee.png in Resources */,
+				13779AF11D1E27D9004011FF /* insects1.txt in Resources */,
 				130079F61C5B064600420CAB /* tuna.png in Resources */,
 				130079F01C5B064600420CAB /* cow.png in Resources */,
 				130079EF1C5B064600420CAB /* butterfly.png in Resources */,
@@ -311,6 +318,7 @@
 				130079F11C5B064600420CAB /* dragonfly.png in Resources */,
 				13C854F11C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 in Resources */,
 				13EBAD2C1C1ADEF300A3F596 /* Main.storyboard in Resources */,
+				13779AF31D1E280F004011FF /* vechiles1.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
