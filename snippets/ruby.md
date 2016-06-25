@@ -1,5 +1,6 @@
 # Ruby
 
+## mysql2
 ```
 require 'mysql2'
 
@@ -16,6 +17,7 @@ client.query("INSERT INTO t VALUES (10,'C',now())")
 p client.affected_rows
 ```
 
+## date
 ```
 started = Time.now
 elapsed = Time.now - started # second
@@ -35,6 +37,7 @@ dt = Datetime.parse("2001-02-03T04:05:06+07:00")
 dt.strftime("%F %T") # ISO date and time
 ```
 
+## file
 ```
 fh = open("k_marimba.sql","r:cp932")
 fh.each do |line|
@@ -66,6 +69,7 @@ ensure
 end
 ```
 
+## optparse
 ```
 Ruby optparse
 require 'optparse'
@@ -102,7 +106,7 @@ p ARGV
 
 http://ruby-doc.org/stdlib-2.2.3/libdoc/optparse/rdoc/OptionParser.html
 
-Ruby main function
+## main function
 ```
 def main()
   # ..
