@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -24,9 +24,27 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="9Bb-xX-8sj">
+                                <rect key="frame" x="20" y="28" width="560" height="253"/>
+                            </imageView>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="zb1-v5-OFc">
+                                <rect key="frame" x="60" y="534" width="480" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="b6E-Fv-ym5"/>
+                                    <constraint firstAttribute="width" constant="480" id="yPy-Km-dog"/>
+                                </constraints>
+                            </adBannerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drP-Ys-w0x">
-                                <rect key="frame" x="283" y="346" width="34" height="30"/>
-                                <state key="normal" title="Start"/>
+                                <rect key="frame" x="210" y="462" width="180" height="64"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="dc7-DJ-WdK"/>
+                                    <constraint firstAttribute="width" constant="180" id="prF-1d-X56"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="START">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <segue destination="seo-EU-vYh" kind="show" id="ZxB-1V-jT9"/>
                                 </connections>
@@ -34,9 +52,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="drP-Ys-w0x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U9A-oP-5uo"/>
-                            <constraint firstItem="drP-Ys-w0x" firstAttribute="top" secondItem="BBW-2s-zQ9" secondAttribute="bottom" constant="36" id="oDT-oR-39w"/>
+                            <constraint firstItem="BBW-2s-zQ9" firstAttribute="top" secondItem="9Bb-xX-8sj" secondAttribute="bottom" constant="8" id="D0o-hG-tEI"/>
+                            <constraint firstItem="9Bb-xX-8sj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="I5m-Ua-9pL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zb1-v5-OFc" secondAttribute="bottom" id="JgA-No-hec"/>
+                            <constraint firstItem="9Bb-xX-8sj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="PYx-3B-PYy"/>
+                            <constraint firstItem="zb1-v5-OFc" firstAttribute="top" secondItem="drP-Ys-w0x" secondAttribute="bottom" constant="8" id="Qcw-Vo-CfC"/>
+                            <constraint firstItem="zb1-v5-OFc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zni-gW-iYf"/>
+                            <constraint firstItem="9Bb-xX-8sj" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="c2H-5I-nL0"/>
                             <constraint firstItem="BBW-2s-zQ9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="oie-gb-oNV"/>
+                            <constraint firstItem="drP-Ys-w0x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="we5-5N-yVt"/>
                             <constraint firstItem="BBW-2s-zQ9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wnH-Di-3oZ"/>
                         </constraints>
                     </view>
@@ -288,5 +312,6 @@
     </scenes>
     <resources>
         <image name="Image" width="64" height="64"/>
+        <image name="icon" width="180" height="180"/>
     </resources>
 </document>
