@@ -33,3 +33,20 @@ Integer(current_token)
 ```
 Kernel.print
 ```
+
+### 静的なコンストラクタ
+```
+class Foo
+  class << self
+    def setup
+      puts "static init"
+    end
+  end
+  setup
+
+  def initialize
+    puts "instance init"
+  end
+end
+Foo.new
+```
