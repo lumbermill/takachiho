@@ -36,8 +36,12 @@ def parsefile(f,id)
     sql = "INSERT IGNORE INTO tmpr_logs"
     sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,updated_at)"
     sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid},now(),now())"
-    @client.query(sql)
-    n += @client.affected_rows
+    begin
+      @client.query(sql)
+      n += @client.affected_rows
+    rescue => e
+      $stderr.puts e
+    end
   end
   fh.close
   puts "(%d)" % [n]
@@ -125,10 +129,7 @@ def main
     next if d.start_with? "."
     next unless File.directory? DIR+"/"+d
     puts d
-    next unless d == "1_greenhouse"
-    # next unless File.exists? DIR+"/"+d
     parsedir(DIR+"/"+d)
-
   end
 end
 
