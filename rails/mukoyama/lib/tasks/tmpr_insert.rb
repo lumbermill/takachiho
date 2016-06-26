@@ -66,11 +66,13 @@ def parsedir(dir)
     end
     puts "%d files scanned, %d rows added." % [n_files,n_rows]
     insert_daily(nil)
+    insert_monthly(nil)
   elsif OPTS[:daily]
     # Expected to run the first of the day.
     n_rows = parsefile(dir+"/"+files[-2],id)
     yesterday = Date.today - 1
     insert_daily(yesterday)
+    insert_monthly(yesterday) if Date.today.day == 1
   else
     n_rows = parsefile(dir+"/"+files[-1],id)
   end
@@ -98,15 +100,18 @@ def insert_daily(date)
   now(),now()
   FROM tmpr_logs #{where} GROUP BY raspi_id,date(time_stamp);
 EOT
-
   @client.query(daily_sql)
 end
 
 def insert_monthly(date)
-  begin_date = Date.new(date.year,date.month,1) - 1.month
-  end_date = begin_date + 1.month - 1.day
-  where = year_month.nil? ? "" : "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
-  daily_sql = <<EOT
+  if date.nil?
+    where = ""
+  else
+    begin_date = Date.new(date.year,date.month,1) - 1.month
+    end_date = begin_date + 1.month - 1.day
+    where = year_month.nil? ? "" : "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
+  end
+  monthly_sql = <<EOT
   INSERT IGNORE INTO tmpr_monthly_logs
     (raspi_id,`year_month`,
     temperature_average,pressure_average,humidity_average,
@@ -120,8 +125,7 @@ def insert_monthly(date)
   now(),now()
   FROM tmpr_daily_logs #{where} GROUP BY raspi_id,year(time_stamp),month(time_stamp);
 EOT
-
-  @client.query(daily_sql)
+  @client.query(monthly_sql)
 end
 
 def main
