@@ -1,0 +1,12 @@
+apple,banana,carrot,onion
+orange,banana,strawberry,soy
+banana,butter,eggplant,apple
+grape,mango,cherry,carrot
+melon,strawberry,cherry,carrot
+watermelon,pineapple,mashroom,wombat
+strawberry,soy,pumpkin,onion
+pineapple,cherry,grape,banana
+mango,banana,watermelon,grape
+pear,banana,strawberry,raspberry
+cherry,carrot,cucumber,cranberry
+peach,banana,raspberry,pig

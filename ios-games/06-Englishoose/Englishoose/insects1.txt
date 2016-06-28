@@ -6,6 +6,7 @@ ant,butterfly,leopard,weasel
 bee,firefly,grasshopper,goat
 grasshopper,dragonfly,bat,bear
 dragonfly,tuna,weasel,bat
-tuna,bonito,sea bream,salmon
-cow,shrimp,squid,horse
-shrimp,bonito,crab,squid
+spider,
+ladybug,
+mosquito,
+fly,

@@ -1,0 +1,12 @@
+tuna,bonito,sea bream,salmon
+cow,shrimp,squid,horse
+shrimp,bonito,crab,squid
+cat,
+dog,
+monkey,
+mouse,
+wildboar,
+bird,
+snake,
+dear,
+panda,

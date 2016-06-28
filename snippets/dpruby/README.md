@@ -7,7 +7,10 @@ http://www.hyuki.com/dp/
 
 
 ## メモ
+インタフェースは全て決してダックタイピングスタイルに
+実行時まで分からない、でもその方がいい。
 
+attr_accessor
 
 require_relative の方法。
 
@@ -24,4 +27,26 @@ to_iを使うと、数値に変換できない文字列は「0」として扱わ
 
 ```
 Integer(current_token)
+```
+
+### printメソッドを使っている場合
+```
+Kernel.print
+```
+
+### 静的なコンストラクタ
+```
+class Foo
+  class << self
+    def setup
+      puts "static init"
+    end
+  end
+  setup
+
+  def initialize
+    puts "instance init"
+  end
+end
+Foo.new
 ```

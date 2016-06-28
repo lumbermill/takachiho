@@ -16,6 +16,7 @@ end
 desc 'Install to raspberry.'
 task :deploy => [:ping] do
   ip = ENV["IP"]
+  `ssh pi@#{ip} "sudo mkdir -p /opt/bosch-bme280/{bin,etc,logs} && sudo chown -R pi:pi /opt/bosch-bme280"`
   `rsync -avz ./ pi@#{ip}:/opt/bosch-bme280/bin/`
   puts "Move bin/record.conf to etc/ folder to initialize settings."
 end

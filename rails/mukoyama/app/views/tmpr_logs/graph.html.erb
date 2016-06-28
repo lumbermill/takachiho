@@ -4,23 +4,17 @@ Loading..
 <p><small><%= @notice %></small></p>
 
 <div id="chart_daily" class="col-md-12">
-Loading.. #TODO: 日次のグラフ
+Loading..
 </div>
 
 <div id="chart_monthly" class="col-md-12">
-Loading.. #TODO: 月次のグラフ
+Loading..
 </div>
-
-#TODO: 統計情報
 
 <table class="table">
 	<tr>
-		<th>記録開始日</th>
-		<td></td>
-	</tr>
-	<tr>
-		<th>閾値を超えた回数</th>
-		<td></td>
+		<th>データの保持範囲</th>
+		<td><%= @min_timestamp %> to <%= @max_timestamp %></td>
 	</tr>
 </table>
 <script>
@@ -30,7 +24,7 @@ Loading.. #TODO: 月次のグラフ
 						type: 'line'
 				},
 				title: {
-						text: '気温 (°C)',
+						text: '直近7日間の気温 (°C)',
 				},
 				xAxis: {
 						type: 'datetime'
@@ -54,13 +48,58 @@ Loading.. #TODO: 月次のグラフ
 		});
 	});
 
-	$.getJSON('../graph_data.json?unit=day&limit=-30%20day', <%= @p.html_safe %> ,function (data) {
+	$.getJSON('../graph_data.json?unit=day&limit=-70%20day', <%= @p.html_safe %> ,function (data) {
 		$('#chart_daily').highcharts({
 				chart: {
 						type: 'line'
 				},
 				title: {
-						text: '気温 (°C)',
+						text: '日次の気温 (°C)',
+				},
+				xAxis: {
+						type: 'datetime'
+				},
+				yAxis: {
+						title: {
+								text: ''
+						},
+						plotBands: [{
+								from: <%= @min_tmpr %>,
+								to: <%= @max_tmpr %>,
+								color: 'rgba(68, 170, 213, .2)'
+						}]
+				},
+				tooltip: {
+						crosshairs: true,
+						shared: true,
+						valueSuffix: '°C'
+				},
+				legend: {
+				},
+				series: [{
+						name: "平均",
+						data: data["avg"],
+						zIndex: 1
+				},{
+						name: "高低",
+						data: data["minmax"],
+						type: 'arearange',
+						lineWidth: 0,
+						linkedTo: ':previous',
+						color: Highcharts.getOptions().colors[0],
+						fillOpacity: 0.3,
+						zIndex: 0
+				}]
+		});
+	});
+
+	$.getJSON('../graph_data.json?unit=month', <%= @p.html_safe %> ,function (data) {
+		$('#chart_monthly').highcharts({
+				chart: {
+						type: 'line'
+				},
+				title: {
+						text: '月次の気温 (°C)',
 				},
 				xAxis: {
 						type: 'datetime'
