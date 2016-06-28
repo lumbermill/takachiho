@@ -50,3 +50,11 @@ class Foo
 end
 Foo.new
 ```
+
+### TclTk
+```
+sudo apt-get install ruby2.1-tcltk
+```
+
+http://www.tkdocs.com/
+http://ruby-doc.org/stdlib-2.0.0/libdoc/tk/rdoc/TclTk.html
