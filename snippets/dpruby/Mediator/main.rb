@@ -9,7 +9,7 @@ TkGrid.rowconfigure root, 0, weight: 1
 $userid = TkVariable.new; $password = TkVariable.new; $radio = TkVariable.new("Guest")
 guest_radio = Tk::Tile::RadioButton.new(content) {text "Guest"; variable $radio; value "Guest"; command {mediate}}.grid(column: 1, row: 1, sticky: 'w')
 login_radio = Tk::Tile::RadioButton.new(content) {text "Login"; variable $radio; value "Login"; command {mediate}}.grid(column: 2, row: 1, sticky: 'w')
-Tk::Tile::Label.new(content) {text 'Username:'}.grid( :column => 1, :row => 2, :sticky => 'we');
+Tk::Tile::Label.new(content) {text 'Username:'}.grid( :column => 1, :row => 2, :sticky => 'we')
 $userid_entry = Tk::Tile::Entry.new(content) {width 20; textvariable $userid}.grid( :column => 2, :row => 2, :sticky => 'we' )
 Tk::Tile::Label.new(content) {text 'Password:'}.grid( :column => 1, :row => 3, :sticky => 'we');
 $password_entry = Tk::Tile::Entry.new(content) {width 20; textvariable $password; show "*"}.grid( :column => 2, :row => 3, :sticky => 'we' )
