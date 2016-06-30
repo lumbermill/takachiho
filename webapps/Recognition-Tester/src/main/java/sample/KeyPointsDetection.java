@@ -6,26 +6,31 @@ import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.Scalar;
 import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.Features2d;
-import org.opencv.features2d.KeyPoint;
-import org.opencv.highgui.Highgui;
+//import org.opencv.features2d.KeyPoint;
+//import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
+
+//OpenCV3
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.core.KeyPoint;
 
 public class KeyPointsDetection {
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 		// 画像データの読み込み
-		Mat sourceImage = Highgui.imread(resourcePath("tortoise.png"));
+		Mat sourceImage = Imgcodecs.imread(resourcePath("tortoise.png"));
 
 		// 白黒画像データの作成
 		Mat grayImage = new Mat();
 		Imgproc.cvtColor(sourceImage, grayImage, Imgproc.COLOR_BGRA2GRAY);
 
 		// 白黒画像データの描画
-		Highgui.imwrite("gray_tortoise.png", grayImage);
+		Imgcodecs.imwrite("gray_tortoise.png", grayImage);
 
 		// キーポイント検出器の初期化
-		FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SIFT);
+//		FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SIFT);
+		FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.AKAZE);
 
 		// キーポイント検出
 		MatOfKeyPoint keyPoints = new MatOfKeyPoint();
@@ -42,7 +47,6 @@ public class KeyPointsDetection {
 		Mat output = new Mat();
 		Features2d.drawKeypoints(sourceImage, keyPoints, output,
 			new Scalar(0.0, 0.0, 255.0), 4);
-		Highgui.imwrite("keypoints.png", output);
 	}
 
 	private static String resourcePath(String name) {

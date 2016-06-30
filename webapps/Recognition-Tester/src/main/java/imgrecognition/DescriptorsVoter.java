@@ -10,12 +10,15 @@ import java.util.Map.Entry;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDMatch;
-import org.opencv.features2d.DMatch;
+//import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorMatcher;
 
+//OpenCV3
+import org.opencv.core.DMatch;
+
 public class DescriptorsVoter {
-	// FLANNアルゴリズムによる特徴量のマッチングを行うインスタンス
-	private final DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.FLANNBASED);
+	// FLANNアルゴリズムはAKAZEで抽出した特徴量には使えないので別のアルゴリズムでマッチングする
+	private final DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMING);
 
 	// Resultを得点の高いものから降順にソートするためのComparator
 	private final Comparator<Result> comparator = new Comparator<Result>() {
