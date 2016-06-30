@@ -1,0 +1,7 @@
+%YAML:1.0
+name: "Feature2D.SIFT"
+contrastThreshold: 0.04
+edgeThreshold: 10.0
+nFeatures: 0
+nOctaveLayers: 3
+sigma: 1.6
