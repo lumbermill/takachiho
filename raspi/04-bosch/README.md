@@ -4,8 +4,8 @@
 $ sudo rpi-update
 $ sudo raspi-config Enable I2C
 
-$ sudo vi /etc/modules
-# 下記を追加
+$ cat /etc/modules
+# 下記が書いてあることを確認する。書いてなければ追加
 i2c-dev
 
 $ sudo apt-get install python-smbus
@@ -26,14 +26,6 @@ $ sudo python bme280_sample.py
 temp : 26.84  ℃
 pressure :  974.36 hPa
 hum :  72.45 ％
-```
-
-プログラムをセットアップします。
-下記を実行し、ディレクトリを作っておきます。
-
-```
-$ sudo mkdir -p /opt/bosch-bme280/{bin,etc,logs}
-$ sudo chown -R pi:pi /opt/bosch-bme280
 ```
 
 rsyncでraspiにプログラムを送信します。  

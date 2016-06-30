@@ -5,4 +5,4 @@ mkdir -p logs/$ID || exit 3
 echo "$ID -> $DST"
 sudo i2cdetect -y 1
 sudo python bin/bosch-bme280.py >> logs/$ID/$(date +%y%m%d).log
-rsync -avz logs/ $DST:$PROJECT_PATH
+rsync -avz logs/$ID/ $DST:/opt/bme280logs/$ID/

@@ -75,6 +75,19 @@ class TmprLogsController < ApplicationController
         @data[:avg] += [[ts,row[src+"_average"]]]
         @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
       end
+    elsif unit == "month" # 1month
+        @data = {avg: [], minmax: []}
+        # limit param doesn't work here.
+        ym = (Date.today - 360.days).strftime("%Y%m").to_i
+        sql = "raspi_id = #{raspi_id} AND `year_month` > #{ym}"
+        results = TmprMonthlyLog.where(sql).order(:year_month)
+        results.each do |row|
+          y = row["year_month"] / 100
+          m = row["year_month"] - y * 100
+          ts = Time.new(y,m,1).to_i * 1000
+          @data[:avg] += [[ts,row[src+"_average"]]]
+          @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
+        end
     else # 10min
       @data = []
       results = TmprLog.where("raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
@@ -93,7 +106,8 @@ class TmprLogsController < ApplicationController
     setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     @min_tmpr = setting.min_tmpr
     @max_tmpr = setting.max_tmpr
-    @notice = '直近7日間のデータを表示しています。'
+    @min_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).minimum(:time_stamp)
+    @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
   end
 
   private

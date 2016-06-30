@@ -33,3 +33,28 @@ Integer(current_token)
 ```
 Kernel.print
 ```
+
+### 静的なコンストラクタ
+```
+class Foo
+  class << self
+    def setup
+      puts "static init"
+    end
+  end
+  setup
+
+  def initialize
+    puts "instance init"
+  end
+end
+Foo.new
+```
+
+### TclTk
+```
+sudo apt-get install ruby2.1-tcltk
+```
+
+http://www.tkdocs.com/
+http://ruby-doc.org/stdlib-2.0.0/libdoc/tk/rdoc/TclTk.html
