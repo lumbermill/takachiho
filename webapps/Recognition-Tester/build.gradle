@@ -2,11 +2,14 @@ apply {
   plugin 'java'
   plugin 'maven'
   plugin 'eclipse'
+  plugin 'application'
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options*.encoding = 'UTF-8'  
+mainClassName = "server.ImageRecognitionServer"
+applicationDefaultJvmArgs = ["-Djava.library.path=./libs/"]
 
 repositories {
   mavenCentral()
