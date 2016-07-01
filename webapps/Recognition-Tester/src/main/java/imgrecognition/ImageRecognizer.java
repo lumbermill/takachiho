@@ -31,10 +31,18 @@ public class ImageRecognizer {
 	private List<TrainData> loadTrainData(Path trainImageRoot) throws IOException {
 		List<TrainData> trainData = new ArrayList<TrainData>();
 		for (Path labelDir : Files.newDirectoryStream(trainImageRoot)) {
+			if (!labelDir.toFile().isDirectory()) {
+				continue;
+			}
 			String label = labelDir.getFileName().toString();
 			for (Path imagePath : Files.newDirectoryStream(labelDir)) {
-				Mat features = featureExtractor.extract(imagePath);
-				trainData.add(new TrainData(label, features));
+				try {
+					Mat features = featureExtractor.extract(imagePath);
+					trainData.add(new TrainData(label, features));
+				} catch(org.opencv.core.CvException e) {
+					System.out.println(e);
+					continue;
+				}
 			}
 		}
 		return trainData;
