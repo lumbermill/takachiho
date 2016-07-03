@@ -116,3 +116,11 @@ if __FILE__ == $0
   main()
 end
 ```
+
+## json
+```
+require 'json'
+
+my_hash = JSON.parse('{"hello": "goodbye"}')
+puts my_hash["hello"] => "goodbye"
+```
