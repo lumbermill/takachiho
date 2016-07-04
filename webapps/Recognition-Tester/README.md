@@ -20,26 +20,8 @@ http://gihyo.jp/magazine/wdpress/archive/2014/vol83/support
 $ brew opencv3 --with-java
 ```
 
-#### Linux (CentOS7)
+#### Linux (Ubuntu)
 ```
-# Java1.8 インストール
-$ sudo yum install java-1.8.0-openjdk-devel
-
-# OpenCV3.1インストール
-$ sudo yum install cmake
-$ sudo yum install gcc gcc-c++
-$ wget https://github.com/Itseez/opencv/archive/3.1.0.zip
-$ unzip 3.1.0.zip
-$ cd opencv-3.1.0
-$ mkdir release
-$ cd release
-$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
-
-# 8080ポートを開放
-$ sudo firewall-cmd --add-port=8080/tcp
-
-#開いているポートを確認(結果は割愛)
-$ firewall-cmd --list-ports --zone=public 
 ```
 - OpenCV3.1のインストール手順は以下を参考にしました。
  - https://blog.kevin-brown.com/programming/2014/09/27/building-and-installing-opencv-3.html
