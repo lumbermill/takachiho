@@ -72,5 +72,13 @@ $ cp -a /path/to/label-image/* webapp/label-image/data/train-image/ #ラベル�
 
 ### サーバ起動
 プログラムが配置されたディレクトリ（build.gradleのあるディレクトリ）で
-``` $ ./gradlew run& ``` すると
-自動的にソースコードがコンパイルされ、httpサーバがポート番号8080で起動します。
+以下のコマンドを実行すると自動的にソースコードがコンパイルされ、httpサーバがポート番号8080で起動します。
+```
+$ ./gradlew run&
+```
+
+ログアウトするとプロセス終了してしまう場合は
+```
+$ nohup ./gradlew run$
+```
+として下さい。
