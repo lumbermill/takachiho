@@ -54,10 +54,14 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
                 print("不正解〜！！")
             }
         }
-        // TODO: まる、ばつの画像をオーバラップする
-        // TODO: 画面をタップしたら次の問題へ
     }
     
+    func loadDrill(drill: Drill) {
+        data = drill.options
+        shuffle(&data)
+    }
+    
+    // 旧版で使っていたメソッド、もう使いません。
     func loadQuestions(name: String){
         if let path = NSBundle.mainBundle().pathForResource(name, ofType: "txt") {
             data = [Array<String>]()
@@ -94,11 +98,7 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
         ansImageView.image = nil
         let row = data[i]
         answer = row[0]
-        if let path = NSBundle.mainBundle().pathForResource(answer, ofType: "png") {
-            imageView.image = UIImage(contentsOfFile: path)
-        }else{
-            print("image not found")
-        }
+        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+answer+".png")
         
         var idx = [0,1,2,3]
         shuffle(&idx)
@@ -134,10 +134,6 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadQuestions("animals1")
-        
-        loadQuestion(ans_count)
-        
         sound_correct = createSoundPlayer("se_maoudamashii_chime13") // correct
         sound_wrong = createSoundPlayer("se_maoudamashii_onepoint33") // wrong
     }
@@ -146,6 +142,7 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
         super.viewDidAppear(animated)
         
         start_time = NSDate.timeIntervalSinceReferenceDate()
+        loadQuestion(ans_count)
     }
     
     override func didReceiveMemoryWarning() {

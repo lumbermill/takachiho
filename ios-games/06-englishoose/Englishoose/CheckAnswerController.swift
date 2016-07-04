@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import iAd
 
-class CheckAnswerController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate{
+class CheckAnswerController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,ADBannerViewDelegate{
     @IBOutlet weak var ans_count: UILabel!
     @IBOutlet weak var time_label: UILabel!
     
@@ -33,17 +34,13 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
         let testCell:UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
         let imageView = testCell.contentView.viewWithTag(1) as! UIImageView
         let ansImageView = testCell.contentView.viewWithTag(2) as! UIImageView
-        if let path = NSBundle.mainBundle().pathForResource(data[indexPath.row][0], ofType: "png") {
-            imageView.image = UIImage(contentsOfFile: path)
-            if ans_data[indexPath.row]{
-                print("true")
-                ansImageView.image = UIImage(named: "true.png")
-            }else{
-                print("false")
-                ansImageView.image = UIImage(named: "false.png")
-            }
+        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+data[indexPath.row][0]+".png")
+        if ans_data[indexPath.row]{
+            print("true")
+            ansImageView.image = UIImage(named: "true.png")
         }else{
-            print("image not found")
+            print("false")
+            ansImageView.image = UIImage(named: "false.png")
         }
         return testCell
     }
@@ -54,6 +51,10 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        print(error)
     }
     
 }
