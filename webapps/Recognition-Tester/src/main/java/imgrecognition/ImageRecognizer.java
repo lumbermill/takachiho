@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
 
 public class ImageRecognizer {
 	private final FeatureExtractor featureExtractor = new FeatureExtractor();
@@ -23,8 +22,8 @@ public class ImageRecognizer {
 	}
 
 	public List<Result> recognize(Path queryImagePath) {
-		Mat queryFeatures = featureExtractor.extract(queryImagePath);
-		return voter.vote(queryFeatures, trainData);
+		Feature queryFeatures = featureExtractor.extract(queryImagePath);
+		return voter.vote(queryFeatures.descriptors, trainData);
 	}
 
 	// 登録された訓練画像を読み込み、特徴量を抽出する
@@ -37,8 +36,8 @@ public class ImageRecognizer {
 			String label = labelDir.getFileName().toString();
 			for (Path imagePath : Files.newDirectoryStream(labelDir)) {
 				try {
-					Mat features = featureExtractor.extract(imagePath);
-					trainData.add(new TrainData(label, features));
+					Feature features = featureExtractor.extract(imagePath);
+					trainData.add(new TrainData(label, features.descriptors));
 				} catch(org.opencv.core.CvException e) {
 					System.out.println(e);
 					continue;

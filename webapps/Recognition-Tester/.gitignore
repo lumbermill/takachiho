@@ -1,6 +1,7 @@
 data/query-image/*
 data/train-image/*
 webapp/label-image/*
+libs/*
 .*
 build
 bin

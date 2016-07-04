@@ -24,7 +24,7 @@ public class FeatureExtractor {
 //		descriptorExtractor.read(configPath);//configは後で検討
 	}
 
-	public Mat extract(Path imagePath) {
+	public Feature extract(Path imagePath) {
 		// 画像データの読み込み
 		Mat image = Imgcodecs.imread(imagePath.toString());
 
@@ -39,6 +39,6 @@ public class FeatureExtractor {
 		// 特徴量記述
 		Mat descriptors = new Mat();
 		descriptorExtractor.compute(grayImage, keyPoints, descriptors);
-		return descriptors;
+		return new Feature(image,grayImage,keyPoints,descriptors);
 	}
 }

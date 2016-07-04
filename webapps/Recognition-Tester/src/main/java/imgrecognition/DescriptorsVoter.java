@@ -17,7 +17,7 @@ import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.core.DMatch;
 
 public class DescriptorsVoter {
-	// FLANNアルゴリズムはAKAZEで抽出した特徴量には使えないので別のアルゴリズムでマッチングする
+	// FLANNアルゴリズムはSIFT以外で上手く動作しなかったので別のアルゴリズムでマッチングする
 	private final DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMING);
 
 	// Resultを得点の高いものから降順にソートするためのComparator
