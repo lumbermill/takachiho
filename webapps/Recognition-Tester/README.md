@@ -1,4 +1,3 @@
-(この文書は書きかけです。情報が不完全ですので参考にしないで下さい。)
 # Recognition-Tester
 ## このプログラムについて
 このプログラムは 「WEB+DB PRESS Vol83」の特集記事「[実践]画像認識」のサンプルコードをベースとした画像認識システムです。
@@ -22,22 +21,54 @@ $ brew opencv3 --with-java
 
 #### Linux (Ubuntu)
 ```
-```
-- OpenCV3.1のインストール手順は以下を参考にしました。
- - https://blog.kevin-brown.com/programming/2014/09/27/building-and-installing-opencv-3.html
+$ sudo apt-get update
 
-### ソースコードをcron
+# Javaインストール
+$ sudo apt-get install default-jdk
+$ sudo apt-get install ant
+
+# OpenCV3.1インストール
+$ sudo apt-get install build-essential
+$ sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+$ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+$ sudo apt-get install unzip
+
+$ mkdir ~/src
+$ cd  ~/src
+$ wget https://github.com/Itseez/opencv/archive/3.1.0.zip
+$ unzip 3.1.0.zip
+$ cd opencv-3.1.0/
+$ mkdir release
+$ cd release
+$ export JAVA_HOME=/usr/lib/jvm/default-java/
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+$ make
+$ sudo make install
+```
+
+### ソースコードをclone
+```
+$ git clone https://github.com/lumbermill/takachiho.git
+$ cd takachiho/webapps/Recognition-Tester # ここがシステムディレクトリになります
+```
 
 ### OpenCVライブラリをシステムディレクトリにコピー
 #### Mac
 ```
-$ cd /path/to/Recognition-Tester
-$ cp /usr/local/Cellar/opencv3/3.1.0_3/share/OpenCV/java/libopencv_java310.so ./libs/
-$ cp /usr/local/Cellar/opencv3/3.1.0_3/share/OpenCV/java/opencv-310.jar ./libs/
+$ cp /usr/local/Cellar/opencv3/3.1.0_3/share/OpenCV/* ./libs/
 $ mv ./libs/libopencv_java310.so ./libs/libopencv_java310.dylib
 ```
 
-#### Linux (CentOS7)
+#### Linux (Ubuntu)
+```
+$ cp /usr/local/share/OpenCV/java/* libs/
+```
+
+### 訓練画像とラベル画像を配置
+```
+$ cp -a /path/to/train-image/* data/train-image/ #訓練画像を配置
+$ cp -a /path/to/label-image/* webapp/label-image/data/train-image/ #ラベル画像を配置
+```
 
 ### サーバ起動
 プログラムが配置されたディレクトリ（build.gradleのあるディレクトリ）で
