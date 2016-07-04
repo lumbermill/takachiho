@@ -79,6 +79,6 @@ $ ./gradlew run&
 
 ログアウトするとプロセス終了してしまう場合は
 ```
-$ nohup ./gradlew run$
+$ nohup ./gradlew run&
 ```
 として下さい。
