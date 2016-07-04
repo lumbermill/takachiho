@@ -55,7 +55,7 @@ $ cd takachiho/webapps/Recognition-Tester # ここがシステムディレクト
 ### OpenCVライブラリをシステムディレクトリにコピー
 #### Mac
 ```
-$ cp /usr/local/Cellar/opencv3/3.1.0_3/share/OpenCV/* ./libs/
+$ cp /usr/local/Cellar/opencv3/3.1.0_3/share/OpenCV/java/* ./libs/
 $ mv ./libs/libopencv_java310.so ./libs/libopencv_java310.dylib
 ```
 
