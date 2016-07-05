@@ -50,11 +50,52 @@
                     <connections>
                         <outlet property="btnCamera" destination="uKe-gW-MAX" id="V0p-u5-cuI"/>
                         <outlet property="lblInfo" destination="EAb-jF-Sgv" id="TdN-PL-wPk"/>
+                        <segue destination="Z2D-YV-0k1" kind="show" identifier="showResult" id="9bq-Cm-F9J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="375" y="325"/>
+        </scene>
+        <!--Result Table View Controller-->
+        <scene sceneID="BkD-IC-04l">
+            <objects>
+                <tableViewController id="Z2D-YV-0k1" customClass="ResultTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="qHu-eP-hX4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableHeaderView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="adC-lx-kCh">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem title="閉じる" id="kah-5F-JGE">
+                                    <connections>
+                                        <segue destination="sbo-C6-oms" kind="unwind" unwindAction="back:" id="AT8-nN-QZM"/>
+                                    </connections>
+                                </barButtonItem>
+                            </items>
+                        </toolbar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="qbR-WV-dzS">
+                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qbR-WV-dzS" id="WpY-Ql-rQn">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Z2D-YV-0k1" id="DcS-sG-CM6"/>
+                            <outlet property="delegate" destination="Z2D-YV-0k1" id="FCD-JL-6g2"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ytY-26-TGw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="sbo-C6-oms" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1087" y="586"/>
         </scene>
     </scenes>
 </document>

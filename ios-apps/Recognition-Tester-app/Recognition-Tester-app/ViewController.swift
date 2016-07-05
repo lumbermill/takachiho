@@ -27,6 +27,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         cameraStart(self)
     }
     
+    @IBAction func back(segue:UIStoryboardSegue){//戻るボタン用
+        print("back")
+    }
+    
     func cameraStart(sender: AnyObject) {
         let sourceType:UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.Camera
         // カメラが利用可能かチェック
@@ -60,6 +64,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 if (!api.error) {
                     self.lblInfo.text = "APIからデータを取得しました。結果を表示します。"
                     // 結果一覧画面へ
+                    self.performSegueWithIdentifier("showResult", sender: self)
                 } else {
                     self.lblInfo.text = "APIへの問い合わせでエラーが発生しました。"
                 }
