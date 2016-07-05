@@ -57,8 +57,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 // 問い合わせ終了後
                 self.btnCamera.enabled = true
                 print(api.result)
-                if (api.error) {
-                // 結果一覧画面へ
+                if (!api.error) {
+                    self.lblInfo.text = "APIからデータを取得しました。結果を表示します。"
+                    // 結果一覧画面へ
                 } else {
                     self.lblInfo.text = "APIへの問い合わせでエラーが発生しました。"
                 }

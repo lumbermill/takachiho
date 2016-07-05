@@ -28,29 +28,13 @@ class RecognitionAPI {
             upload_image_size = image.size
         }
 
-        let request = createRequest(url)
-        self.sendRequest(request, imagedata: imagedata!,
-                         callback: {
-                            data,responce,error in
-                            callback(data: data,response: responce, error: error)
-        })
-    }
-
-    func createRequest(url:String)->NSMutableURLRequest {
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        request.HTTPMethod = "POST"
-        request.addValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        return request
-    }
-
-    func sendRequest(request:NSMutableURLRequest, imagedata:NSData, callback:(data:NSData?, response:NSURLResponse?, error:NSError?)->()) {
+        let request = createRequest(imagedata!)
         let start_time = NSDate()
         let session = NSURLSession.sharedSession()
-        let task = session.uploadTaskWithRequest(request, fromData: imagedata, completionHandler: {
+        let task = session.dataTaskWithRequest(request, completionHandler: {
             data, response, error -> Void in
             let response_time = abs(Float(start_time.timeIntervalSinceNow))
             self.result = "Response Time:" + String.init(response_time) + "s\n"
-            callback(data: data,response: response, error: error)
             if (data != nil && error == nil) {
                 do {
                     self.result_dict = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
@@ -58,6 +42,9 @@ class RecognitionAPI {
                     self.error = false
                 } catch {
                     self.result += "API JSON Parse Error.\n" + String.init(data: data!, encoding: NSUTF8StringEncoding)!
+                    if (response != nil) {
+                        self.result += "\n" + response!.description
+                    }
                     self.error = true
                 }
                 NSLog("API:%@",String.init(data: data!, encoding: NSUTF8StringEncoding)!)
@@ -66,8 +53,37 @@ class RecognitionAPI {
                 self.result += "API Error." + error!.localizedDescription
                 self.error = true
             }
+            callback(data: data,response: response, error: error)
         })
         task.resume()
+    }
+
+    func createRequest(image:NSData)->NSMutableURLRequest {
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = "POST"
+
+        let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
+        let body: NSMutableData = NSMutableData()
+        var postData :String = String()
+        let boundary:String = "---------------------------\(uniqueId)"
+        
+        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type") //(1)
+        
+        postData += "--\(boundary)\r\n"
+        
+        postData += "Content-Disposition: form-data; name=\"images_file\"; filename=\"test.jpg\"\r\n" //(2)
+        postData += "Content-Type: image/jpeg\r\n\r\n"
+        body.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+        body.appendData(image)
+        
+        postData = String()
+        postData += "\r\n"
+        postData += "\r\n--\(boundary)--\r\n"
+        
+        body.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!) //(3)
+        
+        request.HTTPBody = NSData(data:body)
+        return request
     }
 }
 
