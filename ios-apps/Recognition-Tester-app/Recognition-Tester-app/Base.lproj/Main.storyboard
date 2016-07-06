@@ -31,6 +31,11 @@
                                             <action selector="pushCameraButton:" destination="BYZ-38-t0r" id="f7N-CR-1Vz"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Next" id="f8d-r7-ZEg">
+                                        <connections>
+                                            <action selector="pushButtonNext:" destination="BYZ-38-t0r" id="Hpv-H4-km8"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -49,6 +54,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="btnCamera" destination="uKe-gW-MAX" id="V0p-u5-cuI"/>
+                        <outlet property="btnNext" destination="f8d-r7-ZEg" id="a6C-Dz-Tza"/>
                         <outlet property="lblInfo" destination="EAb-jF-Sgv" id="TdN-PL-wPk"/>
                         <segue destination="Z2D-YV-0k1" kind="show" identifier="showResult" id="9bq-Cm-F9J"/>
                     </connections>

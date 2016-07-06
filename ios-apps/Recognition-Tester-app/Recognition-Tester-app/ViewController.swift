@@ -12,12 +12,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var lblInfo: UILabel!
     @IBOutlet weak var btnCamera: UIBarButtonItem!
+    
+    @IBOutlet weak var btnNext: UIBarButtonItem! //デバッグ用
+    
+    
     var api: RecognitionAPI?
     var queryImage: UIImage?
+    let debug = true // for debug
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        // for debug
+        if (debug) {
+            btnNext.title = "Next"
+        } else {
+            btnNext.title = ""
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -27,6 +40,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func pushCameraButton(sender: AnyObject) {
         cameraStart(self)
+    }
+    
+    // for debug
+    @IBAction func pushButtonNext(sender: AnyObject) {
+        queryImage = UIImage(named: "debug.jpg")
+        api = RecognitionAPI()
+        api?.result_dict = [
+            "results":[
+                ["label":"Juice","labelImgSrc":"1.jpg","score":"100"],
+                ["label":"riquer","labelImgSrc":"2.jpg","score":"200"],
+                ["label":"soy source","labelImgSrc":"3.jpg","score":"300"],
+                ["label":"water","labelImgSrc":"4.jpg","score":"400"],
+            ],
+            "time":500
+        ]
+        self.performSegueWithIdentifier("showResult", sender: self)
     }
     
     @IBAction func back(segue:UIStoryboardSegue){//戻るボタン用
