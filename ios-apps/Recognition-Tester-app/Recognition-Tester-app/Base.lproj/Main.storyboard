@@ -60,7 +60,7 @@
         <!--Result Table View Controller-->
         <scene sceneID="BkD-IC-04l">
             <objects>
-                <tableViewController id="Z2D-YV-0k1" customClass="ResultTableViewController" sceneMemberID="viewController">
+                <tableViewController id="Z2D-YV-0k1" customClass="ResultTableViewController" customModule="Recognition_Tester_app" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="qHu-eP-hX4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

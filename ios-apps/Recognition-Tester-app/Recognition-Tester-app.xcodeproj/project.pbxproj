@@ -62,8 +62,8 @@
 			children = (
 				E7B9C5051D2B3A3100F7B5D0 /* AppDelegate.swift */,
 				E7B9C5071D2B3A3100F7B5D0 /* ViewController.swift */,
-				E7B5DB881D2B4C100087C0FF /* RecognitionAPI.swift */,
 				E7B5DB8A1D2B83870087C0FF /* ResultTableViewController.swift */,
+				E7B5DB881D2B4C100087C0FF /* RecognitionAPI.swift */,
 				E7B9C5091D2B3A3100F7B5D0 /* Main.storyboard */,
 				E7B9C50F1D2B3A3100F7B5D0 /* Assets.xcassets */,
 				E7B9C5111D2B3A3100F7B5D0 /* LaunchScreen.storyboard */,

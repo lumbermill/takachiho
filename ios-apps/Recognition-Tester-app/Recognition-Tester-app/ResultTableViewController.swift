@@ -10,5 +10,11 @@ import Foundation
 import UIKit
 
 class ResultTableViewController: UITableViewController{
+    var query_image = UIImage()
+    var api_result_dict: NSDictionary = [:]
     
+    override func viewDidLoad() {
+        print(query_image)
+        print(api_result_dict)
+    }
 }
