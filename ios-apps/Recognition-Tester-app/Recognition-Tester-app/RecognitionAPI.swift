@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 class RecognitionAPI {
-    let url = "http://153.120.93.203:8080/Upload"
+    static let apiHost = "http://153.120.93.203:8080"
+    let url = "\(apiHost)/Upload"
     var result = ""
     var result_dict = NSDictionary()
     var upload_image_size = CGSize()

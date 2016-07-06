@@ -67,11 +67,19 @@ class ResultTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     /*
+     行の高さを返す
+     */
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50
+    }
+    
+    /*
      Cellに値を設定する.
      */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ResultCell", forIndexPath: indexPath) 
         cell.imageView?.image = nil
+        cell.textLabel?.numberOfLines = 0
         if indexPath.section == 0 {
             cell.textLabel?.text = "\(queryImageRows[indexPath.row])"
             cell.imageView?.image = query_image
@@ -79,8 +87,28 @@ class ResultTableViewController: UIViewController, UITableViewDelegate, UITableV
             let label = results[indexPath.row]["label"] as! String!
             let score = "\(results[indexPath.row]["score"] as! NSNumber!)"
             cell.textLabel?.text = "ラベル：\(label)\nスコア：\(score)"
-//            cell.imageView?.image = results[indexPath.row]["labelImgSrc"]
+            let imagePath = results[indexPath.row]["labelImgSrc"] as! String
+            let url = imageURL(imagePath)
+            cell.imageView?.image = imageFromURL(url)
         }
         return cell
     }
+
+    func imageURL(path:String)->String {
+        return RecognitionAPI.apiHost + path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+    }
+    
+    func imageFromURL( url:String)->UIImage? {
+        //NSLog(@"req=%@",url);
+        let imageURL = NSURL(string: url)
+        let imageData = NSData(contentsOfURL: imageURL!)
+        if (imageData == nil){
+            //NSLog(@"%@",error);
+            return nil;
+        }
+        let image = UIImage(data:imageData!);
+        //NSLog(@"res=%@",image);
+        return image;
+    }
+
 }
