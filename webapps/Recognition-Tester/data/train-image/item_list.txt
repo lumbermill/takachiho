@@ -1,0 +1,6 @@
+1,DummyJANCODE_1,C.C.レモン
+2,DummyJANCODE_2,Gokuriグレープフルーツ
+3,DummyJANCODE_3,オランジーナ
+4,DummyJANCODE_4,ボス贅沢微糖
+5,DummyJANCODE_5,サントリーウーロン茶
+6,DummyJANCODE_6,ボス無糖ブラック
