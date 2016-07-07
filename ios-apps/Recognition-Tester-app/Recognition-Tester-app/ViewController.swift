@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var api: RecognitionAPI?
     var queryImage: UIImage?
-    let debug = true // for debug
+    let debug = false // for debug
     
     override func viewDidLoad() {
         super.viewDidLoad()
