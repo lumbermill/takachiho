@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var api: RecognitionAPI?
     var queryImage: UIImage?
-    let debug = true // for debug
+    let debug = false // for debug
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // for debug
         if (debug) {
             btnNext.title = "Next"
+            btnNext.enabled = true
         } else {
             btnNext.title = ""
-            
+            btnNext.enabled = false
         }
     }
     
@@ -52,6 +53,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 ["label":"riquer","labelImgSrc":"/label-image/Gokuriグレープフルーツ.jpg","score":200],
                 ["label":"soy source","labelImgSrc":"/label-image/サントリーウーロン茶.jpg","score":300],
                 ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["label":"長ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーい商品名","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
             ],
             "time":500
         ]
@@ -121,7 +135,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let next_vc = segue.destinationViewController as! ResultTableViewController
         next_vc.api_result_dict = api!.result_dict
         next_vc.query_image = queryImage!
-    }
-    
+    }    
 }
 
