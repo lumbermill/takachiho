@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var api: RecognitionAPI?
     var queryImage: UIImage?
-    let debug = false // for debug
+    let debug = true // for debug
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,23 +49,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         api = RecognitionAPI()
         api?.result_dict = [
             "results":[
-                ["label":"Juice","labelImgSrc":"/label-image/オランジーナ.jpg","score":100],
-                ["label":"riquer","labelImgSrc":"/label-image/Gokuriグレープフルーツ.jpg","score":200],
-                ["label":"soy source","labelImgSrc":"/label-image/サントリーウーロン茶.jpg","score":300],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"water","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
-                ["label":"長ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーい商品名","labelImgSrc":"/label-image/ボス贅沢微糖.jpg","score":400],
+                ["id":"1", "jan":"1234567890123","label":"Juice",     "labelImgSrc":"/label-image/1.jpg","score":100],
+                ["id":"2", "jan":"1234567890123","label":"riquer",    "labelImgSrc":"/label-image/2.jpg","score":200],
+                ["id":"3", "jan":"1234567890123","label":"soy source","labelImgSrc":"/label-image/3.jpg","score":300],
+                ["id":"4", "jan":"1234567890123","label":"water1",     "labelImgSrc":"/label-image/4.jpg","score":400],
+                ["id":"5", "jan":"1234567890123","label":"water2",     "labelImgSrc":"/label-image/5.jpg","score":400],
+                ["id":"6", "jan":"1234567890123","label":"water3",     "labelImgSrc":"/label-image/6.jpg","score":400],
+                ["id":"8", "jan":"1234567890123","label":"water4",     "labelImgSrc":"/label-image/7.jpg","score":400],
+                ["id":"9", "jan":"1234567890123","label":"water5",     "labelImgSrc":"/label-image/8.jpg","score":400],
+                ["id":"10","jan":"1234567890123","label":"water6",     "labelImgSrc":"/label-image/9.jpg","score":400],
+                ["id":"11","jan":"1234567890123","label":"water7",     "labelImgSrc":"/label-image/10.jpg","score":400],
+                ["id":"12","jan":"1234567890123","label":"water8",     "labelImgSrc":"/label-image/11.jpg","score":400],
+                ["id":"13","jan":"1234567890123","label":"water9",     "labelImgSrc":"/label-image/12.jpg","score":400],
+                ["id":"14","jan":"1234567890123","label":"water10",     "labelImgSrc":"/label-image/13.jpg","score":400],
+                ["id":"15","jan":"1234567890123","label":"water11",     "labelImgSrc":"/label-image/14.jpg","score":400],
+                ["id":"16","jan":"1234567890123","label":"water12",     "labelImgSrc":"/label-image/15.jpg","score":400],
+                ["id":"17","jan":"1234567890123","label":"water13",     "labelImgSrc":"/label-image/16.jpg","score":400],
+                ["id":"18","jan":"1234567890123","label":"長ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーい商品名","labelImgSrc":"/label-image/17.jpg","score":400],
             ],
             "time":500
         ]

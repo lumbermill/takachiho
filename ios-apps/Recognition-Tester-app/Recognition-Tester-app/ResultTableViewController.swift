@@ -63,7 +63,9 @@ class ResultTableViewController: UIViewController, UITableViewDelegate, UITableV
             print("Value: \(results[indexPath.row])")
             let label = results[indexPath.row]["label"] as! String!
             let score = "\(results[indexPath.row]["score"] as! NSNumber!)"
-            current_text = "\(label)\nスコア：\(score)"
+            let jan  = results[indexPath.row]["jan"] as! String!
+            let id  = results[indexPath.row]["id"] as! String!
+            current_text = "\(label)\nスコア：\(score), JAN：\(jan), ID：\(id)"
             let imagePath = results[indexPath.row]["labelImgSrc"] as! String
             let url = imageURL(imagePath)
             current_image = imageFromURL(url)!
@@ -104,8 +106,10 @@ class ResultTableViewController: UIViewController, UITableViewDelegate, UITableV
         } else if indexPath.section == 1 {
             let label = results[indexPath.row]["label"] as! String!
             let score = "\(results[indexPath.row]["score"] as! NSNumber!)"
+            let jan  = results[indexPath.row]["jan"] as! String!
+            let id  = results[indexPath.row]["id"] as! String!
             cell.textLabel?.text = label
-            cell.detailTextLabel!.text = "スコア：\(score)"
+            cell.detailTextLabel!.text =  "スコア：\(score), JAN：\(jan), ID：\(id)"
             let imagePath = results[indexPath.row]["labelImgSrc"] as! String
             let url = imageURL(imagePath)
             cell.imageView?.image = imageFromURL(url)
