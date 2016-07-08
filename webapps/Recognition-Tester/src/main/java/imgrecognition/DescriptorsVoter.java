@@ -42,8 +42,8 @@ public class DescriptorsVoter {
 		Map<String, Integer> scores = new HashMap<String, Integer>();
 		// 各ラベルで距離が一番小さいとされた回数をカウント
 		for (Match match : matches.values()) {
-			int oldScore = scores.containsKey(match.label) ? scores.get(match.label) : 0;
-			scores.put(match.label, oldScore + 1);
+			int oldScore = scores.containsKey(match.id) ? scores.get(match.id) : 0;
+			scores.put(match.id, oldScore + 1);
 		}
 
 		// scoresをList<Result>へ変換
@@ -63,7 +63,7 @@ public class DescriptorsVoter {
 		matcher.match(queryDescriptors, trainData.descriptors, dMatches);
 		List<Match> result = new ArrayList<Match>();
 		for (DMatch dMatch : dMatches.toArray()) {
-			result.add(new Match(trainData.label, dMatch));
+			result.add(new Match(trainData.id, dMatch));
 		}
 		return result;
 	}
@@ -78,12 +78,12 @@ public class DescriptorsVoter {
 
 	// 質問画像の特徴量とマッチングした訓練画像（ラベル）の特徴量の距離を格納するためのクラス
 	private static class Match {
-		public final String label;
+		public final String id;
 		public final int queryIndex;
 		public final double distance;
 
-		public Match(String label, DMatch match) {
-			this.label = label;
+		public Match(String id, DMatch match) {
+			this.id = id;
 			queryIndex = match.queryIdx;
 			distance = match.distance;
 		}

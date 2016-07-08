@@ -5,14 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.opencv.core.Core;
 
 public class ImageRecognizer {
 	private final FeatureExtractor featureExtractor = new FeatureExtractor();
 	private final DescriptorsVoter voter = new DescriptorsVoter();
 	private final List<TrainData> trainData;
-
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
@@ -29,15 +27,15 @@ public class ImageRecognizer {
 	// 登録された訓練画像を読み込み、特徴量を抽出する
 	private List<TrainData> loadTrainData(Path trainImageRoot) throws IOException {
 		List<TrainData> trainData = new ArrayList<TrainData>();
-		for (Path labelDir : Files.newDirectoryStream(trainImageRoot)) {
-			if (!labelDir.toFile().isDirectory()) {
+		for (Path idDir : Files.newDirectoryStream(trainImageRoot)) {
+			if (!idDir.toFile().isDirectory()) {
 				continue;
 			}
-			String label = labelDir.getFileName().toString();
-			for (Path imagePath : Files.newDirectoryStream(labelDir)) {
+			String id = idDir.getFileName().toString();
+			for (Path imagePath : Files.newDirectoryStream(idDir)) {
 				try {
 					Feature features = featureExtractor.extract(imagePath);
-					trainData.add(new TrainData(label, features.descriptors));
+					trainData.add(new TrainData(id, features.descriptors));
 				} catch(org.opencv.core.CvException e) {
 					System.out.println(e);
 					continue;

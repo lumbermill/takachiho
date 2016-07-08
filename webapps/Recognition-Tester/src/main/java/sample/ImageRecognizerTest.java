@@ -18,7 +18,7 @@ public class ImageRecognizerTest {
 
 		// 認識結果を表示
 		for (Result result : recognizer.recognize(queryPath)) {
-			System.out.println("l: " + result.label + ", s: " + result.score);
+			System.out.println("l: " + result.id + ", s: " + result.score);
 		}
 	}
 }

@@ -1,11 +1,11 @@
 package imgrecognition;
 
 public class Result {
-	public final String label;
+	public final String id;
 	public final int score;
 
-	public Result(String label, int score) {
-		this.label = label;
+	public Result(String id, int score) {
+		this.id = id;
 		this.score = score;
 	}
 }

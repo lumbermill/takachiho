@@ -65,9 +65,52 @@ $ cp /usr/local/share/OpenCV/java/* libs/
 ```
 
 ### 訓練画像とラベル画像を配置
+訓練画像は以下のように (商品ID)/(連番).jpg という形式で配置します。
 ```
-$ cp -a /path/to/train-image/* data/train-image/ #訓練画像を配置
-$ cp -a /path/to/label-image/* webapp/label-image/data/train-image/ #ラベル画像を配置
+data/train-image/
+├── 1
+│   ├── 0.jpg
+│   ├── 1.jpg
+│   ├── 2.jpg
+│   ├── 3.jpg
+│   ├── 4.jpg
+│   ├── 5.jpg
+│   ├── 6.jpg
+│   └── 7.jpg
+├── 2
+│   ├── 0.jpg
+│   ├── 1.jpg
+│   ├── 2.jpg
+│   ├── 3.jpg
+│   ├── 4.jpg
+│   ├── 5.jpg
+│   ├── 6.jpg
+│   └── 7.jpg
+      :
+      :
+```
+
+商品のラベル情報を data/train-image/item_list.txt に以下の形式で記述します。
+カンマ区切りで、(商品ID),(JANコード),(商品名)の順になります。
+```
+1,JANCODE_1,C.C.レモン
+2,JANCODE_2,Gokuriグレープフルーツ
+3,JANCODE_3,オランジーナ
+4,JANCODE_4,ボス贅沢微糖
+5,JANCODE_5,サントリーウーロン茶
+6,JANCODE_6,ボス無糖ブラック
+```
+
+ラベル画像は以下のように (商品ID).jpg という形式で配置します。
+訓練画像の商品IDと一致するように注意してください。
+```
+webapp/label-image/
+├── 1.jpg
+├── 2.jpg
+├── 3.jpg
+├── 4.jpg
+├── 5.jpg
+└── 6.jpg
 ```
 
 ### サーバ起動
