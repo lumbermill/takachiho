@@ -36,6 +36,12 @@
                                             <action selector="pushButtonNext:" destination="BYZ-38-t0r" id="Hpv-H4-km8"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wkl-3h-mbH"/>
+                                    <barButtonItem title="設定" id="fgL-7o-pWc">
+                                        <connections>
+                                            <action selector="pushButtonConfig:" destination="BYZ-38-t0r" id="wV3-7N-eZJ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -54,14 +60,72 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="btnCamera" destination="uKe-gW-MAX" id="V0p-u5-cuI"/>
+                        <outlet property="btnConfig" destination="fgL-7o-pWc" id="ZFt-o3-HTp"/>
                         <outlet property="btnNext" destination="f8d-r7-ZEg" id="a6C-Dz-Tza"/>
                         <outlet property="lblInfo" destination="EAb-jF-Sgv" id="TdN-PL-wPk"/>
                         <segue destination="Z2D-YV-0k1" kind="show" identifier="showResult" id="9bq-Cm-F9J"/>
+                        <segue destination="iUj-Ay-Vhn" kind="show" identifier="showConfig" id="hKm-J1-qns"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="375" y="325"/>
+        </scene>
+        <!--Config View Controller-->
+        <scene sceneID="E06-rT-y4J">
+            <objects>
+                <viewController id="iUj-Ay-Vhn" customClass="ConfigViewController" customModule="Recognition_Tester_app" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cm0-cq-aPG"/>
+                        <viewControllerLayoutGuide type="bottom" id="gCR-Wx-ry9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="utC-rG-60S">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APIのURL:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lpj-Mg-bTf">
+                                <rect key="frame" x="20" y="20" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mMV-db-nnJ">
+                                <rect key="frame" x="20" y="41" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="enterApiUrl:" destination="iUj-Ay-Vhn" eventType="editingDidEnd" id="1eF-pt-YlC"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrJ-TB-ZwQ">
+                                <rect key="frame" x="550" y="71" width="30" height="30"/>
+                                <state key="normal" title="戻る"/>
+                                <connections>
+                                    <segue destination="6Wm-zc-zFT" kind="unwind" unwindAction="back:" id="kCA-pg-alo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Lpj-Mg-bTf" firstAttribute="top" secondItem="cm0-cq-aPG" secondAttribute="bottom" id="QzY-6L-yax"/>
+                            <constraint firstItem="qrJ-TB-ZwQ" firstAttribute="trailing" secondItem="utC-rG-60S" secondAttribute="trailingMargin" id="Tdy-Nq-Ejm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mMV-db-nnJ" secondAttribute="trailing" id="bvT-nY-QsY"/>
+                            <constraint firstItem="qrJ-TB-ZwQ" firstAttribute="top" secondItem="mMV-db-nnJ" secondAttribute="bottom" id="dg4-yM-deX"/>
+                            <constraint firstItem="mMV-db-nnJ" firstAttribute="leading" secondItem="utC-rG-60S" secondAttribute="leadingMargin" id="hOz-2W-vtP"/>
+                            <constraint firstItem="mMV-db-nnJ" firstAttribute="top" secondItem="Lpj-Mg-bTf" secondAttribute="bottom" id="ls4-ZF-KcF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Lpj-Mg-bTf" secondAttribute="trailing" id="mw1-NL-q2n"/>
+                            <constraint firstItem="Lpj-Mg-bTf" firstAttribute="leading" secondItem="utC-rG-60S" secondAttribute="leadingMargin" id="oqo-NG-eeh"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="txtApiUrl" destination="mMV-db-nnJ" id="a5q-EM-7dO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l13-44-I3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6Wm-zc-zFT" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="1071"/>
         </scene>
         <!--Result Table View Controller-->
         <scene sceneID="BkD-IC-04l">
@@ -94,14 +158,14 @@
                                             <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aFC-Pf-V9y">
                                             <rect key="frame" x="15" y="25.5" width="30.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -153,7 +217,7 @@
                                     <constraint firstAttribute="height" constant="100" id="pKU-ds-k3Q"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

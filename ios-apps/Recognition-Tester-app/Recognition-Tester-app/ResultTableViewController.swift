@@ -10,6 +10,7 @@ import UIKit
 class ResultTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var query_image = UIImage()
     var api_result_dict: NSDictionary = [:]
+    var api_host = ""
     var image_cache: NSMutableDictionary = [:]
     var current_image = UIImage()
     var current_text = ""
@@ -118,7 +119,7 @@ class ResultTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func imageURL(path:String)->String {
-        return RecognitionAPI.apiHost + path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        return api_host + path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
     }
     
     func imageFromURL(url:String)->UIImage? {

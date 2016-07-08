@@ -12,6 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var lblInfo: UILabel!
     @IBOutlet weak var btnCamera: UIBarButtonItem!
+    @IBOutlet weak var btnConfig: UIBarButtonItem!
     
     @IBOutlet weak var btnNext: UIBarButtonItem! //デバッグ用
     
@@ -41,6 +42,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func pushCameraButton(sender: AnyObject) {
         cameraStart(self)
+    }
+    
+    @IBAction func pushButtonConfig(sender: AnyObject) {
+        self.performSegueWithIdentifier("showConfig", sender: self)
     }
     
     // for debug
@@ -132,9 +137,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // Segueで画面遷移するときに呼ばれる
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let next_vc = segue.destinationViewController as! ResultTableViewController
-        next_vc.api_result_dict = api!.result_dict
-        next_vc.query_image = queryImage!
-    }    
+        if (segue.identifier == "showResult") {
+            let next_vc = segue.destinationViewController as! ResultTableViewController
+            next_vc.api_result_dict = api!.result_dict
+            next_vc.query_image = queryImage!
+            next_vc.api_host = api!.apiHost
+        }
+    }
 }
 

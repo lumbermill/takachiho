@@ -17,6 +17,7 @@
 		E7B9C50E1D2B3A3100F7B5D0 /* Recognition_Tester_app.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B9C50C1D2B3A3100F7B5D0 /* Recognition_Tester_app.xcdatamodeld */; };
 		E7B9C5101D2B3A3100F7B5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7B9C50F1D2B3A3100F7B5D0 /* Assets.xcassets */; };
 		E7B9C5131D2B3A3100F7B5D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B9C5111D2B3A3100F7B5D0 /* LaunchScreen.storyboard */; };
+		E7BF23031D2F2DA10094DCA5 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BF23021D2F2DA10094DCA5 /* ConfigViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E7B9C50F1D2B3A3100F7B5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7B9C5121D2B3A3100F7B5D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7B9C5141D2B3A3100F7B5D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7BF23021D2F2DA10094DCA5 /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				E7B9C5071D2B3A3100F7B5D0 /* ViewController.swift */,
 				E7B5DB8A1D2B83870087C0FF /* ResultTableViewController.swift */,
 				E76C02C81D2DE35B002972A1 /* DetailViewController.swift */,
+				E7BF23021D2F2DA10094DCA5 /* ConfigViewController.swift */,
 				E7B5DB881D2B4C100087C0FF /* RecognitionAPI.swift */,
 				E7B9C5091D2B3A3100F7B5D0 /* Main.storyboard */,
 				E7B9C50F1D2B3A3100F7B5D0 /* Assets.xcassets */,
@@ -156,6 +159,7 @@
 				E7B9C5081D2B3A3100F7B5D0 /* ViewController.swift in Sources */,
 				E7B5DB8B1D2B83870087C0FF /* ResultTableViewController.swift in Sources */,
 				E76C02C91D2DE35B002972A1 /* DetailViewController.swift in Sources */,
+				E7BF23031D2F2DA10094DCA5 /* ConfigViewController.swift in Sources */,
 				E7B5DB891D2B4C100087C0FF /* RecognitionAPI.swift in Sources */,
 				E7B9C5061D2B3A3100F7B5D0 /* AppDelegate.swift in Sources */,
 			);

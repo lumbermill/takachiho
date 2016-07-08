@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 
 class RecognitionAPI {
-    static let apiHost = "http://153.120.93.203:8080"
-    let url = "\(apiHost)/Upload"
+    let ud = NSUserDefaults.standardUserDefaults()
+    var apiHost = ""
+    var url = ""
     var result = ""
     var result_dict = NSDictionary()
     var upload_image_size = CGSize()
     var error = false
-
+    
     func send(image:UIImage,callback:(data:NSData?, response:NSURLResponse?, error:NSError?)->()) {
+        apiHost = ud.stringForKey("api_url")!
+        url = "\(apiHost)/Upload"
         var imagedata = UIImageJPEGRepresentation(image,1.0)
         // 大きすぎる画像は縮小する
         if (imagedata?.length > 4194304) {
