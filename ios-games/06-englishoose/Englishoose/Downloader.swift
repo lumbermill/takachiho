@@ -14,6 +14,8 @@ class Downloader {
     static let BASEURL = "https://lmlab.net/englishoose/"
     static let BASEDIR = NSHomeDirectory()+"/Documents/"
     static let INDEX = "index.json"
+    static let SERIAL = "serial.json"
+    static var latest_serial = 0
     
     class func fetch_file(file:String, completion: (path:String)->Void) {
         // ファイルが既に存在する場合、ダウンロードしない
@@ -68,6 +70,34 @@ class Downloader {
         })
     }
     
+    class func check_update(completion: (Bool) -> Void) {
+        let ud = NSUserDefaults.standardUserDefaults()
+        let current_serial = ud.integerForKey("serial")
+        fetch_file(SERIAL, completion: { (path) in
+            guard let data = NSData(contentsOfFile: path) else {
+                print("Could not get data from "+path)
+                return
+            }
+            do {
+                guard let s = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary else {
+                    print("Could not parse data from "+path)
+                    return
+                }
+                guard let remote_serial = s["serial"] as? Int else {
+                    print("Could not obrain serial from "+path)
+                    return
+                }
+                print("current: %d, remote: %d",current_serial,remote_serial)
+                latest_serial = remote_serial
+                dispatch_async(dispatch_get_main_queue(), {
+                    completion(current_serial < remote_serial)
+                })
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
     // 全ファイルダウンロード
     class func fetch_all(completion: ([Drill]) -> Void) {
         // index.jsonを取得、パースしてさらに関連する画像も全部取得する。
@@ -112,7 +142,14 @@ class Downloader {
                     drills += [d]
                 }
                 fetch_files(files, completion: { (paths) in
-                    completion(drills)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completion(drills)
+                    })
+                    let ud = NSUserDefaults.standardUserDefaults()
+                    if(ud.integerForKey("serial") == 0){
+                        ud.setInteger(latest_serial, forKey: "serial")
+                        ud.synchronize()
+                    }
                 })
             } catch let error as NSError {
                 print(error.localizedDescription)
@@ -129,5 +166,9 @@ class Downloader {
         }catch let error as NSError {
             print(error.localizedDescription)
         }
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setInteger(0, forKey: "serial")
+        ud.synchronize()
+
     }
 }

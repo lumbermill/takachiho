@@ -108,6 +108,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="refreshButton" destination="HeW-Iq-gfq" id="H8K-2c-CST"/>
                         <outlet property="table" destination="FvW-dM-3or" id="Zw9-yI-qf3"/>
                     </connections>
                 </viewController>

@@ -13,13 +13,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var drills:[Drill] = []
     
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var refreshButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drills = [Drill]()
+        self.refreshButton.enabled = false
+        // 問題の更新有無をチェック
+        Downloader.check_update({ (has_newer) in
+            if (has_newer) {
+                self.refreshButton.setTitle("Update", forState: UIControlState.Normal)
+            }
+        })
         // 問題の一覧と画像をダウンロードする（更新をしない限りはローカルのキャッシュ優先
         Downloader.fetch_all({ (drills) in
             self.drills = drills
             self.table.reloadData()
+            self.refreshButton.enabled = true
         })
     }
 
@@ -48,16 +58,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func refreshPushed(sender: AnyObject) {
         Downloader.clear_all()
-        
         self.drills = [Drill]()
+        self.refreshButton.enabled = false
         Downloader.fetch_all({ (drills) in
             self.drills = drills
             self.table.reloadData()
+            self.refreshButton.enabled = true
+            self.refreshButton.setTitle("Refresh", forState: UIControlState.Normal)
         })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "start") {
+            if(self.refreshButton.enabled == false){
+                // 更新中は何もしない
+                return
+            }
             let quizController:QuizController = segue.destinationViewController as! QuizController
             let i = table.indexPathForSelectedRow!.row
             quizController.loadDrill(drills[i])
