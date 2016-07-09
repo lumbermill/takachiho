@@ -8,16 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var itemList: [[String]] = []
     var currentItemName = ""
     var currentItemJan = ""
     var currentItemId = ""
+    var CurrentItemImageIndex = 0
     
     @IBOutlet weak var ItemPicker: UIPickerView!
     @IBOutlet weak var itemName: UILabel!
     @IBOutlet weak var itemJAN: UILabel!
     @IBOutlet var itemImages: [UIImageView]!
+    @IBOutlet weak var btnCamera: UIBarButtonItem!
+    @IBOutlet weak var btnSend: UIBarButtonItem!
+    
     
     
     override func viewDidLoad() {
@@ -26,12 +30,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         loadItemList()
         ItemPicker.dataSource = self
         ItemPicker.delegate = self
-        itemName.text = ""
+        itemName.text =  "商品を選択して下さい。"
         itemJAN.text = ""
         for itemImage in itemImages {
             itemImage.contentMode = UIViewContentMode.ScaleAspectFit
             itemImage.image = UIImage(imageLiteral: "blank.png")
         }
+        btnSend.enabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +45,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     func loadItemList() {
+        itemList.append(["","",""]) //未選択状態を表す選択肢
         if let csvPath = NSBundle.mainBundle().pathForResource("item_list", ofType: "txt") {
             do {
                 let csvString = try NSString(contentsOfFile: csvPath, encoding: NSUTF8StringEncoding) as String
@@ -64,11 +70,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
         // Picker View で選択されたときに実行する処理
     func pickerView(pickerview: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        itemName.text =  itemList[row][2]
-        itemJAN.text =  "JAN:" + itemList[row][1]
-        currentItemId = itemList[row][0]
-        currentItemJan = itemList[row][1]
-        currentItemName = itemList[row][2]
+        if (itemList[row][0] != "") {
+            itemName.text =  itemList[row][2]
+            itemJAN.text =  "JAN:" + itemList[row][1]
+            currentItemId = itemList[row][0]
+            currentItemJan = itemList[row][1]
+            currentItemName = itemList[row][2]
+        } else {
+            itemName.text =  "商品を選択して下さい。"
+            itemJAN.text = ""
+            currentItemId = ""
+            currentItemJan = ""
+            currentItemName = ""
+        }
     }
     
     // Picker View に文字列設定＆フォントサイズ調整
@@ -80,6 +94,48 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         pickerLabel.textAlignment = NSTextAlignment.Center
         pickerLabel.text = itemList[row][2]
         return pickerLabel
+    }
+
+    @IBAction func pushBtnCamera(sender: AnyObject) {
+        cameraStart(self)
+    }
+    
+    func cameraStart(sender: AnyObject) {
+        let sourceType:UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.Camera
+        // カメラが利用可能かチェック
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            btnCamera.enabled = false
+            // インスタンスの作成
+            let cameraPicker = UIImagePickerController()
+            cameraPicker.sourceType = sourceType
+            cameraPicker.delegate = self
+            
+            self.presentViewController(cameraPicker, animated: true, completion: nil)
+        }
+        else{
+            btnCamera.enabled = true
+        }
+    }
+    
+    //　撮影が完了時した時に呼ばれる
+    func imagePickerController(imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        btnCamera.enabled = true
+        itemImages[CurrentItemImageIndex].image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        if (CurrentItemImageIndex < itemImages.count - 1) {
+            CurrentItemImageIndex += 1
+        } else {
+            CurrentItemImageIndex = 0
+            btnCamera.enabled = false
+            btnSend.enabled = true
+        }
+        //閉じる処理
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // 撮影がキャンセルされた時に呼ばれる
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        btnCamera.enabled = true // 問い合わせ終了後
     }
 }
 

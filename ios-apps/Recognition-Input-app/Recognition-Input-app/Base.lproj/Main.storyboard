@@ -39,7 +39,7 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="LCk-5d-Ak8"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -63,7 +63,11 @@
                                     <constraint firstAttribute="height" constant="50" id="xec-ty-VIL"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem systemItem="camera" id="Oy9-FZ-sij"/>
+                                    <barButtonItem systemItem="camera" id="Oy9-FZ-sij">
+                                        <connections>
+                                            <action selector="pushBtnCamera:" destination="BYZ-38-t0r" id="myf-MN-Eam"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LQT-p3-i4l"/>
                                     <barButtonItem title="送信" id="8sT-fm-dD1"/>
                                 </items>
@@ -102,13 +106,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9d8-t3-SEJ">
                                         <rect key="frame" x="0.0" y="237" width="560" height="114"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjV-PO-pNc" userLabel="ItemImage7">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UjV-PO-pNc" userLabel="ItemImage7">
                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="114"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3TT-c8-ilz" userLabel="ItemImage8">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3TT-c8-ilz" userLabel="ItemImage8">
                                                 <rect key="frame" x="187" y="0.0" width="187" height="114"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-D5-JFU">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-D5-JFU" userLabel="ItemImage9">
                                                 <rect key="frame" x="374" y="0.0" width="187" height="114"/>
                                             </imageView>
                                         </subviews>
@@ -133,17 +137,19 @@
                     </view>
                     <connections>
                         <outlet property="ItemPicker" destination="MSA-9s-rgm" id="Bv1-fy-sfm"/>
+                        <outlet property="btnCamera" destination="Oy9-FZ-sij" id="2TY-l8-1Dh"/>
+                        <outlet property="btnSend" destination="8sT-fm-dD1" id="9A7-yc-vp1"/>
                         <outlet property="itemJAN" destination="YkP-zA-3L9" id="XKQ-mo-guj"/>
                         <outlet property="itemName" destination="DU0-4z-JWA" id="jhj-1U-nX5"/>
                         <outletCollection property="itemImages" destination="WIH-wg-0fr" collectionClass="NSMutableArray" id="6h2-fi-8f9"/>
                         <outletCollection property="itemImages" destination="Z7Z-nb-wZR" collectionClass="NSMutableArray" id="JBh-5V-cws"/>
                         <outletCollection property="itemImages" destination="cXL-Dj-ei8" collectionClass="NSMutableArray" id="vQk-oO-1iu"/>
-                        <outletCollection property="itemImages" destination="ZH9-7S-9mV" collectionClass="NSMutableArray" id="g6i-Br-pve"/>
-                        <outletCollection property="itemImages" destination="3TT-c8-ilz" collectionClass="NSMutableArray" id="JG0-ay-JEG"/>
-                        <outletCollection property="itemImages" destination="g8c-aj-07M" collectionClass="NSMutableArray" id="4Gn-Ws-WxV"/>
-                        <outletCollection property="itemImages" destination="Qo2-hR-PEG" collectionClass="NSMutableArray" id="KnD-Db-Pzv"/>
-                        <outletCollection property="itemImages" destination="UjV-PO-pNc" collectionClass="NSMutableArray" id="8KX-SI-woY"/>
-                        <outletCollection property="itemImages" destination="Zkz-D5-JFU" collectionClass="NSMutableArray" id="fek-3c-zBu"/>
+                        <outletCollection property="itemImages" destination="g8c-aj-07M" collectionClass="NSMutableArray" id="68I-0a-Vgy"/>
+                        <outletCollection property="itemImages" destination="ZH9-7S-9mV" collectionClass="NSMutableArray" id="wdO-2O-7EY"/>
+                        <outletCollection property="itemImages" destination="Qo2-hR-PEG" collectionClass="NSMutableArray" id="1aH-kh-sAk"/>
+                        <outletCollection property="itemImages" destination="UjV-PO-pNc" collectionClass="NSMutableArray" id="nbv-rW-qUX"/>
+                        <outletCollection property="itemImages" destination="3TT-c8-ilz" collectionClass="NSMutableArray" id="tWK-c6-c5Q"/>
+                        <outletCollection property="itemImages" destination="Zkz-D5-JFU" collectionClass="NSMutableArray" id="nW1-uP-TS5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
