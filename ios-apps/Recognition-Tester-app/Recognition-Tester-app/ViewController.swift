@@ -19,11 +19,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var api: RecognitionAPI?
     var queryImage: UIImage?
+    let ud = NSUserDefaults.standardUserDefaults()
     let debug = false // for debug
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if (ud.objectForKey("api_url") == nil) {
+            ud.setObject("", forKey: "api_url")
+        }
 
         // for debug
         if (debug) {

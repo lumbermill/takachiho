@@ -19,7 +19,8 @@ class RecognitionAPI {
     var error = false
     
     func send(image:UIImage,callback:(data:NSData?, response:NSURLResponse?, error:NSError?)->()) {
-        apiHost = ud.stringForKey("api_url")!
+        let conf_apiHost = ud.stringForKey("api_url")!
+        apiHost = conf_apiHost.stringByReplacingOccurrencesOfString("/+$", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil) // 末尾の'/'を削除
         url = "\(apiHost)/Upload"
         var imagedata = UIImageJPEGRepresentation(image,1.0)
         // 大きすぎる画像は縮小する

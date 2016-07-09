@@ -19,7 +19,7 @@ class ConfigViewController: UIViewController{
     }
     
     @IBAction func enterApiUrl(sender: AnyObject) {
-        ud.setObject(txtApiUrl.text, forKey: "api_url")
+        ud.setObject(txtApiUrl.text!, forKey: "api_url")
         ud.synchronize()
     }
 }
