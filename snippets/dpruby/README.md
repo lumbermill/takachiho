@@ -50,6 +50,12 @@ class Foo
 end
 Foo.new
 ```
+### Rubyのリフレクション
+```
+cls = eval "String"
+str = cls.new("123")
+str.send("to_i") # => 123
+```
 
 ### TclTk
 ```
