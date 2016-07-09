@@ -69,7 +69,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LQT-p3-i4l"/>
-                                    <barButtonItem title="送信" id="8sT-fm-dD1"/>
+                                    <barButtonItem title="送信" id="8sT-fm-dD1">
+                                        <connections>
+                                            <action selector="pushBtnSend:" destination="BYZ-38-t0r" id="P5W-lp-br5"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="TZC-kT-CRi">
@@ -103,17 +107,17 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9d8-t3-SEJ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9d8-t3-SEJ">
                                         <rect key="frame" x="0.0" y="237" width="560" height="114"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UjV-PO-pNc" userLabel="ItemImage7">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="114"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjV-PO-pNc" userLabel="ItemImage7">
+                                                <rect key="frame" x="0.0" y="0.0" width="184" height="114"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3TT-c8-ilz" userLabel="ItemImage8">
-                                                <rect key="frame" x="187" y="0.0" width="187" height="114"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3TT-c8-ilz" userLabel="ItemImage8">
+                                                <rect key="frame" x="189" y="0.0" width="183" height="114"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-D5-JFU" userLabel="ItemImage9">
-                                                <rect key="frame" x="374" y="0.0" width="187" height="114"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-D5-JFU" userLabel="ItemImage9">
+                                                <rect key="frame" x="377" y="0.0" width="184" height="114"/>
                                             </imageView>
                                         </subviews>
                                     </stackView>

@@ -298,6 +298,7 @@
 				E79824AB1D2F431100E5250C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

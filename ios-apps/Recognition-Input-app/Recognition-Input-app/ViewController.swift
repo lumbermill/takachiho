@@ -27,17 +27,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        loadItemList()
-        ItemPicker.dataSource = self
-        ItemPicker.delegate = self
-        itemName.text =  "商品を選択して下さい。"
-        itemJAN.text = ""
-        for itemImage in itemImages {
-            itemImage.contentMode = UIViewContentMode.ScaleAspectFit
-            itemImage.image = UIImage(imageLiteral: "blank.png")
-        }
-        btnSend.enabled = false
+        clearInput()
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -56,6 +48,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 print("Loading Item List Failed: Data is Invalid.")
             }
         }
+    }
+
+    func clearInput() {
+        loadItemList()
+        ItemPicker.dataSource = self
+        ItemPicker.delegate = self
+        itemName.text =  "商品を選択して下さい。"
+        itemJAN.text = ""
+        for itemImage in itemImages {
+            itemImage.contentMode = UIViewContentMode.ScaleAspectFit
+            itemImage.image = UIImage(imageLiteral: "blank.png")
+        }
+        btnSend.enabled = false
     }
     
     // Picker View の列数=1
@@ -135,7 +140,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     // 撮影がキャンセルされた時に呼ばれる
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        btnCamera.enabled = true // 問い合わせ終了後
+        btnCamera.enabled = true
     }
+    
+    @IBAction func pushBtnSend(sender: AnyObject) {
+        showAlert("画像をアップロードしました。", message: nil)
+        clearInput()
+        btnCamera.enabled = true
+    }
+    
+    func showAlert(title:String?, message:String?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
 }
 
