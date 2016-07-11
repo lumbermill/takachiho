@@ -37,7 +37,7 @@ public class ImageRecognizer {
 					Feature features = featureExtractor.extract(imagePath);
 					trainData.add(new TrainData(id, features.descriptors));
 				} catch(org.opencv.core.CvException e) {
-					System.out.println(e);
+					System.out.println("Something wrong with " + imagePath.toString() + ". This File is ignored. Error :" + e);
 					continue;
 				}
 			}
