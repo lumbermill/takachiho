@@ -28,7 +28,8 @@
       for (var i in resultsJson) {
         var d = resultsJson[i];
         html += '<li><img src=' + d.labelImgSrc + ' width="100" height="130">' +
-          d.label + ', JANコード：' + d.jan + ', スコア：' + d.score + '</li>';
+          d.label + ', JANコード：' + d.jan + ', スコア：' + d.score +
+          ' (' + Math.round(d.similarytyRatio * 1000) / 10 + '%)' + '</li>';
       }
       return html;
     }

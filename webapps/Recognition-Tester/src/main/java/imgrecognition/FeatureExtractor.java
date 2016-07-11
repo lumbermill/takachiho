@@ -19,6 +19,7 @@ public class FeatureExtractor {
 	public FeatureExtractor() {
 //		String configPath = getClass().getResource("sift_config").getPath(); //configは後で検討
 		featureDetector = FeatureDetector.create(FeatureDetector.ORB);
+
 //		featureDetector.read(configPath); //configは後で検討
 		descriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.ORB);
 //		descriptorExtractor.read(configPath);//configは後で検討
@@ -34,11 +35,11 @@ public class FeatureExtractor {
 
 		// キーポイント検出
 		MatOfKeyPoint keyPoints = new MatOfKeyPoint();
-		featureDetector.detect(grayImage, keyPoints);
+		featureDetector.detect(image, keyPoints);
 
 		// 特徴量記述
 		Mat descriptors = new Mat();
-		descriptorExtractor.compute(grayImage, keyPoints, descriptors);
+		descriptorExtractor.compute(image, keyPoints, descriptors);
 		return new Feature(image,grayImage,keyPoints,descriptors);
 	}
 }

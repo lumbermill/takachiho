@@ -17,7 +17,7 @@ public class ImageRecognizerTest {
 		ImageRecognizer recognizer = new ImageRecognizer(trainDir);
 
 		// 認識結果を表示
-		for (Result result : recognizer.recognize(queryPath)) {
+		for (Result result : recognizer.recognize(queryPath).resultList) {
 			System.out.println("l: " + result.id + ", s: " + result.score);
 		}
 	}

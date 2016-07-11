@@ -19,9 +19,12 @@ public class ImageRecognizer {
 		trainData = loadTrainData(trainImageRoot);
 	}
 
-	public List<Result> recognize(Path queryImagePath) {
+	public QueryResult recognize(Path queryImagePath) {
 		Feature queryFeatures = featureExtractor.extract(queryImagePath);
-		return voter.vote(queryFeatures.descriptors, trainData);
+		System.out.print("Count of keypoints for query image:");
+		System.out.println(queryFeatures.countOfKeyPoints());
+		 List<Result> resultList = voter.vote(queryFeatures.descriptors, trainData);
+		 return new QueryResult(resultList,queryFeatures);
 	}
 
 	// 登録された訓練画像を読み込み、特徴量を抽出する
@@ -35,6 +38,8 @@ public class ImageRecognizer {
 			for (Path imagePath : Files.newDirectoryStream(idDir)) {
 				try {
 					Feature features = featureExtractor.extract(imagePath);
+					System.out.print("Count of keypoints for train image(" + imagePath.toString() + "):");
+					System.out.println(features.countOfKeyPoints());
 					trainData.add(new TrainData(id, features.descriptors));
 				} catch(org.opencv.core.CvException e) {
 					System.out.println("Something wrong with " + imagePath.toString() + ". This File is ignored. Error :" + e);

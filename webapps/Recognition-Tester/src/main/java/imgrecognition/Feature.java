@@ -14,4 +14,8 @@ public class Feature {
 		this.keyPoints = keyPoints;
 		this.descriptors = descriptors;
 	}
+	
+	public int countOfKeyPoints() {
+		return this.keyPoints.toArray().length;
+	}	
 }

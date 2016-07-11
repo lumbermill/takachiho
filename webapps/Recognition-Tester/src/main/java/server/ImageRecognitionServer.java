@@ -1,6 +1,7 @@
 package server;
 
 import imgrecognition.ImageRecognizer;
+import imgrecognition.QueryResult;
 import imgrecognition.Result;
 import imgrecognition.util.ImageScaler;
 
@@ -50,10 +51,11 @@ public class ImageRecognitionServer extends HttpServlet {
 		ImageScaler.adjustWidth(queryImagePath, 480);
 		// 認識処理にかかる時間を測定
 		long startTime = System.currentTimeMillis();
-		List<Result> results = recognizer.recognize(queryImagePath);
+		QueryResult q_result = recognizer.recognize(queryImagePath);
+		List<Result> results = q_result.resultList;
 		long time = System.currentTimeMillis() - startTime;
 		// 結果をJSON形式で送信
-		res.getWriter().print(JSON.encode(new ResponseModel(time, results, itemInfo)));
+		res.getWriter().print(JSON.encode(new ResponseModel(time, q_result, itemInfo)));
 	}
 
 	private Path extractQuery(HttpServletRequest req) {

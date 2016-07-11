@@ -1,5 +1,7 @@
 package server;
 
+import imgrecognition.Feature;
+import imgrecognition.QueryResult;
 import imgrecognition.Result;
 
 import java.util.ArrayList;
@@ -10,11 +12,11 @@ public class ResponseModel {
 	public final long time;
 	public final List<ResultModel> results;
 
-	public ResponseModel(long time, List<Result> results, Map<String, Map<String, String>> itemInfo) {
+	public ResponseModel(long time, QueryResult q_result, Map<String, Map<String, String>> itemInfo) {
 		this.time = time;
 		this.results = new ArrayList<ResultModel>();
-		for (Result result : results) {
-			this.results.add(new ResultModel(result.id, result.score, itemInfo));
+		for (Result result : q_result.resultList) {
+			this.results.add(new ResultModel(result.id, result.score, itemInfo, q_result.queryImageFeature));
 		}
 	}
 
@@ -25,14 +27,16 @@ public class ResponseModel {
 		public final String jan;
 		public final String label;
 		public final int score;
+		public final double similarytyRatio;
 
-		public ResultModel(String id, int score, Map<String, Map<String, String>> itemInfo) {
+		public ResultModel(String id, int score, Map<String, Map<String, String>> itemInfo, Feature queryFeature) {
 			this.labelImgSrc = String.format(SRC_FORMAT, id);
 			this.id = id;
 			this.score = score;
 			Map<String, String> info = itemInfo.get(id);
 			this.label = info.get("label");
 			this.jan   = info.get("jan");
+			this.similarytyRatio = (double)score / queryFeature.countOfKeyPoints(); // マッチした訓練画像特徴点の数 ÷ 質問画像の特徴点の総数
 		}		
 	}
 }
