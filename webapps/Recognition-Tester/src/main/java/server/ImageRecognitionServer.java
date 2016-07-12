@@ -38,7 +38,12 @@ public class ImageRecognitionServer extends HttpServlet {
 	public final Map<String, Map<String, String>> itemInfo;
 
 	public ImageRecognitionServer() throws IOException {
-		recognizer = new ImageRecognizer(Paths.get("./data/train-image/"));
+		Map<String, String> option = new HashMap<String, String>();
+		option.put("featureDetector", "ORB");
+		option.put("descriptorExtractor", "ORB");
+		option.put("optionFile", ""); // optionは後で検討
+		
+		recognizer = new ImageRecognizer(Paths.get("./data/train-image/"),option);
 		queryImageDir = Paths.get("./data/query-image/");
 		itemInfo = loadItemInfo(Paths.get("./data/train-image/item_list.txt")); // リストのパスにする
 		Files.createDirectories(queryImageDir);

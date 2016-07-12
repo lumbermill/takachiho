@@ -16,13 +16,9 @@ public class FeatureExtractor {
 	private final FeatureDetector featureDetector;
 	private final DescriptorExtractor descriptorExtractor;
 
-	public FeatureExtractor() {
-//		String configPath = getClass().getResource("sift_config").getPath(); //configは後で検討
-		featureDetector = FeatureDetector.create(FeatureDetector.ORB);
-
-//		featureDetector.read(configPath); //configは後で検討
-		descriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.ORB);
-//		descriptorExtractor.read(configPath);//configは後で検討
+	public FeatureExtractor(FeatureDetector featureDetector,DescriptorExtractor descriptorExtractor) {
+		this.featureDetector = featureDetector;
+		this.descriptorExtractor = descriptorExtractor;
 	}
 
 	public Feature extract(Path imagePath) {
