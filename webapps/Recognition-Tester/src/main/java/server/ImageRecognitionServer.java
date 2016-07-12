@@ -2,7 +2,6 @@ package server;
 
 import imgrecognition.ImageRecognizer;
 import imgrecognition.QueryResult;
-import imgrecognition.Result;
 import imgrecognition.util.ImageScaler;
 
 import java.io.BufferedReader;
@@ -11,8 +10,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -52,7 +53,6 @@ public class ImageRecognitionServer extends HttpServlet {
 		// 認識処理にかかる時間を測定
 		long startTime = System.currentTimeMillis();
 		QueryResult q_result = recognizer.recognize(queryImagePath);
-		List<Result> results = q_result.resultList;
 		long time = System.currentTimeMillis() - startTime;
 		// 結果をJSON形式で送信
 		res.getWriter().print(JSON.encode(new ResponseModel(time, q_result, itemInfo)));
@@ -61,12 +61,32 @@ public class ImageRecognitionServer extends HttpServlet {
 	private Path extractQuery(HttpServletRequest req) {
 		try {
 			FileItem item = (FileItem) upload.parseRequest(req).get(0);
-			Path dataPath = queryImageDir.resolve(item.getName());
+			String filename = getFileHash(item); 
+			Path dataPath = queryImageDir.resolve(filename + ".jpg");
 			item.write(dataPath.toFile());
 			return dataPath;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	private String getFileHash(FileItem file) throws NoSuchAlgorithmException, IOException {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		DigestInputStream input = new DigestInputStream(file.getInputStream(),md);
+        while(input.read() != -1) { }
+        byte[] digest = md.digest();
+        input.close();
+        // 16進数文字列に変換
+        StringBuffer buffer = new StringBuffer();
+        for(int i = 0; i < digest.length; i++) {
+            String tmp = Integer.toHexString(digest[i] & 0xff);
+            if(tmp.length() == 1) {
+                buffer.append('0').append(tmp);
+            } else {
+                buffer.append(tmp);
+            }
+        }
+        return buffer.toString();
 	}
 	// ID,JANコード,商品名をテキストファイルから読み込む
 	private Map<String, Map<String, String>> loadItemInfo(Path item_list_path) throws IOException {
