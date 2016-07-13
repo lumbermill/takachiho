@@ -13,9 +13,11 @@ import java.nio.file.Paths;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -68,12 +70,21 @@ public class ImageRecognitionServer extends HttpServlet {
 		Path queryImagePath = extractQuery(req);
 		// 質問画像のサイズを調整
 		ImageScaler.adjustWidth(queryImagePath, 480);
-		// 認識処理にかかる時間を測定
-		long startTime = System.currentTimeMillis();
-		QueryResult q_result = recognizers.get(recognizerPair[0]).recognize(queryImagePath);
-		long time = System.currentTimeMillis() - startTime;
+		
+		// すべての判定器を使って判定する
+		Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
+		List<ResponseModel> response = new ArrayList<ResponseModel>();
+		while (iter_recognizer.hasNext()) {
+			// 認識処理にかかる時間を測定
+			long startTime = System.currentTimeMillis();
+			String[] recognizer_set = iter_recognizer.next();
+			QueryResult q_result = recognizers.get(recognizer_set).recognize(queryImagePath);
+			long time = System.currentTimeMillis() - startTime;
+			response.add(new ResponseModel(time, q_result, itemInfo));
+		}
+		
 		// 結果をJSON形式で送信
-		res.getWriter().print(JSON.encode(new ResponseModel(time, q_result, itemInfo)));
+		res.getWriter().print(JSON.encode(response));
 	}
 
 	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException {

@@ -24,7 +24,9 @@
         dataType: 'json'
       }).done(function (json) {
         // 結果をリストに表示
-        $('#results').append(generateHtml(json));
+        for (var result of json) {
+          $('#results').append(generateHtml(result));
+        }
       });
     }
 
