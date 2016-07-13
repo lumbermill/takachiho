@@ -5,27 +5,15 @@
   <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
   <script>
   $(function () {
-    var recognizer_pair = [
-      [ "ORB", "ORB", "" ],// optionは後で検討
-      [ "GRID_ORB", "ORB", "" ],
-      [ "PYRAMID_ORB", "ORB", "" ],
-      [ "DYNAMIC_ORB", "ORB", "" ],
-      [ "ORB", "OPPONENT_ORB", "" ],
-      [ "GRID_ORB", "OPPONENT_ORB", "" ],
-      [ "PYRAMID_ORB", "OPPONENT_ORB", "" ],
-      [ "DYNAMIC_ORB", "OPPONENT_ORB", "" ],
-      [ "AKAZE", "AKAZE", "" ],
-    ];
 
     $('#fileInput').change(function () {
-      for (var recognizer of recognizer_pair) {
-        postRequest(this.files[0], recognizer);
-      }
+      postRequest(this.files[0]);
     });
 
-    function postRequest(query_image,recognaizer) {
+    function postRequest(query_image) {
       var formData = new FormData();
       formData.append("userfile", query_image);
+      $('#results').empty();
 
       // Ajaxで質問画像をアップロード
       $.ajax('/Upload', {
@@ -36,26 +24,45 @@
         dataType: 'json'
       }).done(function (json) {
         // 結果をリストに表示
-        $('#result').html(generateHtml(json));
+        $('#results').append(generateHtml(json));
       });
     }
 
     function generateHtml(json) {
-      var html = 'time: ' + json.time + ' ms<br/>';
       var resultsJson = json.results;
+      var html = '<div class="result">'
+      html += 'time: ' + json.time + ' ms<br/>';
+      html += '<ol>'
       for (var i in resultsJson) {
         var d = resultsJson[i];
-        html += '<li><img src=' + d.labelImgSrc + ' width="100" height="130">' +
-          d.label + ', JANコード：' + d.jan + ', スコア：' + d.score +
-          ' (' + Math.round(d.similarytyRatio * 1000) / 10 + '%)' + '</li>';
+        html += '<li>';
+        html += '<img src=' + d.labelImgSrc + ' width="100" height="130" title="' + d.label + ', JANコード：' + d.jan + '">' +
+          'スコア：' + d.score +
+          ' (' + Math.round(d.similarytyRatio * 1000) / 10 + '%)';
+        html += '</li>';
       }
+      html += '</ol>'
+      html += '</div>'
       return html;
     }
   });
   </script>
+  <style>
+    #results {
+      width:1500px; 
+    }
+    .result {
+      width:150px;
+      float:left;
+    }
+    .result li {
+      height: 200px;
+    }
+  </style>
 </head>
 <body>
   <input type="file" id="fileInput" accept="image/*" capture="camera">
-  <ol id="result"></ol>
+  <div id="results">
+  </div>
 </body>
 </html>
