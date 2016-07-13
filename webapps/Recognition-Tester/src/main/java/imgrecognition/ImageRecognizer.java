@@ -13,6 +13,9 @@ import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.FeatureDetector;
 
 public class ImageRecognizer {
+	private final String featureDetectorName;
+	private final String descriptorExtractorName;
+	private final String optionFile;
 	private final FeatureExtractor featureExtractor;
 	private final DescriptorsVoter voter = new DescriptorsVoter();
 	private final List<TrainData> trainData;
@@ -26,9 +29,9 @@ public class ImageRecognizer {
 	}
 
 	public ImageRecognizer(Path trainImageRoot, Map<String, String> option) throws IOException {
-		String featureDetectorName = option.get("featureDetector");
-		String descriptorExtractorName = option.get("descriptorExtractor");
-		String optionFile = (String) option.get("optionFile");
+		featureDetectorName = option.get("featureDetector");
+		descriptorExtractorName = option.get("descriptorExtractor");
+		optionFile = (String) option.get("optionFile");
 
 		FeatureDetector featureDetector = FeatureDetector.create(featureDetectorNames.get(featureDetectorName));
 		DescriptorExtractor descriptorExtractor = DescriptorExtractor.create(descriptorExtractorNames.get(descriptorExtractorName));
@@ -44,6 +47,9 @@ public class ImageRecognizer {
 
 	public QueryResult recognize(Path queryImagePath) {
 		Feature queryFeatures = featureExtractor.extract(queryImagePath);
+		System.out.print("FD:" + featureDetectorName + "/");
+		System.out.print("DE:" + descriptorExtractorName + "/");
+		System.out.print("OptionFile:" + optionFile + "/");
 		System.out.print("Count of keypoints for query image:");
 		System.out.println(queryFeatures.countOfKeyPoints());
 		List<Result> resultList = voter.vote(queryFeatures.descriptors, trainData);
@@ -61,6 +67,9 @@ public class ImageRecognizer {
 			for (Path imagePath : Files.newDirectoryStream(idDir)) {
 				try {
 					Feature features = featureExtractor.extract(imagePath);
+					System.out.print("FD:" + featureDetectorName + "/");
+					System.out.print("DE:" + descriptorExtractorName + "/");
+					System.out.print("OptionFile:" + optionFile + "/");
 					System.out.print("Count of keypoints for train image(" + imagePath.toString() + "):");
 					System.out.println(features.countOfKeyPoints());
 					trainData.add(new TrainData(id, features.descriptors));
@@ -141,5 +150,5 @@ public class ImageRecognizer {
 		descriptorExtractorNames.put("OPPONENT_BRISK", new Integer(DescriptorExtractor.OPPONENT_BRISK));
 		descriptorExtractorNames.put("OPPONENT_FREAK", new Integer(DescriptorExtractor.OPPONENT_FREAK));
 		descriptorExtractorNames.put("OPPONENT_AKAZE", new Integer(DescriptorExtractor.OPPONENT_AKAZE));
-	}
+	}	
 }

@@ -13,7 +13,9 @@ import java.nio.file.Paths;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -33,17 +35,28 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class ImageRecognitionServer extends HttpServlet {
 	private final ServletFileUpload upload =
 		new ServletFileUpload(new DiskFileItemFactory());
-	private final ImageRecognizer recognizer;
+	//private final ImageRecognizer recognizer;
 	private final Path queryImageDir;
-	public final Map<String, Map<String, String>> itemInfo;
-
+	private final Map<String, Map<String, String>> itemInfo;
+	private final String[][] recognizerPair = {
+			{ "ORB", "ORB", "" },// optionは後で検討
+			{ "GRID_ORB", "ORB", "" },
+			{ "PYRAMID_ORB", "ORB", "" },
+			{ "DYNAMIC_ORB", "ORB", "" },
+			{ "ORB", "OPPONENT_ORB", "" },
+			{ "GRID_ORB", "OPPONENT_ORB", "" },
+			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
+			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
+			{ "AKAZE", "AKAZE", "" },
+		};
+	private final Map<String[], ImageRecognizer> recognizers = new HashMap<String[], ImageRecognizer>();
+	
 	public ImageRecognitionServer() throws IOException {
-		Map<String, String> option = new HashMap<String, String>();
-		option.put("featureDetector", "ORB");
-		option.put("descriptorExtractor", "ORB");
-		option.put("optionFile", ""); // optionは後で検討
-		
-		recognizer = new ImageRecognizer(Paths.get("./data/train-image/"),option);
+		Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
+		while(iter_recognizer.hasNext()) {
+			String[] recognizer_set = iter_recognizer.next();
+			recognizers.put(recognizer_set, createRecognizer(recognizer_set)); 
+		}
 		queryImageDir = Paths.get("./data/query-image/");
 		itemInfo = loadItemInfo(Paths.get("./data/train-image/item_list.txt")); // リストのパスにする
 		Files.createDirectories(queryImageDir);
@@ -57,12 +70,19 @@ public class ImageRecognitionServer extends HttpServlet {
 		ImageScaler.adjustWidth(queryImagePath, 480);
 		// 認識処理にかかる時間を測定
 		long startTime = System.currentTimeMillis();
-		QueryResult q_result = recognizer.recognize(queryImagePath);
+		QueryResult q_result = recognizers.get(recognizerPair[0]).recognize(queryImagePath);
 		long time = System.currentTimeMillis() - startTime;
 		// 結果をJSON形式で送信
 		res.getWriter().print(JSON.encode(new ResponseModel(time, q_result, itemInfo)));
 	}
 
+	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException {
+		Map<String, String> option = new HashMap<String, String>();
+		option.put("featureDetector",  recognizerPair[0]);
+		option.put("descriptorExtractor",  recognizerPair[1]);
+		option.put("optionFile",  recognizerPair[2]);
+		return new ImageRecognizer(Paths.get("./data/train-image/"),option);
+	}
 	private Path extractQuery(HttpServletRequest req) {
 		try {
 			FileItem item = (FileItem) upload.parseRequest(req).get(0);
