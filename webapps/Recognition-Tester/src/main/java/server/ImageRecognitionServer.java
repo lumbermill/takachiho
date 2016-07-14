@@ -80,11 +80,14 @@ public class ImageRecognitionServer extends HttpServlet {
 			String[] recognizer_set = iter_recognizer.next();
 			QueryResult q_result = recognizers.get(recognizer_set).recognize(queryImagePath);
 			long time = System.currentTimeMillis() - startTime;
-			response.add(new ResponseModel(time, q_result, itemInfo));
+			response.add(new ResponseModel(time, q_result, itemInfo, recognizer_set));
 		}
+		Map<String,Object> response_set = new HashMap<String,Object>();
+		response_set.put("query_img_path", queryImagePath.toString());
+		response_set.put("responses", response);
 		
 		// 結果をJSON形式で送信
-		res.getWriter().print(JSON.encode(response));
+		res.getWriter().print(JSON.encode(response_set));
 	}
 
 	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException {

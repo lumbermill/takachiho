@@ -7,8 +7,14 @@
   $(function () {
 
     $('#fileInput').change(function () {
+      showQueryImage(this.files[0]);
       postRequest(this.files[0]);
     });
+
+    function showQueryImage(query_image) {
+      var blobUrl = window.URL.createObjectURL(query_image);
+      $("#query-image").html('<img src="' + blobUrl + '">');
+    }
 
     function postRequest(query_image) {
       var formData = new FormData();
@@ -24,7 +30,7 @@
         dataType: 'json'
       }).done(function (json) {
         // 結果をリストに表示
-        for (var result of json) {
+        for (var result of json.responses) {
           $('#results').append(generateHtml(result));
         }
       });
@@ -34,37 +40,50 @@
       var resultsJson = json.results;
       var html = '<div class="result">'
       html += 'time: ' + json.time + ' ms<br/>';
-      html += '<ol>'
+      html += 'FD: ' + json.featureDetectorName + '<br/>';
+      html += 'DE: ' + json.descriptorExtractorName + '<br/>';
+      html += 'Option File: ' + json.optionFileName + '<br/>';
+      html += '<ul>'
       for (var i in resultsJson) {
         var d = resultsJson[i];
         html += '<li>';
-        html += '<img src=' + d.labelImgSrc + ' width="100" height="130" title="' + d.label + ', JANコード：' + d.jan + '">' +
+        html += '<img src=' + d.labelImgSrc + ' width="100" height="130" title="' + d.label + ', JANコード：' + d.jan + '"><br>' +
           'スコア：' + d.score +
           ' (' + Math.round(d.similarytyRatio * 1000) / 10 + '%)';
         html += '</li>';
       }
-      html += '</ol>'
+      html += '</ul>'
       html += '</div>'
       return html;
     }
   });
   </script>
   <style>
+    body {
+      font-size:10px;
+    }
+    #query-image img{
+      width:150px;
+    }
     #results {
-      width:1500px; 
+      width:15000px; 
     }
     .result {
-      width:150px;
+      width:120px;
       float:left;
     }
+    .result ul {
+      padding:0;
+      list-style:none;
+    }
     .result li {
-      height: 200px;
+      height: 170px;
     }
   </style>
 </head>
 <body>
   <input type="file" id="fileInput" accept="image/*" capture="camera">
-  <div id="results">
-  </div>
+  <div id="query-image"></div>
+  <div id="results"></div>
 </body>
 </html>

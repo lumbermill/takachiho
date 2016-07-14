@@ -11,9 +11,15 @@ import java.util.Map;
 public class ResponseModel {
 	public final long time;
 	public final List<ResultModel> results;
+	public final String featureDetectorName;
+	public final String descriptorExtractorName;
+	public final String optionFileName;
 
-	public ResponseModel(long time, QueryResult q_result, Map<String, Map<String, String>> itemInfo) {
+	public ResponseModel(long time, QueryResult q_result, Map<String, Map<String, String>> itemInfo, String[] recognizer_set) {
 		this.time = time;
+		this.featureDetectorName = recognizer_set[0];
+		this.descriptorExtractorName = recognizer_set[1];
+		this.optionFileName      = recognizer_set[2];
 		this.results = new ArrayList<ResultModel>();
 		for (Result result : q_result.resultList) {
 			this.results.add(new ResultModel(result.id, result.score, itemInfo, q_result.queryImageFeature));
