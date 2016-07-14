@@ -45,13 +45,14 @@ public class ImageRecognitionServer extends HttpServlet {
 	private final Path resultJsonDir;
 	private final String[][] recognizerPair = { // 認識アルゴリズムの組み合わせ＋設定ファイル名 
 			{ "ORB",         "ORB", "" }, // optionは後で検討
-			{ "GRID_ORB",    "ORB", "" },
-			{ "PYRAMID_ORB", "ORB", "" },
-			{ "DYNAMIC_ORB", "ORB", "" },
-			{ "ORB",         "OPPONENT_ORB", "" },
-			{ "GRID_ORB",    "OPPONENT_ORB", "" },
-			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
-			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
+//			{ "GRID_ORB",    "ORB", "" },
+//			{ "PYRAMID_ORB", "ORB", "" },
+//			{ "DYNAMIC_ORB", "ORB", "" },
+//			{ "ORB",         "OPPONENT_ORB", "" },
+//			{ "GRID_ORB",    "OPPONENT_ORB", "" },
+//			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
+//			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
+//			{ "BRISK",       "BRISK", "" },
 			{ "AKAZE",       "AKAZE", "" }, };
 	private final Map<String, Map<String, String>> itemInfo; // 訓練画像のラベル情報
 
