@@ -14,12 +14,14 @@ public class ResponseModel {
 	public final String featureDetectorName;
 	public final String descriptorExtractorName;
 	public final String optionFileName;
+	public final int keypointCount;
 
 	public ResponseModel(long time, QueryResult q_result, Map<String, Map<String, String>> itemInfo, String[] recognizer_set) {
 		this.time = time;
 		this.featureDetectorName = recognizer_set[0];
 		this.descriptorExtractorName = recognizer_set[1];
 		this.optionFileName      = recognizer_set[2];
+		this.keypointCount       = q_result.queryImageFeature.countOfKeyPoints();
 		this.results = new ArrayList<ResultModel>();
 		for (Result result : q_result.resultList) {
 			this.results.add(new ResultModel(result.id, result.score, itemInfo, q_result.queryImageFeature));

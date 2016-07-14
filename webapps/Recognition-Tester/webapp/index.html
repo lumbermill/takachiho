@@ -39,10 +39,11 @@
     function generateHtml(json) {
       var resultsJson = json.results;
       var html = '<div class="result">'
-      html += 'time: ' + json.time + ' ms<br/>';
       html += 'FD: ' + json.featureDetectorName + '<br/>';
       html += 'DE: ' + json.descriptorExtractorName + '<br/>';
       html += 'Option File: ' + json.optionFileName + '<br/>';
+      html += 'time: ' + json.time + ' ms<br/>';
+      html += 'count of KP: ' + json.keypointCount;
       html += '<ul>'
       for (var i in resultsJson) {
         var d = resultsJson[i];
