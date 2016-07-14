@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -158,15 +159,22 @@ public class ImageRecognitionServer extends HttpServlet {
 		return map;
 	}
 
-	private void saveResultJSON(String resultJSON, String queryImageHash) throws IOException  {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String now = sdf.format(new Date());
-		String filename = queryImageHash + "-" + now + ".json";
-		Path savePath = resultJsonDir.resolve(filename);
-		File file = savePath.toFile();
-		FileWriter filewriter = new FileWriter(file);
-		filewriter.write(resultJSON);
-		filewriter.close();
+	private void saveResultJSON(String resultJSON, String queryImageHash) throws IOException {
+		// 非同期で保存
+		CompletableFuture.runAsync(() -> {
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String now = sdf.format(new Date());
+				String filename = queryImageHash + "-" + now + ".json";
+				Path savePath = resultJsonDir.resolve(filename);
+				File file = savePath.toFile();
+				FileWriter filewriter = new FileWriter(file);
+				filewriter.write(resultJSON);
+				filewriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	public static void main(String[] args) throws Exception {
