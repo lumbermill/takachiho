@@ -24,6 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -77,24 +81,44 @@ public class ImageRecognitionServer extends HttpServlet {
 		ImageScaler.adjustWidth(queryImagePath, 480);
 
 		// すべての判定器を使って判定する
-		Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
+        Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
 		List<ResponseModel> response = new ArrayList<ResponseModel>();
-		while (iter_recognizer.hasNext()) {
-			// 認識処理にかかる時間を測定
-			long startTime = System.currentTimeMillis();
-			String[] recognizer_set = iter_recognizer.next();
-			QueryResult q_result = recognizers.get(recognizer_set).recognize(queryImagePath);
-			long time = System.currentTimeMillis() - startTime;
-			response.add(new ResponseModel(time, q_result, itemInfo, recognizer_set));
+		List<Callable<ResponseModel>> tasks = new ArrayList<Callable<ResponseModel>>();
+        ExecutorService es = Executors.newFixedThreadPool(2);
+		try {
+			while (iter_recognizer.hasNext()) {
+				tasks.add(new ParallelRecognition(iter_recognizer.next(), queryImagePath));
+			}
+			// タスクを並列実行する
+			List<Future<ResponseModel>> futures = null;
+			try {
+				futures = es.invokeAll(tasks);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+				return;
+			}
+            // 並列処理の返り値を取得する
+            for (Future<ResponseModel> future : futures) {
+                try {
+                    response.add(future.get());
+                } catch (Exception e) {
+    				System.out.println(e.getMessage());
+                }
+            }
+		} finally {
+			if (es != null) {
+				es.shutdown();
+			}
 		}
+
 		Map<String, Object> response_set = new HashMap<String, Object>();
 		response_set.put("query_img_path", queryImagePath.toString());
 		response_set.put("responses", response);
 
 		// 結果をJSON形式で保存・送信
 		String resultJSON = JSON.encode(response_set);
-		this.saveResultJSON(resultJSON, queryImageHash);
 		res.getWriter().print(resultJSON);
+		this.saveResultJSON(resultJSON, queryImageHash);
 	}
 
 	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException {
@@ -168,7 +192,26 @@ public class ImageRecognitionServer extends HttpServlet {
 		filewriter.write(resultJSON);
 		filewriter.close();
 	}
-
+	
+	// 画像認識を並列実行するクラス
+	private class ParallelRecognition implements Callable<ResponseModel> {
+		private String[] recognizer_set;
+		private Path queryImagePath;
+		
+		public ParallelRecognition(String[] recognizer_set, Path queryImagePath) {
+			this.recognizer_set = recognizer_set;
+			this.queryImagePath = queryImagePath;
+		}
+        @Override
+        public ResponseModel call() throws Exception {
+			// 認識処理にかかる時間を測定
+			long startTime = System.currentTimeMillis();
+			QueryResult q_result = recognizers.get(recognizer_set).recognize(queryImagePath);
+			long time = System.currentTimeMillis() - startTime;
+			return new ResponseModel(time, q_result, itemInfo, recognizer_set);
+        }
+	}
+	
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8080);
 		WebAppContext context = new WebAppContext("./webapp", "/");
