@@ -58,7 +58,7 @@ public class ImageRecognitionServer extends HttpServlet {
 			{ "AKAZE",       "AKAZE", "" }, };
 	private final Map<String, Map<String, String>> itemInfo; // 訓練画像のラベル情報
 
-	public ImageRecognitionServer() throws IOException {
+	public ImageRecognitionServer() throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
 		while (iter_recognizer.hasNext()) {
 			String[] recognizer_set = iter_recognizer.next();
@@ -99,7 +99,7 @@ public class ImageRecognitionServer extends HttpServlet {
 		res.getWriter().print(resultJSON);
 	}
 
-	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException {
+	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		Map<String, String> option = new HashMap<String, String>();
 		option.put("featureDetector", recognizerPair[0]);
 		option.put("descriptorExtractor", recognizerPair[1]);

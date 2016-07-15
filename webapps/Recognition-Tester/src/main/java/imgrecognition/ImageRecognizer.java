@@ -3,6 +3,7 @@ package imgrecognition;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class ImageRecognizer {
 		LoadDescriptorExtractorNames();
 	}
 
-	public ImageRecognizer(Path trainImageRoot, Map<String, String> option) throws IOException {
+	public ImageRecognizer(Path trainImageRoot, Map<String, String> option) throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		featureDetectorName = option.get("featureDetector");
 		descriptorExtractorName = option.get("descriptorExtractor");
 		optionFile = (String) option.get("optionFile");
@@ -41,8 +42,11 @@ public class ImageRecognizer {
 			featureDetector.read(configPath);
 			descriptorExtractor.read(configPath);
 		}
+		
 		featureExtractor = new FeatureExtractor(featureDetector, descriptorExtractor);
+
 		trainData = loadTrainData(trainImageRoot);
+
 	}
 
 	public QueryResult recognize(Path queryImagePath) {
@@ -57,22 +61,31 @@ public class ImageRecognizer {
 	}
 
 	// 登録された訓練画像を読み込み、特徴量を抽出する
-	private List<TrainData> loadTrainData(Path trainImageRoot) throws IOException {
+	private List<TrainData> loadTrainData(Path trainImageRoot) throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		List<TrainData> trainData = new ArrayList<TrainData>();
 		for (Path idDir : Files.newDirectoryStream(trainImageRoot)) {
 			if (!idDir.toFile().isDirectory()) {
 				continue;
 			}
+
 			String id = idDir.getFileName().toString();
 			for (Path imagePath : Files.newDirectoryStream(idDir)) {
 				try {
-					Feature features = featureExtractor.extract(imagePath);
-					System.out.print("FD:" + featureDetectorName + "/");
-					System.out.print("DE:" + descriptorExtractorName + "/");
-					System.out.print("OptionFile:" + optionFile + "/");
-					System.out.print("Count of keypoints for train image(" + imagePath.toString() + "):");
-					System.out.println(features.countOfKeyPoints());
-					trainData.add(new TrainData(id, features.descriptors));
+					TrainData trainDatum = TrainDataCache.getCache(imagePath, featureDetectorName, descriptorExtractorName,
+							optionFile);
+					// 訓練データがキャッシュから取得できなければ新たに作成する
+					if (trainDatum == null) {
+						Feature features = featureExtractor.extract(imagePath);
+						System.out.print("FD:" + featureDetectorName + "/");
+						System.out.print("DE:" + descriptorExtractorName + "/");
+						System.out.print("OptionFile:" + optionFile + "/");
+						System.out.print("Count of keypoints for train image(" + imagePath.toString() + "):");
+						System.out.println(features.countOfKeyPoints());
+						trainDatum = new TrainData(id, features.descriptors);
+						TrainDataCache.saveCache(trainDatum, imagePath, featureDetectorName, descriptorExtractorName,
+								optionFile); // 訓練データをキャッシュに保存
+					}
+					trainData.add(trainDatum);
 				} catch (org.opencv.core.CvException e) {
 					System.out.println(
 							"Something wrong with " + imagePath.toString() + ". This File is ignored. Error :" + e);

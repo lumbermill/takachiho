@@ -1,5 +1,6 @@
 data/query-image/*
 data/train-image/*
+data/train-cache/*
 data/result-json/*
 webapp/label-image/*
 libs/*
