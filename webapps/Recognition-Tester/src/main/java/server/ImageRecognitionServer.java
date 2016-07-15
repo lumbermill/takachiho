@@ -29,6 +29,7 @@ import java.util.concurrent.CompletableFuture;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import net.arnx.jsonic.JSON;
 
@@ -126,16 +127,7 @@ public class ImageRecognitionServer extends HttpServlet {
 		byte[] digest = md.digest();
 		input.close();
 		// 16進数文字列に変換
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < digest.length; i++) {
-			String tmp = Integer.toHexString(digest[i] & 0xff);
-			if (tmp.length() == 1) {
-				buffer.append('0').append(tmp);
-			} else {
-				buffer.append(tmp);
-			}
-		}
-		return buffer.toString();
+		return DatatypeConverter.printHexBinary(digest);
 	}
 
 	// ID,JANコード,商品名をテキストファイルから読み込む
