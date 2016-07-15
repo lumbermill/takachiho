@@ -29,24 +29,24 @@ public class ImageRecognizer {
 		LoadDescriptorExtractorNames();
 	}
 
-	public ImageRecognizer(Path trainImageRoot, Map<String, String> option) throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
+	public ImageRecognizer(Path trainImageRoot, Map<String, String> option)
+			throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		featureDetectorName = option.get("featureDetector");
 		descriptorExtractorName = option.get("descriptorExtractor");
 		optionFile = (String) option.get("optionFile");
 
 		FeatureDetector featureDetector = FeatureDetector.create(featureDetectorNames.get(featureDetectorName));
-		DescriptorExtractor descriptorExtractor = DescriptorExtractor.create(descriptorExtractorNames.get(descriptorExtractorName));
+		DescriptorExtractor descriptorExtractor = DescriptorExtractor
+				.create(descriptorExtractorNames.get(descriptorExtractorName));
 
 		if (optionFile != null && optionFile != "") {
 			String configPath = getClass().getResource(optionFile).getPath();
 			featureDetector.read(configPath);
 			descriptorExtractor.read(configPath);
 		}
-		
+
 		featureExtractor = new FeatureExtractor(featureDetector, descriptorExtractor);
-
 		trainData = loadTrainData(trainImageRoot);
-
 	}
 
 	public QueryResult recognize(Path queryImagePath) {
@@ -99,8 +99,8 @@ public class ImageRecognizer {
 	private static void LoadFeatureDetectorNames() {
 		featureDetectorNames.put("FAST", new Integer(FeatureDetector.FAST));
 		featureDetectorNames.put("STAR", new Integer(FeatureDetector.STAR));
-		featureDetectorNames.put("SIFT", new Integer(FeatureDetector.SIFT));
-		featureDetectorNames.put("SURF", new Integer(FeatureDetector.SURF));
+//		featureDetectorNames.put("SIFT", new Integer(FeatureDetector.SIFT)); //　ライセンス的に不可
+//		featureDetectorNames.put("SURF", new Integer(FeatureDetector.SURF)); //　ライセンス的に不可
 		featureDetectorNames.put("ORB", new Integer(FeatureDetector.ORB));
 		featureDetectorNames.put("MSER", new Integer(FeatureDetector.MSER));
 		featureDetectorNames.put("GFTT", new Integer(FeatureDetector.GFTT));
@@ -149,8 +149,8 @@ public class ImageRecognizer {
 	}
 
 	private static void LoadDescriptorExtractorNames() {
-		descriptorExtractorNames.put("SIFT", new Integer(DescriptorExtractor.SIFT));
-		descriptorExtractorNames.put("SURF", new Integer(DescriptorExtractor.SURF));
+//		descriptorExtractorNames.put("SIFT", new Integer(DescriptorExtractor.SIFT));　//　ライセンス的に不可
+//		descriptorExtractorNames.put("SURF", new Integer(DescriptorExtractor.SURF));　//　ライセンス的に不可
 		descriptorExtractorNames.put("ORB", new Integer(DescriptorExtractor.ORB));
 		descriptorExtractorNames.put("BRIEF", new Integer(DescriptorExtractor.BRIEF));
 		descriptorExtractorNames.put("BRISK", new Integer(DescriptorExtractor.BRISK));
@@ -163,5 +163,16 @@ public class ImageRecognizer {
 		descriptorExtractorNames.put("OPPONENT_BRISK", new Integer(DescriptorExtractor.OPPONENT_BRISK));
 		descriptorExtractorNames.put("OPPONENT_FREAK", new Integer(DescriptorExtractor.OPPONENT_FREAK));
 		descriptorExtractorNames.put("OPPONENT_AKAZE", new Integer(DescriptorExtractor.OPPONENT_AKAZE));
-	}	
+	}
+	
+	public static String[][] allRecognizerPair() {
+		List<String[]> result = new ArrayList<String[]>();
+		for (String fd : ImageRecognizer.featureDetectorNames.keySet()) {
+			for (String de : ImageRecognizer.descriptorExtractorNames.keySet()) {
+				String[] recognizerPair = {fd,de,""}; 
+				result.add(recognizerPair);
+			}
+		}
+		return result.toArray(new String[0][0]);
+	}
 }

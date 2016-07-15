@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,28 +43,41 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 @SuppressWarnings("serial")
 public class ImageRecognitionServer extends HttpServlet {
+    private final Logger logger;
 	private final ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 	private final Path queryImageDir;
 	private final Map<String[], ImageRecognizer> recognizers = new HashMap<String[], ImageRecognizer>();
 	private final Path resultJsonDir;
-	private final String[][] recognizerPair = { // 認識アルゴリズムの組み合わせ＋設定ファイル名 
-			{ "ORB",         "ORB", "" }, // optionは後で検討
-//			{ "GRID_ORB",    "ORB", "" },
-//			{ "PYRAMID_ORB", "ORB", "" },
-//			{ "DYNAMIC_ORB", "ORB", "" },
-//			{ "ORB",         "OPPONENT_ORB", "" },
-//			{ "GRID_ORB",    "OPPONENT_ORB", "" },
-//			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
-//			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
+//	private final String[][] recognizerPair = { // 認識アルゴリズムの組み合わせ＋設定ファイル名 
+//			{ "ORB",         "ORB", "" }, // optionは後で検討
+////			{ "GRID_ORB",    "ORB", "" },
+////			{ "PYRAMID_ORB", "ORB", "" },
+////			{ "DYNAMIC_ORB", "ORB", "" },
+////			{ "ORB",         "OPPONENT_ORB", "" },
+////			{ "GRID_ORB",    "OPPONENT_ORB", "" },
+////			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
+////			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
 //			{ "BRISK",       "BRISK", "" },
-			{ "AKAZE",       "AKAZE", "" }, };
+//			{ "AKAZE",       "AKAZE", "" },
+////			{ "MSER",        "FREAK", "" }, // can not use
+//			};
+	private final String[][] recognizerPair = ImageRecognizer.allRecognizerPair();
 	private final Map<String, Map<String, String>> itemInfo; // 訓練画像のラベル情報
 
 	public ImageRecognitionServer() throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
-		Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
+
+		logger = Logger.getLogger("Recognition-Tester");
+	    FileHandler fh = new FileHandler("./log/loggile.log");
+	    logger.addHandler(fh);
+
+	    Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
 		while (iter_recognizer.hasNext()) {
 			String[] recognizer_set = iter_recognizer.next();
-			recognizers.put(recognizer_set, createRecognizer(recognizer_set));
+			try {
+				recognizers.put(recognizer_set, createRecognizer(recognizer_set));
+			} catch (Exception e) {
+				logger.warning(recognizer_set[0] + " / " + recognizer_set[1] + " are not able to Use.");
+			}
 		}
 		queryImageDir = Paths.get("./data/query-image/");
 		itemInfo = loadItemInfo(Paths.get("./data/train-image/item_list.txt")); // リストのパスにする
@@ -85,9 +100,12 @@ public class ImageRecognitionServer extends HttpServlet {
 			// 認識処理にかかる時間を測定
 			long startTime = System.currentTimeMillis();
 			String[] recognizer_set = iter_recognizer.next();
-			QueryResult q_result = recognizers.get(recognizer_set).recognize(queryImagePath);
-			long time = System.currentTimeMillis() - startTime;
-			response.add(new ResponseModel(time, q_result, itemInfo, recognizer_set));
+			ImageRecognizer recognizer = recognizers.get(recognizer_set);
+			if (recognizer != null) {
+				QueryResult q_result = recognizer.recognize(queryImagePath);
+				long time = System.currentTimeMillis() - startTime;
+				response.add(new ResponseModel(time, q_result, itemInfo, recognizer_set));
+			}
 		}
 		Map<String, Object> response_set = new HashMap<String, Object>();
 		response_set.put("query_img_path", queryImagePath.toString());

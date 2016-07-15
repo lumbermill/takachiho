@@ -2,6 +2,7 @@ data/query-image/*
 data/train-image/*
 data/train-cache/*
 data/result-json/*
+log/*
 webapp/label-image/*
 libs/*
 .*
