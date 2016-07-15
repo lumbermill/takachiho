@@ -20,16 +20,16 @@
 　　　
 　　アイコンも下記の11サイズ用意します　　　
 　　　　　　　　　　　　　　29×29 pixe
-　　　　　　　　　　　　　　40 40 pixel
-　　　　　　　　　　　　　　58 58 pixel
-　　　　　　　　　　　　　　76 76 pixel
-　　　　　　　　　　　　　　80 80 pixel
-　　　　　　　　　　　　　　87 87 pixel
-　　　　　　　　　　　　　　120 120 pixel
-　　　　　　　　　　　　　　152 152 pixel
-　　　　　　　　　　　　　　160 160 pixel
-　　　　　　　　　　　　　　167 167 pixel
-　　　　　　　　　　　　　　180 180 pixel
+　　　　　　　　　　　　　　40×40 pixel
+　　　　　　　　　　　　　　58×58 pixel
+　　　　　　　　　　　　　　76×76 pixel
+　　　　　　　　　　　　　　80×80 pixel
+　　　　　　　　　　　　　　87×87 pixel
+　　　　　　　　　　　　　　120×120 pixel
+　　　　　　　　　　　　　　152×152 pixel
+　　　　　　　　　　　　　　160×160 pixel
+　　　　　　　　　　　　　　167×167 pixel
+　　　　　　　　　　　　　　180×180 pixel
 
 1. Xcodeを開き、Product->Archiveを選択します。
   - Archiveを選択できない場合、Deviceを「Generic iOS Device」にしてください。
