@@ -1,0 +1,10 @@
+
+# git clone https://github.com/richardghirst/PiBits.git
+# cd PiBits/ServoBlaster/user/
+# make servod
+# sudo ./servod  or  sudo make install
+
+desc 'Send scripts to raspberrypi.local'
+task :sync do
+  `rsync -avz ./ pi@raspberrypi.local:/opt/lm/servoblaster/`
+end
