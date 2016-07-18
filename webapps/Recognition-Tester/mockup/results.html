@@ -15,6 +15,9 @@
     .red{
       color: red;
     }
+    img.item{
+      max-height: 100px
+    }
     </style>
   </head>
   <body>
@@ -43,12 +46,28 @@
 
     <div class="container">
       <h1>Results</h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form class="form-inline">
+            <select class="form-control">
+              <option value="">Recogtest 1.0.0 BRISK</option>
+            </select>
+            <button class="btn btn-success">絞込み</button>
+          </form>
+        </div>
+      </div>
+      <p>使用したシステムのバージョンやdescriptor(記述子)ごとに一意なIDを割り当てておいて、それらで絞込みをしたい。</p>
+
+
+      <p style="text-align: right"><a href="glossaries.html">指標の定義</a></p>
       <table class="table table-bordered">
         <tr>
           <th>結果総数</th>
           <td>3</td>
-          <th>期間</th>
-          <td colspan="3"></td>
+          <th>正解率</th>
+          <td></td>
+          <th>不正解率</th>
+          <td></td>
         </tr>
         <tr>
           <th>適合率</th>
@@ -59,7 +78,6 @@
           <td></td>
         </tr>
       </table>
-
       <table class="table">
         <tr>
           <th>ID</th>
@@ -73,40 +91,50 @@
           <th></th>
         </tr>
         <tr>
+          <td>34</td>
+          <td>0000-00-00<br/>00:00:00</td>
+          <td>ImageRecognition-Tester<br/>1.0.0 BRISK</td>
+          <td><img src="assets/src1.jpg" class="item"/></td>
+          <td><button class="btn btn-default btn-sm">Tell</button></td>
+          <td><img src="assets/4901411110912/0.jpg" class="item"/></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
           <td>3</td>
           <td>0000-00-00<br/>00:00:00</td>
           <td>ImageRecognition-Tester<br/>1.0.0 BRISK</td>
-          <td>入力画像</td>
-          <td>候補画像1</td>
-          <td>候補画像2</td>
-          <td>候補画像3</td>
-          <td>正解画像</td>
+          <td><img src="assets/src1.jpg" class="item"/></td>
+          <td><img src="assets/4901880879891/0.jpg" class="item"/></td>
+          <td><img src="assets/4901880879891/0.jpg" class="item"/></td>
+          <td></td>
+          <td></td>
           <td><span class="glyphicon glyphicon-ok green"></span></td>
         </tr>
         <tr>
           <td>2</td>
           <td>0000-00-00<br/>00:00:00</td>
           <td>ImageRecognition-Tester<br/>1.0.0 BRISK</td>
-          <td>入力画像</td>
-          <td>候補画像1</td>
-          <td>候補画像2</td>
-          <td>候補画像3</td>
-          <td>正解画像</td>
-          <td><span class="glyphicon glyphicon-remove red"></span></td>
+          <td><img src="assets/src2.jpg" class="item"/></td>
+          <td><span class="glyphicon glyphicon-question-sign"></span></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><span class="glyphicon glyphicon-question-sign"></span></td>
         </tr>
         <tr>
           <td>1</td>
           <td>0000-00-00<br/>00:00:00</td>
           <td>ImageRecognition-Tester<br/>1.0.0 BRISK</td>
-          <td>入力画像</td>
-          <td>候補画像1</td>
-          <td>候補画像2</td>
-          <td>候補画像3</td>
-          <td>正解画像</td>
+          <td><img src="assets/src1.jpg" class="item"/></td>
+          <td><img src="assets/4901880879891/0.jpg" class="item"/></td>
+          <td><img src="assets/4901004027160/0.jpg" class="item"/></td>
+          <td></td>
+          <td></td>
           <td><span class="glyphicon glyphicon-remove red"></span></td>
         </tr>
       </table>
-
     </div> <!-- /container -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

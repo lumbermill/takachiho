@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>OpenCV - Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+    .green{
+      color: green;
+    }
+    .red{
+      color: red;
+    }
+    </style>
+  </head>
+  <body>
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">OpenCV - Results</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="results.html">Results</a></li>
+            <li><a href="items.html">Items</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <div class="container">
+      <h1>Glossaries</h1>
+      <div class="row">
+        <div class="col-sm-6">
+          <table class="table table-bordered">
+            <tr>
+              <td></td>
+              <th>商品を判別可能</th>
+              <th>判別不能</th>
+            </tr>
+            <tr>
+              <th>認識結果が一致</th>
+              <td>TP <span class="glyphicon glyphicon-ok green"></span></td>
+              <td>FP (常に0)</td>
+            </tr>
+            <tr>
+              <th>認識結果が不一致</th>
+              <td>FN <span class="glyphicon glyphicon-remove red"></span></td>
+              <td>FN <span class="glyphicon glyphicon-remove red"></span></td>
+            </tr>
+            <tr>
+              <th>認識不能</th>
+              <td>FN <span class="glyphicon glyphicon-remove red"></span></td>
+              <td>TN <span class="glyphicon glyphicon-question-sign"></span></td>
+            </tr>
+          </table>
+          <p>
+            正解率(accuracy) = (TP + TN) / (TP + FP + FN + TN)
+          </p>
+          <p>
+            不正解率(error) = (FP + FN) / (TP + FP + FN + TN) = 1 - 正解率
+          </p>
+          <p>
+            適合率(presicion) = TP / (TP + FP) (常に1)
+          </p>
+          <p>
+            再現率(recall) = TP / (TP + FN)
+          </p>
+          <p>
+            F値(f-measure) = 2 x 適合率 x 再現率 / (適合率 + 再現率)
+          </p>
+          <p>これらは本来、不良品検査の分野で使われている指標です（少々無理にこじつけています）。
+            正解率と再現率に注目して精度を高めることを目指します。
+          </p>
+        </div>
+      </div>
+    </div> <!-- /container -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
