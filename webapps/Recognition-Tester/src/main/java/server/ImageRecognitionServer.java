@@ -48,26 +48,13 @@ public class ImageRecognitionServer extends HttpServlet {
 	private final Path queryImageDir;
 	private final Map<String[], ImageRecognizer> recognizers = new HashMap<String[], ImageRecognizer>();
 	private final Path resultJsonDir;
-//	private final String[][] recognizerPair = { // 認識アルゴリズムの組み合わせ＋設定ファイル名 
-//			{ "ORB",         "ORB", "" }, // optionは後で検討
-////			{ "GRID_ORB",    "ORB", "" },
-////			{ "PYRAMID_ORB", "ORB", "" },
-////			{ "DYNAMIC_ORB", "ORB", "" },
-////			{ "ORB",         "OPPONENT_ORB", "" },
-////			{ "GRID_ORB",    "OPPONENT_ORB", "" },
-////			{ "PYRAMID_ORB", "OPPONENT_ORB", "" },
-////			{ "DYNAMIC_ORB", "OPPONENT_ORB", "" },
-//			{ "BRISK",       "BRISK", "" },
-//			{ "AKAZE",       "AKAZE", "" },
-////			{ "MSER",        "FREAK", "" }, // can not use
-//			};
-	private final String[][] recognizerPair = ImageRecognizer.allRecognizerPair();
+	private final String[][] recognizerPair = ImageRecognizer.allAvailableRecognizerPair();
 	private final Map<String, Map<String, String>> itemInfo; // 訓練画像のラベル情報
 
 	public ImageRecognitionServer() throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
 
 		logger = Logger.getLogger("Recognition-Tester");
-	    FileHandler fh = new FileHandler("./log/loggile.log");
+	    FileHandler fh = new FileHandler("./log/logfile.log");
 	    logger.addHandler(fh);
 
 	    Iterator<String[]> iter_recognizer = Arrays.asList(recognizerPair).iterator();
@@ -75,8 +62,10 @@ public class ImageRecognitionServer extends HttpServlet {
 			String[] recognizer_set = iter_recognizer.next();
 			try {
 				recognizers.put(recognizer_set, createRecognizer(recognizer_set));
+				logger.info(recognizer_set[0] + " / " + recognizer_set[1] + " are able to Use.");
 			} catch (Exception e) {
 				logger.warning(recognizer_set[0] + " / " + recognizer_set[1] + " are not able to Use.");
+				logger.warning("error:" + e);
 			}
 		}
 		queryImageDir = Paths.get("./data/query-image/");
@@ -87,6 +76,7 @@ public class ImageRecognitionServer extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		logger.info("Query Start.");
 		res.setContentType("application/json;charset=UTF-8");
 		String queryImageHash = extractQuery(req);
 		Path queryImagePath = queryImageDir.resolve(queryImageHash + ".jpg");
@@ -115,6 +105,7 @@ public class ImageRecognitionServer extends HttpServlet {
 		String resultJSON = JSON.encode(response_set);
 		this.saveResultJSON(resultJSON, queryImageHash);
 		res.getWriter().print(resultJSON);
+		logger.info("Query Finish.");
 	}
 
 	private ImageRecognizer createRecognizer(String[] recognizerPair) throws IOException, NoSuchAlgorithmException, ClassNotFoundException {
