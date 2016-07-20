@@ -179,7 +179,7 @@ public class ImageRecognitionServer extends HttpServlet {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Server server = new Server(8080);
+		Server server = new Server(8081);
 		WebAppContext context = new WebAppContext("./webapp", "/");
 		server.setHandler(context);
 		server.start();
