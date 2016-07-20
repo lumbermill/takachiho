@@ -1,0 +1,2 @@
+class TrainDatum < ApplicationRecord
+end
