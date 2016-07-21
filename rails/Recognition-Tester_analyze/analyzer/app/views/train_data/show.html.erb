@@ -1,4 +1,13 @@
 <p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_train_datum_path(@train_datum) %> |
+<table class="table">
+  <tr>
+    <td><%= @train_datum[:id] %></td>
+    <td><%= @train_datum[:jan] %><br><%= @train_datum[:label] %></td>
+    <td><%= @train_datum.image_count %></td>
+  </tr>
+</table>
+<% @train_datum.all_image_paths.each do |image_path| %>
+  <%= image_tag(image_path, {class:"item"}) %>
+<% end %>
+<br>
 <%= link_to 'Back', train_data_path %>
