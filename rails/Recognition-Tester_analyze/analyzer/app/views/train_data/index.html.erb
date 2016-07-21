@@ -10,8 +10,22 @@
   </thead>
 
   <tbody>
+    <tr>
+      <th>ID</th>
+      <th>LABEL IMAGE</th>
+      <th>CODE/NAME</th>
+      <th>COUNT</th>
+      <th></th>
+    </tr>
     <% @train_data.each do |train_datum| %>
       <tr>
+
+        <td><%= train_datum[:id] %></td>
+        <td><%= image_tag("train-image/#{train_datum[:id]}/0.jpg", {class:"item",alt:train_datum[:label]}) %></td>
+        <td><%= train_datum[:jan] %><br><%= train_datum[:label] %></td>
+        <td>5</td>
+        <td><a href="" class="btn btn-default">詳細</a></td>
+
         <td><%= link_to 'Show', train_datum %></td>
         <td><%= link_to 'Edit', edit_train_datum_path(train_datum) %></td>
         <td><%= link_to 'Destroy', train_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
