@@ -14,10 +14,10 @@
     <% @train_data.each do |train_datum| %>
       <tr>
         <td><%= train_datum[:id] %></td>
-        <td><%= image_tag("train-image/#{train_datum[:id]}/0.jpg", {class:"item",alt:train_datum[:label]}) %></td>
+        <td><%= image_tag(train_datum.label_image_path, {class:"item",alt:train_datum[:label]}) %></td>
         <td><%= train_datum[:jan] %><br><%= train_datum[:label] %></td>
-        <td><%= train_image_count(train_datum[:id]) %></td>
-        <td><a href="" class="btn btn-default">詳細</a></td>
+        <td><%= train_datum.image_count %></td>
+        <td><%= link_to('詳細', train_datum, {class:"btn btn-default"}) %></td>
       </tr>
     <% end %>
   </tbody>
