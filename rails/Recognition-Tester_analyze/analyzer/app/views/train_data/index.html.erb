@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Train Data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @train_data.each do |train_datum| %>
+      <tr>
+        <td><%= link_to 'Show', train_datum %></td>
+        <td><%= link_to 'Edit', edit_train_datum_path(train_datum) %></td>
+        <td><%= link_to 'Destroy', train_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Train Datum', new_train_datum_path %>
