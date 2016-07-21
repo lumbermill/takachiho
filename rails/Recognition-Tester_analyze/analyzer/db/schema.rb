@@ -12,23 +12,23 @@
 
 ActiveRecord::Schema.define(version: 20160720043106) do
 
-  create_table "answers", force: :cascade do |t|
+  create_table "answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "query_id"
     t.integer  "train_datum_id"
     t.integer  "score"
-    t.float    "similarytyRatio"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.float    "similarytyRatio", limit: 24
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  create_table "correct_answers", force: :cascade do |t|
+  create_table "correct_answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "query_id"
     t.integer  "train_datum_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
-  create_table "queries", force: :cascade do |t|
+  create_table "queries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "fd_algorithm"
     t.string   "de_algorithm"
     t.string   "option_name"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20160720043106) do
     t.datetime "updated_at",            null: false
   end
 
-  create_table "train_data", force: :cascade do |t|
+  create_table "train_data", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "jan"
     t.string   "label"
     t.datetime "created_at", null: false
