@@ -1,5 +1,3 @@
-# TODO: Compositeのコードが使える？
-
 # Copied from Compsite pattern.
 require_relative './entry.rb'
 require_relative './directory.rb'
