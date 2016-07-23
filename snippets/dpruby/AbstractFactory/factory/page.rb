@@ -1,6 +1,4 @@
 class Page
-  attr_reader :content, :title, :author
-
   def initialize(title,author)
     @content = []
     @title = title

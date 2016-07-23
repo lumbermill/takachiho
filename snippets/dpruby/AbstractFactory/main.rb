@@ -34,5 +34,3 @@ page = factory.create_page("MyBookmakrs","Taro Ruby")
 page.add(tray1)
 page.add(tray2)
 page.output
-
-# TODO: attr_reader不要なとこがある？
