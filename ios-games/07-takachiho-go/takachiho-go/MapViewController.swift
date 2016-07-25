@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let lm = CLLocationManager()
     var current = MKPointAnnotation()
@@ -113,7 +113,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
 
         // ImagePicker(Camera)
         let ipc = UIImagePickerController() // TODO: サブクラス必要？効果なし
-        ipc.delegate = self
         if (Utils.isSimulator()){
             ipc.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
         }else{
@@ -123,14 +122,9 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             let sh = UIScreen.mainScreen().bounds.height // screen height
             let ch = UIScreen.mainScreen().bounds.width / 3 * 4
             ipc.cameraViewTransform.ty = (sh - ch) / 2.0;
-            let ov = OverlayView(name: current_spot?.name, imagePicker: ipc)
+            let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
             ov.imagePicker = ipc
             ipc.cameraOverlayView = ov
-            //ipc. 正方形固定、ビューをオーバラップする。
-        }
-        let cd = UIDevice.currentDevice()
-        while(cd.generatesDeviceOrientationNotifications){
-            cd.endGeneratingDeviceOrientationNotifications()
         }
         self.presentViewController(ipc, animated: true, completion: {})
     }
@@ -146,12 +140,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         print("begin writing image data.")
         d.writeToFile(p.path_for_photo(), atomically: true)
         points.dictionary[p.name]!.visited = true
-//        picker.dismissViewControllerAnimated(true, completion: {
-//            let cd = UIDevice.currentDevice()
-//            while(!cd.generatesDeviceOrientationNotifications){
-//                cd.beginGeneratingDeviceOrientationNotifications()
-//            }
-//        })
+        picker.dismissViewControllerAnimated(true, completion: {})
         for a in mapView.selectedAnnotations {
             mapView.deselectAnnotation(a, animated: true)
             mapView.removeAnnotation(a)

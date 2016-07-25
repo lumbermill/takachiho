@@ -62,8 +62,19 @@ class Points {
         
         array += [Point("Kushifuru",kanji:"槵觸神社",lat: 32.710119,lng: 131.315543)]
         array += [Point("Takachiho",kanji:"高千穂神社",lat: 32.706422,lng: 131.302074)]
-        array += [Point("AmanoIwato",kanji:"天岩戸神社",lat: 32.734211,lng: 131.350292)]
+        array += [Point("Amanoiwato",kanji:"天岩戸神社",lat: 32.734211,lng: 131.350292)]
         array += [Point("Futagami",kanji:"二上神社",lat: 32.686976,lng: 131.267234)]
+        array += [Point("Aratate",kanji: "荒立神社",lat: 32.711973,lng: 131.317138)]
+        array += [Point("Akimoto",kanji: "秋元神社",lat: 32.664870,lng: 131.295042)]
+        array += [Point("Sobodake",kanji: "祖母嶽神社",lat: 32.811019,lng: 131.278183)]
+        array += [Point("Nakahata",kanji: "中畑神社",lat: 32.723787,lng: 131.273881)]
+        array += [Point("Ishigami",kanji: "石神神社",lat: 32.706693,lng: 131.322702)]
+        array += [Point("Shimonohachiman Daijinja",kanji: "下野八幡大神社",lat: 32.745196,lng: 131.307631)]
+        array += [Point("Hachudairyuou Suijinja",kanji: "八大龍王水神社",lat: 32.730220,lng: 131.356878)]
+        // array += [Point("Akaishi Shrine",kanji: "赤石神社",lat: ,lng: )] どこ？
+        // 逢初天神社 雲がかかって見えず…！
+        
+        array += [Point("NAZO",kanji: "謎の神社",lat: 32.717751,lng: 131.305815)]
         
         for p in array {
             dictionary[p.name] = p
