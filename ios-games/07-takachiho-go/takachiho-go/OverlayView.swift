@@ -54,15 +54,19 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         CGContextSetFillColor(context, [0.8, 0.8, 0.8, 1.0])
         //CGContextSetFont(context, font: CGFont())
         if let n = name {
-            let font = UIFont(name: "Copperplate", size: 40)!
+            // Name(English)
+            let padding = frame.width * 0.02
+            let fsize = frame.width * 0.1
+            let font = UIFont(name: "Copperplate", size: fsize)!
             let attrs = [NSFontAttributeName: font,NSForegroundColorAttributeName: UIColor.whiteColor()]
             let an = NSAttributedString(string: n, attributes: attrs)
-            // CGContextShowTextAtPoint(context, 8, offset_y, n, 9);
-            // NSString(string: n).drawAtPoint(CGPointMake(8,offset_y), withAttributes: nil)
-            an.drawAtPoint(CGPointMake(8,offset_y))
+            an.drawAtPoint(CGPointMake(padding,offset_y + padding))
             if let kanji = Points.sharedInstance.dictionary[n]?.kanji {
+                // Name(Kanji)
                 let kn = NSAttributedString(string: kanji, attributes: attrs)
-                kn.drawAtPoint(CGPointMake(8,offset_y+100))
+                let w = kn.size().width
+                let h = kn.size().height
+                kn.drawAtPoint(CGPointMake(frame.width - padding - w,offset_y + frame.width - padding - h))
                 // TODO: 右下に表示
             }
         }
@@ -72,10 +76,11 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         let context = UIGraphicsGetCurrentContext()
         drawOverlap(context,frame: frame)
         
-        if(takenImage != nil){
+        if(!taking && takenImage != nil){
             let offset_y = (frame.height - frame.width) / 2
             let center = CGRectMake(0, offset_y, frame.width, frame.width)
-            CGContextDrawImage(context, center, takenImage?.CGImage)
+            takenImage!.drawInRect(center)
+            // CGContextDrawImage(context, center, takenImage?.CGImage)
         }
     }
     
@@ -96,8 +101,8 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     func takeOrUsePushed(sender: AnyObject) {
         print("take or use")
         if(taking){
+            takenImage = nil
             imagePicker.takePicture()
-            //takenImage = Utils.imageFromScreen(imagePicker.view)
         }else{
             controller.imagePickerController(imagePicker, didFinishPickingImage: takenImage!, editingInfo: nil)
         }
@@ -112,38 +117,30 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         }
         mediate()
     }
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        print("delegate!")
         
-        // TODO: 正方形に切り取り、ビューをオーバラップ
+        // Trim to square.
+        // The operation can also remove exif rotation.
+        let w = min(image.size.width,image.size.height)
+        let rect = CGRectMake(0, 0, w, w)
         var trim = CGRectMake(0, 0, 0, 0)
+        let offset = -(max(image.size.width,image.size.height) - w) / 2
         if (image.size.height > image.size.width){
             // portrait
-            let w = image.size.width
-            let offset = (image.size.height - w) / 2
-            trim = CGRectMake(0, offset, w, w)
+            trim = CGRectMake(0, offset, image.size.width, image.size.height)
         } else{
             // landscape
-            let w = image.size.height
-            let offset = (image.size.width - w) / 2
-            trim = CGRectMake(offset, 0, w, w)
+            trim = CGRectMake(offset, 0, image.size.width, image.size.height)
         }
-        let rect = CGRectMake(0, 0, trim.size.width, trim.size.height)
-        let cgi = image.CGImage;
-        let trimmed = CGImageCreateWithImageInRect(cgi, trim);
-        
-        UIGraphicsBeginImageContextWithOptions(trim.size, true, 0);
+        UIGraphicsBeginImageContextWithOptions(rect.size, true, 0);
+        image.drawInRect(trim)
         let context = UIGraphicsGetCurrentContext();
-        CGContextDrawImage(context, rect, trimmed)
         self.drawOverlap(context,frame:rect)
         takenImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        // TODO: exifの回転を修正する
-        // TODO: サイズが合わない？はて？
-        if(taking){
-            
-        }else{
-        }
+        
+        self.setNeedsDisplay()
     }
     
 }
