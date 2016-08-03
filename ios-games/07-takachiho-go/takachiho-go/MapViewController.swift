@@ -12,6 +12,7 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var targetButton: UIButton!
     let lm = CLLocationManager()
     var current = MKPointAnnotation()
     var current_spot: Point?
@@ -57,6 +58,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 let cr = MKCoordinateRegionMake(l.coordinate, MKCoordinateSpanMake(0.05, 0.05))
                 mapView.setRegion(cr, animated: true)
                 need_update_center = false
+                targetButton.enabled = true
             }
         }
     }
@@ -151,5 +153,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     
     @IBAction func targetButtonPushed(sender: AnyObject) {
         need_update_center = true
+        targetButton.enabled = false
     }
 }
