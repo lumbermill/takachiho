@@ -14,7 +14,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var targetButton: UIButton!
     let lm = CLLocationManager()
-    var current = MKPointAnnotation()
     var current_spot: Point?
     var need_update_center = true
     let points = Points.sharedInstance
@@ -26,8 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         cr.span = MKCoordinateSpanMake(0.05, 0.05)
         mapView.setRegion(cr, animated: true)
         mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotation(current)
-        
+        //mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         
         // Pins
         for p in points.array{
@@ -39,7 +37,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         lm.desiredAccuracy = kCLLocationAccuracyBest
         lm.requestWhenInUseAuthorization()
         lm.startUpdatingLocation()
-        
     }
     
     
@@ -53,7 +50,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let l = locations.last {
-            current.coordinate = l.coordinate
             if(need_update_center){
                 let cr = MKCoordinateRegionMake(l.coordinate, MKCoordinateSpanMake(0.05, 0.05))
                 mapView.setRegion(cr, animated: true)
@@ -64,16 +60,8 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if (annotation.isEqual(current)){
-            if let av = mapView.dequeueReusableAnnotationViewWithIdentifier("center") {
-                av.annotation = annotation
-                return av;
-            }else{
-                let av = MKAnnotationView(annotation: annotation, reuseIdentifier: "center")
-                av.image = UIImage(named: "Center")
-                av.annotation = annotation
-                return av;
-            }
+        if (annotation.isKindOfClass(MKUserLocation)){
+            return nil
         } else if (points.is_visited(annotation.title!)) {
             if let av = mapView.dequeueReusableAnnotationViewWithIdentifier("pin-visited"){
                 av.annotation = annotation
@@ -85,12 +73,12 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 av.pinTintColor = UIColor.brownColor()
                 av.canShowCallout = true
                 //av.rightCalloutAccessoryView = UIImageView(image: UIImage(named: "Question"))
-                return av;
+                return av
             }
         }else{
             if let av = mapView.dequeueReusableAnnotationViewWithIdentifier("pin"){
                 av.annotation = annotation
-                return av;
+                return av
             }else{
                 let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
                 av.pinTintColor = UIColor.blueColor()
@@ -98,7 +86,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 let b = UIButton(frame: CGRectMake(0,0,32,32))
                 b.setImage(UIImage(named: "Camera"), forState: UIControlState.Normal)
                 av.rightCalloutAccessoryView = b
-                return av;
+                return av
             }
         }
     }
