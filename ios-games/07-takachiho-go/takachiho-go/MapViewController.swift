@@ -19,6 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     let points = Points.sharedInstance
 
     override func viewDidLoad() -> Void {
+        super.viewDidLoad()
         // MapView
         var cr = mapView.region
         cr.center = CLLocationCoordinate2DMake(32.709981,131.308574) // 452
@@ -26,28 +27,30 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         mapView.setRegion(cr, animated: true)
         mapView.removeAnnotations(mapView.annotations)
         //mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
-        
+
         // Pins
         for p in points.array{
             addPoint(p)
         }
-        
+
         // LocationManager
         lm.delegate = self
         lm.desiredAccuracy = kCLLocationAccuracyBest
         lm.requestWhenInUseAuthorization()
         lm.startUpdatingLocation()
     }
-    
-    
+
     func addPoint(point: Point){
         let pa = MKPointAnnotation()
         pa.coordinate = CLLocationCoordinate2DMake(point.lat,point.lng)
         pa.title = point.name
         pa.subtitle = point.kanji
         mapView.addAnnotation(pa)
+
+        let r = CLCircularRegion(center: pa.coordinate, radius: 30.0, identifier: point.name)
+        lm.startMonitoringForRegion(r)
     }
-    
+
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let l = locations.last {
             if(need_update_center){
@@ -58,7 +61,23 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             }
         }
     }
-    
+
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Enter!")
+        let ac = UIAlertController(title: "Enter", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
+        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        ac.addAction(aa)
+        self.presentViewController(ac, animated: true, completion: {})
+    }
+
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exit!")
+        let ac = UIAlertController(title: "Exit", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
+        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        ac.addAction(aa)
+        self.presentViewController(ac, animated: true, completion: {})
+   }
+
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation.isKindOfClass(MKUserLocation)){
             return nil
@@ -90,7 +109,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             }
         }
     }
-    
+
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let a = view.annotation else {
             return
@@ -118,7 +137,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
         self.presentViewController(ipc, animated: true, completion: {})
     }
-    
+
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         guard let p = current_spot else {
             print("current_spot is not set")
@@ -138,7 +157,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
         // TODO: 撮った写真が保存される感じをどうやって出そう？
     }
-    
+
     @IBAction func targetButtonPushed(sender: AnyObject) {
         need_update_center = true
         targetButton.enabled = false
