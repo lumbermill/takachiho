@@ -73,9 +73,10 @@ class Points {
         array += [Point("Ishigami",kanji: "石神神社",lat: 32.706693,lng: 131.322702,difficulty: 2)]
         array += [Point("Shimonohachiman Daijinja",kanji: "下野八幡大神社",lat: 32.745196,lng: 131.307631,difficulty: 3)]
         array += [Point("Hachudairyuou Suijinja",kanji: "八大龍王水神社",lat: 32.730220,lng: 131.356878,difficulty: 2)]
+        array += [Point("Aisome Tenjinja",kanji: "逢初天神社",lat:32.707272 ,lng:131.317846, difficulty: 2)]
+        array += [Point("Kikunomiya",kanji: "菊宮神社",lat: 32.717751,lng: 131.305815,difficulty: 2)]
         // array += [Point("Akaishi Shrine",kanji: "赤石神社",lat: ,lng: )] どこ？
-        // 逢初天神社 雲がかかって見えず…！
-        // 嶽宮神社 どこ？高千穂町押方325
+        // 嶽宮神社 ？高千穂町押方325
         // 熊野神社 ？高千穂町大字田原640
         // 落立神社 ？岩戸2573
         // 熊野鳴瀧神社 高千穂町河内32-2
@@ -84,9 +85,12 @@ class Points {
         // 二ツ嶽神社 岩戸２１５
         // 鉾神社 上岩戸１４５６
         // 向山神社 向山中尾平1806
-        // 馬生木 八大之宮
+        // 馬生木 八大之宮 住所すら不明…！
+        //        Kuronita 黒仁田神社　向山下椎葉4040
+        //        Kamino 上野神社 上野3389
+        //        Yunokino 柚木野神社 上野932
+        //        Kurokuchi 黒口神社 上野2215
         
-        array += [Point("NAZO",kanji: "謎の神社",lat: 32.717751,lng: 131.305815,difficulty: 2)]
         
         for p in array {
             dictionary[p.name] = p
