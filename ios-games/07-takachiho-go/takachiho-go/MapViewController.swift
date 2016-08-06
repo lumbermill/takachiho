@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     var current_spot: Point?
     var need_update_center = true
     let points = Points.sharedInstance
+    let radius:CLLocationDistance = 50.0 // Sacrid circle radius(meter).
 
     override func viewDidLoad() -> Void {
         super.viewDidLoad()
@@ -26,18 +27,17 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         cr.span = MKCoordinateSpanMake(0.05, 0.05)
         mapView.setRegion(cr, animated: true)
         mapView.removeAnnotations(mapView.annotations)
-        //mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
-
-        // Pins
-        for p in points.array{
-            addPoint(p)
-        }
 
         // LocationManager
         lm.delegate = self
         lm.desiredAccuracy = kCLLocationAccuracyBest
         lm.requestWhenInUseAuthorization()
         lm.startUpdatingLocation()
+
+        // Pins
+        for p in points.array{
+            addPoint(p)
+        }
     }
 
     func addPoint(point: Point){
@@ -46,9 +46,14 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         pa.title = point.name
         pa.subtitle = point.kanji
         mapView.addAnnotation(pa)
-
-        let r = CLCircularRegion(center: pa.coordinate, radius: 30.0, identifier: point.name)
-        lm.startMonitoringForRegion(r)
+        let c:MKCircle = MKCircle(centerCoordinate: pa.coordinate, radius: radius)
+        c.title = point.name
+        mapView.addOverlay(c)
+//        // Up to 20 points.
+//        let r = CLCircularRegion(center: pa.coordinate, radius: radius, identifier: point.name)
+//        r.notifyOnEntry = true
+//        lm.startMonitoringForRegion(r)
+//        // print(CLLocationManager.isMonitoringAvailableForClass(r))
     }
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -62,21 +67,31 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
     }
 
-    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Enter!")
-        let ac = UIAlertController(title: "Enter", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
-        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-        ac.addAction(aa)
-        self.presentViewController(ac, animated: true, completion: {})
+// 何故か反応しない
+//    func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+//        print(state)
+//        print(region)
+//    }
+//
+//    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+//        print("Enter!")
+//        let ac = UIAlertController(title: "Enter", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
+//        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+//        ac.addAction(aa)
+//        self.presentViewController(ac, animated: true, completion: {})
+//    }
+//
+//    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+//        print("Exit!")
+//        let ac = UIAlertController(title: "Exit", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
+//        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+//        ac.addAction(aa)
+//        self.presentViewController(ac, animated: true, completion: {})
+//   }
+    
+    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
+        print(error)
     }
-
-    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exit!")
-        let ac = UIAlertController(title: "Exit", message: region.identifier, preferredStyle: UIAlertControllerStyle.Alert)
-        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-        ac.addAction(aa)
-        self.presentViewController(ac, animated: true, completion: {})
-   }
 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation.isKindOfClass(MKUserLocation)){
@@ -84,14 +99,14 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         } else if (points.is_visited(annotation.title!)) {
             if let av = mapView.dequeueReusableAnnotationViewWithIdentifier("pin-visited"){
                 av.annotation = annotation
-                //av.rightCalloutAccessoryView = UIImageView(image: UIImage(named: "Question"))
-                // 画像出したいけど、重たそう…？
-                return av;
+                return av
             }else{
                 let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin-visited")
-                av.pinTintColor = UIColor.brownColor()
+                av.pinTintColor = UIColor.brownColor() // Change color of visited pins.
                 av.canShowCallout = true
-                //av.rightCalloutAccessoryView = UIImageView(image: UIImage(named: "Question"))
+                let b = UIButton(frame: CGRectMake(0,0,32,32))
+                b.setImage(UIImage(named: "Camera"), forState: UIControlState.Normal)
+                av.rightCalloutAccessoryView = b
                 return av
             }
         }else{
@@ -110,32 +125,69 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
     }
 
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        if let c = overlay as? MKCircle {
+            if(points.is_visited(c.title!)){
+                return MKOverlayRenderer()
+            }
+            let cv = MKCircleRenderer(circle: c)
+            cv.fillColor = UIColor.lightGrayColor()
+            cv.alpha = 0.2
+            return cv
+        }
+        return MKOverlayRenderer()
+    }
+    
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // コールアウト（カメラアイコン）がタップされた時
         guard let a = view.annotation else {
             return
         }
         guard let title = a.title! else {
             return
         }
+        
+        let c1 = MKMapPointForCoordinate(mapView.userLocation.coordinate)
+        let c2 = MKMapPointForCoordinate(view.annotation!.coordinate)
+        
+        let d = MKMetersBetweenMapPoints(c1, c2)
+        
+        if (d < radius){
         print("Showing camera for "+title)
         current_spot = points.dictionary[title]
 
         // ImagePicker(Camera)
-        let ipc = UIImagePickerController() // TODO: サブクラス必要？効果なし
-        if (Utils.isSimulator()){
-            ipc.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+        let ipc = ImagePicker()
+            if (Utils.isSimulator()){
+                ipc.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+            }else{
+                ipc.sourceType = UIImagePickerControllerSourceType.Camera
+                ipc.allowsEditing = false
+                ipc.showsCameraControls = false
+                let sh = UIScreen.mainScreen().bounds.height // screen height
+                let ch = UIScreen.mainScreen().bounds.width
+                if (sh > ch){
+                    ipc.cameraViewTransform.ty = (sh - ch / 3 * 4) / 2.0;
+                } else{
+                    ipc.cameraViewTransform.ty = (ch - sh / 3 * 4) / 2.0;
+                }
+                let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
+                ov.imagePicker = ipc
+                ipc.cameraOverlayView = ov
+            }
+            self.presentViewController(ipc, animated: true, completion: {})
         }else{
-            ipc.sourceType = UIImagePickerControllerSourceType.Camera
-            ipc.allowsEditing = false
-            ipc.showsCameraControls = false
-            let sh = UIScreen.mainScreen().bounds.height // screen height
-            let ch = UIScreen.mainScreen().bounds.width / 3 * 4
-            ipc.cameraViewTransform.ty = (sh - ch) / 2.0;
-            let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
-            ov.imagePicker = ipc
-            ipc.cameraOverlayView = ov
+            let ac = UIAlertController(title: nil, message: "Too far to take picture.", preferredStyle: UIAlertControllerStyle.Alert)
+            //let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            //ac.addAction(aa)
+            self.presentViewController(ac, animated: true, completion: { () -> Void in
+                let delay = 2.0 * Double(NSEC_PER_SEC)
+                let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                dispatch_after(time, dispatch_get_main_queue(), {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+            })
         }
-        self.presentViewController(ipc, animated: true, completion: {})
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
