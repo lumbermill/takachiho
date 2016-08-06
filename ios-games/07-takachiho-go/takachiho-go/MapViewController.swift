@@ -157,7 +157,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         current_spot = points.dictionary[title]
 
         // ImagePicker(Camera)
-        let ipc = ImagePicker()
+        let ipc = UIImagePickerController()
             if (Utils.isSimulator()){
                 ipc.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
             }else{
@@ -200,7 +200,10 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
         print("begin writing image data.")
         d.writeToFile(p.path_for_photo(), atomically: true)
-        points.dictionary[p.name]!.visited = true
+        if var v = points.dictionary[p.name] {
+            v.visited = true
+            v.visited_at = NSDate()
+        }
         picker.dismissViewControllerAnimated(true, completion: {})
         for a in mapView.selectedAnnotations {
             mapView.deselectAnnotation(a, animated: true)
@@ -208,6 +211,8 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             mapView.addAnnotation(a)
         }
         // TODO: 撮った写真が保存される感じをどうやって出そう？
+//        let c:MKCircle = MKCircle(centerCoordinate: mapView.userLocation.coordinate, radius: 300)
+//        mapView.addOverlay(c)
     }
 
     @IBAction func targetButtonPushed(sender: AnyObject) {

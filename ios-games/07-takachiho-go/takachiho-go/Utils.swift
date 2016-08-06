@@ -36,13 +36,13 @@ class Utils {
     
 }
 
-
+// OverlayViewは固定が必要なため、未使用
 class ImagePicker: UIImagePickerController {
     override func shouldAutorotate() -> Bool {
-        return false
+        return true
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
+        return UIInterfaceOrientationMask.All
     }
 }

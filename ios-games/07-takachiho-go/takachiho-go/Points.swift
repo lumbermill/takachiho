@@ -92,7 +92,7 @@ class Points {
         //        Kurokuchi 黒口神社 上野2215
         
         // Debug
-        array = [Point("Apple",kanji:"アップル",lat:37.330651,lng:-122.030080,difficulty: 1)]
+        // array = [Point("Apple",kanji:"アップル",lat:37.330651,lng:-122.030080,difficulty: 1)]
         
         for p in array {
             dictionary[p.name] = p

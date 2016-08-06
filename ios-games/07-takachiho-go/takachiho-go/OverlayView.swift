@@ -17,15 +17,20 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     var cancel_or_retake: UIButton!
     var taking: Bool = true //  or previewing
     var takenImage: UIImage?
+    var f :CGRect = CGRectMake(0, 0, 0, 0)
     
     required init(name: String?, imagePicker: UIImagePickerController, controller: MapViewController){
         self.imagePicker = imagePicker
         self.controller = controller
-        super.init(frame: imagePicker.view.frame)
+        if (imagePicker.view.frame.width > imagePicker.view.frame.height) {
+            f = CGRectMake(0, 0, imagePicker.view.frame.height, imagePicker.view.frame.width)
+        }else{
+            f = imagePicker.view.frame
+        }
+        super.init(frame: f)
         self.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
         self.imagePicker.delegate = self
         
-        let f = self.frame
         take_or_use = UIButton(frame: CGRectMake(f.width-88,f.height-38,80,30))
         take_or_use.setTitle("Take", forState: UIControlState.Normal)
         take_or_use.addTarget(self, action: #selector(OverlayView.takeOrUsePushed(_:)), forControlEvents: .TouchUpInside)
@@ -67,18 +72,17 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
                 let w = kn.size().width
                 let h = kn.size().height
                 kn.drawAtPoint(CGPointMake(frame.width - padding - w,offset_y + frame.width - padding - h))
-                // TODO: 右下に表示
             }
         }
     }
     
     override func drawRect(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
-        drawOverlap(context,frame: frame)
+        drawOverlap(context,frame: f)
         
         if(!taking && takenImage != nil){
-            let offset_y = (frame.height - frame.width) / 2
-            let center = CGRectMake(0, offset_y, frame.width, frame.width)
+            let offset_y = (f.height - f.width) / 2
+            let center = CGRectMake(0, offset_y, f.width, f.width)
             takenImage!.drawInRect(center)
             // CGContextDrawImage(context, center, takenImage?.CGImage)
         }
