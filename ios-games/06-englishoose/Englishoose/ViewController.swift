@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.table.reloadData()
             self.refreshButton.enabled = true
         })
+
+        let f = (Downloader.TARGET as NSString).substringToIndex(1).capitalizedString
+        let o = (Downloader.TARGET as NSString).substringFromIndex(1)
+        titleLabel.text = f + o
     }
 
     override func didReceiveMemoryWarning() {

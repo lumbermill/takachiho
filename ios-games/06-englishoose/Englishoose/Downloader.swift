@@ -9,7 +9,9 @@
 import Foundation
 
 class Downloader {
-    
+    // Englishoose or Japaneese
+    static let TARGET = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as! String
+
     static let fm = NSFileManager.defaultManager()
     static let BASEURL = "https://lmlab.net/englishoose/"
     static let BASEDIR = NSHomeDirectory()+"/Documents/"
@@ -41,9 +43,7 @@ class Downloader {
             data?.writeToFile(BASEDIR+file, atomically: true)
             print("Saved to "+BASEDIR+file)
             completion(path: BASEDIR+file)
-            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
         })
-        print("Downloaded from "+BASEURL+file)
         task.resume()
     }
     
@@ -53,6 +53,7 @@ class Downloader {
             flags[file] = false
             Downloader.fetch_file(file, completion: {(path) in
                 flags[file] = true
+                print("Completed "+file)
             })
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -109,8 +110,14 @@ class Downloader {
             do {
                 var drills:[Drill] = []
                 var files:[String] = []
-                guard let index = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSArray else {
+                guard let root = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary else {
                     print("Could not parse data from "+path)
+                    clear_all() //  Erase all!
+                    completion([])
+                    return
+                }
+                guard let index = root["en"] as? NSArray else {
+                    print("Not found the entry "+path)
                     return
                 }
                 for _q in index {
