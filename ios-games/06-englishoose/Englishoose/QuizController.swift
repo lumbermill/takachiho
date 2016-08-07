@@ -19,8 +19,10 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var ansImageView: UIImageView!
     @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var backButton: UIButton!
     
     var data = [Array<String>]() // 問題データ
+    var images :[String:String] = [:]
     var ans_data = Array<Bool>()
     var answer = "" // 正解
     
@@ -43,21 +45,20 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
             if t == answer{
                 view_state = 1
                 ans_data.append(true)
-                ansImageView.image = UIImage(named: "true.png")
+                ansImageView.image = UIImage(named: "true")
                 sound_correct.play()
-                print("正解！")
             }else{
                 view_state = 2
                 ans_data.append(false)
-                ansImageView.image = UIImage(named: "false.png")
+                ansImageView.image = UIImage(named: "false")
                 sound_wrong.play()
-                print("不正解〜！！")
             }
         }
     }
     
     func loadDrill(drill: Drill) {
         data = drill.options
+        images = drill.images
         shuffle(&data)
     }
     
@@ -98,7 +99,7 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
         ansImageView.image = nil
         let row = data[i]
         answer = row[0]
-        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+answer+".png")
+        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+images[answer]!)
         
         var idx = [0,1,2,3]
         shuffle(&idx)
@@ -198,8 +199,13 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
             let checkAnswerController:CheckAnswerController = segue.destinationViewController as! CheckAnswerController
             checkAnswerController.ans = self.correct_ans
             checkAnswerController.data = self.data
+            checkAnswerController.images = self.images
             checkAnswerController.time = end_time
             checkAnswerController.ans_data = self.ans_data
         }
+    }
+    
+    @IBAction func backButtonPushed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

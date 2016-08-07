@@ -53,7 +53,6 @@ class Downloader {
             flags[file] = false
             Downloader.fetch_file(file, completion: {(path) in
                 flags[file] = true
-                print("Completed "+file)
             })
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -120,6 +119,10 @@ class Downloader {
                     print("Not found the entry "+path)
                     return
                 }
+                guard let index4ja = root["ja"] as? NSArray else {
+                    print("Not found ja entries "+path)
+                    return
+                }
                 for _q in index {
                     guard let q = _q as? NSDictionary else {
                         print("Could not get question.")
@@ -145,6 +148,34 @@ class Downloader {
                         files += [i+".png"]
                         if (o.count != 4) { continue }
                         d.options += [o as! [String]]
+                        d.images[i] = i+".png"
+                    }
+                    if("Japaneese" == TARGET){
+                        // Localization
+                        let i = drills.count
+                        if let qj = index4ja[i] as? NSDictionary{
+                            d.title = qj["title"] as! String
+                            guard let options = qj["options"] as? NSArray else {
+                                print("Could not get option.")
+                                continue
+                            }
+                            var names:[String] = []
+                            for _o in d.options{
+                                names += [_o[0]]
+                            }
+                            d.options = []
+                            for _o in options{
+                                guard let o = _o as? NSArray else {
+                                    print("Could not get o.")
+                                    continue
+                                }
+                                if (o.count != 4) { continue }
+                                d.options += [o as! [String]]
+                                d.images[o[0] as! String] = names[0]+".png"
+                                names.removeFirst()
+                            }
+
+                        }
                     }
                     drills += [d]
                 }

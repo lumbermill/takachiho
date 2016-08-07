@@ -198,6 +198,17 @@
                                             <action selector="buttonPushed:" destination="seo-EU-vYh" eventType="touchUpInside" id="vRT-Fj-tzV"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skv-se-CIS">
+                                        <rect key="frame" x="0.0" y="20" width="46" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="QPa-x9-oVq"/>
+                                            <constraint firstAttribute="width" constant="46" id="cqf-D3-jTY"/>
+                                        </constraints>
+                                        <state key="normal" title="Back"/>
+                                        <connections>
+                                            <action selector="backButtonPushed:" destination="seo-EU-vYh" eventType="touchUpInside" id="CfM-Yk-vxE"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -213,10 +224,12 @@
                                     <constraint firstItem="aet-gk-w29" firstAttribute="top" secondItem="dYK-Vi-sj4" secondAttribute="bottom" constant="8" id="WFN-Z9-NDy"/>
                                     <constraint firstItem="kYg-hf-dig" firstAttribute="top" secondItem="THc-an-SFv" secondAttribute="top" constant="8" id="Y3q-0C-dop"/>
                                     <constraint firstItem="dYK-Vi-sj4" firstAttribute="top" secondItem="THc-an-SFv" secondAttribute="top" id="ZTD-UI-a7P"/>
+                                    <constraint firstItem="skv-se-CIS" firstAttribute="top" secondItem="THc-an-SFv" secondAttribute="top" constant="20" id="cn0-Rc-oi4"/>
                                     <constraint firstItem="TXP-Nl-K7e" firstAttribute="centerX" secondItem="THc-an-SFv" secondAttribute="centerX" id="iah-ZP-kEa"/>
                                     <constraint firstItem="9cM-Bn-V13" firstAttribute="centerX" secondItem="THc-an-SFv" secondAttribute="centerX" id="rep-zz-0NR"/>
                                     <constraint firstAttribute="trailing" secondItem="dYK-Vi-sj4" secondAttribute="trailing" id="x16-60-03m"/>
                                     <constraint firstItem="aet-gk-w29" firstAttribute="centerX" secondItem="THc-an-SFv" secondAttribute="centerX" id="yyK-I3-SHK"/>
+                                    <constraint firstItem="skv-se-CIS" firstAttribute="leading" secondItem="THc-an-SFv" secondAttribute="leading" id="zQd-Gj-XHx"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -234,6 +247,7 @@
                     </view>
                     <connections>
                         <outlet property="ansImageView" destination="dYK-Vi-sj4" id="ftG-1S-0tq"/>
+                        <outlet property="backButton" destination="skv-se-CIS" id="4Dn-F4-E1e"/>
                         <outlet property="imageView" destination="kYg-hf-dig" id="4uG-d0-WDU"/>
                         <outlet property="mainView" destination="THc-an-SFv" id="SN0-mn-04a"/>
                         <outlet property="option1" destination="aet-gk-w29" id="I9P-fr-b30"/>

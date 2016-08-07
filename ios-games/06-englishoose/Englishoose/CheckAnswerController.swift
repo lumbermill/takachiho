@@ -16,6 +16,7 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
     
     var ans: Int = 0
     var data = Array<Array<String>>()
+    var images :[String:String] = [:]
     var ans_data = Array<Bool>()
     var time: NSTimeInterval = 0
     
@@ -34,13 +35,11 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
         let testCell:UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
         let imageView = testCell.contentView.viewWithTag(1) as! UIImageView
         let ansImageView = testCell.contentView.viewWithTag(2) as! UIImageView
-        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+data[indexPath.row][0]+".png")
+        imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+images[data[indexPath.row][0]]!)
         if ans_data[indexPath.row]{
-            print("true")
-            ansImageView.image = UIImage(named: "true.png")
+            ansImageView.image = UIImage(named: "true")
         }else{
-            print("false")
-            ansImageView.image = UIImage(named: "false.png")
+            ansImageView.image = UIImage(named: "false")
         }
         return testCell
     }

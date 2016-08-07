@@ -52,7 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }else{
             cell.detailTextLabel!.text = String(d.options.count)+", "+d.published_at+", "+d.author
         }
-        cell.imageView!.image = UIImage(contentsOfFile: Downloader.BASEDIR+d.options[0][0])
+        cell.imageView!.image = UIImage(contentsOfFile: Downloader.BASEDIR+d.images[d.options[0][0]]!)
         return cell
     }
     

@@ -12,6 +12,7 @@ class Drill {
     var title:String = ""
     var published_at:String = ""
     var author: String = ""
+    var images: [String:String] = [:]
     var options:[[String]] = []
 
     // 0番目の要素が常に正解
