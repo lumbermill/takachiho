@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130EB8F71D56EF3000D48608 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 130EB8F61D56EF3000D48608 /* Assets.xcassets */; };
+		130EB8FF1D56F18700D48608 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBAD2A1C1ADEF300A3F596 /* Main.storyboard */; };
+		130EB9001D56F1B700D48608 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13779AEC1D1E1FCD004011FF /* iAd.framework */; };
+		130EB9011D56F1DE00D48608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD261C1ADEF300A3F596 /* AppDelegate.swift */; };
+		130EB9021D56F1DE00D48608 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD281C1ADEF300A3F596 /* ViewController.swift */; };
+		130EB9031D56F1DE00D48608 /* CheckAnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0149B31C5B5FC7003FE01E /* CheckAnswerController.swift */; };
+		130EB9041D56F1DE00D48608 /* QuizController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD541C1AE94300A3F596 /* QuizController.swift */; };
+		130EB9051D56F1DE00D48608 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13829C2D1D23FA3E0063D629 /* Downloader.swift */; };
+		130EB9061D56F1DE00D48608 /* Drill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386722D1D28AF390061BC5D /* Drill.swift */; };
+		130EB9071D56F1F100D48608 /* se_maoudamashii_chime13.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13C854EE1C5CCC8500354117 /* se_maoudamashii_chime13.mp3 */; };
+		130EB9081D56F1F100D48608 /* se_maoudamashii_onepoint33.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13C854EF1C5CCC8500354117 /* se_maoudamashii_onepoint33.mp3 */; };
+		130EB9091D56F35500D48608 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBAD2F1C1ADEF300A3F596 /* LaunchScreen.storyboard */; };
 		13779AED1D1E1FCD004011FF /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13779AEC1D1E1FCD004011FF /* iAd.framework */; };
 		13829C2E1D23FA3E0063D629 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13829C2D1D23FA3E0063D629 /* Downloader.swift */; };
 		1386722E1D28AF390061BC5D /* Drill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386722D1D28AF390061BC5D /* Drill.swift */; };
@@ -41,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130EB8ED1D56EF3000D48608 /* Japaneese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Japaneese.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		130EB8F61D56EF3000D48608 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		130EB8FB1D56EF3000D48608 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13779AEC1D1E1FCD004011FF /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		13829C2D1D23FA3E0063D629 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		1386722D1D28AF390061BC5D /* Drill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drill.swift; sourceTree = "<group>"; };
@@ -64,6 +79,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		130EB8EA1D56EF3000D48608 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				130EB9001D56F1B700D48608 /* iAd.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13EBAD201C1ADEF300A3F596 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		130EB8EE1D56EF3000D48608 /* Japaneese */ = {
+			isa = PBXGroup;
+			children = (
+				130EB8F61D56EF3000D48608 /* Assets.xcassets */,
+				130EB8FB1D56EF3000D48608 /* Info.plist */,
+			);
+			path = Japaneese;
+			sourceTree = "<group>";
+		};
 		13EBAD1A1C1ADEF300A3F596 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +128,7 @@
 				13EBAD251C1ADEF300A3F596 /* Englishoose */,
 				13EBAD3A1C1ADEF300A3F596 /* EnglishooseTests */,
 				13EBAD451C1ADEF400A3F596 /* EnglishooseUITests */,
+				130EB8EE1D56EF3000D48608 /* Japaneese */,
 				13EBAD241C1ADEF300A3F596 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,6 +139,7 @@
 				13EBAD231C1ADEF300A3F596 /* Englishoose.app */,
 				13EBAD371C1ADEF300A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
 				13EBAD421C1ADEF400A3F596 /* Englishoose.temp_caseinsensitive_rename.xctest */,
+				130EB8ED1D56EF3000D48608 /* Japaneese.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,6 +184,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		130EB8EC1D56EF3000D48608 /* Japaneese */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 130EB8FE1D56EF3000D48608 /* Build configuration list for PBXNativeTarget "Japaneese" */;
+			buildPhases = (
+				130EB8E91D56EF3000D48608 /* Sources */,
+				130EB8EA1D56EF3000D48608 /* Frameworks */,
+				130EB8EB1D56EF3000D48608 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Japaneese;
+			productName = Japaneese;
+			productReference = 130EB8ED1D56EF3000D48608 /* Japaneese.app */;
+			productType = "com.apple.product-type.application";
+		};
 		13EBAD221C1ADEF300A3F596 /* Englishoose */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13EBAD4B1C1ADEF400A3F596 /* Build configuration list for PBXNativeTarget "Englishoose" */;
@@ -209,10 +260,14 @@
 		13EBAD1B1C1ADEF300A3F596 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "LumberMill, Inc.";
 				TargetAttributes = {
+					130EB8EC1D56EF3000D48608 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NU78774256;
+					};
 					13EBAD221C1ADEF300A3F596 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = NU78774256;
@@ -243,11 +298,24 @@
 				13EBAD221C1ADEF300A3F596 /* Englishoose */,
 				13EBAD361C1ADEF300A3F596 /* EnglishooseTests */,
 				13EBAD411C1ADEF400A3F596 /* EnglishooseUITests */,
+				130EB8EC1D56EF3000D48608 /* Japaneese */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		130EB8EB1D56EF3000D48608 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				130EB9091D56F35500D48608 /* LaunchScreen.storyboard in Resources */,
+				130EB9071D56F1F100D48608 /* se_maoudamashii_chime13.mp3 in Resources */,
+				130EB9081D56F1F100D48608 /* se_maoudamashii_onepoint33.mp3 in Resources */,
+				130EB8FF1D56F18700D48608 /* Main.storyboard in Resources */,
+				130EB8F71D56EF3000D48608 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13EBAD211C1ADEF300A3F596 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,6 +345,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		130EB8E91D56EF3000D48608 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				130EB9011D56F1DE00D48608 /* AppDelegate.swift in Sources */,
+				130EB9021D56F1DE00D48608 /* ViewController.swift in Sources */,
+				130EB9031D56F1DE00D48608 /* CheckAnswerController.swift in Sources */,
+				130EB9041D56F1DE00D48608 /* QuizController.swift in Sources */,
+				130EB9051D56F1DE00D48608 /* Downloader.swift in Sources */,
+				130EB9061D56F1DE00D48608 /* Drill.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13EBAD1F1C1ADEF300A3F596 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -341,6 +422,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		130EB8FC1D56EF3000D48608 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Japaneese/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.lmlab.Japaneese;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		130EB8FD1D56EF3000D48608 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Japaneese/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.lmlab.Japaneese;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		13EBAD491C1ADEF400A3F596 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -503,6 +612,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		130EB8FE1D56EF3000D48608 /* Build configuration list for PBXNativeTarget "Japaneese" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				130EB8FC1D56EF3000D48608 /* Debug */,
+				130EB8FD1D56EF3000D48608 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "Englishoose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
