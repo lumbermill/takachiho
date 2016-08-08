@@ -46,13 +46,6 @@
                                     <action selector="backButtonPushed:" destination="JEX-9P-axG" eventType="touchUpInside" id="76F-J1-vga"/>
                                 </connections>
                             </button>
-                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="S7J-Ck-VzU">
-                                <rect key="frame" x="60" y="534" width="480" height="66"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="eYb-hI-EK0"/>
-                                    <constraint firstAttribute="width" constant="480" id="vRo-FG-hvy"/>
-                                </constraints>
-                            </adBannerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't found the spot yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-Dr-vsE">
                                 <rect key="frame" x="20" y="310" width="560" height="21"/>
                                 <constraints>
@@ -66,12 +59,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="2Yj-rK-kwp"/>
-                            <constraint firstItem="S7J-Ck-VzU" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="DIm-L9-FzM"/>
                             <constraint firstItem="a1b-XF-NjG" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="EOQ-PW-tCy"/>
                             <constraint firstItem="2bY-Dr-vsE" firstAttribute="top" secondItem="a1b-XF-NjG" secondAttribute="bottom" constant="8" id="JpQ-M4-bml"/>
                             <constraint firstItem="2bY-Dr-vsE" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="MGM-5A-7K4"/>
                             <constraint firstItem="2bY-Dr-vsE" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="RzO-0f-rIZ"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="S7J-Ck-VzU" secondAttribute="bottom" id="WrI-uV-Lcv"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="ah7-J9-FAu"/>
                             <constraint firstItem="z5X-yI-Ixv" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="hei-Wt-3d8"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="nWe-gO-gEM"/>

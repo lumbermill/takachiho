@@ -17,7 +17,15 @@ struct Point {
     var lat :Double
     var lng :Double
     var difficulty :Int = 1 // 1 to 3
-    var visited_at :NSDate?
+    var visited_at :NSDate?  {
+        didSet {
+            if let d = visited_at {
+                let ud = NSUserDefaults.standardUserDefaults()
+                ud.setDouble(d.timeIntervalSinceReferenceDate, forKey: name)
+                ud.synchronize()
+            }
+        }
+    }
     var visited :Bool = false
     
     init(_ name: String, kanji: String, lat: Double, lng: Double, difficulty: Int) {
@@ -27,8 +35,13 @@ struct Point {
         self.lng = lng
         self.difficulty = difficulty
         self.visited = has_photo()
+        let ud = NSUserDefaults.standardUserDefaults()
+        let t = ud.doubleForKey(name)
+        if (t > 0){
+            visited_at = NSDate(timeIntervalSinceReferenceDate: t)
+        }
     }
-    
+
     func path_for_photo() -> String {
         return BASEDIR+name+".jpg"
     }
@@ -45,6 +58,17 @@ struct Point {
             return nil
         }
         return UIImage(data: d)
+    }
+
+    func detailText() -> String {
+        var v = "";
+        if let d = visited_at {
+            let df = NSDateFormatter()
+            df.dateStyle = NSDateFormatterStyle.MediumStyle
+            df.timeStyle = NSDateFormatterStyle.ShortStyle
+            v = " - " + df.stringFromDate(d)
+        }
+        return kanji + v
     }
 }
 
@@ -114,4 +138,11 @@ class Points {
         return p.visited
     }
     
+    func n_visited() -> Int {
+        var n = 0
+        for p in array {
+            if (p.visited) { n += 1 }
+        }
+        return n
+    }
 }

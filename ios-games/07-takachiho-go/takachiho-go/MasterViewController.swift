@@ -19,6 +19,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +56,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         let p = points.array[indexPath.row] 
         cell.textLabel!.text = p.name
-        cell.detailTextLabel!.text = p.kanji
+        cell.detailTextLabel!.text = p.detailText()
         if let i = p.photo() {
             cell.imageView!.image = i
         } else {

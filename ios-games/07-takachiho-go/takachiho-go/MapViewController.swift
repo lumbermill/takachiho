@@ -210,6 +210,14 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             mapView.removeAnnotation(a)
             mapView.addAnnotation(a)
         }
+
+        let n = points.n_visited()
+        let total = points.array.count
+        let ac = UIAlertController(title: "Gotcha!", message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.Alert)
+        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        ac.addAction(aa)
+        self.presentViewController(ac, animated: true, completion: nil)
+
         // TODO: 撮った写真が保存される感じをどうやって出そう？
 //        let c:MKCircle = MKCircle(centerCoordinate: mapView.userLocation.coordinate, radius: 300)
 //        mapView.addOverlay(c)
