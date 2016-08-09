@@ -21,7 +21,6 @@
 		13AB6CD71D44D579006C5777 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB6CD61D44D579006C5777 /* OverlayView.swift */; };
 		13CD41881D435D0A000726DD /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41871D435D0A000726DD /* Points.swift */; };
 		13CD418A1D449692000726DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41891D449692000726DD /* Utils.swift */; };
-		13CD418C1D44AF3B000726DD /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13CD418B1D44AF3B000726DD /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +69,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13CD418C1D44AF3B000726DD /* iAd.framework in Frameworks */,
 				136A2CD51D423318004EF77E /* CoreLocation.framework in Frameworks */,
 				136A2CD11D422C70004EF77E /* MapKit.framework in Frameworks */,
 			);
@@ -99,7 +97,7 @@
 				13CD418B1D44AF3B000726DD /* iAd.framework */,
 				136A2CD41D423318004EF77E /* CoreLocation.framework */,
 				136A2CD01D422C70004EF77E /* MapKit.framework */,
-				136A2C9F1D422A88004EF77E /* takachiho-go */,
+				136A2C9F1D422A88004EF77E /* TakachihoGO */,
 				136A2CB61D422A88004EF77E /* takachiho-goTests */,
 				136A2CC11D422A88004EF77E /* takachiho-goUITests */,
 				136A2C9E1D422A88004EF77E /* Products */,
@@ -116,7 +114,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		136A2C9F1D422A88004EF77E /* takachiho-go */ = {
+		136A2C9F1D422A88004EF77E /* TakachihoGO */ = {
 			isa = PBXGroup;
 			children = (
 				136A2CA01D422A88004EF77E /* AppDelegate.swift */,
@@ -131,6 +129,7 @@
 				13CD41891D449692000726DD /* Utils.swift */,
 				13AB6CD61D44D579006C5777 /* OverlayView.swift */,
 			);
+			name = TakachihoGO;
 			path = "takachiho-go";
 			sourceTree = "<group>";
 		};
@@ -220,6 +219,7 @@
 				TargetAttributes = {
 					136A2C9C1D422A88004EF77E = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NU78774256;
 					};
 					136A2CB21D422A88004EF77E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -231,7 +231,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 136A2C981D422A88004EF77E /* Build configuration list for PBXProject "takachiho-go" */;
+			buildConfigurationList = 136A2C981D422A88004EF77E /* Build configuration list for PBXProject "TakachihoGO" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -431,7 +431,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "takachiho-go/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.takachiho-go";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -442,7 +444,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "takachiho-go/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.takachiho-go";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -498,7 +502,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		136A2C981D422A88004EF77E /* Build configuration list for PBXProject "takachiho-go" */ = {
+		136A2C981D422A88004EF77E /* Build configuration list for PBXProject "TakachihoGO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				136A2CC51D422A88004EF77E /* Debug */,
