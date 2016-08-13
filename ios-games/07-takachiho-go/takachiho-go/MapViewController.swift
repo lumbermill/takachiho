@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MapKit
+import GameKit
 
 class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
@@ -37,6 +38,20 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         // Pins
         for p in points.array{
             addPoint(p)
+        }
+        authPlayer()
+    }
+
+    func authPlayer(){
+        let p = GKLocalPlayer.localPlayer()
+        p.authenticateHandler = {(viewController, error) -> Void in
+            if (viewController != nil){
+                if let vc = UIApplication.sharedApplication().delegate?.window??.rootViewController {
+                    vc.presentViewController(viewController!, animated: true, completion: nil)
+                }
+            } else {
+                NSLog("%d",GKLocalPlayer.localPlayer().authenticated)
+            }
         }
     }
 
@@ -218,9 +233,44 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         ac.addAction(aa)
         self.presentViewController(ac, animated: true, completion: nil)
 
+        if (points.is_achieved(p.difficulty)) {
+            // Achieve all levels.
+            reportAcheivement(p.difficulty)
+        } else if (n == 1) {
+            // First taken!
+            reportAcheivement(0)
+        }
+
         // TODO: 撮った写真が保存される感じをどうやって出そう？
 //        let c:MKCircle = MKCircle(centerCoordinate: mapView.userLocation.coordinate, radius: 300)
 //        mapView.addOverlay(c)
+    }
+
+    func reportScore(){
+        if (!GKLocalPlayer.localPlayer().authenticated) { return }
+        let s = GKScore(leaderboardIdentifier: "test") // Leaderboard ID
+        s.value = Int64(0)
+        NSLog("Reporting scores %@",s)
+        GKScore.reportScores([s], withCompletionHandler: {(error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            }
+        })
+    }
+
+    func reportAcheivement(difficulty:(Int)){
+        if (!GKLocalPlayer.localPlayer().authenticated) { return }
+        var id = "first"
+        if (difficulty >= 1 && difficulty <= 3){
+            id = "level"+String(difficulty)
+        }
+        let a = GKAchievement(identifier: id)
+        a.percentComplete = 100.0
+        GKAchievement.reportAchievements([a], withCompletionHandler: {(error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            }
+        })
     }
 
     @IBAction func targetButtonPushed(sender: AnyObject) {

@@ -49,7 +49,6 @@ struct Point {
     func has_photo() -> Bool {
         let fm = NSFileManager.defaultManager()
         return fm.fileExistsAtPath(path_for_photo())
-        // できれば更新日時を取りたいかも
     }
     
     func photo() -> UIImage? {
@@ -86,34 +85,31 @@ class Points {
     
     init(){
         
-        array += [Point("Kushifuru",kanji:"槵觸神社",lat: 32.710119,lng: 131.315543,difficulty: 1)]
-        array += [Point("Takachiho",kanji:"高千穂神社",lat: 32.706422,lng: 131.302074,difficulty: 1)]
-        array += [Point("Amanoiwato",kanji:"天岩戸神社",lat: 32.734211,lng: 131.350292,difficulty: 1)]
-        array += [Point("Futagami",kanji:"二上神社",lat: 32.686976,lng: 131.267234,difficulty: 2)]
-        array += [Point("Aratate",kanji: "荒立神社",lat: 32.711973,lng: 131.317138,difficulty: 1)]
-        array += [Point("Akimoto",kanji: "秋元神社",lat: 32.664870,lng: 131.295042,difficulty: 3)]
-        array += [Point("Sobodake",kanji: "祖母嶽神社",lat: 32.811019,lng: 131.278183,difficulty: 3)]
-        array += [Point("Nakahata",kanji: "中畑神社",lat: 32.723787,lng: 131.273881,difficulty: 2)]
-        array += [Point("Ishigami",kanji: "石神神社",lat: 32.706693,lng: 131.322702,difficulty: 2)]
-        array += [Point("Shimonohachiman Daijinja",kanji: "下野八幡大神社",lat: 32.745196,lng: 131.307631,difficulty: 3)]
-        array += [Point("Hachudairyuou Suijinja",kanji: "八大龍王水神社",lat: 32.730220,lng: 131.356878,difficulty: 2)]
-        array += [Point("Aisome Tenjinja",kanji: "逢初天神社",lat:32.707272 ,lng:131.317846, difficulty: 2)]
-        array += [Point("Kikunomiya",kanji: "菊宮神社",lat: 32.717751,lng: 131.305815,difficulty: 2)]
-        // array += [Point("Akaishi Shrine",kanji: "赤石神社",lat: ,lng: )] どこ？
-        // 嶽宮神社 ？高千穂町押方325
-        // 熊野神社 ？高千穂町大字田原640
-        // 落立神社 ？岩戸2573
-        // 熊野鳴瀧神社 高千穂町河内32-2
-        // 芝原神社 ?押方３３７１-3
-        // 歳宮神社  高千穂町三田井川登
-        // 二ツ嶽神社 岩戸２１５
-        // 鉾神社 上岩戸１４５６
-        // 向山神社 向山中尾平1806
-        // 馬生木 八大之宮 住所すら不明…！
-        //        Kuronita 黒仁田神社　向山下椎葉4040
-        //        Kamino 上野神社 上野3389
-        //        Yunokino 柚木野神社 上野932
-        //        Kurokuchi 黒口神社 上野2215
+        array += [Point("Kushifuru", kanji:"槵觸神社", lat:32.710119, lng:131.315543,difficulty:1)]
+        array += [Point("Takachiho", kanji:"高千穂神社", lat:32.706422, lng:131.302074,difficulty:1)]
+        array += [Point("Amanoiwato", kanji:"天岩戸神社", lat:32.734211, lng:131.350292,difficulty:1)]
+        array += [Point("Futagami", kanji:"二上神社", lat:32.686976, lng:131.267234,difficulty:2)]
+        array += [Point("Aratate", kanji:"荒立神社", lat:32.711973, lng:131.317138,difficulty:1)]
+        array += [Point("Akimoto", kanji:"秋元神社", lat:32.651516, lng:131.283982,difficulty:3)]
+        array += [Point("Sobodake", kanji:"祖母嶽神社", lat:32.811019, lng:131.278183,difficulty:3)]
+        array += [Point("Nakahata", kanji:"中畑神社", lat:32.723787, lng:131.273881,difficulty:3)]
+        array += [Point("Ishigami", kanji:"石神神社", lat:32.7064742, lng:131.3445836,difficulty:2)]
+        array += [Point("Shimonohachiman Daijinja", kanji:"下野八幡大神社", lat:32.745196, lng:131.307631,difficulty:3)]
+        array += [Point("Hachudairyuou Suijinja", kanji:"八大龍王水神社", lat:32.73022, lng:131.356878,difficulty:2)]
+        array += [Point("Aisome Tenjinja", kanji:"逢初天神社", lat:32.707272, lng:131.317846,difficulty:1)]
+        array += [Point("Kikunomiya", kanji:"菊宮神社", lat:32.717751, lng:131.305815,difficulty:1)]
+        array += [Point("Takemiya", kanji:"嶽宮神社", lat:32.7101173, lng:131.2851693,difficulty:2)]
+        array += [Point("Kumano", kanji:"熊野神社", lat:32.771345, lng:131.281986,difficulty:2)]
+        array += [Point("Ochitachi", kanji:"落立神社", lat:32.746587, lng:131.35241,difficulty:2)]
+        array += [Point("Kumanonarutaki", kanji:"熊野鳴瀧神社", lat:32.777605, lng:131.253812,difficulty:2)]
+        array += [Point("Shibahara", kanji:"芝原神社", lat:32.7058501, lng:131.2636936,difficulty:2)]
+        array += [Point("Toshimiya", kanji:"端午宮歳大明神", lat:32.7123342, lng:131.3272841,difficulty:1)]
+        array += [Point("Futatsudake", kanji:"二ツ嶽神社", lat:32.7478558, lng:131.3760164,difficulty:2)]
+        array += [Point("Hoko", kanji:"鉾神社", lat:32.781628, lng:131.38494,difficulty:3)]
+        array += [Point("Mukouyama", kanji:"向山神社", lat:32.6884439, lng:131.3058391,difficulty:3)]
+        array += [Point("Kamino", kanji:"上野神社 ", lat:32.7649291, lng:131.2995413,difficulty:1)]
+        array += [Point("Yunokino", kanji:"柚木野神社 ", lat:32.74175, lng:131.292822,difficulty:2)]
+        array += [Point("Kurokuchi", kanji:"黒口神社 ", lat:32.746172, lng:131.281836,difficulty:3)]
         
         // Debug
         // array = [Point("Apple",kanji:"アップル",lat:37.330651,lng:-122.030080,difficulty: 1)]
@@ -125,7 +121,7 @@ class Points {
         // debug
         // dictionary["Kushifuru"]!.visited = true;
     }
-    
+
     func is_visited(name: String?) -> Bool {
         guard let n = name else {
             print("No name on the annotation.")
@@ -144,5 +140,12 @@ class Points {
             if (p.visited) { n += 1 }
         }
         return n
+    }
+
+    func is_achieved(difficulty: Int) -> Bool {
+        for p in array{
+            if (p.difficulty == difficulty && !p.visited) { return false }
+        }
+        return true
     }
 }

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import GameKit
 
-class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GKGameCenterControllerDelegate {
     @IBOutlet var tableView: UITableView!
     
     let points = Points.sharedInstance
@@ -71,6 +72,23 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBAction func mapButtonPushed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {})
+    }
+
+    @IBAction func scoreButtonPushed(sender: AnyObject) {
+        showScore()
+    }
+
+
+    func showScore(){
+        let vc = self
+        //let vc = self.view?.window?.rootViewController
+        let gc = GKGameCenterViewController()
+        gc.gameCenterDelegate = self
+        vc.presentViewController(gc, animated: true, completion: nil)
+    }
+
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController){
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
