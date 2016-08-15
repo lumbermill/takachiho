@@ -3,6 +3,7 @@
 # 「名前 URL」の順に半角スペース区切りで列挙してください
 def url2latlng(file='links.txt')
   open(file).each do |line|
+    next if line.start_with? "#"
     name,url = line.split(" ")
     m = url.match /!3d([0-9.]+)!4d([0-9.]+)?/
     puts name
