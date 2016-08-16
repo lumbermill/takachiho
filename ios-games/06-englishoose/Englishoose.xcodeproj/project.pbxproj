@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		130EB8F71D56EF3000D48608 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 130EB8F61D56EF3000D48608 /* Assets.xcassets */; };
 		130EB8FF1D56F18700D48608 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EBAD2A1C1ADEF300A3F596 /* Main.storyboard */; };
-		130EB9001D56F1B700D48608 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13779AEC1D1E1FCD004011FF /* iAd.framework */; };
 		130EB9011D56F1DE00D48608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD261C1ADEF300A3F596 /* AppDelegate.swift */; };
 		130EB9021D56F1DE00D48608 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBAD281C1ADEF300A3F596 /* ViewController.swift */; };
 		130EB9031D56F1DE00D48608 /* CheckAnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0149B31C5B5FC7003FE01E /* CheckAnswerController.swift */; };
@@ -83,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				130EB9001D56F1B700D48608 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,6 +619,7 @@
 				130EB8FD1D56EF3000D48608 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		13EBAD1E1C1ADEF300A3F596 /* Build configuration list for PBXProject "Englishoose" */ = {
 			isa = XCConfigurationList;

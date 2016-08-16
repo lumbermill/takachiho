@@ -46,11 +46,13 @@ class QuizController: UIViewController, AVAudioPlayerDelegate {
                 view_state = 1
                 ans_data.append(true)
                 ansImageView.image = UIImage(named: "true")
+                if(sound_correct.playing) { sound_correct.stop() }
                 sound_correct.play()
             }else{
                 view_state = 2
                 ans_data.append(false)
                 ansImageView.image = UIImage(named: "false")
+                if(sound_wrong.playing) { sound_wrong.stop() }
                 sound_wrong.play()
             }
         }
