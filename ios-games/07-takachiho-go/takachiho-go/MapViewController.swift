@@ -219,27 +219,29 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             v.visited = true
             v.visited_at = NSDate()
         }
-        picker.dismissViewControllerAnimated(true, completion: {})
-        for a in mapView.selectedAnnotations {
-            mapView.deselectAnnotation(a, animated: true)
-            mapView.removeAnnotation(a)
-            mapView.addAnnotation(a)
-        }
+        points.load() // どこかが意図せず値渡しになっている？ v.visitedの更新が反映されないので、強引にNSDefaultからロード
+        picker.dismissViewControllerAnimated(true, completion: {
+            for a in self.mapView.selectedAnnotations {
+                self.mapView.deselectAnnotation(a, animated: true)
+                self.mapView.removeAnnotation(a)
+                self.mapView.addAnnotation(a)
+            }
+            
+            let n = self.points.n_visited()
+            let total = self.points.array.count
+            let ac = UIAlertController(title: "Gotcha!", message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.Alert)
+            let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            ac.addAction(aa)
+            self.presentViewController(ac, animated: true, completion: nil)
+            if (self.points.is_achieved(p.difficulty)) {
+                // Achieve all levels.
+                self.reportAcheivement(p.difficulty)
+            } else if (n == 1) {
+                // First taken!
+                self.reportAcheivement(0)
+            }
+        })
 
-        let n = points.n_visited()
-        let total = points.array.count
-        let ac = UIAlertController(title: "Gotcha!", message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.Alert)
-        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-        ac.addAction(aa)
-        self.presentViewController(ac, animated: true, completion: nil)
-
-        if (points.is_achieved(p.difficulty)) {
-            // Achieve all levels.
-            reportAcheivement(p.difficulty)
-        } else if (n == 1) {
-            // First taken!
-            reportAcheivement(0)
-        }
 
         // TODO: 撮った写真が保存される感じをどうやって出そう？
 //        let c:MKCircle = MKCircle(centerCoordinate: mapView.userLocation.coordinate, radius: 300)
@@ -260,9 +262,9 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
 
     func reportAcheivement(difficulty:(Int)){
         if (!GKLocalPlayer.localPlayer().authenticated) { return }
-        var id = "first"
+        var id = "grp.tg.first"
         if (difficulty >= 1 && difficulty <= 3){
-            id = "level"+String(difficulty)
+            id = "grp.tg.level"+String(difficulty)
         }
         let a = GKAchievement(identifier: id)
         a.percentComplete = 100.0

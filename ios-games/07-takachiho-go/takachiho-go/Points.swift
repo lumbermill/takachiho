@@ -122,6 +122,18 @@ class Points {
         // dictionary["Kushifuru"]!.visited = true;
     }
 
+    func load() -> Void {
+        let ud = NSUserDefaults.standardUserDefaults()
+        for i in 0..<array.count{
+            let t = ud.doubleForKey(array[i].name)
+            if (t > 0){
+                array[i].visited = true
+                array[i].visited_at = NSDate(timeIntervalSinceReferenceDate: t)
+            }
+
+        }
+    }
+
     func is_visited(name: String?) -> Bool {
         guard let n = name else {
             print("No name on the annotation.")
