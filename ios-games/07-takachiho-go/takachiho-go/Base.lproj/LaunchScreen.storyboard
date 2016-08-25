@@ -17,17 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Takachiho GO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oh-Jp-yWx">
-                                <rect key="frame" x="20" y="283" width="560" height="33"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="32"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="MTd-wf-RSj">
+                                <rect key="frame" x="20" y="120" width="560" height="360"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="360" id="HHa-Su-SBT"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="7oh-Jp-yWx" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Tp0-Uj-cVj"/>
-                            <constraint firstItem="7oh-Jp-yWx" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="gCU-tI-TuQ"/>
-                            <constraint firstItem="7oh-Jp-yWx" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="mxx-ZU-JjB"/>
+                            <constraint firstItem="MTd-wf-RSj" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="8qw-5d-41b"/>
+                            <constraint firstItem="MTd-wf-RSj" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="iLh-fB-CTT"/>
+                            <constraint firstItem="MTd-wf-RSj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="q3R-qY-MMS"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,4 +37,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launch" width="898" height="1000"/>
+    </resources>
 </document>
