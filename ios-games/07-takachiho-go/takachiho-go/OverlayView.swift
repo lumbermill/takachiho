@@ -107,6 +107,7 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         if(taking){
             takenImage = nil
             imagePicker.takePicture()
+            take_or_use.enabled = false
         }else{
             controller.imagePickerController(imagePicker, didFinishPickingImage: takenImage!, editingInfo: nil)
         }
@@ -123,7 +124,6 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        
         // Trim to square.
         // The operation can also remove exif rotation.
         let w = min(image.size.width,image.size.height)
@@ -145,6 +145,7 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         UIGraphicsEndImageContext()
         
         self.setNeedsDisplay()
+        take_or_use.enabled = true
     }
     
 }
