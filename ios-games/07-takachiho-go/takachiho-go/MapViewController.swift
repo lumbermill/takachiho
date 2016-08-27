@@ -18,7 +18,11 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     var current_spot: Point?
     var need_update_center = true
     let points = Points.sharedInstance
+    #if DEBUG
+    let radius:CLLocationDistance = 1550.0 // Sacrid circle radius(meter).
+    #else
     let radius:CLLocationDistance = 50.0 // Sacrid circle radius(meter).
+    #endif
 
     override func viewDidLoad() -> Void {
         super.viewDidLoad()
@@ -240,6 +244,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 // First taken!
                 self.reportAcheivement(0)
             }
+            self.reportScore("grp.tg.visits",score: n)
         })
 
 
@@ -248,10 +253,10 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
 //        mapView.addOverlay(c)
     }
 
-    func reportScore(){
+    func reportScore(id: String, score: Int){
         if (!GKLocalPlayer.localPlayer().authenticated) { return }
-        let s = GKScore(leaderboardIdentifier: "test") // Leaderboard ID
-        s.value = Int64(0)
+        let s = GKScore(leaderboardIdentifier: id) // Leaderboard ID
+        s.value = Int64(score)
         NSLog("Reporting scores %@",s)
         GKScore.reportScores([s], withCompletionHandler: {(error: NSError?) -> Void in
             if error != nil {
