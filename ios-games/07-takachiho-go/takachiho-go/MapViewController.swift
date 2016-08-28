@@ -107,7 +107,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
 //        ac.addAction(aa)
 //        self.presentViewController(ac, animated: true, completion: {})
 //   }
-    
+
     func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         print(error)
     }
@@ -156,7 +156,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
         return MKOverlayRenderer()
     }
-    
+
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         // コールアウト（カメラアイコン）がタップされた時
         guard let a = view.annotation else {
@@ -165,18 +165,18 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         guard let title = a.title! else {
             return
         }
-        
+
         let c1 = MKMapPointForCoordinate(mapView.userLocation.coordinate)
         let c2 = MKMapPointForCoordinate(view.annotation!.coordinate)
-        
-        let d = MKMetersBetweenMapPoints(c1, c2)
-        
-        if (d < radius){
-        print("Showing camera for "+title)
-        current_spot = points.dictionary[title]
 
-        // ImagePicker(Camera)
-        let ipc = UIImagePickerController()
+        let d = MKMetersBetweenMapPoints(c1, c2)
+
+        if (d < radius){
+            print("Showing camera for "+title)
+            current_spot = points.dictionary[title]
+
+            // ImagePicker(Camera)
+            let ipc = UIImagePickerController()
             if (Utils.isSimulator()){
                 ipc.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
             }else{
@@ -223,14 +223,14 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             v.visited = true
             v.visited_at = NSDate()
         }
-        points.load() // どこかが意図せず値渡しになっている？ v.visitedの更新が反映されないので、強引にNSDefaultからロード
+        points.load() // Pointがクラスでなく構造体なので、この瞬間にロードしなおさないとうまくいかない…
         picker.dismissViewControllerAnimated(true, completion: {
             for a in self.mapView.selectedAnnotations {
                 self.mapView.deselectAnnotation(a, animated: true)
                 self.mapView.removeAnnotation(a)
                 self.mapView.addAnnotation(a)
             }
-            
+
             let n = self.points.n_visited()
             let total = self.points.array.count
             let ac = UIAlertController(title: "Gotcha!", message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -238,7 +238,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             ac.addAction(aa)
             self.presentViewController(ac, animated: true, completion: nil)
             if (self.points.is_achieved(p.difficulty)) {
-                // Achieve all levels.
+                // Achieve all in the level.
                 self.reportAcheivement(p.difficulty)
             } else if (n == 1) {
                 // First taken!
@@ -258,11 +258,15 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         let s = GKScore(leaderboardIdentifier: id) // Leaderboard ID
         s.value = Int64(score)
         NSLog("Reporting scores %@",s)
+        #if DEBUG
+            // do nothing.
+        #else
         GKScore.reportScores([s], withCompletionHandler: {(error: NSError?) -> Void in
             if error != nil {
                 print(error)
             }
         })
+        #endif
     }
 
     func reportAcheivement(difficulty:(Int)){
