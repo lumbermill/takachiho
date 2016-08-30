@@ -87,14 +87,16 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     }
 
     func updateGodImage() {
-        // TODO: nameに応じて画像を切り替える
-        godImage = UIImage(named: "Center")
-        if((godImage) != nil) {
-            let offset_y = (frame.height - frame.width) / 2
-            godX = CGFloat(random() % Int(frame.width - godImage!.size.width))
-            godY = CGFloat(random() % Int(frame.width - godImage!.size.height)) + offset_y
-            godScale = CGFloat(random() % 20) / 100 + 1
+        if (self.name == nil) { return }
+        guard let n = Points.sharedInstance.dictionary[self.name!]?.god() else {
+            return
         }
+        godImage = UIImage(named: n)
+        if(godImage == nil) { return }
+        let offset_y = (frame.height - frame.width) / 2
+        godX = CGFloat(random() % Int(frame.width - godImage!.size.width))
+        godY = CGFloat(random() % Int(frame.width - godImage!.size.height)) + offset_y
+        godScale = CGFloat(random() % 20) / 100 + 1
     }
 
     func drawGodImage() {

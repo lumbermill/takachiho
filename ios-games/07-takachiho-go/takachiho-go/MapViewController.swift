@@ -246,11 +246,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             }
             self.reportScore("grp.tg.visits",score: n)
         })
-
-
-        // TODO: 撮った写真が保存される感じをどうやって出そう？
-//        let c:MKCircle = MKCircle(centerCoordinate: mapView.userLocation.coordinate, radius: 300)
-//        mapView.addOverlay(c)
     }
 
     func reportScore(id: String, score: Int){
