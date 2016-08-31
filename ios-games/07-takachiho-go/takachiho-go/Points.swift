@@ -48,15 +48,17 @@ struct Point {
         return BASEDIR+name+".jpg"
     }
 
-    func god() -> String {
+    func god() -> String? {
         let r = random() % 100
         if r < 2 && gods.count > 2 {
             let gs = gods[2...gods.count-1]
             return gs[random() % gs.count]
-        }else if r < 20 && gods.count > 1{
+        } else if r < 20 && gods.count > 1{
             return gods[1]
-        } else {
+        } else if gods.count > 0{
             return gods[0]
+        } else {
+            return nil
         }
     }
 

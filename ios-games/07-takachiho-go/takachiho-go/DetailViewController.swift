@@ -13,7 +13,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descLabel: UILabel!
-
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var messageLabel: UILabel!
 
     var detailItem: Point? {
         didSet {
@@ -30,11 +31,13 @@ class DetailViewController: UIViewController {
             if let i = detail.photo() {
                 imageView.image = i
                 imageView.contentMode = UIViewContentMode.ScaleAspectFit
-                descLabel.text = ""
+                descLabel.text = detail.detailText()
+                saveButton.enabled = true
             }else{
                 imageView.image = UIImage(named: "Question")
                 imageView.contentMode = UIViewContentMode.Center
                 descLabel.text = "You haven't found the spot yet."
+                saveButton.enabled = false
             }
         }
     }
@@ -51,6 +54,21 @@ class DetailViewController: UIViewController {
 
     @IBAction func backButtonPushed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {})
+    }
+    
+    @IBAction func saveButtonPushed(sender: AnyObject) {
+        if let image = imageView.image {
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(imageSaved), nil)
+            saveButton.enabled = false
+        }
+    }
+
+    func imageSaved(image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+        if error == nil {
+            messageLabel.text = "Saved to Camera roll."
+        }else{
+            messageLabel.text = "Failed to save. \(error.code)"
+        }
     }
 }
 
