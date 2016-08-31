@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "6aratate_amanouzume.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "6aratate_amanouzume.png",
       "scale" : "2x"
     },
     {

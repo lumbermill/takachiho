@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "question-mark-on-a-circular-black-background.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "question-mark-on-a-circular-black-background.png",
       "scale" : "2x"
     },
     {

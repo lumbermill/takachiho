@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "16kumano_ukemochinomikoto.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "16kumano_ukemochinomikoto.png",
       "scale" : "2x"
     },
     {

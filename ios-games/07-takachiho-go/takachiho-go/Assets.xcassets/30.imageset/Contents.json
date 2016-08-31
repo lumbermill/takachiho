@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "30yunokino_ootoshigami.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "30yunokino_ootoshigami.png",
       "scale" : "2x"
     },
     {

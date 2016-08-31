@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "9hoko_sobodake_toyotamahime.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "9hoko_sobodake_toyotamahime.png",
       "scale" : "2x"
     },
     {

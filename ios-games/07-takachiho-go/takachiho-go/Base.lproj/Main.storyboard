@@ -117,6 +117,7 @@
                                     <constraint firstAttribute="width" constant="52" id="Mpq-n4-l5p"/>
                                     <constraint firstAttribute="height" constant="52" id="U8j-aF-2k3"/>
                                 </constraints>
+                                <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
                                 <state key="normal" image="Target"/>
                                 <connections>
                                     <action selector="targetButtonPushed:" destination="Z5w-3c-TeC" eventType="touchUpInside" id="bDg-aF-L5A"/>
@@ -189,21 +190,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PBk-2X-9WY">
-                                                    <rect key="frame" x="56" y="16" width="41" height="17"/>
+                                                    <rect key="frame" x="62" y="16" width="41" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CdP-3c-gjY">
-                                                    <rect key="frame" x="56" y="33" width="41" height="14"/>
+                                                    <rect key="frame" x="62" y="33" width="41" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Question" id="sa9-jo-7aV">
-                                                    <rect key="frame" x="15" y="18" width="26" height="26"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="Question" id="sa9-jo-7aV">
+                                                    <rect key="frame" x="15" y="15" width="32" height="32"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -267,7 +268,7 @@
     </scenes>
     <resources>
         <image name="Menu" width="22" height="18"/>
-        <image name="Question" width="26" height="26"/>
-        <image name="Target" width="20" height="20"/>
+        <image name="Question" width="32" height="32"/>
+        <image name="Target" width="64" height="64"/>
     </resources>
 </document>

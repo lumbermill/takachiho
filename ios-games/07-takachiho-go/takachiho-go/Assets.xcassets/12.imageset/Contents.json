@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "12ishigami_kunitokotachinomikoto.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "12ishigami_ushigamisama.png",
       "scale" : "2x"
     },
     {

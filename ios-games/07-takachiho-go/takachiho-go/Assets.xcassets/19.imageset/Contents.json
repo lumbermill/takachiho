@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "18kurokuchi_amenomikudarinomikoto.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "18kurokuchi_amenomikudarinomikoto.png",
       "scale" : "2x"
     },
     {
