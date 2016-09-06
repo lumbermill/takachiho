@@ -1,6 +1,12 @@
 <% content_for :title, t("root") %>
 <div class="root1">
   <div class="container">
+    <% if notice %>
+      <div class="alert alert-info" role="alert"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="alert alert-danger" role="alert"><%= alert %></div>
+    <% end %>
     <h1>Project Mukoyama</h1>
     <p>Raspberry Piでビニールハウスの温度監視システムを構築するプロジェクト。</p>
   </div>

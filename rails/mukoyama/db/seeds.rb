@@ -1,7 +1,7 @@
-admin = User.create(email:'info@lmlab.net', password:'secret')
+t=Time.now
+admin = User.create(email:'info@lmlab.net', password:'secret',confirmed_at:t)
 
 if Rails.env == 'development'
-	t=Time.now
 	100.times do
 		TmprLog.create(raspi_id: 1, time_stamp: t, temperature: rand(100..300)/10.0)
 		t += 10.minutes
