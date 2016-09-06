@@ -8,14 +8,14 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :password, "合言葉" %><br />
+        <%= f.label :password, "パスワード" %><br />
         <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
       </div>
 
       <% if devise_mapping.rememberable? -%>
         <div class="form-group">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, "合言葉を記憶する" %>
+          <%= f.label :remember_me, "パスワードを記憶する" %>
         </div>
       <% end -%>
 
