@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(version: 20160610104052) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "tmpr_logs", ["raspi_id", "time_stamp"], name: "index_tmpr_logs_on_raspi_id_and_time_stamp", unique: true, using: :btree
-
   create_table "tmpr_monthly_logs", force: :cascade do |t|
     t.integer  "raspi_id",            limit: 4
     t.integer  "year_month",          limit: 4
