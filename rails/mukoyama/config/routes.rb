@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :tmpr_monthly_logs
     resources :tmpr_daily_logs
     resources :tmpr_logs
+
+    get 'users' => 'users#index'
   end
   root 'pages#root'
 

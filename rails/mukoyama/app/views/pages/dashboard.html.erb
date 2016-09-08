@@ -25,6 +25,11 @@
   </tbody>
 </table>
 <p>
-<%= link_to '設定の編集', settings_path, class: "btn btn-default" %>
+<%= link_to 'センサの追加・編集', settings_path, class: "btn btn-default" %>
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
 </p>
+<% if current_user.admin? %>
+<p>
+  <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
+</p>
+<% end %>
