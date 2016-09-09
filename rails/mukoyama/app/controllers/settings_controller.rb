@@ -25,10 +25,11 @@ class SettingsController < ApplicationController
   # POST /settings.json
   def create
     @setting = Setting.new(setting_params)
-
+    @setting.raspi_id = Setting.order("raspi_id DESC").limit(1).first.id + 1
+    @setting.user = current_user
     respond_to do |format|
       if @setting.save
-        format.html { redirect_to @setting, notice: 'Setting was successfully created.' }
+        format.html { redirect_to @setting, notice: '設定が追加されました。' }
         format.json { render :show, status: :created, location: @setting }
       else
         format.html { render :new }
@@ -73,6 +74,6 @@ class SettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def setting_params
-      params.require(:setting).permit(:raspi_id, :min_tmpr, :max_tmpr)
+      params.require(:setting).permit(:raspi_id, :name, :min_tmpr, :max_tmpr)
     end
 end

@@ -1,19 +1,21 @@
-<p id="notice"><%= notice %></p>
+<table class="table">
+  <tr>
+    <th>ID:</th>
+    <td><%= @setting.raspi_id %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.name") %></th>
+    <td><%= @setting.name %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.min_tmpr") %></th>
+    <td><%= @setting.min_tmpr %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.max_tmpr") %></th>
+    <td><%= @setting.max_tmpr %></td>
+  </tr>
+</table>
 
-<p>
-  <strong>Raspi:</strong>
-  <%= @setting.raspi_id %>
-</p>
-
-<p>
-  <strong>Min tmpr:</strong>
-  <%= @setting.min_tmpr %>
-</p>
-
-<p>
-  <strong>Max tmpr:</strong>
-  <%= @setting.max_tmpr %>
-</p>
-
-<%= link_to 'Edit', edit_setting_path(@setting) %> |
-<%= link_to 'Back', settings_path %>
+<%= link_to t('edit'), edit_setting_path(@setting) %> |
+<%= link_to t('back'), settings_path %>

@@ -1,5 +1,5 @@
 <% content_for :title, 'ダッシュボード' %>
-<p>Welcome, <%= current_user.name %></p>
+<p>ようこそ、 <%= current_user.name.present? ? current_user.name : current_user.email %> さん</p>
 <table class="table">
   <thead>
     <tr>
@@ -29,6 +29,7 @@
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
 </p>
 <% if current_user.admin? %>
+<hr/>
 <p>
   <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
 </p>

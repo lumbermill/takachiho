@@ -1,6 +1,9 @@
 ja:
   hello: "こんにちは"
   root: 'トップ'
+  edit: '編集'
+  back: '戻る'
+  show: '閲覧'
   activerecord:
     models:
       user: '会員'
@@ -10,3 +13,19 @@ ja:
         name: '名前'
         min_tmpr: '最低気温'
         max_tmpr: '最高気温'
+#    errors:
+# 以下は効かない？
+  helpers:
+    label:
+      submit:
+        create: 登録する
+        submit: 保存する
+        update: 更新する
+  devise:
+    failure:
+      user:
+        unauthenticated: '認証に失敗しました。'
+        invalid: 'メールアドレスまたはパスワードが一致しません。'
+    sessions:
+      user:
+        signed_in: '入室しました。'

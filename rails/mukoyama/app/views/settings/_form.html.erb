@@ -1,8 +1,7 @@
 <%= form_for(@setting) do |f| %>
   <% if @setting.errors.any? %>
-    <div id="error_explanation">
+    <div class="alert alert-warning">
       <h2><%= pluralize(@setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
-
       <ul>
       <% @setting.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,19 +10,20 @@
     </div>
   <% end %>
   <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.number_field :name, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= f.label :raspi_id %><br>
-    <%= f.number_field :raspi_id %>
-  </div>
-  <div class="field">
-    <%= f.label :min_tmpr %><br>
-    <%= f.text_field :min_tmpr %>
+    <%= f.label :raspi_id, "ID" %>
+    <input type="text" value="<%= @setting.id.present? ? @setting.id : "*(自動割当)" %>" class="form-control" disabled="disabled"/>
+    <%= f.hidden_field :raspi_id %>
   </div>
   <div class="form-group">
-    <%= f.label :max_tmpr %><br>
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :min_tmpr, "最低気温" %>
+    <%= f.text_field :min_tmpr, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :max_tmpr, "最高気温" %>
     <%= f.text_field :max_tmpr, class: "form-control" %>
   </div>
   <%= f.submit nil, class: "btn btn-primary" %>

@@ -9,7 +9,7 @@ if Rails.env == 'development'
 	Address.create(raspi_id: 1, mail: 's-kai@lumber-mill.co.jp', active: true)
 	Setting.create(raspi_id: 1, min_tmpr: 12, max_tmpr: 28, user:admin)
 
-	u1 = User.create(email:'test@lmlab.net', password:'secret')
+	u1 = User.create(email:'test@lmlab.net', password:'secret',confirmed_at:t)
 
 	t=Time.now
 	100.times do
