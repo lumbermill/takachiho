@@ -15,6 +15,7 @@
         <% if user_signed_in? %>
           <li><%= link_to '<span class="glyphicon glyphicon-dashboard"></span> ダッシュボード'.html_safe, dashboard_path %></li>
         <% end %>
+        <li><%= link_to '<span class="glyphicon glyphicon-wrench"></span> 参加方法'.html_safe, howto_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
