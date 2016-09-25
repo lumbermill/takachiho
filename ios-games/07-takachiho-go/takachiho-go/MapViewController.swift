@@ -257,7 +257,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         #if DEBUG
             // do nothing.
         #else
-        GKScore.report([s], withCompletionHandler: {(error: NSError?) -> Void in
+        GKScore.report([s], withCompletionHandler: {(error: Error?) -> Void in
             if error != nil {
                 print(error)
             }
