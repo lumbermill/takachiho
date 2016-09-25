@@ -44,8 +44,8 @@ struct Point {
         }
     }
 
-    func path_for_photo() -> String {
-        return BASEDIR+name+".jpg"
+    func path_for_photo(thumb: Bool) -> String {
+        return BASEDIR+name+(thumb ? "-thumb" : "")+".jpg"
     }
 
     func god() -> String? {
@@ -64,12 +64,36 @@ struct Point {
 
     func has_photo() -> Bool {
         let fm = FileManager.default
-        return fm.fileExists(atPath: path_for_photo())
+        return fm.fileExists(atPath: path_for_photo(thumb: false))
     }
 
-    func photo() -> UIImage? {
+    func create_thumbnail() -> UIImage? {
+        if(!has_photo()) { return nil }
+        guard let i = photo(thumb: false) else {
+            return nil
+        }
+        let size = CGSize(width: 128, height: 128)
+        UIGraphicsBeginImageContext(size)
+        i.draw(in: CGRect(x: 0, y:0, width: size.width, height: size.height))
+        guard let ri = UIGraphicsGetImageFromCurrentImageContext() else {
+            return nil
+        }
+        UIGraphicsEndImageContext()
+        guard let d = UIImageJPEGRepresentation(ri, 1.0) else {
+            return nil
+        }
+        print("begin writing thumbnail data.")
+        try? d.write(to: URL(fileURLWithPath: path_for_photo(thumb: true)), options: [.atomic])
+        return ri
+    }
+
+    func photo(thumb: Bool) -> UIImage? {
         let fm = FileManager.default
-        guard let d = fm.contents(atPath: path_for_photo()) else {
+        guard let d = fm.contents(atPath: path_for_photo(thumb: thumb)) else {
+            if(thumb && has_photo()){
+                // サムネイルが無ければ作る
+                return create_thumbnail()
+            }
             return nil
         }
         return UIImage(data: d)

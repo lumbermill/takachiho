@@ -28,7 +28,7 @@ class DetailViewController: UIViewController {
         if let detail = self.detailItem {
             if titleLabel == nil { return }
             titleLabel.text = detail.name
-            if let i = detail.photo() {
+            if let i = detail.photo(thumb: false) {
                 imageView.image = i
                 imageView.contentMode = UIViewContentMode.scaleAspectFit
                 descLabel.text = detail.detailText()

@@ -19,7 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     var need_update_center = true
     let points = Points.sharedInstance
     #if DEBUG
-    let radius:CLLocationDistance = 1550.0 // Sacrid circle radius(meter).
+    let radius:CLLocationDistance = 3050.0
     #else
     let radius:CLLocationDistance = 50.0 // Sacrid circle radius(meter).
     #endif
@@ -218,7 +218,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             return
         }
         print("begin writing image data.")
-        try? d.write(to: URL(fileURLWithPath: p.path_for_photo()), options: [.atomic])
+        try? d.write(to: URL(fileURLWithPath: p.path_for_photo(thumb: false)), options: [.atomic])
         if var v = points.dictionary[p.name] {
             v.visited = true
             v.visited_at = Date()

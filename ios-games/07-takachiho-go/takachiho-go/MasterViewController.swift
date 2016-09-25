@@ -58,7 +58,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let p = points.array[(indexPath as NSIndexPath).row] 
         cell.textLabel!.text = p.name
         cell.detailTextLabel!.text = p.detailText()
-        if let i = p.photo() {
+        if let i = p.photo(thumb: true) {
             cell.imageView!.image = i
         } else {
             cell.imageView!.image = UIImage(named: "Question")
