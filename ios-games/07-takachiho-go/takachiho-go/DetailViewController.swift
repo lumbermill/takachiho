@@ -30,14 +30,14 @@ class DetailViewController: UIViewController {
             titleLabel.text = detail.name
             if let i = detail.photo() {
                 imageView.image = i
-                imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                imageView.contentMode = UIViewContentMode.scaleAspectFit
                 descLabel.text = detail.detailText()
-                saveButton.enabled = true
+                saveButton.isEnabled = true
             }else{
                 imageView.image = UIImage(named: "Question")
-                imageView.contentMode = UIViewContentMode.Center
+                imageView.contentMode = UIViewContentMode.center
                 descLabel.text = "You haven't found the spot yet."
-                saveButton.enabled = false
+                saveButton.isEnabled = false
             }
         }
     }
@@ -52,18 +52,18 @@ class DetailViewController: UIViewController {
     }
 
 
-    @IBAction func backButtonPushed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {})
+    @IBAction func backButtonPushed(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: {})
     }
     
-    @IBAction func saveButtonPushed(sender: AnyObject) {
+    @IBAction func saveButtonPushed(_ sender: AnyObject) {
         if let image = imageView.image {
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(imageSaved), nil)
-            saveButton.enabled = false
+            saveButton.isEnabled = false
         }
     }
 
-    func imageSaved(image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+    func imageSaved(_ image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutableRawPointer) {
         if error == nil {
             messageLabel.text = "Saved to Camera roll."
         }else{

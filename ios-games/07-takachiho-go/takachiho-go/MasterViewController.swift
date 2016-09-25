@@ -18,7 +18,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
@@ -29,11 +29,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     // MARK: - Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let p = points.array[indexPath.row]
-                let controller = segue.destinationViewController as! DetailViewController
+                let p = points.array[(indexPath as NSIndexPath).row]
+                let controller = segue.destination as! DetailViewController
                 controller.detailItem = p
                 //controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.navigationItem.title = p.name
@@ -44,18 +44,18 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     // MARK: - Table View
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return points.array.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let p = points.array[indexPath.row] 
+        let p = points.array[(indexPath as NSIndexPath).row] 
         cell.textLabel!.text = p.name
         cell.detailTextLabel!.text = p.detailText()
         if let i = p.photo() {
@@ -66,15 +66,15 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
 
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
 
-    @IBAction func mapButtonPushed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {})
+    @IBAction func mapButtonPushed(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: {})
     }
 
-    @IBAction func scoreButtonPushed(sender: AnyObject) {
+    @IBAction func scoreButtonPushed(_ sender: AnyObject) {
         showScore()
     }
 
@@ -84,11 +84,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //let vc = self.view?.window?.rootViewController
         let gc = GKGameCenterViewController()
         gc.gameCenterDelegate = self
-        vc.presentViewController(gc, animated: true, completion: nil)
+        vc.present(gc, animated: true, completion: nil)
     }
 
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController){
-        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController){
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }
 

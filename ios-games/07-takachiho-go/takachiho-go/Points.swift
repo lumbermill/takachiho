@@ -18,11 +18,11 @@ struct Point {
     var lng :Double
     var gods :[String] = []
     var difficulty :Int = 1 // 1 to 3
-    var visited_at :NSDate?  {
+    var visited_at :Date?  {
         didSet {
             if let d = visited_at {
-                let ud = NSUserDefaults.standardUserDefaults()
-                ud.setDouble(d.timeIntervalSinceReferenceDate, forKey: name)
+                let ud = UserDefaults.standard
+                ud.set(d.timeIntervalSinceReferenceDate, forKey: name)
                 ud.synchronize()
             }
         }
@@ -37,10 +37,10 @@ struct Point {
         self.difficulty = difficulty
         self.visited = has_photo()
         self.gods = gods
-        let ud = NSUserDefaults.standardUserDefaults()
-        let t = ud.doubleForKey(name)
+        let ud = UserDefaults.standard
+        let t = ud.double(forKey: name)
         if (t > 0){
-            visited_at = NSDate(timeIntervalSinceReferenceDate: t)
+            visited_at = Date(timeIntervalSinceReferenceDate: t)
         }
     }
 
@@ -49,10 +49,10 @@ struct Point {
     }
 
     func god() -> String? {
-        let r = random() % 100
+        let r = arc4random() % 100
         if r < 2 && gods.count > 2 {
             let gs = gods[2...gods.count-1]
-            return gs[random() % gs.count]
+            return gs[Int(arc4random()) % gs.count]
         } else if r < 20 && gods.count > 1{
             return gods[1]
         } else if gods.count > 0{
@@ -63,13 +63,13 @@ struct Point {
     }
 
     func has_photo() -> Bool {
-        let fm = NSFileManager.defaultManager()
-        return fm.fileExistsAtPath(path_for_photo())
+        let fm = FileManager.default
+        return fm.fileExists(atPath: path_for_photo())
     }
 
     func photo() -> UIImage? {
-        let fm = NSFileManager.defaultManager()
-        guard let d = fm.contentsAtPath(path_for_photo()) else {
+        let fm = FileManager.default
+        guard let d = fm.contents(atPath: path_for_photo()) else {
             return nil
         }
         return UIImage(data: d)
@@ -78,10 +78,10 @@ struct Point {
     func detailText() -> String {
         var v = "";
         if let d = visited_at {
-            let df = NSDateFormatter()
-            df.dateStyle = NSDateFormatterStyle.MediumStyle
-            df.timeStyle = NSDateFormatterStyle.ShortStyle
-            v = " - " + df.stringFromDate(d)
+            let df = DateFormatter()
+            df.dateStyle = DateFormatter.Style.medium
+            df.timeStyle = DateFormatter.Style.short
+            v = " - " + df.string(from: d)
         }
         return kanji + v
     }
@@ -139,18 +139,18 @@ class Points {
     }
 
     func load() -> Void {
-        let ud = NSUserDefaults.standardUserDefaults()
+        let ud = UserDefaults.standard
         for i in 0..<array.count{
-            let t = ud.doubleForKey(array[i].name)
+            let t = ud.double(forKey: array[i].name)
             if (t > 0){
                 array[i].visited = true
-                array[i].visited_at = NSDate(timeIntervalSinceReferenceDate: t)
+                array[i].visited_at = Date(timeIntervalSinceReferenceDate: t)
             }
 
         }
     }
 
-    func is_visited(name: String?) -> Bool {
+    func is_visited(_ name: String?) -> Bool {
         guard let n = name else {
             print("No name on the annotation.")
             return false;
@@ -170,7 +170,7 @@ class Points {
         return n
     }
 
-    func is_achieved(difficulty: Int) -> Bool {
+    func is_achieved(_ difficulty: Int) -> Bool {
         for p in array{
             if (p.difficulty == difficulty && !p.visited) { return false }
         }

@@ -23,13 +23,13 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     var godY:CGFloat = 0
     var godScale:CGFloat = 1.0
     var takenImage: UIImage?
-    var f :CGRect = CGRectMake(0, 0, 0, 0)
+    var f :CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
 
     required init(name: String?, imagePicker: UIImagePickerController, controller: MapViewController){
         self.imagePicker = imagePicker
         self.controller = controller
         if (imagePicker.view.frame.width > imagePicker.view.frame.height) {
-            f = CGRectMake(0, 0, imagePicker.view.frame.height, imagePicker.view.frame.width)
+            f = CGRect(x: 0, y: 0, width: imagePicker.view.frame.height, height: imagePicker.view.frame.width)
         }else{
             f = imagePicker.view.frame
         }
@@ -37,13 +37,13 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         self.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
         self.imagePicker.delegate = self
 
-        take_or_use = UIButton(frame: CGRectMake(f.width-88,f.height-38,80,30))
-        take_or_use.setTitle("Take", forState: UIControlState.Normal)
-        take_or_use.addTarget(self, action: #selector(OverlayView.takeOrUsePushed(_:)), forControlEvents: .TouchUpInside)
-        take_or_use.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
-        cancel_or_retake = UIButton(frame: CGRectMake(8,f.height - 38,80,30))
-        cancel_or_retake.setTitle("Cancel", forState: UIControlState.Normal)
-        cancel_or_retake.addTarget(self, action: #selector(OverlayView.cancelOrRetakePushed(_:)), forControlEvents: .TouchUpInside)
+        take_or_use = UIButton(frame: CGRect(x: f.width-88,y: f.height-38,width: 80,height: 30))
+        take_or_use.setTitle("Take", for: UIControlState())
+        take_or_use.addTarget(self, action: #selector(OverlayView.takeOrUsePushed(_:)), for: .touchUpInside)
+        take_or_use.contentHorizontalAlignment = UIControlContentHorizontalAlignment.right
+        cancel_or_retake = UIButton(frame: CGRect(x: 8,y: f.height - 38,width: 80,height: 30))
+        cancel_or_retake.setTitle("Cancel", for: UIControlState())
+        cancel_or_retake.addTarget(self, action: #selector(OverlayView.cancelOrRetakePushed(_:)), for: .touchUpInside)
         imageView = UIImageView()
 
         self.addSubview(take_or_use)
@@ -59,29 +59,29 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         fatalError("init(coder:) has not been implemented")
     }
 
-    func drawOverlap(context:CGContext?,frame: CGRect){
-        CGContextSetLineWidth(context, 1)
-        CGContextSetStrokeColor(context,[0.8, 0.8, 0.8, 1.0])
+    func drawOverlap(_ context:CGContext?,frame: CGRect){
+        context?.setLineWidth(1)
+        context?.setStrokeColor([0.8, 0.8, 0.8, 1.0])
         let offset_y = (frame.height - frame.width) / 2
-        let center = CGRectMake(0, offset_y, frame.width, frame.width)
-        CGContextStrokeRect(context, center)
-        CGContextSetFontSize(context, 64)
-        CGContextSetFillColor(context, [0.8, 0.8, 0.8, 1.0])
+        let center = CGRect(x: 0, y: offset_y, width: frame.width, height: frame.width)
+        context?.stroke(center)
+        context?.setFontSize(64)
+        context?.setFillColor([0.8, 0.8, 0.8, 1.0])
         //CGContextSetFont(context, font: CGFont())
         if let n = name {
             // Name(English)
             let padding = frame.width * 0.02
             let fsize = frame.width * 0.1
             let font = UIFont(name: "Copperplate", size: fsize)!
-            let attrs = [NSFontAttributeName: font,NSForegroundColorAttributeName: UIColor.whiteColor()]
+            let attrs = [NSFontAttributeName: font,NSForegroundColorAttributeName: UIColor.white]
             let an = NSAttributedString(string: n, attributes: attrs)
-            an.drawAtPoint(CGPointMake(padding,offset_y + padding))
+            an.draw(at: CGPoint(x: padding,y: offset_y + padding))
             if let kanji = Points.sharedInstance.dictionary[n]?.kanji {
                 // Name(Kanji)
                 let kn = NSAttributedString(string: kanji, attributes: attrs)
                 let w = kn.size().width
                 let h = kn.size().height
-                kn.drawAtPoint(CGPointMake(frame.width - padding - w,offset_y + frame.width - padding - h))
+                kn.draw(at: CGPoint(x: frame.width - padding - w,y: offset_y + frame.width - padding - h))
             }
         }
     }
@@ -94,40 +94,40 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         godImage = UIImage(named: n)
         if(godImage == nil) { return }
         let offset_y = (frame.height - frame.width) / 2
-        godX = CGFloat(random() % Int(frame.width - godImage!.size.width))
-        godY = CGFloat(random() % Int(frame.width - godImage!.size.height)) + offset_y
-        godScale = CGFloat(random() % 20) / 100 + 1
+        godX = CGFloat(arc4random() % UInt32(frame.width - godImage!.size.width))
+        godY = CGFloat(arc4random() % UInt32(frame.width - godImage!.size.height)) + offset_y
+        godScale = CGFloat(arc4random() % 20) / 100 + 1
     }
 
     func drawGodImage() {
         guard let image = godImage else { return }
         imageView.image = image
 
-        imageView.frame = CGRectMake(godX, godY, image.size.width, image.size.height)
+        imageView.frame = CGRect(x: godX, y: godY, width: image.size.width, height: image.size.height)
 
-        let angle = CGFloat(random() % 30) / 100.0
-        imageView.center = CGPointMake(imageView.frame.origin.x + imageView.frame.size.width / 2,imageView.frame.origin.y + imageView.frame.size.height / 2)
-        imageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, -angle)
-        let opts:UIViewAnimationOptions = [.Repeat,.Autoreverse]
-        UIView.animateWithDuration(1.0, delay: 1.0, options: opts,
+        let angle = CGFloat(arc4random() % 30) / 100.0
+        imageView.center = CGPoint(x: imageView.frame.origin.x + imageView.frame.size.width / 2,y: imageView.frame.origin.y + imageView.frame.size.height / 2)
+        imageView.transform = CGAffineTransform.identity.rotated(by: -angle)
+        let opts:UIViewAnimationOptions = [.repeat,.autoreverse]
+        UIView.animate(withDuration: 1.0, delay: 1.0, options: opts,
                                    animations: {
-                                    let t1 = CGAffineTransformRotate(self.imageView.transform, angle*2)
-                                    let t2 = CGAffineTransformScale(t1, self.godScale, self.godScale)
+                                    let t1 = self.imageView.transform.rotated(by: angle*2)
+                                    let t2 = t1.scaledBy(x: self.godScale, y: self.godScale)
                                     self.imageView.transform = t2
                                     self.imageView.alpha = 0.6
             }, completion: { (b) in
-                self.imageView.transform = CGAffineTransformIdentity
+                self.imageView.transform = CGAffineTransform.identity
             })
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         drawOverlap(context,frame: f)
 
         if(!taking && takenImage != nil){
             let offset_y = (f.height - f.width) / 2
-            let center = CGRectMake(0, offset_y, f.width, f.width)
-            takenImage!.drawInRect(center)
+            let center = CGRect(x: 0, y: offset_y, width: f.width, height: f.width)
+            takenImage!.draw(in: center)
             // CGContextDrawImage(context, center, takenImage?.CGImage)
         } else if (first){
             drawGodImage()
@@ -137,24 +137,24 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
 
     func mediate() -> Void {
         if(taking){
-            take_or_use.setTitle("Use", forState: UIControlState.Normal)
-            cancel_or_retake.setTitle("Retake", forState: UIControlState.Normal)
+            take_or_use.setTitle("Use", for: UIControlState())
+            cancel_or_retake.setTitle("Retake", for: UIControlState())
             taking = false
         }else{
-            take_or_use.setTitle("Take", forState: UIControlState.Normal)
-            cancel_or_retake.setTitle("Cancel", forState: UIControlState.Normal)
+            take_or_use.setTitle("Take", for: UIControlState())
+            cancel_or_retake.setTitle("Cancel", for: UIControlState())
             taking = true
         }
         self.setNeedsDisplay()
     }
 
-    func takeOrUsePushed(sender: AnyObject) {
+    func takeOrUsePushed(_ sender: AnyObject) {
         print("take or use")
         if(taking){
             takenImage = nil
             imagePicker.takePicture()
-            take_or_use.enabled = false
-            cancel_or_retake.enabled = false
+            take_or_use.isEnabled = false
+            cancel_or_retake.isEnabled = false
             imageView.removeFromSuperview()
         }else{
             controller.imagePickerController(imagePicker, didFinishPickingImage: takenImage!, editingInfo: nil)
@@ -162,10 +162,10 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         mediate()
     }
 
-    func cancelOrRetakePushed(sender: AnyObject) {
+    func cancelOrRetakePushed(_ sender: AnyObject) {
         print("cancel or retake")
         if(taking){
-            imagePicker.dismissViewControllerAnimated(true, completion: {})
+            imagePicker.dismiss(animated: true, completion: {})
         }else{
             self.addSubview(imageView)
             drawGodImage()
@@ -173,34 +173,34 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         mediate()
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         // Trim to square.
         // The operation can also remove exif rotation.
         let w = min(image.size.width,image.size.height)
-        let rect = CGRectMake(0, 0, w, w)
-        var trim = CGRectMake(0, 0, 0, 0)
+        let rect = CGRect(x: 0, y: 0, width: w, height: w)
+        var trim = CGRect(x: 0, y: 0, width: 0, height: 0)
         let offset = -(max(image.size.width,image.size.height) - w) / 2
         if (image.size.height > image.size.width){
             // portrait
-            trim = CGRectMake(0, offset, image.size.width, image.size.height)
+            trim = CGRect(x: 0, y: offset, width: image.size.width, height: image.size.height)
         } else{
             // landscape
-            trim = CGRectMake(offset, 0, image.size.width, image.size.height)
+            trim = CGRect(x: offset, y: 0, width: image.size.width, height: image.size.height)
         }
         UIGraphicsBeginImageContextWithOptions(rect.size, true, 0);
-        image.drawInRect(trim)
+        image.draw(in: trim)
         let context = UIGraphicsGetCurrentContext();
         self.drawOverlap(context,frame:rect)
         if(godImage != nil) {
             let scale = w / frame.width
-            godImage!.drawInRect(CGRectMake(godX * scale, godY * scale + offset * 2, godImage!.size.width * scale, godImage!.size.height * scale))
+            godImage!.draw(in: CGRect(x: godX * scale, y: godY * scale + offset * 2, width: godImage!.size.width * scale, height: godImage!.size.height * scale))
         }
         takenImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         self.setNeedsDisplay()
-        take_or_use.enabled = true
-        cancel_or_retake.enabled = true
+        take_or_use.isEnabled = true
+        cancel_or_retake.isEnabled = true
     }
 
 }

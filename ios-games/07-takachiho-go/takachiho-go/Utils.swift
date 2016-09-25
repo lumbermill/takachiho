@@ -14,35 +14,35 @@ class Utils {
         return TARGET_OS_SIMULATOR != 0
     }
     
-    class func imageFromView(view: UIView) -> UIImage {
+    class func imageFromView(_ view: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(view.frame.size, true, 0);
         let context = UIGraphicsGetCurrentContext();
-        CGContextTranslateCTM(context, -view.frame.origin.x, -view.frame.origin.y);
-        view.layer.renderInContext(context!)
+        context?.translateBy(x: -view.frame.origin.x, y: -view.frame.origin.y);
+        view.layer.render(in: context!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
     
-    class func imageFromScreen(view: UIView) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 0);
+    class func imageFromScreen(_ view: UIView) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(UIScreen.main.bounds.size, false, 0);
         let context = UIGraphicsGetCurrentContext();
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        view.layer.renderInContext(context!)
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        view.layer.render(in: context!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
     
 }
 
 // OverlayViewは固定が必要なため、未使用
 class ImagePicker: UIImagePickerController {
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.All
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.all
     }
 }
