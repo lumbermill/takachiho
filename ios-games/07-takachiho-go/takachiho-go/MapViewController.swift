@@ -190,6 +190,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 } else{
                     ipc.cameraViewTransform.ty = (ch - sh / 3 * 4) / 2.0;
                 }
+                // FIXME: iOS10の不具合かビューが移動しない。workaroundはあるか？ https://forums.developer.apple.com/thread/60888
                 let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
                 ov.imagePicker = ipc
                 ipc.cameraOverlayView = ov
