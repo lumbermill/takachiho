@@ -1,23 +1,32 @@
 <% content_for :title, "参加方法" %>
+<p>ベータ版です。</p>
 
 <h2>ウェブ編</h2>
 
 <h3>アカウントを作成する</h3>
+<p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
 
 <h3>トークンを手にいれる</h3>
+<p><b>ここ検討中？どうする？</b></p>
 
 <h3>通知設定する</h3>
+<p></p>
 
-
-<h2>ハードウェア編</h2>
+<h2>ハードウェア(RaspberryPi)編</h2>
 <h3>必要なもの</h3>
+<ul>
+  <li>Raspberry Pi 3</li>
+  <li>BME280温度センサ</li>
+  <li>インターネット接続</li>
+</ul>
 <p>
-
-
 </p>
 <h3>組み立て方</h3>
 
 
 <h3>データの送信方法</h3>
+<pre>
+<%= request.protocol + request.host + ":" + request.port.to_s %>/tmpr_logs/insert?token=abcdef&time_stamp=123&temperature=12.3&pressure=12.3&humidity=123
+</pre>
 
 <h3>受信データを確認する</h3>
