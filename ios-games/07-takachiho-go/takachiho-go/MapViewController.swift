@@ -183,19 +183,16 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 ipc.sourceType = UIImagePickerControllerSourceType.camera
                 ipc.allowsEditing = false
                 ipc.showsCameraControls = false
-                let sh = UIScreen.main.bounds.height // screen height
-                let ch = UIScreen.main.bounds.width
-                if (sh > ch){
-                    ipc.cameraViewTransform.ty = (sh - ch / 3 * 4) / 2.0;
-                } else{
-                    ipc.cameraViewTransform.ty = (ch - sh / 3 * 4) / 2.0;
-                }
-                // FIXME: iOS10の不具合かビューが移動しない。workaroundはあるか？ https://forums.developer.apple.com/thread/60888
+                // FIXME: iOS10の不具合かビューが移動しない。 https://forums.developer.apple.com/thread/60888
+                ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
                 let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
                 ov.imagePicker = ipc
                 ipc.cameraOverlayView = ov
             }
-            self.present(ipc, animated: true, completion: {})
+            self.present(ipc, animated: true, completion: {
+                // workaround for iOS10
+                ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+            })
         }else{
             let ac = UIAlertController(title: nil, message: "Too far to take picture.", preferredStyle: UIAlertControllerStyle.alert)
             //let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
