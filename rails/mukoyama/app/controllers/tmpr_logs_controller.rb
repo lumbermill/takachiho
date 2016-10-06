@@ -110,6 +110,19 @@ class TmprLogsController < ApplicationController
     @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
   end
 
+  # GET /tmpr_logs/insert
+  def insert
+    @tmpr_log = TmprLog.new(tmpr_log_params)
+
+    respond_to do |format|
+      if @tmpr_log.save
+        format.text { render text: "Inserted #{@tmpr_log.id}", status: 200 }
+      else
+        format.text { render text: @tmpr_log.errors, status: 500 }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_log

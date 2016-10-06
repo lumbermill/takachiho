@@ -145,6 +145,9 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
             cancel_or_retake.setTitle("Cancel", for: UIControlState())
             taking = true
         }
+        // workaround for iOS10
+        imagePicker.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+
         self.setNeedsDisplay()
     }
 
@@ -174,6 +177,9 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        // workaround for iOS10
+        imagePicker.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+
         // Trim to square.
         // The operation can also remove exif rotation.
         let w = min(image.size.width,image.size.height)

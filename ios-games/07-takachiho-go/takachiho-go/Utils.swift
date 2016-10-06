@@ -34,6 +34,17 @@ class Utils {
         return image!
     }
     
+    class func getCameraViewTransformY() -> CGFloat {
+        var ty:CGFloat = 0.0
+        let sh = UIScreen.main.bounds.height // screen height
+        let ch = UIScreen.main.bounds.width
+        if (sh > ch){
+            ty = (sh - ch / 3 * 4) / 2.0;
+        } else{
+            ty = (ch - sh / 3 * 4) / 2.0;
+        }
+        return ty
+    }
 }
 
 // OverlayViewは固定が必要なため、未使用
