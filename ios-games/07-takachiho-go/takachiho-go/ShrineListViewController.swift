@@ -9,7 +9,7 @@
 import UIKit
 import GameKit
 
-class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GKGameCenterControllerDelegate {
+class ShrineListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GKGameCenterControllerDelegate {
     @IBOutlet var tableView: UITableView!
     
     let points = Points.sharedInstance

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		132BEE251D5B44CE00F5F7C4 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132BEE241D5B44CE00F5F7C4 /* GameKit.framework */; };
 		136A2CA11D422A88004EF77E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A2CA01D422A88004EF77E /* AppDelegate.swift */; };
-		136A2CA31D422A88004EF77E /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A2CA21D422A88004EF77E /* MasterViewController.swift */; };
+		136A2CA31D422A88004EF77E /* ShrineListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A2CA21D422A88004EF77E /* ShrineListViewController.swift */; };
 		136A2CA51D422A88004EF77E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A2CA41D422A88004EF77E /* DetailViewController.swift */; };
 		136A2CA81D422A88004EF77E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A2CA61D422A88004EF77E /* Main.storyboard */; };
 		136A2CAA1D422A88004EF77E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 136A2CA91D422A88004EF77E /* Assets.xcassets */; };
@@ -22,6 +22,8 @@
 		13AB6CD71D44D579006C5777 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB6CD61D44D579006C5777 /* OverlayView.swift */; };
 		13CD41881D435D0A000726DD /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41871D435D0A000726DD /* Points.swift */; };
 		13CD418A1D449692000726DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41891D449692000726DD /* Utils.swift */; };
+		8A620F091DB0CB4F002BDE09 /* GodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A620F081DB0CB4F002BDE09 /* GodListViewController.swift */; };
+		8A620F0B1DB0CEE2002BDE09 /* Gods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A620F0A1DB0CEE2002BDE09 /* Gods.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +47,7 @@
 		132BEE241D5B44CE00F5F7C4 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		136A2C9D1D422A88004EF77E /* takachiho-go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "takachiho-go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		136A2CA01D422A88004EF77E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		136A2CA21D422A88004EF77E /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		136A2CA21D422A88004EF77E /* ShrineListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrineListViewController.swift; sourceTree = "<group>"; };
 		136A2CA41D422A88004EF77E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		136A2CA71D422A88004EF77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		136A2CA91D422A88004EF77E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,6 +66,8 @@
 		13CD41871D435D0A000726DD /* Points.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Points.swift; sourceTree = "<group>"; };
 		13CD41891D449692000726DD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		13CD418B1D44AF3B000726DD /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		8A620F081DB0CB4F002BDE09 /* GodListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodListViewController.swift; sourceTree = "<group>"; };
+		8A620F0A1DB0CEE2002BDE09 /* Gods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gods.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +126,8 @@
 			isa = PBXGroup;
 			children = (
 				136A2CA01D422A88004EF77E /* AppDelegate.swift */,
-				136A2CA21D422A88004EF77E /* MasterViewController.swift */,
+				136A2CA21D422A88004EF77E /* ShrineListViewController.swift */,
+				8A620F081DB0CB4F002BDE09 /* GodListViewController.swift */,
 				136A2CA41D422A88004EF77E /* DetailViewController.swift */,
 				136A2CA61D422A88004EF77E /* Main.storyboard */,
 				136A2CA91D422A88004EF77E /* Assets.xcassets */,
@@ -130,6 +135,7 @@
 				136A2CAE1D422A88004EF77E /* Info.plist */,
 				136A2CD21D422CB1004EF77E /* MapViewController.swift */,
 				13CD41871D435D0A000726DD /* Points.swift */,
+				8A620F0A1DB0CEE2002BDE09 /* Gods.swift */,
 				13CD41891D449692000726DD /* Utils.swift */,
 				13AB6CD61D44D579006C5777 /* OverlayView.swift */,
 			);
@@ -290,9 +296,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A620F0B1DB0CEE2002BDE09 /* Gods.swift in Sources */,
 				136A2CA51D422A88004EF77E /* DetailViewController.swift in Sources */,
-				136A2CA31D422A88004EF77E /* MasterViewController.swift in Sources */,
+				136A2CA31D422A88004EF77E /* ShrineListViewController.swift in Sources */,
 				13AB6CD71D44D579006C5777 /* OverlayView.swift in Sources */,
+				8A620F091DB0CB4F002BDE09 /* GodListViewController.swift in Sources */,
 				136A2CA11D422A88004EF77E /* AppDelegate.swift in Sources */,
 				13CD41881D435D0A000726DD /* Points.swift in Sources */,
 				136A2CD31D422CB1004EF77E /* MapViewController.swift in Sources */,
