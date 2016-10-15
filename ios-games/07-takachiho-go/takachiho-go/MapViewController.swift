@@ -242,7 +242,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                 // First taken!
                 self.reportAcheivement(0)
             }
-            self.reportScore("grp.tg.visits",score: n)
+            self.reportScore("grp.tg.shrines",score: n)
         })
     }
 
