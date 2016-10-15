@@ -163,6 +163,8 @@ class Points {
     }
 
     func load() -> Void {
+        
+        
         let ud = UserDefaults.standard
         for i in 0..<array.count{
             let t = ud.double(forKey: array[i].name)

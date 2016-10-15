@@ -109,8 +109,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fbZ-yk-UMv">
-                                <frame key="frameInset" width="1000" height="1000"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fbZ-yk-UMv">
                                 <connections>
                                     <outlet property="delegate" destination="Z5w-3c-TeC" id="nc9-kZ-92v"/>
                                 </connections>
@@ -149,14 +148,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="QdE-ef-tBC" firstAttribute="top" secondItem="rES-jQ-NqJ" secondAttribute="bottom" id="GeK-qP-Flv"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="top" secondItem="zYQ-lZ-M82" secondAttribute="top" id="HLF-uu-W8E"/>
                             <constraint firstItem="SHg-S4-p5o" firstAttribute="top" secondItem="dGg-c9-tEM" secondAttribute="bottom" constant="8" id="Mz9-Xu-xrO"/>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="leading" secondItem="zYQ-lZ-M82" secondAttribute="leading" id="PT5-9M-cly"/>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="top" secondItem="zYQ-lZ-M82" secondAttribute="top" id="Qy8-89-bHB"/>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="centerX" secondItem="SHg-S4-p5o" secondAttribute="centerX" id="Vrc-fh-rSG"/>
                             <constraint firstItem="pdl-22-E58" firstAttribute="top" secondItem="QdE-ef-tBC" secondAttribute="bottom" constant="8" id="XOT-iT-dHg"/>
                             <constraint firstItem="QdE-ef-tBC" firstAttribute="trailing" secondItem="zYQ-lZ-M82" secondAttribute="trailingMargin" id="YMd-id-mod"/>
                             <constraint firstItem="rES-jQ-NqJ" firstAttribute="trailing" secondItem="zYQ-lZ-M82" secondAttribute="trailingMargin" id="aOJ-3w-kgP"/>
-                            <constraint firstAttribute="trailing" secondItem="fbZ-yk-UMv" secondAttribute="trailing" id="dRi-zP-g5e"/>
-                            <constraint firstItem="pdl-22-E58" firstAttribute="top" secondItem="fbZ-yk-UMv" secondAttribute="bottom" id="nSh-zr-Yvb"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="leading" secondItem="zYQ-lZ-M82" secondAttribute="leading" id="rL1-gD-mTb"/>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="bottom" secondItem="pdl-22-E58" secondAttribute="top" id="omR-kc-1uf"/>
                             <constraint firstItem="SHg-S4-p5o" firstAttribute="centerX" secondItem="zYQ-lZ-M82" secondAttribute="centerX" id="x97-5Z-hWy"/>
                         </constraints>
                     </view>
@@ -167,9 +166,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gA7-8V-vMQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1708" y="-609"/>
+            <point key="canvasLocation" x="-1708" y="-609.44527736131943"/>
         </scene>
-        <!--Item 1-->
+        <!--Shrines-->
         <scene sceneID="S1o-Bw-5vy">
             <objects>
                 <viewController id="niD-QV-1ir" customClass="ShrineListViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
@@ -265,7 +264,7 @@
                             <constraint firstItem="lUr-lc-qtr" firstAttribute="trailing" secondItem="Ywk-gy-rKE" secondAttribute="trailingMargin" id="uvf-x3-zw7"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="4iJ-5t-umD"/>
+                    <tabBarItem key="tabBarItem" title="Shrines" image="tab-shrine" id="4iJ-5t-umD"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="eUb-kW-U1U" id="RwE-ek-TEB"/>
@@ -275,10 +274,10 @@
             </objects>
             <point key="canvasLocation" x="-143.19999999999999" y="-941.37931034482767"/>
         </scene>
-        <!--Item-->
+        <!--Credits-->
         <scene sceneID="ZBX-wW-1fZ">
             <objects>
-                <viewController id="lOt-NX-rOZ" sceneMemberID="viewController">
+                <viewController id="lOt-NX-rOZ" customClass="CreditViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="S32-dd-7Vu"/>
                         <viewControllerLayoutGuide type="bottom" id="wI8-9a-WgC"/>
@@ -286,13 +285,27 @@
                     <view key="view" contentMode="scaleToFill" id="irl-yB-opF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ES1-rk-VyF">
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wI8-9a-WgC" firstAttribute="top" secondItem="ES1-rk-VyF" secondAttribute="bottom" id="8q6-Ij-da9"/>
+                            <constraint firstAttribute="trailing" secondItem="ES1-rk-VyF" secondAttribute="trailing" id="MCo-kD-v9H"/>
+                            <constraint firstItem="ES1-rk-VyF" firstAttribute="top" secondItem="irl-yB-opF" secondAttribute="top" id="aF1-6u-1IU"/>
+                            <constraint firstItem="ES1-rk-VyF" firstAttribute="leading" secondItem="irl-yB-opF" secondAttribute="leading" id="c6B-SC-WS6"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="pQj-Wa-V2d"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Credits" image="tab-credit" id="pQj-Wa-V2d"/>
+                    <connections>
+                        <outlet property="webView" destination="ES1-rk-VyF" id="V1y-Bx-Lep"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZc-lX-VZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-143" y="457"/>
+            <point key="canvasLocation" x="-143.19999999999999" y="456.52173913043481"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="WOX-jB-KEP">
@@ -313,7 +326,7 @@
             </objects>
             <point key="canvasLocation" x="-974" y="-608"/>
         </scene>
-        <!--Item 1-->
+        <!--Gods-->
         <scene sceneID="Wp7-7f-qhX">
             <objects>
                 <viewController id="ZFg-Ii-VtZ" customClass="GodListViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
@@ -406,7 +419,7 @@
                             <constraint firstItem="HAy-QC-hQL" firstAttribute="centerX" secondItem="GjS-rN-RWH" secondAttribute="centerX" id="xNe-00-PJJ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="yRW-dL-THY"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Gods" image="tab-god" id="yRW-dL-THY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="UJ6-HM-0xa" id="K2O-l5-gh5"/>
@@ -421,5 +434,8 @@
         <image name="Menu" width="22" height="18"/>
         <image name="Question" width="32" height="32"/>
         <image name="Target" width="64" height="64"/>
+        <image name="tab-credit" width="30" height="30"/>
+        <image name="tab-god" width="30" height="30"/>
+        <image name="tab-shrine" width="30" height="30"/>
     </resources>
 </document>

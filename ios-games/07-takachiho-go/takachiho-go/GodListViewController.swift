@@ -13,7 +13,7 @@ import GameKit
 class GodListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GKGameCenterControllerDelegate {
     @IBOutlet var tableView: UITableView!
     
-    let points = Points.sharedInstance
+    let gods = Gods.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,7 @@ class GodListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        gods.load()
         tableView.reloadData()
     }
     
@@ -30,18 +31,18 @@ class GodListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - Segues
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let p = points.array[(indexPath as NSIndexPath).row]
-                let controller = segue.destination as! DetailViewController
-                controller.detailItem = p
-                //controller.navigationItem.leftItemsSupplementBackButton = true
-                controller.navigationItem.title = p.name
-                //controller.title = p.name
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "detail" {
+//            if let indexPath = self.tableView.indexPathForSelectedRow {
+//                let p = gods.array[(indexPath as NSIndexPath).row]
+//                let controller = segue.destination as! DetailViewController
+//                controller.detailItem = p
+//                //controller.navigationItem.leftItemsSupplementBackButton = true
+//                controller.navigationItem.title = p.name
+//                //controller.title = p.name
+//            }
+//        }
+//    }
     
     // MARK: - Table View
     
@@ -50,16 +51,16 @@ class GodListViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return points.array.count
+        return gods.array.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let p = points.array[(indexPath as NSIndexPath).row]
-        cell.textLabel!.text = p.name
-        cell.detailTextLabel!.text = p.detailText()
-        if let i = p.photo(thumb: true) {
+        let p = gods.array[(indexPath as NSIndexPath).row]
+        cell.textLabel!.text = p.kanji
+        cell.detailTextLabel!.text = p.kana
+        if let i = p.photo() {
             cell.imageView!.image = i
         } else {
             cell.imageView!.image = UIImage(named: "Question")

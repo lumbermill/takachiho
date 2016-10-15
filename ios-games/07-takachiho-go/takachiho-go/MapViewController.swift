@@ -19,7 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     var need_update_center = true
     let points = Points.sharedInstance
     #if DEBUG
-    let radius:CLLocationDistance = 3050.0
+    let radius:CLLocationDistance = 15050.0
     #else
     let radius:CLLocationDistance = 50.0 // Sacrid circle radius(meter).
     #endif
@@ -216,34 +216,49 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             return
         }
         print("begin writing image data.")
-        try? d.write(to: URL(fileURLWithPath: p.path_for_photo(thumb: false)), options: [.atomic])
-        if var v = points.dictionary[p.name] {
-            v.visited = true
-            v.visited_at = Date()
+        DispatchQueue.global().async {
+            var b = false
+            do{
+                try d.write(to: URL(fileURLWithPath: p.path_for_photo(thumb: false)), options: [.atomic])
+                let _ = p.create_thumbnail()
+                b = true
+            }catch {
+                b = false
+            }
+            if var v = self.points.dictionary[p.name] {
+                v.visited = true
+                v.visited_at = Date()
+            }
+            self.points.load() // Pointがクラスでなく構造体なので、この瞬間にロードしなおさないとうまくいかない…
+            Gods.sharedInstance.load() // 神様もフラグ更新
+            DispatchQueue.main.async {
+                picker.dismiss(animated: true, completion: {
+                    for a in self.mapView.selectedAnnotations {
+                        self.mapView.deselectAnnotation(a, animated: true)
+                        self.mapView.removeAnnotation(a)
+                        self.mapView.addAnnotation(a)
+                    }
+                    var title = "Gotcha!"
+                    if(!b){
+                        title = "Failed to save..."
+                    }
+                    let n = self.points.n_visited()
+                    let total = self.points.array.count
+                    let ac = UIAlertController(title: title, message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.alert)
+                    let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
+                    ac.addAction(aa)
+                    self.present(ac, animated: true, completion: nil)
+                    if (self.points.is_achieved(p.difficulty)) {
+                        // Achieve all in the level.
+                        self.reportAcheivement(p.difficulty)
+                    } else if (n == 1) {
+                        // First taken!
+                        self.reportAcheivement(0)
+                    }
+                    self.reportScore("grp.tg.shrines",score: n)
+                })
+            }
         }
-        points.load() // Pointがクラスでなく構造体なので、この瞬間にロードしなおさないとうまくいかない…
-        picker.dismiss(animated: true, completion: {
-            for a in self.mapView.selectedAnnotations {
-                self.mapView.deselectAnnotation(a, animated: true)
-                self.mapView.removeAnnotation(a)
-                self.mapView.addAnnotation(a)
-            }
-
-            let n = self.points.n_visited()
-            let total = self.points.array.count
-            let ac = UIAlertController(title: "Gotcha!", message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.alert)
-            let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
-            ac.addAction(aa)
-            self.present(ac, animated: true, completion: nil)
-            if (self.points.is_achieved(p.difficulty)) {
-                // Achieve all in the level.
-                self.reportAcheivement(p.difficulty)
-            } else if (n == 1) {
-                // First taken!
-                self.reportAcheivement(0)
-            }
-            self.reportScore("grp.tg.shrines",score: n)
-        })
     }
 
     func reportScore(_ id: String, score: Int){
