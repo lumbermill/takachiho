@@ -16,7 +16,7 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     var take_or_use: UIButton!
     var cancel_or_retake: UIButton!
     var imageView: UIImageView!
-    var taking: Bool = true //  or previewing
+    var taking: Int = 0 // 0:taking, 1:previewing 2:processing
     var first: Bool = true
     var godImage: UIImage?
     var godX:CGFloat = 0
@@ -60,6 +60,19 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
     }
 
     func drawOverlap(_ context:CGContext?,frame: CGRect){
+        if(taking == 2){
+            let center = UIScreen.main.bounds
+            context?.setFillColor([0.0, 0.0, 0.0, 1.0])
+            context?.fill(center)
+            context?.setFontSize(64)
+            context?.setFillColor([0.8, 0.8, 0.8, 1.0])
+            let fsize = frame.width * 0.05
+            let font = UIFont(name: "Copperplate", size: fsize)!
+            let attrs = [NSFontAttributeName: font,NSForegroundColorAttributeName: UIColor.white]
+            let an = NSAttributedString(string: "Generating..", attributes: attrs)
+            an.draw(at: CGPoint(x: 60,y: 200))
+            return
+        }
         context?.setLineWidth(1)
         context?.setStrokeColor([0.8, 0.8, 0.8, 1.0])
         let offset_y = (frame.height - frame.width) / 2
@@ -93,6 +106,7 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         }
         godImage = UIImage(named: n)
         if(godImage == nil) { return }
+        print("god = "+n)
         let offset_y = (frame.height - frame.width) / 2
         godX = CGFloat(arc4random() % UInt32(frame.width - godImage!.size.width))
         godY = CGFloat(arc4random() % UInt32(frame.width - godImage!.size.height)) + offset_y
@@ -124,7 +138,7 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
         let context = UIGraphicsGetCurrentContext()
         drawOverlap(context,frame: f)
 
-        if(!taking && takenImage != nil){
+        if(taking == 1 && takenImage != nil){
             let offset_y = (f.height - f.width) / 2
             let center = CGRect(x: 0, y: offset_y, width: f.width, height: f.width)
             takenImage!.draw(in: center)
@@ -134,49 +148,71 @@ class OverlayView: UIView,UIImagePickerControllerDelegate,UINavigationController
             first = false
         }
     }
+    
+    func reset(name: String) -> Void{
+        // print("reset")
+        self.name = name
+        first = true
+        takenImage = nil
+        godImage = nil
+        taking = 1
+        take_or_use.isEnabled = true
+        cancel_or_retake.isEnabled = true
+        mediate()
+    }
 
     func mediate() -> Void {
-        if(taking){
+        if(taking == 0){
             take_or_use.setTitle("Use", for: UIControlState())
             cancel_or_retake.setTitle("Retake", for: UIControlState())
-            taking = false
-        }else{
+            taking = 1
+        }else if(taking == 1){
             take_or_use.setTitle("Take", for: UIControlState())
             cancel_or_retake.setTitle("Cancel", for: UIControlState())
-            taking = true
+            taking = 0
         }
         // workaround for iOS10
-        imagePicker.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+        //imagePicker.cameraViewTransform.ty = Utils.getCameraViewTransformY()
 
         self.setNeedsDisplay()
     }
 
     func takeOrUsePushed(_ sender: AnyObject) {
-        print("take or use")
-        if(taking){
+        // print("take or use")
+        take_or_use.isEnabled = false
+        cancel_or_retake.isEnabled = false
+        if(taking == 0){
+            // take
             takenImage = nil
             imagePicker.takePicture()
-            take_or_use.isEnabled = false
-            cancel_or_retake.isEnabled = false
-            imageView.removeFromSuperview()
-        }else{
+            taking = 2 // processing
+            print("taking2-1")
+            //imageView.removeFromSuperview()
+            imageView.image = nil
+        }else if(taking == 1){
+            // use
             controller.imagePickerController(imagePicker, didFinishPickingImage: takenImage!, editingInfo: nil)
         }
         mediate()
     }
 
     func cancelOrRetakePushed(_ sender: AnyObject) {
-        print("cancel or retake")
-        if(taking){
+        // print("cancel or retake")
+        if(taking == 0){
+            // cancel
             imagePicker.dismiss(animated: true, completion: {})
-        }else{
-            self.addSubview(imageView)
+        }else if(taking == 1){
+            // retake
+            //self.addSubview(imageView)
             drawGodImage()
         }
         mediate()
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        print("taking2-2")
+        taking = 0
+        mediate()
         // workaround for iOS10
         imagePicker.cameraViewTransform.ty = Utils.getCameraViewTransformY()
 

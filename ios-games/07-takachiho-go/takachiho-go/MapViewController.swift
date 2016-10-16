@@ -15,6 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var targetButton: UIButton!
     let lm = CLLocationManager()
+    let ipc = UIImagePickerController()
     var current_spot: Point?
     var need_update_center = true
     let points = Points.sharedInstance
@@ -38,6 +39,22 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         lm.desiredAccuracy = kCLLocationAccuracyBest
         lm.requestWhenInUseAuthorization()
         lm.startUpdatingLocation()
+        
+        // ImagePickerController
+        // ImagePicker(Camera)
+        if (Utils.isSimulator()){
+            ipc.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
+        }else{
+            ipc.sourceType = UIImagePickerControllerSourceType.camera
+            ipc.allowsEditing = false
+            ipc.showsCameraControls = false
+            // FIXME: iOS10の不具合かビューが移動しない。 https://forums.developer.apple.com/thread/60888
+            ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+            let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
+            ov.imagePicker = ipc
+            ipc.cameraOverlayView = ov
+        }
+
 
         // Pins
         for p in points.array{
@@ -54,9 +71,13 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
                     vc.present(viewController!, animated: true, completion: nil)
                 }
             } else {
-                print(GKLocalPlayer.localPlayer().isAuthenticated)
+                // print(GKLocalPlayer.localPlayer().isAuthenticated)
             }
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        print("memory warning!!")
     }
 
     func addPoint(_ point: Point){
@@ -175,23 +196,15 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             print("Showing camera for "+title)
             current_spot = points.dictionary[title]
 
-            // ImagePicker(Camera)
-            let ipc = UIImagePickerController()
-            if (Utils.isSimulator()){
-                ipc.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
-            }else{
-                ipc.sourceType = UIImagePickerControllerSourceType.camera
-                ipc.allowsEditing = false
-                ipc.showsCameraControls = false
-                // FIXME: iOS10の不具合かビューが移動しない。 https://forums.developer.apple.com/thread/60888
-                ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
-                let ov = OverlayView(name: current_spot?.name, imagePicker: ipc,controller: self)
-                ov.imagePicker = ipc
-                ipc.cameraOverlayView = ov
+            if let ov :OverlayView = ipc.cameraOverlayView as? OverlayView {
+                if let name = current_spot?.name {
+                    ov.reset(name: name)
+                    ov.updateGodImage()
+                }
             }
             self.present(ipc, animated: true, completion: {
                 // workaround for iOS10
-                ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+                self.ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
             })
         }else{
             let ac = UIAlertController(title: nil, message: "Too far to take picture.", preferredStyle: UIAlertControllerStyle.alert)
@@ -212,18 +225,16 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             print("current_spot is not set")
             return
         }
-        guard let d = UIImageJPEGRepresentation(image, 1.0) else {
-            return
-        }
-        print("begin writing image data.")
+        // print("begin writing image data.")
         DispatchQueue.global().async {
             var b = false
-            do{
-                try d.write(to: URL(fileURLWithPath: p.path_for_photo(thumb: false)), options: [.atomic])
-                let _ = p.create_thumbnail()
-                b = true
-            }catch {
-                b = false
+            if let d = UIImageJPEGRepresentation(image, 1.0) {
+                do{
+                    try d.write(to: URL(fileURLWithPath: p.path_for_photo(thumb: false)), options: [.atomic])
+                    let _ = p.create_thumbnail()
+                    b = true
+                }catch {
+                }
             }
             if var v = self.points.dictionary[p.name] {
                 v.visited = true
@@ -265,7 +276,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         if (!GKLocalPlayer.localPlayer().isAuthenticated) { return }
         let s = GKScore(leaderboardIdentifier: id) // Leaderboard ID
         s.value = Int64(score)
-        NSLog("Reporting scores %@",s)
+        // NSLog("Reporting scores %@",s)
         #if DEBUG
             // do nothing.
         #else
