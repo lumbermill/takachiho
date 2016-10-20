@@ -112,14 +112,27 @@ class TmprLogsController < ApplicationController
 
   # GET /tmpr_logs/insert
   def insert
-    @tmpr_log = TmprLog.new(tmpr_log_params)
+    setting = Setting.find_by(raspi_id: params[:id])
+    if setting.nil?
+      render status:404, text: "Device not found for raspi_id="+params[:id]
+      return
+    elsif setting.token != params[:token]
+      render status:404, text: "Token did not match for raspi_id="+params[:id]
+      return
+    end
+    raspi_id = params[:id]
+    time_stamp = DateTime.parse(params[:time_stamp])
+    @tmpr_log = TmprLog.find_or_initialize_by(raspi_id: raspi_id, time_stamp: time_stamp)
+    insert_or_update = @tmpr_log.id.nil? ? "Inserted" : "Updated"
+    @tmpr_log.temperature = params[:temperature]
+    @tmpr_log.pressure = params[:pressure]
+    @tmpr_log.humidity = params[:humidity]
+    @tmpr_log.sender = request.remote_ip
 
-    respond_to do |format|
-      if @tmpr_log.save
-        format.text { render text: "Inserted #{@tmpr_log.id}", status: 200 }
-      else
-        format.text { render text: @tmpr_log.errors, status: 500 }
-      end
+    if @tmpr_log.save
+      render text: "#{insert_or_update} #{@tmpr_log.id}", status: 200
+    else
+      render text: @tmpr_log.errors, status: 500
     end
   end
 

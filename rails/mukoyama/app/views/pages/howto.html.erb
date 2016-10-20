@@ -7,7 +7,7 @@
 <p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
 
 <h3>トークンを手にいれる</h3>
-<p><b>ここ検討中？どうする？</b></p>
+<p>デバイスを追加すると自動発行されます。</p>
 
 <h3>通知設定する</h3>
 <p></p>
@@ -22,11 +22,15 @@
 <p>
 </p>
 <h3>組み立て方</h3>
-
+<p>TODO</p>
 
 <h3>データの送信方法</h3>
+<p>以下のようなリクエストを送信することで、サーバのデータベースにデータを蓄積することができます。</p>
 <pre>
-<%= request.protocol + request.host + ":" + request.port.to_s %>/tmpr_logs/insert?token=abcdef&time_stamp=123&temperature=12.3&pressure=12.3&humidity=123
+<%= request.protocol + request.host + ":" + request.port.to_s %>/logs/insert?id=1&amp;token=abcdef&amp;time_stamp=<%= DateTime.now.to_s %>&amp;temperature=12.3&amp;pressure=12.3&amp;humidity=123
 </pre>
-
+<p>正常にデータが受信された場合、以下のような応答が返ります。</p>
+<pre>
+Inserted {ID} または Updated {ID}
+</pre>
 <h3>受信データを確認する</h3>
