@@ -3,7 +3,7 @@ ja:
   root: 'トップ'
   edit: '編集'
   back: '戻る'
-  show: '閲覧'
+  show: '表示'
   activerecord:
     models:
       user: '会員'

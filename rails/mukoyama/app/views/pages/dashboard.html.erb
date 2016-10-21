@@ -7,6 +7,9 @@
       <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
       <th>下限</th>
       <th>上限</th>
+      <th>件数</th>
+      <th>開始</th>
+      <th>最新</th>
       <th>グラフ</th>
       <th>連絡先</th>
     </tr>
@@ -18,9 +21,23 @@
         <td><%= r.name %></td>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
+        <td id="<%= r.raspi_id%>-c"></td>
+        <td id="<%= r.raspi_id%>-first"></td>
+        <td id="<%= r.raspi_id%>-last"></td>
         <td><%= link_to 'グラフ', tmpr_logs_graph_path(r.raspi_id), class: "btn btn-default btn-sm" %></td>
         <td><%= link_to "#{r.addresses.count}件", addresses_path(raspi_id: r.raspi_id), class: "btn btn-default btn-sm" %></td>
       </tr>
+      <script>
+        var id = <%= r.raspi_id %>;
+        $.getJSON("dashboard-stat1",{"raspi_id": id},function(json){
+          console.dir(json);
+          $("#"+json.raspi_id+"-c").text(json.c);
+          if(json.c > 0){
+            $("#"+json.raspi_id+"-first").text(json.first);
+            $("#"+json.raspi_id+"-last").text(json.last);
+          }
+        });
+      </script>
     <% end %>
   </tbody>
 </table>

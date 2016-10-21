@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
+    get 'dashboard-stat1' => 'pages#dashboard_stat1'
 
     get 'tmpr_logs/graph/:raspi_id' => 'tmpr_logs#graph', as: :tmpr_logs_graph
     get 'tmpr_logs/graph_data'
