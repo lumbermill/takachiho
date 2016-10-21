@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<% content_for :title, "送信先アドレス" %>
+<% content_for :title, "通知先アドレス" %>
 
 <table class="table">
   <thead>
@@ -25,7 +25,6 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to '新しいアドレス', new_address_path, class: "btn btn-primary" %>
+<p>
+<%= link_to '通知先を追加する', new_address_path, class: "btn btn-primary" %>
+</p>

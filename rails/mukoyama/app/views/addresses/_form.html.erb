@@ -11,19 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :raspi_id %><br>
-    <%= f.number_field :raspi_id %>
+  <%= f.hidden_field :raspi_id %>
+  <div class="form-group">
+    <%= f.label :mail %>
+    <%= f.text_field :mail, class: "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :mail %><br>
-    <%= f.text_field :mail %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br>
+  <div class="form-group">
+    <%= f.label :active %>
     <%= f.check_box :active %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>
+<br/>
