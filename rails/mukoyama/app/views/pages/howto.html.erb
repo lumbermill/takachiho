@@ -1,15 +1,14 @@
 <% content_for :title, "参加方法" %>
-<p>ベータ版です。</p>
-
+<div class="alert alert-warning">
+このプロジェクトはα版の運用中です。
+ユーザの登録やデータ送信は自由に行って頂けますが、正式版移行時の互換性は保証されません。検証用途にのみご利用ください。
+</div>
 <h2>ウェブ編</h2>
-
 <h3>アカウントを作成する</h3>
 <p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
-
 <h3>トークンを手にいれる</h3>
 <p>作成したアカウントでログインし、メイン画面（ダッシュボード）からセンサを追加してください。
   追加時に自動発行されます。同時に付与されたIDとペアでデータ送信に使用します。</p>
-
 <h3>通知設定する</h3>
 <p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
 
@@ -22,8 +21,29 @@
 </ul>
 <p>
 </p>
-<h3>組み立て方</h3>
-<p>TODO</p>
+<h3>センサの有効化</h3>
+<p>
+  Raspberry Piには最新のRaspbianがインストールされ、BME280温度センサがGPIOに接続されていることを前提とします。
+  結線方法については<a href="https://itunes.apple.com/jp/book/raspberrypi-ru-men/id1035076658?mt=11&ign-mpt=uo%3D4">拙著・RaspberriPi入門</a>や下記のURL(Qiita)を参照してください。</p>
+<p>以下の手順でセンサを有効化します。</p>
+<pre>
+sudo rpi-update
+sudo raspi-config Enable I2C
+
+cat /etc/modules
+# 下記が書いてあることを確認します。書いてなければ追記してください。
+i2c-dev
+
+sudo apt-get install python-smbus
+
+i2cdetect -y 1
+# 今回は76で設定しています。
+</pre>
+<p>うまくいかない場合は、以下のURL等も参考にしてください。</p>
+<ul>
+  <li><a href="http://qiita.com/masato/items/16bf8b17ee4881179462#bme280">http://qiita.com/masato/items/16bf8b17ee4881179462#bme280</a></li>
+  <li><a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch</a></li>
+</ul>
 
 <h3>データの送信方法</h3>
 <p>以下のようなリクエストを送信することで、サーバのデータベースにデータを蓄積することができます。</p>
