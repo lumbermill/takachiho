@@ -1,5 +1,6 @@
 t=Time.now
 admin = User.create(email:'info@lmlab.net', password:'secret',confirmed_at:t)
+Setting.create(raspi_id: 1, min_tmpr: 12, max_tmpr: 28, user:admin, token: 'secret')
 
 if Rails.env == 'development'
 	100.times do
@@ -7,7 +8,6 @@ if Rails.env == 'development'
 		t += 10.minutes
 	end
 	Address.create(raspi_id: 1, mail: 's-kai@lumber-mill.co.jp', active: true)
-	Setting.create(raspi_id: 1, min_tmpr: 12, max_tmpr: 28, user:admin, token: 'secret')
 
 	u1 = User.create(email:'test@lmlab.net', password:'secret',confirmed_at:t)
 

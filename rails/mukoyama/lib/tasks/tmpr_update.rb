@@ -6,11 +6,9 @@ require 'mysql2'
 require 'optparse'
 
 Version = '1.0.0'
-DIR = '/opt/bme280logs'
 
 opt = OptionParser.new
 opt.on('--all') { |v| OPTS[:all] = true }
-opt.on('--daily') { |v| OPTS[:daily] = true }
 opt.on('-e env') { |v| OPTS[:e] = v }
 
 OPTS = {}
@@ -18,73 +16,6 @@ opt.parse!(ARGV)
 
 env = OPTS[:e] || "development"
 @client = Mysql2::Client.new(host:"localhost",username:"root",database:"mukoyama_#{env}")
-
-def get_id_from_dirname(dir)
-  b = File.basename(dir)
-  # DIR/id_name/yymmdd.log
-  b.split("_")[0]
-end
-
-def parsefile(f,id)
-  print f+" "
-  n = 0
-  fh = open(f,"r")
-  fh.each do |line|
-    row = line.split(",").map { |v| v.strip }
-    temp = row[0]
-    press = row[1]
-    humid = row[2]
-    ts = row[3]
-    sql = "INSERT IGNORE INTO tmpr_logs"
-    sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,updated_at)"
-    sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid},now(),now())"
-    begin
-      @client.query(sql)
-      n += @client.affected_rows
-    rescue => e
-      $stderr.puts e
-    end
-  end
-  fh.close
-  puts "(%d)" % [n]
-  return n
-end
-
-
-def parsedir(dir)
-  id = get_id_from_dirname(dir)
-
-  files = []
-  Dir.entries(dir).sort.each do |f|
-    next unless f.end_with? ".log"
-    files += [f]
-  end
-  if OPTS[:all]
-    n_rows = 0
-    n_files = 0
-    files.each do |f|
-      n_rows += parsefile(dir+"/"+f,id)
-      n_files += 1
-    end
-    puts "%d files scanned, %d rows added." % [n_files,n_rows]
-    insert_daily(nil)
-    insert_monthly(nil)
-  elsif OPTS[:daily]
-    # Expected to run the first of the day.
-    n_rows = parsefile(dir+"/"+files[-2],id)
-    yesterday = Date.today - 1
-    insert_daily(yesterday)
-    insert_monthly(yesterday) if Date.today.day == 1
-  else
-    n_rows = parsefile(dir+"/"+files[-1],id)
-  end
-
-
-  results = @client.query("SELECT max(time_stamp) AS time_stamp FROM tmpr_logs")
-  results.each do |row|
-    puts "Latest timestamp: %s" % [row["time_stamp"]]
-  end
-end
 
 def insert_daily(date)
   where = date.nil? ? "" : "WHERE DATE(time_stamp) = '#{date}'"
@@ -103,6 +34,7 @@ def insert_daily(date)
   FROM tmpr_logs #{where} GROUP BY raspi_id,date(time_stamp);
 EOT
   @client.query(daily_sql)
+  puts @client.affected_rows
 end
 
 def insert_monthly(date)
@@ -128,15 +60,20 @@ def insert_monthly(date)
   FROM tmpr_daily_logs #{where} GROUP BY raspi_id,year(time_stamp),month(time_stamp);
 EOT
   @client.query(monthly_sql)
+  puts @client.affected_rows
 end
 
 def main
-  Dir.entries(DIR).sort.each do |d|
-    next if d.start_with? "."
-    next unless File.directory? DIR+"/"+d
-    puts d
-    parsedir(DIR+"/"+d)
+  if OPTS[:all]
+    insert_daily(nil)
+    insert_monthly(nil)
+  else
+    yesterday = Date.today - 1
+    insert_daily(yesterday)
+    insert_monthly(yesterday) if Date.today.day == 1
   end
 end
 
-main
+if $0 == __FILE__
+  main
+end

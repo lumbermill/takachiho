@@ -33,7 +33,9 @@ crontabに以下を設定します。
 tmpr_check.rbの引数に`1`を指定していますが、これはraspberrypiIDです。  
 監視したいraspiのIDを1つだけ指定することができます。  
 
+パスと環境(staging,production)は適宜修正してください。
+
 ```
-1,11,21,31,41,51 * * * * ruby /var/www/mukoyama/current/lib/tasks/tmpr_insert.rb
+1,11,21,31,41,51 * * * * cd /var/www/mukoyama/current && ruby lib/tasks/tmpr_update.rb -e staging
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb 1
 ```
