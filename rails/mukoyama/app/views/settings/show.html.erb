@@ -33,6 +33,13 @@
     </table>
   </div>
 </div>
+<p>同リポジトリ内のプログラム(04-bosch)を利用する場合、同プログラムをRaspberryPiに配備してから、以下の設定をcrontabに登録してください。</p>
+<div class="well">
+MUKOYAMA_URL=<%= request.protocol + request.host + ":" + request.port.to_s %><br/>
+MUKOYAMA_ID=<%= @setting.raspi_id %><br/>
+MUKOYAMA_TOKEN=<%= @setting.token %><br/>
+*/10 * * * * python $HOME/bin/bosch-bme280.py
+</div>
 <p>
 <%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>
 <%= link_to t('back'), settings_path, class: "btn btn-default" %>
