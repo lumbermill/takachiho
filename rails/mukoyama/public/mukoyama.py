@@ -155,11 +155,11 @@ def get_data():
 
 def get_url_params():
   t,p,h = get_data()
-  ts = (datetime.now() + timedelta(hours=9)).strftime("%Y-%m-%dT%H:%M:%S%z")
+  ts = datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z")
   s = "time_stamp=%s" % (ts)
-  s += "&temperatre=%s" % (t.strip())
+  s += "&temperature=%s" % (t.strip())
   s += "&pressure=%s" % (p.strip())
-  s += "&Humidity=%s" % (h.strip())
+  s += "&humidity=%s" % (h.strip())
   return s
 
 setup()
@@ -173,7 +173,7 @@ if __name__ == '__main__':
     id = os.environ["MUKOYAMA_ID"]
     token = os.environ["MUKOYAMA_TOKEN"]
     u = (url+"/logs/insert?id=%s&token=%s&"+get_url_params()) % (id,token)
-    cmd = 'curl "'+u+'"'
+    cmd = 'curl -s -S "'+u+'"'
     os.system(cmd)
   except KeyboardInterrupt:
     pass
