@@ -54,9 +54,11 @@ i2cdetect -y 1
 <pre>
 Inserted {ID} または Updated {ID}
 </pre>
-<p>このリポジトリ(takachiho)のraspi/04-boschを使うとセンサからの値取得が簡単に実現できます。
-実行ファイル(bosch-bme280.py)をRaspberryPi上の任意の位置に転送してください。センサごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
+<p>現在時刻をベースにリクエスト送信するスクリプトを用意しています。下記の実行ファイルをRaspberryPi上の任意の位置に配置してください。
+センサごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
+(開発者向け: このスクリプトは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はこちらを確認してください)
 </p>
-
+<p><a href="mukoyama.py">mukoyama.py</a></p>
+<pre>curl -O <%= request.protocol + request.host + ":" + request.port.to_s %>/mukoyama.py</pre>
 <h3>受信データを確認する</h3>
 <p>ダッシュボードにセンサごとの受信データ件数、最も古い及び新しいデータの取得日時が表示されています。</p>

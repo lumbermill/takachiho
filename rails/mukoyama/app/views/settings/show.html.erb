@@ -33,12 +33,13 @@
     </table>
   </div>
 </div>
-<p>同リポジトリ内のプログラム(04-bosch)を利用する場合、同プログラムをRaspberryPiに配備してから、以下の設定をcrontabに登録してください。</p>
+<p>当プロジェクトのプログラム(mukoyama.py)を利用する場合、同プログラムをRaspberryPiに配備してから(「参加方法」参照)、以下の設定をcrontabに登録してください。
+Raspbianの規定の設定では、/var/log/syslogに処理ログが出力されますので、ここで正常にコマンドが動いていることを確認してください。</p>
 <div class="well">
 MUKOYAMA_URL=<%= request.protocol + request.host + ":" + request.port.to_s %><br/>
 MUKOYAMA_ID=<%= @setting.raspi_id %><br/>
 MUKOYAMA_TOKEN=<%= @setting.token %><br/>
-*/10 * * * * python $HOME/bin/bosch-bme280.py
+*/10 * * * * python $HOME/bin/mukoyama.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </div>
 <p>
 <%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>
