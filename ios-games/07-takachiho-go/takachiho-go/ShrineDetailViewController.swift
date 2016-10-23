@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class ShrineDetailViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!

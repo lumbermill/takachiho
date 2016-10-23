@@ -9,7 +9,7 @@
         <!--Detail-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Detail" id="JEX-9P-axG" customClass="ShrineDetailViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SYR-Wa-9uf"/>
                         <viewControllerLayoutGuide type="bottom" id="GAO-Cl-Wes"/>
@@ -95,7 +95,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="567" y="-941"/>
+            <point key="canvasLocation" x="729" y="-941"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="242-9L-fCV">
@@ -129,7 +129,6 @@
                                     <constraint firstAttribute="width" constant="52" id="Mpq-n4-l5p"/>
                                     <constraint firstAttribute="height" constant="52" id="U8j-aF-2k3"/>
                                 </constraints>
-                                <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
                                 <state key="normal" image="Target"/>
                                 <connections>
                                     <action selector="targetButtonPushed:" destination="Z5w-3c-TeC" eventType="touchUpInside" id="bDg-aF-L5A"/>
@@ -147,15 +146,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="top" secondItem="zYQ-lZ-M82" secondAttribute="top" id="3fx-42-4BL"/>
                             <constraint firstItem="QdE-ef-tBC" firstAttribute="top" secondItem="rES-jQ-NqJ" secondAttribute="bottom" id="GeK-qP-Flv"/>
                             <constraint firstItem="SHg-S4-p5o" firstAttribute="top" secondItem="dGg-c9-tEM" secondAttribute="bottom" constant="8" id="Mz9-Xu-xrO"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="leading" secondItem="zYQ-lZ-M82" secondAttribute="leading" id="PT5-9M-cly"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="top" secondItem="zYQ-lZ-M82" secondAttribute="top" id="Qy8-89-bHB"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="centerX" secondItem="SHg-S4-p5o" secondAttribute="centerX" id="Vrc-fh-rSG"/>
                             <constraint firstItem="pdl-22-E58" firstAttribute="top" secondItem="QdE-ef-tBC" secondAttribute="bottom" constant="8" id="XOT-iT-dHg"/>
                             <constraint firstItem="QdE-ef-tBC" firstAttribute="trailing" secondItem="zYQ-lZ-M82" secondAttribute="trailingMargin" id="YMd-id-mod"/>
                             <constraint firstItem="rES-jQ-NqJ" firstAttribute="trailing" secondItem="zYQ-lZ-M82" secondAttribute="trailingMargin" id="aOJ-3w-kgP"/>
-                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="bottom" secondItem="pdl-22-E58" secondAttribute="top" id="omR-kc-1uf"/>
+                            <constraint firstItem="pdl-22-E58" firstAttribute="top" secondItem="fbZ-yk-UMv" secondAttribute="bottom" id="cc0-l1-pLJ"/>
+                            <constraint firstAttribute="trailing" secondItem="fbZ-yk-UMv" secondAttribute="trailing" id="p8e-7t-I1V"/>
+                            <constraint firstItem="fbZ-yk-UMv" firstAttribute="leading" secondItem="zYQ-lZ-M82" secondAttribute="leading" id="rPP-HJ-a8Y"/>
                             <constraint firstItem="SHg-S4-p5o" firstAttribute="centerX" secondItem="zYQ-lZ-M82" secondAttribute="centerX" id="x97-5Z-hWy"/>
                         </constraints>
                     </view>
@@ -377,6 +376,9 @@
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="xKs-5Q-XTF" kind="showDetail" identifier="detail" id="YvD-YM-Qmu"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -429,11 +431,92 @@
             </objects>
             <point key="canvasLocation" x="-143" y="-246"/>
         </scene>
+        <!--Detail-->
+        <scene sceneID="pZJ-lk-OSZ">
+            <objects>
+                <viewController title="Detail" id="xKs-5Q-XTF" customClass="GodDetailViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EWe-aj-7EM"/>
+                        <viewControllerLayoutGuide type="bottom" id="nVC-go-Zdv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jQy-0T-BWI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="神様" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="MkI-lg-dLj">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="Z2m-p3-BK4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Question" translatesAutoresizingMaskIntoConstraints="NO" id="BuF-Kh-j9k">
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="cB0-gr-nac"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ib3-xl-brT">
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backButtonPushed:" destination="xKs-5Q-XTF" eventType="touchUpInside" id="1pb-Tu-5q8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't found the god yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZ4-Cd-Mnx">
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="K0b-iO-UFs"/>
+                                    <constraint firstAttribute="height" constant="21" id="hrK-7i-3Lo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5C-EV-QwV">
+                                <mutableString key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JZ4-Cd-Mnx" firstAttribute="top" secondItem="BuF-Kh-j9k" secondAttribute="bottom" constant="8" id="62i-3d-zlE"/>
+                            <constraint firstItem="JZ4-Cd-Mnx" firstAttribute="trailing" secondItem="jQy-0T-BWI" secondAttribute="trailingMargin" id="7EG-YF-ZgU"/>
+                            <constraint firstItem="ib3-xl-brT" firstAttribute="leading" secondItem="jQy-0T-BWI" secondAttribute="leadingMargin" id="9Pw-g2-fZC"/>
+                            <constraint firstItem="BuF-Kh-j9k" firstAttribute="top" secondItem="MkI-lg-dLj" secondAttribute="bottom" constant="8" id="Fo5-Ct-TeN"/>
+                            <constraint firstItem="JZ4-Cd-Mnx" firstAttribute="leading" secondItem="jQy-0T-BWI" secondAttribute="leadingMargin" id="GPS-yy-AjW"/>
+                            <constraint firstItem="MkI-lg-dLj" firstAttribute="trailing" secondItem="jQy-0T-BWI" secondAttribute="trailingMargin" id="HHP-rz-cw4"/>
+                            <constraint firstItem="nVC-go-Zdv" firstAttribute="top" secondItem="C5C-EV-QwV" secondAttribute="bottom" constant="20" id="KfO-rc-PZ6"/>
+                            <constraint firstItem="BuF-Kh-j9k" firstAttribute="leading" secondItem="jQy-0T-BWI" secondAttribute="leadingMargin" id="Llq-5U-GP4"/>
+                            <constraint firstItem="ib3-xl-brT" firstAttribute="top" secondItem="EWe-aj-7EM" secondAttribute="bottom" id="P5T-Nj-UIs"/>
+                            <constraint firstItem="MkI-lg-dLj" firstAttribute="leading" secondItem="jQy-0T-BWI" secondAttribute="leadingMargin" id="UWs-r3-bnn"/>
+                            <constraint firstItem="C5C-EV-QwV" firstAttribute="top" secondItem="JZ4-Cd-Mnx" secondAttribute="bottom" constant="8" id="dd2-zQ-En2"/>
+                            <constraint firstItem="MkI-lg-dLj" firstAttribute="top" secondItem="EWe-aj-7EM" secondAttribute="bottom" constant="8" id="duh-Nn-bMB"/>
+                            <constraint firstItem="C5C-EV-QwV" firstAttribute="leading" secondItem="jQy-0T-BWI" secondAttribute="leadingMargin" id="n4s-Jj-Dc0"/>
+                            <constraint firstItem="BuF-Kh-j9k" firstAttribute="trailing" secondItem="jQy-0T-BWI" secondAttribute="trailingMargin" id="rjv-h4-cea"/>
+                            <constraint firstItem="C5C-EV-QwV" firstAttribute="trailing" secondItem="jQy-0T-BWI" secondAttribute="trailingMargin" id="vKm-PI-ouc"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Detail" id="sMF-Vn-QX0"/>
+                    <connections>
+                        <outlet property="desc1Label" destination="JZ4-Cd-Mnx" id="B0a-yH-I7p"/>
+                        <outlet property="desc2Label" destination="C5C-EV-QwV" id="CMR-X3-xik"/>
+                        <outlet property="imageView" destination="BuF-Kh-j9k" id="1YI-rI-95E"/>
+                        <outlet property="titleLabel" destination="MkI-lg-dLj" id="juZ-kA-thq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1fl-cz-gOp" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="728.79999999999995" y="-246.02698650674665"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Menu" width="22" height="18"/>
         <image name="Question" width="32" height="32"/>
-        <image name="Target" width="64" height="64"/>
+        <image name="Target" width="32" height="32"/>
         <image name="tab-credit" width="30" height="30"/>
         <image name="tab-god" width="30" height="30"/>
         <image name="tab-shrine" width="30" height="30"/>
