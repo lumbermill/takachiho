@@ -71,7 +71,7 @@ class TmprLogsController < ApplicationController
       sql = "raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})"
       results = TmprDailyLog.where(sql).order(:time_stamp)
       results.each do |row|
-        ts = (row["time_stamp"].to_time.to_i + 9 * 60 * 60) * 1000
+        ts = (row["time_stamp"].to_time.to_i * 60 * 60) * 1000
         @data[:avg] += [[ts,row[src+"_average"]]]
         @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
       end
@@ -93,7 +93,7 @@ class TmprLogsController < ApplicationController
       results = TmprLog.where("raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
-        @data += [[(row.time_stamp.to_i + 9 * 60 * 60) * 1000,row.send(src)]]
+        @data += [[(row.time_stamp.to_i * 60 * 60) * 1000,row.send(src)]]
       end
     end
     respond_to do |format|
