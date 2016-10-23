@@ -172,7 +172,7 @@ if __name__ == '__main__':
     url = os.environ["MUKOYAMA_URL"]
     id = os.environ["MUKOYAMA_ID"]
     token = os.environ["MUKOYAMA_TOKEN"]
-    u = (url+"?id=%s&token=%s&"+get_url_params()) % (id,token)
+    u = (url+"/logs/insert?id=%s&token=%s&"+get_url_params()) % (id,token)
     cmd = 'curl "'+u+'"'
     os.system(cmd)
   except KeyboardInterrupt:
