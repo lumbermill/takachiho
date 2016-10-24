@@ -33,7 +33,7 @@ class ShrineListViewController: UIViewController, UITableViewDelegate, UITableVi
         if segue.identifier == "detail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let p = points.array[(indexPath as NSIndexPath).row]
-                let controller = segue.destination as! DetailViewController
+                let controller = segue.destination as! ShrineDetailViewController
                 controller.detailItem = p
                 //controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.navigationItem.title = p.name

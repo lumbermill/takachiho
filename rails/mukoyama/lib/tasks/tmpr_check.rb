@@ -1,3 +1,5 @@
+#! /usr/local/bin/ruby
+# 閾値を超えているかチェックする
 require 'time'
 
 class TmprCheck

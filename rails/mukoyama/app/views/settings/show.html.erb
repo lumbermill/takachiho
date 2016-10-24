@@ -1,6 +1,8 @@
-<table class="table">
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table">
   <tr>
-    <th>ID:</th>
+    <th>ID</th>
     <td><%= @setting.raspi_id %></td>
   </tr>
   <tr>
@@ -15,7 +17,31 @@
     <th><%= t("activerecord.attributes.setting.max_tmpr") %></th>
     <td><%= @setting.max_tmpr %></td>
   </tr>
-</table>
-
-<%= link_to t('edit'), edit_setting_path(@setting) %> |
-<%= link_to t('back'), settings_path %>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.token") %></th>
+    <td><div class="well well-sm"><%= @setting.token %></div>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.created_at") %></th>
+    <td><%= @setting.created_at %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.setting.updated_at") %></th>
+    <td><%= @setting.updated_at %></td>
+  </tr>
+    </table>
+  </div>
+</div>
+<p>当プロジェクトのプログラム(mukoyama.py)を利用する場合、同プログラムをRaspberryPiに配備してから(「参加方法」参照)、以下の設定をcrontabに登録してください。
+Raspbianの規定の設定では、/var/log/syslogに処理ログが出力されますので、ここで正常にコマンドが動いていることを確認してください。</p>
+<div class="well">
+MUKOYAMA_URL=<%= request.protocol + request.host + ":" + request.port.to_s %><br/>
+MUKOYAMA_ID=<%= @setting.raspi_id %><br/>
+MUKOYAMA_TOKEN=<%= @setting.token %><br/>
+*/10 * * * * python $HOME/bin/mukoyama.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
+</div>
+<p>
+<%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>
+<%= link_to t('back'), settings_path, class: "btn btn-default" %>
+</p>

@@ -1,17 +1,20 @@
 # Ruby on Rails
 
+## SQLを直接実行する
 ```
 results = ActiveRecord::Base.connection.select_all(sql)
-result.to_a
+results.to_a
 # => [ {"name" => "Joe",   "email" => "joe@example.com"},
 #      {"name" => "Alice", "email" => "alice@example.com"},
 #      {"name" => "Bob",   "email" => "bob@example.com"} ]
 ```
 
+更新系のクエリを実行する場合（更新件数は得られない…？）
 ```
 ActiveRecord::Base.connection.execute(sql)
 ```
 
+## railsプロジェクトを新規作成
 ```
 $ rails new sandbox-rails --database=mysql
 ```

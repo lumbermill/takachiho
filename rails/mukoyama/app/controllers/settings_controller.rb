@@ -26,6 +26,9 @@ class SettingsController < ApplicationController
   def create
     @setting = Setting.new(setting_params)
     @setting.raspi_id = Setting.order("raspi_id DESC").limit(1).first.id + 1
+    # パリティ代わりにmd5のトークン(12文字)をくっつける
+    require 'digest/md5'
+    @setting.token = Digest::MD5.new.update(@setting.raspi_id.to_s).to_s[0,12]
     @setting.user = current_user
     respond_to do |format|
       if @setting.save

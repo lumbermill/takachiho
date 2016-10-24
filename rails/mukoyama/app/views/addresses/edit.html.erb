@@ -1,6 +1,7 @@
-<h1>Editing Address</h1>
+<h1>通知先の編集</h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @address %> |
-<%= link_to 'Back', addresses_path %>
+<p>
+<%= link_to '表示', @address, class: "btn btn-default" %>
+<%= link_to '戻る', addresses_path, class: "btn btn-default" %>
+</p>

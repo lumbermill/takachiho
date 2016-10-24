@@ -1,8 +1,20 @@
 <table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>メール</th>
+    <th>センサ数</th>
+    <th>登録日時</th>
+  </tr>
+  </thead>
+  <tbody>
   <% @users.each do |user| %>
   <tr>
     <td><%= user.id %></td>
     <td><%= user.email %></td>
+    <td><%= user.settings.count %></td>
+    <td><%= user.confirmed_at %></td>
   </tr>
   <% end %>
+  </tbody>
 </table>

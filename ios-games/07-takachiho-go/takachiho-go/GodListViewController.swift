@@ -31,18 +31,16 @@ class GodListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - Segues
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow {
-//                let p = gods.array[(indexPath as NSIndexPath).row]
-//                let controller = segue.destination as! DetailViewController
-//                controller.detailItem = p
-//                //controller.navigationItem.leftItemsSupplementBackButton = true
-//                controller.navigationItem.title = p.name
-//                //controller.title = p.name
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detail" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let p = gods.array[(indexPath as NSIndexPath).row]
+                let controller = segue.destination as! GodDetailViewController
+                controller.detailItem = p
+                // controller.navigationItem.title = p.
+            }
+        }
+    }
     
     // MARK: - Table View
     

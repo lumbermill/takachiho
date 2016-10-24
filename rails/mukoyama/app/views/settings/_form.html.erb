@@ -1,3 +1,5 @@
+<div class="row">
+<div class="col-sm-6">
 <%= form_for(@setting) do |f| %>
   <% if @setting.errors.any? %>
     <div class="alert alert-warning">
@@ -26,5 +28,8 @@
     <%= f.label :max_tmpr, "最高気温" %>
     <%= f.text_field :max_tmpr, class: "form-control" %>
   </div>
-  <%= f.submit nil, class: "btn btn-primary" %>
+  <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>
+</div>
+</div>
+<hr/>

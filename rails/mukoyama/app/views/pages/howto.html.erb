@@ -1,16 +1,16 @@
 <% content_for :title, "参加方法" %>
-<p>ベータ版です。</p>
-
+<div class="alert alert-warning">
+このプロジェクトはα版の運用中です。
+ユーザの登録やデータ送信は自由に行って頂けますが、正式版移行時の互換性は保証されません。検証用途にのみご利用ください。
+</div>
 <h2>ウェブ編</h2>
-
 <h3>アカウントを作成する</h3>
 <p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
-
 <h3>トークンを手にいれる</h3>
-<p><b>ここ検討中？どうする？</b></p>
-
+<p>作成したアカウントでログインし、メイン画面（ダッシュボード）からセンサを追加してください。
+  追加時に自動発行されます。同時に付与されたIDとペアでデータ送信に使用します。</p>
 <h3>通知設定する</h3>
-<p></p>
+<p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
 
 <h2>ハードウェア(RaspberryPi)編</h2>
 <h3>必要なもの</h3>
@@ -21,12 +21,44 @@
 </ul>
 <p>
 </p>
-<h3>組み立て方</h3>
+<h3>センサの有効化</h3>
+<p>
+  Raspberry Piには最新のRaspbianがインストールされ、BME280温度センサがGPIOに接続されていることを前提とします。
+  結線方法については<a href="https://itunes.apple.com/jp/book/raspberrypi-ru-men/id1035076658?mt=11&ign-mpt=uo%3D4">拙著・RaspberriPi入門</a>や下記のURL(Qiita)を参照してください。</p>
+<p>以下の手順でセンサを有効化します。</p>
+<pre>
+sudo rpi-update
+sudo raspi-config Enable I2C
 
+cat /etc/modules
+# 下記が書いてあることを確認します。書いてなければ追記してください。
+i2c-dev
+
+sudo apt-get install python-smbus
+
+i2cdetect -y 1
+# 今回は76で設定しています。
+</pre>
+<p>うまくいかない場合は、以下のURL等も参考にしてください。</p>
+<ul>
+  <li><a href="http://qiita.com/masato/items/16bf8b17ee4881179462#bme280">http://qiita.com/masato/items/16bf8b17ee4881179462#bme280</a></li>
+  <li><a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch</a></li>
+</ul>
 
 <h3>データの送信方法</h3>
+<p>以下のようなリクエストを送信することで、サーバのデータベースにデータを蓄積することができます。</p>
 <pre>
-<%= request.protocol + request.host + ":" + request.port.to_s %>/tmpr_logs/insert?token=abcdef&time_stamp=123&temperature=12.3&pressure=12.3&humidity=123
+<%= request.protocol + request.host + ":" + request.port.to_s %>/logs/insert?id=1&amp;token=abcdef&amp;time_stamp=<%= DateTime.now.to_s %>&amp;temperature=12.3&amp;pressure=12.3&amp;humidity=123
 </pre>
-
+<p>正常にデータが受信された場合、以下のような応答が返ります。</p>
+<pre>
+Inserted {ID} または Updated {ID}
+</pre>
+<p>現在時刻をベースにリクエスト送信するスクリプトを用意しています。下記の実行ファイルをRaspberryPi上の任意の位置に配置してください。
+センサごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
+(開発者向け: このスクリプトは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はこちらを確認してください)
+</p>
+<p><a href="mukoyama.py">mukoyama.py</a></p>
+<pre>curl -O <%= request.protocol + request.host + ":" + request.port.to_s %>/mukoyama.py</pre>
 <h3>受信データを確認する</h3>
+<p>ダッシュボードにセンサごとの受信データ件数、最も古い及び新しいデータの取得日時が表示されています。</p>

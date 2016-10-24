@@ -22,3 +22,7 @@ task :deploy => [:ping] do
 end
 
 # */10 * * * * /opt/bosch-bme280/bin/record.sh
+desc 'Copy to mukoyama project.'
+task :mukoyama do
+  cp 'bosch-bme280.py', '../../rails/mukoyama/public/mukoyama.py'
+end
