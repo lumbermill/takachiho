@@ -124,3 +124,11 @@ require 'json'
 my_hash = JSON.parse('{"hello": "goodbye"}')
 puts my_hash["hello"] => "goodbye"
 ```
+
+
+## その他
+
+### エスケープシーケンスで文字に色をつける
+```
+puts "\e[31m"+"Hello, world."+"\e[m"
+```
