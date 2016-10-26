@@ -59,9 +59,10 @@ class AddressesController < ApplicationController
   # DELETE /addresses/1
   # DELETE /addresses/1.json
   def destroy
+    raspi_id = @address.raspi_id
     @address.destroy
     respond_to do |format|
-      format.html { redirect_to addresses_url, notice: 'Address was successfully destroyed.' }
+      format.html { redirect_to addresses_url(raspi_id: raspi_id), notice: 'Address was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
