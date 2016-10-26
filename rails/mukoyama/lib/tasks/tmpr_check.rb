@@ -5,12 +5,12 @@ require 'time'
 class TmprCheck
 
   def self.execute
-    if(ARGV[0] == nil || ARGV[0] == "" || ARGV[0].to_i.to_s != ARGV[0].to_s)
+    if(ARGV[-1] == nil || ARGV[-1] == "" || ARGV[-1].to_i.to_s != ARGV[-1].to_s)
       puts "raspberrypiIDを指定してください。"
       return
     end
 
-    id = ARGV[0].to_i
+    id = ARGV[-1].to_i
     setting = Setting.where(raspi_id: id)
     tmpr_logs = TmprLog.where(raspi_id: id)
     logs = tmpr_logs.order(:time_stamp).last
