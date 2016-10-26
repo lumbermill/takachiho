@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :raspi_id %>
+  <%= f.hidden_field :raspi_id, value: @raspi_id %>
   <div class="form-group">
     <%= f.label :mail %>
     <%= f.text_field :mail, class: "form-control" %>
