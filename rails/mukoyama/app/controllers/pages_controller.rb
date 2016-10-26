@@ -15,4 +15,7 @@ class PagesController < ApplicationController
     h["raspi_id"] = id
     render text: h.to_json
   end
+
+  def usecase
+  end
 end

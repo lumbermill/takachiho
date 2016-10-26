@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get 'about' => 'pages#about'
   get 'howto' => 'pages#howto'
+  get 'usecase' => 'pages#usecase'
 
   root 'pages#root'
 end
