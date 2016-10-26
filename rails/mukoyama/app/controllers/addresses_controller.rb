@@ -7,6 +7,7 @@ class AddressesController < ApplicationController
     setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     raise 'Setting not found for current user.' unless setting
     @addresses = setting.addresses
+    @raspi_id = params[:raspi_id]
   end
 
   # GET /addresses/1
@@ -16,11 +17,13 @@ class AddressesController < ApplicationController
 
   # GET /addresses/new
   def new
+    @raspi_id = params[:raspi_id]
     @address = Address.new
   end
 
   # GET /addresses/1/edit
   def edit
+    @raspi_id = @address.raspi_id
   end
 
   # POST /addresses
