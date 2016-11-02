@@ -1,10 +1,11 @@
 
 /*
  * Posting sensor value to Mukoyama example sketch.
- * コンパイルするためにはArduinoIDEにESP8266 Core for ArduinoとTime Libraryをインストールする必要があります。
+ * コンパイルするためにはArduinoIDEにESP8266 Core for ArduinoとTime Library,SHT31 Libraryをインストールする必要があります。
  * 
  * ESP8266 Core for Arduino: https://github.com/esp8266/Arduino
  * Time Library: http://playground.arduino.cc/code/time
+ * SHT31 Library: http://cactus.io/hookups/sensors/temperature-humidity/sht31/hookup-arduino-to-sensirion-sht31-temp-humidity-sensor
  * 参考: http://trac.switch-science.com/wiki/esp_dev_arduino_ide
  */
 
@@ -13,6 +14,7 @@
 #include <TimeLib.h> 
 #include <WiFiUdp.h>
 #include <Ticker.h>
+#include "cactus_io_SHT31.h"
 extern "C" {
   #include "user_interface.h"
 }
@@ -34,11 +36,15 @@ const char* mukoyama_token = "************";   // mukoyama.lmlab.netから発行
 Ticker ticker;
 bool readyForTicker = true; // タイマーで指定時刻になったら立てるフラグ
 
+cactus_io_SHT31 sht31; //温湿度センサー
+
 void setup() {
   Serial.begin(115200);
   Serial.println();
   Serial.print("connecting to ");
   Serial.println(ssid);
+
+  // *** Wifi Setup ***
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -49,12 +55,23 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
+  // *** NTP Setup ***
   Serial.println("Starting UDP");
   Udp.begin(localPort);
   Serial.print("Local port: ");
   Serial.println(Udp.localPort());
   Serial.println("waiting for sync");
   setSyncProvider(getNtpTime);
+
+  // *** sht31 ***
+  Serial.println("*** setup shi31 start ***");
+  Serial.println("Sensirion SHT31 - Humidity - Temp Sensor | cactus.io");
+  if (!sht31.begin()) {
+    Serial.println("Could not find the sensor. Check wiring and I2C address");
+    while (1) delay(1);
+  }
+  Serial.println("*** setup shi31 end   ***");
+
   wifi_set_sleep_type(LIGHT_SLEEP_T); //省電力の設定
   ticker.attach_ms(10 * 60 * 1000, setReadyForTicker); //10分毎に実行する設定
 }
@@ -71,9 +88,9 @@ void setReadyForTicker() {
 }
 
 void get_sensor_value(float* f_temp, float* f_press, float* f_humid) {
-  *f_temp = random(0,500) / 10; 
-  *f_press = random(0,500) / 10; 
-  *f_humid = random(0,500) / 10; 
+  *f_temp  = sht31.getTemperature_C();
+  *f_press = 0; // 気圧はsht31では取得できない
+  *f_humid = sht31.getHumidity();
   Serial.print("temperature:");
   Serial.println(*f_temp);
   Serial.print("pressure:");
