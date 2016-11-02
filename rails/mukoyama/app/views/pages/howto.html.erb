@@ -58,7 +58,25 @@ Inserted {ID} または Updated {ID}
 センサごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
 (開発者向け: このスクリプトは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はこちらを確認してください)
 </p>
-<p><a href="mukoyama.py">mukoyama.py</a></p>
+<p><a href="mukoyama_bme280.py" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_bme280.py</a></p>
 <pre>curl -O <%= request.protocol + request.host + ":" + request.port.to_s %>/mukoyama.py</pre>
 <h3>受信データを確認する</h3>
 <p>ダッシュボードにセンサごとの受信データ件数、最も古い及び新しいデータの取得日時が表示されています。</p>
+
+<h2>ハードウェア(esp8266)編</h2>
+<h3>必要なもの</h3>
+<ul>
+  <li>ESP8266(WiFiモジュール)</li>
+  <li>SHT31(温湿度センサ)</li>
+  <li>WiFiアクセスポイント</li>
+</ul>
+<h3>設定</h3>
+<p>サンプルスケッチを掲載します。Wifiの接続情報と当ホストで発行されたセンサID、トークンを書き換えてインストールしてください。</p>
+<p><a href="mukoyama_esp8266.ino" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_esp8266.ino</a></p>
+<pre>
+const char* ssid     = "*******";  // WifiのSSID
+const char* password = "*******";  // Wifiのパスワード
+
+const char* mukoyama_id    = "*";         // mukoyama.lmlab.netから発行されるセンサーID
+const char* mukoyama_token = "************";   // mukoyama.lmlab.netから発行されるトークン
+</pre>
