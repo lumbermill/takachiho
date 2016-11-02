@@ -116,7 +116,6 @@ void send_data() {
   String temperature = String(f_temp);
   String pressure    = String(f_press);
   String humidity    = String(f_humid);
-  Serial.println(pressure);
 
   char url_buf[256];
   sprintf(url_buf,"%s?id=%s&token=%s&time_stamp=%s&temperature=%s&pressure=%s&humidity=%s",
