@@ -5,6 +5,7 @@
     <th>メール</th>
     <th>センサ数</th>
     <th>登録日時</th>
+    <th>ログイン日時</th>
   </tr>
   </thead>
   <tbody>
@@ -14,7 +15,10 @@
     <td><%= user.email %></td>
     <td><%= user.settings.count %></td>
     <td><%= user.confirmed_at %></td>
+    <td><%= user.current_sign_in_at %></td>
   </tr>
   <% end %>
   </tbody>
 </table>
+<p>登録日時(confirmed_at)を更新してユーザの有効/無効を切り替え可能です。</p>
+<pre>update users set confirmed_at = now() where id = ID;</pre>

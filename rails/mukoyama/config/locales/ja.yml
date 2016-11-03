@@ -13,6 +13,22 @@ ja:
         name: '名前'
         min_tmpr: '最低気温'
         max_tmpr: '最高気温'
+      user:
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: '確認パスワード'
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 'を入力してください。'
+              taken: 'は既に使用されています。'
+            password:
+              blank: 'を入力してください。'
+              too_short: 'が短すぎます。'
+            password_confirmation:
+              confirmation: 'が一致しません。'
 #    errors:
 # 以下は効かない？
   helpers:
