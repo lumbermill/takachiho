@@ -31,3 +31,23 @@ LOAD DATA INFILE '/tmp/t.csv' REPLACE INTO TABLE t IGNORE 1 LINES;
 ```
 SELECT * INTO OUTFILE '/tmp/t.csv' FROM t;
 ```
+
+# Export table list to csv.
+```bash
+filename="db.tsv"
+db="db_name"
+user="user"
+result=`mysql -u$user $db -N -s -e 'SHOW TABLES;'`
+printf "" > $filename
+
+table_c=0
+record_c=0
+for line in $result; do
+  result=`mysql -u$user $db -N -s -e "SELECT COUNT(*) FROM $line"`
+  echo -e "$line\t$result" >> $filename
+  table_c=$((table_c+1))
+  record_c=$((record_c+$result))
+done
+echo "Table total: $table_c" >> $filename
+echo "Record total: $record_c" >> $filename
+```
