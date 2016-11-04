@@ -5,22 +5,15 @@ require 'time'
 class TmprCheck
 
   def self.execute
-    if(ARGV[-1] == nil || ARGV[-1] == "" || ARGV[-1].to_i.to_s != ARGV[-1].to_s)
-      puts "raspberrypiIDを指定してください。"
-      return
-    end
-
-    id = ARGV[-1].to_i
-    setting = Setting.where(raspi_id: id)
-    tmpr_logs = TmprLog.where(raspi_id: id)
-    logs = tmpr_logs.order(:time_stamp).last
-
-    now = Time.now
-    puts logs.temperature
-    if setting.first.max_tmpr < logs.temperature
-      send_mail(id, "#{now.hour}時#{now.min}分 #{logs.temperature}°Cです。設定値を上回りました。")
-    elsif setting.first.min_tmpr > logs.temperature
-      send_mail(id, "#{now.hour}時#{now.min}分 #{logs.temperature}°Cです。設定値を下回りました。")
+    Setting.all.each do |setting|
+      log = TmprLog.where(raspi_id: setting.raspi_id).order(:time_stamp).last
+      now = Time.now
+      puts log.temperature
+      if setting.max_tmpr < log.temperature
+        send_mail(setting.raspi_id, "#{now.hour}時#{now.min}分 #{log.temperature}°Cです。設定値を上回りました。")
+      elsif setting.min_tmpr > log.temperature
+        send_mail(setting.raspi_id, "#{now.hour}時#{now.min}分 #{log.temperature}°Cです。設定値を下回りました。")
+      end
     end
   end
 
