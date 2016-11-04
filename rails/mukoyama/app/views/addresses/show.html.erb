@@ -1,19 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Raspi:</strong>
+  <strong>Raspi ID:</strong>
   <%= @address.raspi_id %>
 </p>
 
 <p>
-  <strong>Mail:</strong>
+  <strong>メール:</strong>
   <%= @address.mail %>
 </p>
 
 <p>
-  <strong>Active:</strong>
+  <strong>送信間隔(分):</strong>
+  <%= @address.snooze %>
+</p>
+
+<p>
+  <strong>有効:</strong>
   <%= @address.active %>
 </p>
 
-<%= link_to 'Edit', edit_address_path(@address) %> |
-<%= link_to 'Back', addresses_path(raspi_id: @address.raspi_id) %>
+<%= link_to '編集', edit_address_path(@address), class: "btn btn-default" %>
+<%= link_to '戻る', addresses_path(raspi_id: @address.raspi_id), class: "btn btn-default" %>
