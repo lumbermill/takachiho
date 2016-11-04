@@ -18,123 +18,186 @@ Loading..
 	</tr>
 </table>
 <script>
-	$.getJSON('../graph_data.json', <%= @p.html_safe %> ,function (data) {
-		$('#chart_latest').highcharts({
-				chart: {
-						type: 'line'
-				},
+	var chart_latest = new Highcharts.Chart({
+			chart: {
+					renderTo: 'chart_latest',
+					alignTicks: false,
+					type: 'line'
+			},
+			title: {
+					text: '直近7日間の気温(°C)と湿度(%)',
+			},
+			xAxis: {
+					type: 'datetime'
+			},
+			yAxis: [{
+					title: {
+							text: ''
+					},
+					plotBands: [{
+							from: <%= @min_tmpr %>,
+							to: <%= @max_tmpr %>,
+							color: 'rgba(22, 227, 147, 0.2)'
+					}]
+			}, {
 				title: {
-						text: '直近7日間の気温 (°C)',
+						text: ''
 				},
-				xAxis: {
-						type: 'datetime'
+				opposite: true
+			}],
+			tooltip: {
+					crosshairs: true,
+					shared: true
+			},
+			series: []
+	});
+	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
+		chart_latest.addSeries({
+				name: "気温",
+				color: Highcharts.getOptions().colors[3],
+				showInLegend: true,
+				data: data,
+				yAxis: 0
+		});
+	});
+	$.getJSON('../graph_data.json', <%= @h.html_safe %> ,function (data) {
+			chart_latest.addSeries({
+					name: "湿度",
+					color: Highcharts.getOptions().colors[0],
+					showInLegend: true,
+					data: data,
+					yAxis: 1
+			});
+	});
+
+	var chart_daily = new Highcharts.Chart({
+		chart: {
+				renderTo: 'chart_daily',
+				alignTicks: false,
+				type: 'spline'
+		},
+		title: {
+				text: '日次の気温(°C)と湿度(%)',
+		},
+		xAxis: {
+				type: 'datetime'
+		},
+		yAxis: [{
+				title: {
+						text: ''
 				},
-				yAxis: {
-						title: {
-								text: ''
-						},
-						plotBands: [{
-								from: <%= @min_tmpr %>,
-								to: <%= @max_tmpr %>,
-								color: 'rgba(68, 170, 213, .2)'
-						}]
-				},
-				series: [{
-						name: "気温",
-						color: Highcharts.getOptions().colors[3],
-						showInLegend: false,
-						data: data
+				plotBands: [{
+						from: <%= @min_tmpr %>,
+						to: <%= @max_tmpr %>,
+						color: 'rgba(22, 227, 147, 0.2)'
 				}]
+		}, {
+			title: {
+					text: ''
+			},
+			opposite: true
+		}],
+		tooltip: {
+				crosshairs: true,
+				shared: true
+		},
+		legend: {
+		},
+		series: []
+	});
+	$.getJSON('../graph_data.json?unit=day&limit=-70%20day', <%= @t.html_safe %> ,function (data) {
+		chart_daily.addSeries({
+				name: "平均気温",
+				color: Highcharts.getOptions().colors[3],
+				data: data["avg"],
+				yAxis: 0,
+				zIndex: 2
+		});
+		chart_daily.addSeries({
+				name: "高低",
+				data: data["minmax"],
+				type: 'arearange',
+				lineWidth: 0,
+				linkedTo: ':previous',
+				color: Highcharts.getOptions().colors[3],
+				fillOpacity: 0.3,
+				yAxis: 0,
+				zIndex: 0
+		});
+	});
+	$.getJSON('../graph_data.json?unit=day&limit=-70%20day', <%= @h.html_safe %> ,function (data) {
+		chart_daily.addSeries({
+				name: "平均湿度",
+				color: Highcharts.getOptions().colors[0],
+				data: data["avg"],
+				yAxis: 1,
+				zIndex: 1
 		});
 	});
 
-	$.getJSON('../graph_data.json?unit=day&limit=-70%20day', <%= @p.html_safe %> ,function (data) {
-		$('#chart_daily').highcharts({
-				chart: {
-						type: 'line'
-				},
+	var chart_monthly = new Highcharts.Chart({
+		chart: {
+				renderTo: 'chart_monthly',
+				alignTicks: false,
+				type: 'spline'
+		},
+		title: {
+				text: '月次の気温(°C)と湿度(%)',
+		},
+		xAxis: {
+				type: 'datetime'
+		},
+		yAxis: [{
 				title: {
-						text: '日次の気温 (°C)',
+						text: ''
 				},
-				xAxis: {
-						type: 'datetime'
-				},
-				yAxis: {
-						title: {
-								text: ''
-						},
-						plotBands: [{
-								from: <%= @min_tmpr %>,
-								to: <%= @max_tmpr %>,
-								color: 'rgba(68, 170, 213, .2)'
-						}]
-				},
-				tooltip: {
-						crosshairs: true,
-						shared: true,
-						valueSuffix: '°C'
-				},
-				legend: {
-				},
-				series: [{
-						name: "平均",
-						data: data["avg"],
-						zIndex: 1
-				},{
-						name: "高低",
-						data: data["minmax"],
-						type: 'arearange',
-						lineWidth: 0,
-						linkedTo: ':previous',
-						color: Highcharts.getOptions().colors[0],
-						fillOpacity: 0.3,
-						zIndex: 0
+				plotBands: [{
+						from: <%= @min_tmpr %>,
+						to: <%= @max_tmpr %>,
+						color: 'rgba(22, 227, 147, 0.2)'
 				}]
-		});
+		}, {
+			title: {
+					text: ''
+			},
+			opposite: true
+		}],
+		tooltip: {
+				crosshairs: true,
+				shared: true
+		},
+		legend: {
+		},
+		series: []
 	});
 
-	$.getJSON('../graph_data.json?unit=month', <%= @p.html_safe %> ,function (data) {
-		$('#chart_monthly').highcharts({
-				chart: {
-						type: 'line'
-				},
-				title: {
-						text: '月次の気温 (°C)',
-				},
-				xAxis: {
-						type: 'datetime'
-				},
-				yAxis: {
-						title: {
-								text: ''
-						},
-						plotBands: [{
-								from: <%= @min_tmpr %>,
-								to: <%= @max_tmpr %>,
-								color: 'rgba(68, 170, 213, .2)'
-						}]
-				},
-				tooltip: {
-						crosshairs: true,
-						shared: true,
-						valueSuffix: '°C'
-				},
-				legend: {
-				},
-				series: [{
-						name: "平均",
-						data: data["avg"],
-						zIndex: 1
-				},{
-						name: "高低",
-						data: data["minmax"],
-						type: 'arearange',
-						lineWidth: 0,
-						linkedTo: ':previous',
-						color: Highcharts.getOptions().colors[0],
-						fillOpacity: 0.3,
-						zIndex: 0
-				}]
+	$.getJSON('../graph_data.json?unit=month', <%= @t.html_safe %> ,function (data) {
+		chart_monthly.addSeries({
+				name: "平均気温",
+				color: Highcharts.getOptions().colors[3],
+				data: data["avg"],
+				yAxis: 0,
+				zIndex: 2
+		});
+		chart_monthly.addSeries({
+				name: "高低",
+				data: data["minmax"],
+				type: 'arearange',
+				lineWidth: 0,
+				linkedTo: ':previous',
+				color: Highcharts.getOptions().colors[3],
+				fillOpacity: 0.3,
+				yAxis: 0,
+				zIndex: 0
+		});
+	});
+	$.getJSON('../graph_data.json?unit=month', <%= @t.html_safe %> ,function (data) {
+		chart_monthly.addSeries({
+				name: "平均湿度",
+				color: Highcharts.getOptions().colors[0],
+				data: data["avg"],
+				yAxis: 1,
+				zIndex: 1
 		});
 	});
 </script>

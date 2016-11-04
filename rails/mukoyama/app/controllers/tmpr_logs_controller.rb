@@ -102,7 +102,9 @@ class TmprLogsController < ApplicationController
   end
 
   def graph
-    @p = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
+    @t = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
+    @p = "{raspi_id: #{params[:raspi_id]},src: 'pressure'}"
+    @h = "{raspi_id: #{params[:raspi_id]},src: 'humidity'}"
     setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     @min_tmpr = setting.min_tmpr
     @max_tmpr = setting.max_tmpr
