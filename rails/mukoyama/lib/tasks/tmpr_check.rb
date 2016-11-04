@@ -26,11 +26,18 @@ class TmprCheck
 
   def self.send_mail(id, msg)
     addresses = Address.where(raspi_id: id)
+    now = DateTime.now
     addresses.each do |address|
       next if (address.active != true)
-      cmd = "echo '#{msg}' | sendmail #{address.mail}"
-      puts cmd
-      system(cmd)
+      ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
+      d_flg = false
+      if ts.nil? || ts + address.snooze.minute < now
+        d_flg = true
+        cmd = "echo '#{msg}' | sendmail #{address.mail}"
+        puts cmd
+        system(cmd)
+      end
+      MailLog.create(address_id: address.id, time_stamp: now, delivered: d_flg)
     end
   end
 end

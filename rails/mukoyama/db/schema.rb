@@ -11,14 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019135450) do
+ActiveRecord::Schema.define(version: 20161104070954) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
     t.string   "mail",       limit: 255
     t.boolean  "active"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "snooze",     limit: 4,   default: 60, null: false
+  end
+
+  create_table "mail_logs", force: :cascade do |t|
+    t.integer  "address_id", limit: 4
+    t.datetime "time_stamp"
+    t.boolean  "delivered"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "settings", force: :cascade do |t|
