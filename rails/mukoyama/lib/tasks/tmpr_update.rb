@@ -13,10 +13,13 @@ opt.on('-e env') { |v| OPTS[:e] = v }
 OPTS = {}
 opt.parse!(ARGV)
 
+LOG_RETENTION_PERIOD = 90 # 3months
+
 env = OPTS[:e] || "development"
 @client = Mysql2::Client.new(host:"localhost",username:"root",database:"mukoyama_#{env}")
 
 def insert_daily(date)
+  print "Inserting into tmpr_daily_logs "
   where = date.nil? ? "" : "WHERE DATE(time_stamp) = '#{date}'"
   daily_sql = <<EOT
   INSERT IGNORE INTO tmpr_daily_logs
@@ -44,6 +47,7 @@ def insert_monthly(date)
     end_date = begin_date + 1.month - 1.day
     where = year_month.nil? ? "" : "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
   end
+  print "Inserting into tmpr_monthly_logs "
   monthly_sql = <<EOT
   INSERT IGNORE INTO tmpr_monthly_logs
     (raspi_id,`year_month`,
@@ -62,6 +66,18 @@ EOT
   puts @client.affected_rows
 end
 
+def clean_logs
+  b = Date.today - LOG_RETENTION_PERIOD
+  print "Cleaning up logs older than #{b} .. tmpr:"
+  sql = "DELETE FROM tmpr_logs WHERE time_stamp < '#{b}'"
+  @client.query(sql)
+  print @client.affected_rows
+  print " mail:"
+  sql = "DELETE FROM mail_logs WHERE time_stamp < '#{b}'"
+  @client.query(sql)
+  puts @client.affected_rows
+end
+
 def main
   if OPTS[:all]
     insert_daily(nil)
@@ -70,6 +86,7 @@ def main
     yesterday = Date.today - 1
     insert_daily(yesterday)
     insert_monthly(yesterday) if Date.today.day == 1
+    clean_logs
   end
 end
 
