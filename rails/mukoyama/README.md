@@ -29,13 +29,12 @@ Raspberry Piで測定した温度データを受け取り、データベース�
 温度測定とデータ送信部分は ../raspi/01-mukoyama を参照してください。
 
 ## データ読み込み&メール送信設定
-crontabに以下を設定します。  
-tmpr_check.rbの引数に`1`を指定していますが、これはraspberrypiIDです。  
-監視したいraspiのIDを1つだけ指定することができます。  
-
-パスと環境(staging,production)は適宜修正してください。
+crontabに以下を設定します。電話の発信に対応する場合は、[Twilio](https://www.twilio.com)のアカウントを取得して、SID,TOKENとNUMBERの設定が必要です（これが無くてもメールの発信は可能です）。パスと環境(staging,production)は適宜修正してください。
 
 ```
+TWILIO_SID=
+TWILIO_TOKEN=
+TWILIO_NUMBER=
 1,11,21,31,41,51 * * * * cd /var/www/mukoyama/current && ruby lib/tasks/tmpr_update.rb -e staging
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb
 ```
