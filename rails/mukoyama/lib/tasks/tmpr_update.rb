@@ -1,6 +1,5 @@
 #! /usr/local/bin/ruby
-# Deprecated: https経由でのデータ更新を今後は利用します
-# daliy,monthlyログの更新プログラムはtmpr_update.rbに引き継ぎました
+# 日次、月次の記録を更新します
 require 'date'
 require 'mysql2'
 require 'optparse'
