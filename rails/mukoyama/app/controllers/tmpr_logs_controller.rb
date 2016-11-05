@@ -105,9 +105,9 @@ class TmprLogsController < ApplicationController
     @t = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
     @p = "{raspi_id: #{params[:raspi_id]},src: 'pressure'}"
     @h = "{raspi_id: #{params[:raspi_id]},src: 'humidity'}"
-    setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
-    @min_tmpr = setting.min_tmpr
-    @max_tmpr = setting.max_tmpr
+    @setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
+    @min_tmpr = @setting.min_tmpr
+    @max_tmpr = @setting.max_tmpr
     @min_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).minimum(:time_stamp)
     @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
   end
