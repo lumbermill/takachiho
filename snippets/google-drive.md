@@ -1,0 +1,3 @@
+```
+Cmd + ;  -  Insert current date.
+```
