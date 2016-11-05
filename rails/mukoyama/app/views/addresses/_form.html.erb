@@ -1,3 +1,5 @@
+<div class="row">
+  <div class="col-sm-6">
 <%= form_for(@address) do |f| %>
   <% if @address.errors.any? %>
     <div id="error_explanation">
@@ -26,4 +28,12 @@
   </div>
     <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>
-<br/>
+  <br/>
+  </div>
+  <div class="col-sm-6">
+    <ul>
+      <li>電話番号(日本)を登録する場合、先頭の「0」を除いて「+81」を追加します。<br/>
+      例: 090-1234-5678 → +819012345678</li>
+    </ul>
+  </div>
+</div>

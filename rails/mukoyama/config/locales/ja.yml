@@ -17,6 +17,10 @@ ja:
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: '確認パスワード'
+      address:
+        mail: 'メールアドレス(電話番号)'
+        snooze: '通知間隔(分)'
+        active: '有効'
     errors:
       models:
         user:

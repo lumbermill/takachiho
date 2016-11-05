@@ -8,7 +8,7 @@
       <div class="alert alert-danger" role="alert"><%= alert %></div>
     <% end %>
     <h1>Project Mukoyama</h1>
-    <p>Raspberry Piでビニールハウスの温度監視システムを構築するプロジェクト。</p>
+    <p>ビニールハウスや生産設備の温度監視システム</p>
   </div>
 </div>
 <div class="root2">
@@ -18,18 +18,21 @@
       <div class="col-sm-6">
         <h3>概要</h3>
         <p>
-        Raspberry Piに温度センサと3G(4G)通信モジュールをつけて、ビニールハウスの温度変化を記録し、
-        異常を検知したらハウス管理者のところへメールでお知らせする仕組みを構築しています。
-        他の仕組みに比べると、部品代が安いところ（全部で1万円ちょっとくらい）と、
-        拡張性が高いところ（GPIOのピンが沢山余ってます、の意）が特徴です。
+        Raspberry PiやESP8266に温度センサと通信モジュール(3G,Wifi)をつけて、ビニールハウスの温度変化を記録し、
+        異常を検知したらハウス管理者のところへメールや電話でお知らせする仕組みを構築しています。
+        試行錯誤をしている最中なので仕様がころころ変わっていますが、気軽に導入して使える温度監視装置としては実用性があるのではないかと思います。
+        </p>
+        <p>
+          現在、α版のテスト中です。どなたでも自由にアカウントを登録してセンサのデータ蓄積を試して頂けます(電話通知は維持コストがかかるため予告なく終了する可能性があります)。
+          機器の構築代行と年間リースのプランを計画中です（興味のある方は<a href="http://www.lumber-mill.co.jp/contact.php">お問い合わせ</a>ください）。
         </p>
         <h3>課題</h3>
         <ul>
           <li>防水・防塵が不十分です。タッパに入れてるだけ…。<br/>
             -&gt; 防水性のシューズケースに入れてみました。
           </li>
-          <li>安定入手できる3G通信モジュールが見つかっていません。今はL-05Aを使ってます。<br/>
-          -&gt; <a href="https://iot.sakura.ad.jp/">さくらのIoT Platform</a>を検討しています。Wifi環境のある設備なら導入は簡単です。</li>
+          <li>廉価に安定入手できる3G通信モジュールが見つかっていません。今はL-05Aを使ってます。<br/>
+          -&gt; <a href="https://iot.sakura.ad.jp/">さくらのIoT Platform</a>を検討しています。</li>
         </ul>
         <p>
           最新の課題は、<a href="https://github.com/lumbermill/takachiho/issues?q=is%3Aopen+is%3Aissue+milestone%3Amukoyama">GitHub</a>で管理しています。
@@ -38,7 +41,7 @@
         <p>
         まずはルールベースの異常検知とデータの可視化で実績を作ります。
         気象データや周辺のセンサからの情報なども統合を進め（ビッグデータ化）、
-        最終的にはAIによるインテリジェントな異常判断や自律的な制御(温度を直接操作するなど)までいけたら面白そうですね。
+        最終的にはAIによるインテリジェントな異常判断や自律的な制御(温度を直接操作するなど)を目指します。
         </p>
       </div>
       <div class="col-sm-6">
@@ -55,10 +58,10 @@
       <div class="col-sm-6">
         <h3>開発者向け</h3>
         <p>ビニールハウス農家さんの協力で実際の現場に設置してデータを収集しています。</p>
-        <p>
-          プロジェクトのコードは全てGitHubで公開しています。不明な点などあれば、お気軽にお問い合わせください。
+        <p>プロジェクトのコードは全てGitHubで公開しています。不明な点などあれば、お気軽にお問い合わせください。
 当初はRaspberryPiとホストサーバ間をrsyncでデータ転送していましたが、Arduino等の利用も視野に入れてhttpsベースのデータ転送方式に変更しています。
-詳細は<a href="howto">参加方法</a>を参照してください。
+また、<a href="https://www.twilio.com">Twilio</a> APIと連携し、電話によるエラー通知も可能になっています。
+詳細は<a href="howto">参加方法</a>や<a href="">README(GitHub)</a>を参照してください。
         </p>
         <p>
           <a href="https://github.com/lumbermill/takachiho">https://github.com/lumbermill/takachiho</a>
@@ -67,13 +70,14 @@
       <div class="col-sm-3">
         <%= image_tag 'about.png', class: 'img img-responsive img-rounded' %>
         <br/>
-        <br/>
         <%= image_tag 'IMG_0979.JPG', class: 'img img-responsive img-rounded' %>
+        <br/>
       </div>
       <div class="col-sm-3">
         <%= image_tag 'pic2.jpg', class: 'img img-responsive img-rounded' %>
         <br/>
         <%= image_tag 'IMG_0983.JPG', class: 'img img-responsive img-rounded' %>
+        <br/>
       </div>
     </div>
   </div>

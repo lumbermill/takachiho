@@ -9,6 +9,15 @@
   padding-top: 200px;
 }
 
+.root1 h1{
+  font-family: 'Copperplate';
+  font-size: 48px;
+}
+
+.root1 p{
+  letter-spacing: 0.1em;
+}
+
 .root2{
   background-color: #93B793;
 }
@@ -18,5 +27,4 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 360px;
 }
