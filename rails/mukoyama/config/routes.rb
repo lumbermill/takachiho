@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :tmpr_logs
 
     get 'users' => 'users#index'
+    get 'login-as' => 'users#login_as'
   end
   get 'logs/insert' => 'tmpr_logs#insert'
 

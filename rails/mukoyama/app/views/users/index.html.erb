@@ -4,16 +4,26 @@
     <th>ID</th>
     <th>メール</th>
     <th>センサ数</th>
+    <th>通知数</th>
     <th>登録日時</th>
     <th>ログイン日時</th>
   </tr>
   </thead>
   <tbody>
   <% @users.each do |user| %>
+  <%
+    addresses = user.settings.map {|s| s.addresses}.flatten.map {|a| a.id}
+    n = MailLog.where(address_id: addresses, delivered: true).count
+  %>
   <tr>
     <td><%= user.id %></td>
-    <td><%= user.email %></td>
+    <% unless user.id == 1 %>
+    <td><%= link_to user.email, login_as_path(id: user.id) %></td>
+    <% else %>
+    <td><strong><%= user.email %></strong></td>
+    <% end %>
     <td><%= user.settings.count %></td>
+    <td><%= n %></td>
     <td><%= user.confirmed_at %></td>
     <td><%= user.current_sign_in_at %></td>
   </tr>
@@ -22,3 +32,5 @@
 </table>
 <p>登録日時(confirmed_at)を更新してユーザの有効/無効を切り替え可能です。</p>
 <pre>update users set confirmed_at = now() where id = ID;</pre>
+<p>メールアドレスをクリックすると、当該ユーザのダッシュボードにアクセス可能です。
+  ログイン日時が記録されます。必ずユーザ本人の許可を得た上で実行してください。</p>
