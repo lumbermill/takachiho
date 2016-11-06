@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: 
+  user_id: 1
+  revision: 1
+  maker: MyString
+  name: MyString
+  size: MyString
+  price: 1
+  picture: 
+
+two:
+  code: 
+  user_id: 1
+  revision: 1
+  maker: MyString
+  name: MyString
+  size: MyString
+  price: 1
+  picture: 
