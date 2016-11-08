@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     get 'users' => 'users#index'
     get 'login-as' => 'users#login_as'
+    get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
   end
   get 'logs/insert' => 'tmpr_logs#insert'
 
