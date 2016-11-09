@@ -45,38 +45,16 @@ class TmprCheck
         d_flg = true
         if address.phone?
           puts " call"
-          make_call(address.mail, msg)
+          Mailer.make_call(address.mail, msg)
         else
-          cmd = "echo '#{msg}' | sendmail #{address.mail}"
-          puts " sendmail"
-          system(cmd)
+          subject = "mukoyama"
+          Mailer.send_mail(address.mail, subject, msg).deliver_now
         end
       else
         puts " snoozed"
       end
       MailLog.create(address_id: address.id, time_stamp: now, delivered: d_flg)
     end
-  end
-
-  def self.make_call(number, msg)
-    sid = ENV['TWILIO_SID']
-    token = ENV['TWILIO_TOKEN']
-    twilio_number = ENV['TWILIO_NUMBER']
-    url = 'http://twimlets.com/echo?Twiml=%3CResponse%3E%3CSay%20language%3D%22ja-jp%22%20voice%3D%22woman%22%3E'+URI.escape(msg)+'%3C%2FSay%3E%3C%2FResponse%3E'
-    unless sid
-      puts "  !!Please add environment variables for Twilio.!!"
-      puts "  #{url}"
-      return
-    end
-    @client = Twilio::REST::Client.new sid, token
-    @client.account.calls.create({
-      :to => number,
-      :from => twilio_number,
-      :method => 'GET',
-      :fallback_method => 'GET',
-      :status_callback_method => 'GET',
-      :record => 'false',
-      :url => url})
   end
 end
 
