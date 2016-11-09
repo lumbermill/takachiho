@@ -19,5 +19,36 @@
   </tr>
 </table>
 </div></div>
+<div>
+  <% if @address.phone? %>
+    <%= button_tag '送信テスト', type: 'button', class: "btn btn-default call_phone" %>
+  <% else %>
+    <%= button_tag '送信テスト', type: 'button', class: "btn btn-default send_mail" %>
+  <% end %>
+</div>
 <%= link_to '編集', edit_address_path(@address), class: "btn btn-default" %>
 <%= link_to '戻る', addresses_path(raspi_id: @address.raspi_id), class: "btn btn-default" %>
+<script type="text/javascript">
+  $('.call_phone').on('click',function() {
+    $.ajax({
+      type: 'GET',
+      url: '/send_testcall?phone=<%= @address.mail %>',
+      dataType: 'text'
+    }).done(function(res) {
+      console.log(res);
+    }).fail(function(res) {
+      // console.log(res);
+    });
+  });
+  $('.send_mail').on('click',function() {
+    $.ajax({
+      type: 'GET',
+      url: '/send_testmail?mail=<%= @address.mail %>',
+      dataType: 'text'
+    }).done(function(res) {
+      console.log(res);
+    }).fail(function(res) {
+      // console.log(res);
+    });
+  });
+</script>
