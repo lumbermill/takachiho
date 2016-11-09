@@ -76,7 +76,7 @@ class AddressesController < ApplicationController
 
   def send_testcall
     phone = params[:phone]
-    res = Mailer.make_call(phone, "テストです").deliver
+    res = Mailer.make_call(phone, "テストです")
     render text: res, status: 200
   end
 
