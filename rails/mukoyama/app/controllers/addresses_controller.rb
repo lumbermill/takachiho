@@ -67,6 +67,18 @@ class AddressesController < ApplicationController
     end
   end
 
+  def send_testmail
+    mail = params[:mail]
+    res = Mailer.send_mail(mail, "mukoyama", "メール送信テストです。").deliver_now
+    render text: res, status: 200
+  end
+
+  def send_testcall
+    phone = params[:phone]
+    res = Mailer.make_call(phone, "電話通知のテストです。本日は晴天なり。")
+    render text: res, status: 200
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_address

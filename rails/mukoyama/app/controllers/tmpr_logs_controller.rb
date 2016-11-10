@@ -138,6 +138,22 @@ class TmprLogsController < ApplicationController
     end
   end
 
+  def last_timestamp
+    raspi_id = params[:id]
+    unit = params[:unit] || "10min"
+    if unit == "day" # 1day
+      @tmpr_log = TmprDailyLog.where(raspi_id: raspi_id).order(:time_stamp).last
+    else # 10min
+      @tmpr_log = TmprLog.where(raspi_id: raspi_id).order(:time_stamp).last
+    end
+
+    if @tmpr_log.blank?
+      render text: @tmpr_log.errors, status: 500
+    else
+      render text: @tmpr_log.time_stamp, status: 200
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_log
