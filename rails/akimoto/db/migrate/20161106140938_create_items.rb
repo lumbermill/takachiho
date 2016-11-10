@@ -8,7 +8,9 @@ class CreateItems < ActiveRecord::Migration
       t.string :name,      null: false, default: ""
       t.string :size,      null: false, default: ""
       t.integer :price,    null: false, default: 0
-      t.binary :picture,   limit: 16777215
+      t.integer :picture_main, null: false, default: 1
+      t.integer :picture_latest, null: false, default: 1
+      t.string :memo,      null: false, default: ""
 
       t.timestamps null: false
     end

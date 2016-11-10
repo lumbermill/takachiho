@@ -14,16 +14,18 @@
 ActiveRecord::Schema.define(version: 20161106141437) do
 
   create_table "items", force: :cascade do |t|
-    t.integer  "code",       limit: 8,                     null: false
-    t.integer  "user_id",    limit: 4,                     null: false
-    t.integer  "revision",   limit: 4,        default: 1,  null: false
-    t.string   "maker",      limit: 255,      default: "", null: false
-    t.string   "name",       limit: 255,      default: "", null: false
-    t.string   "size",       limit: 255,      default: "", null: false
-    t.integer  "price",      limit: 4,        default: 0,  null: false
-    t.binary   "picture",    limit: 16777215
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "code",           limit: 8,                null: false
+    t.integer  "user_id",        limit: 4,                null: false
+    t.integer  "revision",       limit: 4,   default: 1,  null: false
+    t.string   "maker",          limit: 255, default: "", null: false
+    t.string   "name",           limit: 255, default: "", null: false
+    t.string   "size",           limit: 255, default: "", null: false
+    t.integer  "price",          limit: 4,   default: 0,  null: false
+    t.integer  "picture_main",   limit: 4,   default: 1,  null: false
+    t.integer  "picture_latest", limit: 4,   default: 1,  null: false
+    t.string   "memo",           limit: 255, default: "", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "items", ["code", "user_id", "revision"], name: "index_items_on_code_and_user_id_and_revision", unique: true, using: :btree
