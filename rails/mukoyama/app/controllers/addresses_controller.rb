@@ -4,6 +4,11 @@ class AddressesController < ApplicationController
   # GET /addresses
   # GET /addresses.json
   def index
+    if params[:raspi_id].nil? && current_user.admin?
+      @addresses = Address.all.order("id")
+      @raspi_id = 0
+      return
+    end
     setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
     raise 'Setting not found for current user.' unless setting
     @addresses = setting.addresses

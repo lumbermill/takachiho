@@ -1,33 +1,36 @@
 <div class="row">
   <div class="col-sm-6">
-<table class="table">
-  <tr>
-    <th>センサID:</th>
-    <td><%= @address.raspi_id %></td>
-  </tr>
-  <tr>
-    <th>メール(電話番号)</th>
-    <td><%= @address.mail %></td>
-  </tr>
-  <tr>
-    <th>送信間隔(分)</th>
-    <td><%= @address.snooze %></td>
-  </tr>
-  <tr>
-    <th>有効</th>
-    <td><%= @address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
-  </tr>
-</table>
-</div></div>
-<div>
-  <% if @address.phone? %>
-    <%= button_tag '送信テスト', type: 'button', class: "btn btn-default call_phone" %>
-  <% else %>
-    <%= button_tag '送信テスト', type: 'button', class: "btn btn-default send_mail" %>
-  <% end %>
+    <table class="table">
+      <tr>
+        <th>センサID:</th>
+        <td><%= @address.raspi_id %></td>
+      </tr>
+      <tr>
+        <th>メール(電話番号)</th>
+        <td><%= @address.mail %>
+          &nbsp;
+          <% if @address.phone? %>
+            <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs call_phone" %>
+          <% else %>
+            <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs send_mail" %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th>送信間隔(分)</th>
+        <td><%= @address.snooze %></td>
+      </tr>
+      <tr>
+        <th>有効</th>
+        <td><%= @address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
+      </tr>
+    </table>
+  </div>
 </div>
+<p>
 <%= link_to '編集', edit_address_path(@address), class: "btn btn-default" %>
 <%= link_to '戻る', addresses_path(raspi_id: @address.raspi_id), class: "btn btn-default" %>
+</p>
 <script type="text/javascript">
   $('.call_phone').on('click',function() {
     $(".alert").remove();
