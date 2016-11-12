@@ -297,8 +297,8 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         let a = GKAchievement(identifier: id)
         a.percentComplete = 100.0
         GKAchievement.report([a], withCompletionHandler: {(error: Error?) -> Void in
-            if error != nil {
-                print(error)
+            if let e = error{
+                print(e)
             }
         })
     }
