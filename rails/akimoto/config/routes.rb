@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  resources :tags
-  resources :items
+  get 'pages/howto'
+
   devise_for :users
+
+  authenticate :user do
+    get 'pages/dashboard'
+    resources :tags
+    resources :items
+  end
+
+  root 'pages#root'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
