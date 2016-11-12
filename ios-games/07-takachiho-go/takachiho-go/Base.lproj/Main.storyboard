@@ -174,6 +174,7 @@
                     <connections>
                         <outlet property="mapView" destination="fbZ-yk-UMv" id="4Qh-Y7-MYp"/>
                         <outlet property="targetButton" destination="rES-jQ-NqJ" id="FxU-VP-ys0"/>
+                        <segue destination="iEq-JL-IVb" kind="presentation" identifier="wvc" id="smL-tn-TNU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gA7-8V-vMQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -289,6 +290,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DmH-Zo-YHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-143.19999999999999" y="-941.37931034482767"/>
+        </scene>
+        <!--Webcam View Controller-->
+        <scene sceneID="6Lp-R8-M5k">
+            <objects>
+                <viewController id="iEq-JL-IVb" customClass="WebcamViewController" customModule="takachiho_go" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6aS-AP-xEt"/>
+                        <viewControllerLayoutGuide type="bottom" id="r7b-mY-5pE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dQz-7T-LRQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qi4-dd-ZJz">
+                                <rect key="frame" x="0.0" y="28" width="375" height="593"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhz-jX-yB7">
+                                <rect key="frame" x="279" y="629" width="80" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="3fj-yr-07W"/>
+                                    <constraint firstAttribute="height" constant="30" id="gQ6-Fi-b89"/>
+                                </constraints>
+                                <state key="normal" title="Take">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takeButtonPushed:" destination="iEq-JL-IVb" eventType="touchUpInside" id="fMb-Yg-rJY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tns-yg-1Dp">
+                                <rect key="frame" x="16" y="629" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="QmI-zp-UZA"/>
+                                    <constraint firstAttribute="height" constant="30" id="hOZ-q6-Fah"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonPushed:" destination="iEq-JL-IVb" eventType="touchUpInside" id="aAu-Kw-Pg1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="r7b-mY-5pE" firstAttribute="top" secondItem="Tns-yg-1Dp" secondAttribute="bottom" constant="8" id="McJ-xF-6Vm"/>
+                            <constraint firstItem="zhz-jX-yB7" firstAttribute="trailing" secondItem="dQz-7T-LRQ" secondAttribute="trailingMargin" id="fdU-XE-5Ul"/>
+                            <constraint firstItem="Tns-yg-1Dp" firstAttribute="leading" secondItem="dQz-7T-LRQ" secondAttribute="leadingMargin" id="iQl-te-T6z"/>
+                            <constraint firstItem="r7b-mY-5pE" firstAttribute="top" secondItem="zhz-jX-yB7" secondAttribute="bottom" constant="8" id="uZb-wL-5qB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="qi4-dd-ZJz" id="M28-od-y1g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xuu-ak-g1x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-943.20000000000005" y="553.67316341829087"/>
         </scene>
         <!--Credits-->
         <scene sceneID="ZBX-wW-1fZ">

@@ -28,6 +28,7 @@ struct Point {
         }
     }
     var visited :Bool = false
+    var webcam: String?
 
     init(_ name: String, kanji: String, lat: Double, lng: Double, difficulty: Int, gods: [String]) {
         self.name = name
@@ -42,6 +43,22 @@ struct Point {
         if (t > 0){
             visited_at = Date(timeIntervalSinceReferenceDate: t)
         }
+    }
+
+    init(_ name: String, kanji: String, lat: Double, lng: Double, webcam: String) {
+        self.name = name
+        self.kanji = kanji
+        self.lat = lat
+        self.lng = lng
+        self.difficulty = -1
+        self.visited = has_photo()
+        self.gods = []
+        let ud = UserDefaults.standard
+        let t = ud.double(forKey: name)
+        if (t > 0){
+            visited_at = Date(timeIntervalSinceReferenceDate: t)
+        }
+        self.webcam = webcam
     }
 
     func path_for_photo(thumb: Bool) -> String {
@@ -65,6 +82,10 @@ struct Point {
     func has_photo() -> Bool {
         let fm = FileManager.default
         return fm.fileExists(atPath: path_for_photo(thumb: false))
+    }
+    
+    func has_webcam() -> Bool {
+        return webcam != nil
     }
 
     func create_thumbnail() -> UIImage? {
@@ -151,6 +172,11 @@ class Points {
         array += [Point("Yunokino", kanji:"柚木野神社 ", lat:32.74175, lng:131.292822,difficulty:2, gods: ["30","32","33","31"])]
         array += [Point("Kurokuchi", kanji:"黒口神社 ", lat:32.746172, lng:131.281836,difficulty:3, gods: ["19","20"])]
 
+        let uk = "http://118.21.109.43:50000/cgi-bin/camera?resolution=640x480&Quality=Standard"
+        array += [Point("Kunimigaoka", kanji:"国見ヶ丘", lat: 32.719649, lng: 131.278288, webcam: uk)]
+        let ug = "http://118.21.109.46:50000/SnapshotJpeg?Resolution=640x480&Quality=Standard"
+        array += [Point("Takachiho Gorge", kanji:"高千穂峡", lat: 32.702834, lng: 131.300754, webcam: ug)]
+        
         // Debug
         // array = [Point("Apple",kanji:"アップル",lat:37.330651,lng:-122.030080,difficulty: 1)]
 

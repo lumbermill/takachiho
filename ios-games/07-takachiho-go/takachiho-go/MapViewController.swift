@@ -55,7 +55,6 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             ipc.cameraOverlayView = ov
         }
 
-
         // Pins
         for p in points.array{
             addPoint(p)
@@ -134,15 +133,34 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let title = annotation.title else {
+            return nil
+        }
+        guard let p = points.dictionary[title!] else {
+            return nil
+        }
         if (annotation.isKind(of: MKUserLocation.self)){
             return nil
-        } else if (points.is_visited(annotation.title!)) {
+        } else if (p.visited) {
             if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "pin-visited"){
                 av.annotation = annotation
                 return av
             }else{
                 let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin-visited")
                 av.pinTintColor = UIColor.brown // Change color of visited pins.
+                av.canShowCallout = true
+                let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                b.setImage(UIImage(named: "Camera"), for: UIControlState())
+                av.rightCalloutAccessoryView = b
+                return av
+            }
+        }else if(p.has_webcam()){
+            if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "pin-webcam"){
+                av.annotation = annotation
+                return av
+            }else{
+                let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin-webcam")
+                av.pinTintColor = UIColor(red:0.0, green: 0.60, blue: 0.0, alpha: 1.0)
                 av.canShowCallout = true
                 let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
                 b.setImage(UIImage(named: "Camera"), for: UIControlState())
@@ -193,19 +211,27 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         let d = MKMetersBetweenMapPoints(c1, c2)
 
         if (d < radius){
-            print("Showing camera for "+title)
             current_spot = points.dictionary[title]
-
-            if let ov :OverlayView = ipc.cameraOverlayView as? OverlayView {
-                if let name = current_spot?.name {
-                    ov.reset(name: name)
-                    ov.updateGodImage()
-                }
+            if(current_spot == nil){
+                print("can't find point for "+title)
+                return
             }
-            self.present(ipc, animated: true, completion: {
-                // workaround for iOS10
-                self.ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
-            })
+            if (current_spot!.has_webcam()){
+                print("Showing webcam view for "+title)
+                self.performSegue(withIdentifier: "wvc", sender: self)
+            }else{
+                print("Showing camera for "+title)
+                if let ov :OverlayView = ipc.cameraOverlayView as? OverlayView {
+                    if let name = current_spot?.name {
+                        ov.reset(name: name)
+                        ov.updateGodImage()
+                    }
+                }
+                self.present(ipc, animated: true, completion: {
+                    // workaround for iOS10
+                    self.ipc.cameraViewTransform.ty = Utils.getCameraViewTransformY()
+                })
+            }
         }else{
             let ac = UIAlertController(title: nil, message: "Too far to take picture.", preferredStyle: UIAlertControllerStyle.alert)
             //let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -306,5 +332,14 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     @IBAction func targetButtonPushed(_ sender: AnyObject) {
         need_update_center = true
         targetButton.isEnabled = false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "wvc" {
+            guard let wvc:WebcamViewController = (segue.destination as? WebcamViewController) else {
+                return
+            }
+            wvc.point = current_spot
+        }
     }
 }

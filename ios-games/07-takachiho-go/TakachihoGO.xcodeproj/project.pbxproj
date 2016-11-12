@@ -21,6 +21,7 @@
 		136A2CD31D422CB1004EF77E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A2CD21D422CB1004EF77E /* MapViewController.swift */; };
 		136A2CD51D423318004EF77E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 136A2CD41D423318004EF77E /* CoreLocation.framework */; };
 		13AB6CD71D44D579006C5777 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB6CD61D44D579006C5777 /* OverlayView.swift */; };
+		13B8067E1DD744160010408A /* WebcamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8067D1DD744160010408A /* WebcamViewController.swift */; };
 		13CD41881D435D0A000726DD /* Points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41871D435D0A000726DD /* Points.swift */; };
 		13CD418A1D449692000726DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CD41891D449692000726DD /* Utils.swift */; };
 		13DB3CDC1DB20D770073B94C /* CreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DB3CDB1DB20D770073B94C /* CreditViewController.swift */; };
@@ -67,6 +68,7 @@
 		136A2CD21D422CB1004EF77E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		136A2CD41D423318004EF77E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		13AB6CD61D44D579006C5777 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		13B8067D1DD744160010408A /* WebcamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebcamViewController.swift; sourceTree = "<group>"; };
 		13CD41871D435D0A000726DD /* Points.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Points.swift; sourceTree = "<group>"; };
 		13CD41891D449692000726DD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		13CD418B1D44AF3B000726DD /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -137,11 +139,12 @@
 				136A2CA41D422A88004EF77E /* ShrineDetailViewController.swift */,
 				8A620F081DB0CB4F002BDE09 /* GodListViewController.swift */,
 				13627DBE1DBC998700F497AC /* GodDetailViewController.swift */,
+				136A2CD21D422CB1004EF77E /* MapViewController.swift */,
+				13B8067D1DD744160010408A /* WebcamViewController.swift */,
 				136A2CA61D422A88004EF77E /* Main.storyboard */,
 				136A2CA91D422A88004EF77E /* Assets.xcassets */,
 				136A2CAB1D422A88004EF77E /* LaunchScreen.storyboard */,
 				136A2CAE1D422A88004EF77E /* Info.plist */,
-				136A2CD21D422CB1004EF77E /* MapViewController.swift */,
 				13CD41871D435D0A000726DD /* Points.swift */,
 				8A620F0A1DB0CEE2002BDE09 /* Gods.swift */,
 				13DB3CDD1DB218BB0073B94C /* Credits.swift */,
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13B8067E1DD744160010408A /* WebcamViewController.swift in Sources */,
 				8A620F0B1DB0CEE2002BDE09 /* Gods.swift in Sources */,
 				136A2CA51D422A88004EF77E /* ShrineDetailViewController.swift in Sources */,
 				136A2CA31D422A88004EF77E /* ShrineListViewController.swift in Sources */,
