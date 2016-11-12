@@ -163,8 +163,6 @@ class Points {
     }
 
     func load() -> Void {
-        
-        
         let ud = UserDefaults.standard
         for i in 0..<array.count{
             let t = ud.double(forKey: array[i].name)
@@ -172,7 +170,9 @@ class Points {
                 array[i].visited = true
                 array[i].visited_at = Date(timeIntervalSinceReferenceDate: t)
             }
-
+        }
+        for p in array {
+            dictionary[p.name] = p
         }
     }
 
