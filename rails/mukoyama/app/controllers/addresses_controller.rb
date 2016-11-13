@@ -67,13 +67,14 @@ class AddressesController < ApplicationController
     raspi_id = @address.raspi_id
     @address.destroy
     respond_to do |format|
-      format.html { redirect_to addresses_url(raspi_id: raspi_id), notice: 'Address was successfully destroyed.' }
+      format.html { redirect_to addresses_url(raspi_id: raspi_id), notice: '通知先を削除しました。' }
       format.json { head :no_content }
     end
   end
 
   def send_message
-    mail = params[:mail]
+    mail = params[:mail].strip
+    logger.debug "TO: "+mail
     if mail.match /^.+@.+$/
       res = Mailer.send_mail(mail, "mukoyama", "メール送信テストです。").deliver_now
     elsif mail.match /^\+[0-9]+/
