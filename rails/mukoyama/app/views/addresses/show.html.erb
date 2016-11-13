@@ -32,7 +32,7 @@
     $(".alert").remove();
     $.ajax({
       type: 'GET',
-      url: '/send_message?mail=<%= URI.encode(@address.mail) %>',
+      url: '/send_message?id=<%= @address.id %>',
       dataType: 'text'
     }).done(function(res) {
       $('.container h1').after('<div class="alert alert-info" role="alert"><%= @address.type %>で通知しました。</div>');

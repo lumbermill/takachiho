@@ -6,7 +6,7 @@
 <body>
   <%= render 'layouts/navbar' %>
   <div class="container">
-    <h1><%= content_for :title %></h1>
+    <h1><%= content_for :title %> <small><%= content_for :subtitle %></small></h1>
     <% if notice %>
       <div class="alert alert-info" role="alert"><%= notice %></div>
     <% end %>

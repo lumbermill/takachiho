@@ -73,14 +73,14 @@ class AddressesController < ApplicationController
   end
 
   def send_message
-    mail = params[:mail].strip
-    logger.debug "TO: "+mail
-    if mail.match /^.+@.+$/
-      res = Mailer.send_mail(mail, "mukoyama", "メール送信テストです。").deliver_now
-    elsif mail.match /^\+[0-9]+/
-      res = Mailer.make_call(mail, "電話通知のテストです。本日は晴天なり。")
+    address = Address.find(params[:id])
+    logger.debug "TO: "+address.mail
+    if address.mail?
+      res = Mailer.send_mail(address.mail, "mukoyama", "メール送信テストです。").deliver_now
+    elsif address.phone?
+      res = Mailer.make_call(address.mail, "電話通知のテストです。本日は晴天なり。")
     else
-      res = Mailer.send_line(mail, "通知のテストです。")
+      res = Mailer.send_line(address.mail, "LINE通知のテストです。")
     end
     render text: res.body, status: 200
   end
