@@ -11,6 +11,7 @@ import UIKit
 
 class WebcamViewController: UIViewController{
 
+    var controller :MapViewController?
     var timer: Timer?
     var point: Point?
     @IBOutlet weak var imageView: UIImageView!
@@ -73,11 +74,13 @@ class WebcamViewController: UIViewController{
             }
             p.visited = true
             p.visited_at = Date()
-            Points.sharedInstance.load() // Pointがクラスでなく構造体なので、この瞬間にロードしなおさないとうまくいかない…
-            Gods.sharedInstance.load() // 神様もフラグ更新
             
             DispatchQueue.main.async {
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: {
+                    if let c = self.controller {
+                        c.updateForWebcam(b)
+                    }
+                })
             }
         }
 

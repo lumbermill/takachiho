@@ -20,7 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
     var need_update_center = true
     let points = Points.sharedInstance
     #if DEBUG
-    let radius:CLLocationDistance = 15050.0
+    let radius:CLLocationDistance = 10050.0
     #else
     let radius:CLLocationDistance = 50.0 // Sacrid circle radius(meter).
     #endif
@@ -141,44 +141,62 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
         }
         if (annotation.isKind(of: MKUserLocation.self)){
             return nil
-        } else if (p.visited) {
-            if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "pin-visited"){
-                av.annotation = annotation
-                return av
-            }else{
-                let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin-visited")
-                av.pinTintColor = UIColor.brown // Change color of visited pins.
-                av.canShowCallout = true
-                let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
-                b.setImage(UIImage(named: "Camera"), for: UIControlState())
-                av.rightCalloutAccessoryView = b
-                return av
-            }
         }else if(p.has_webcam()){
-            if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "pin-webcam"){
-                av.annotation = annotation
-                return av
+            if(p.visited){
+                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "webcam-visited"){
+                    av.annotation = annotation
+                    return av
+                }else{
+                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "webcam-visited")
+                    av.pinTintColor = UIColor.brown // Change color of visited pins.
+                    av.canShowCallout = true
+                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                    b.setImage(UIImage(named: "Webcam"), for: UIControlState())
+                    av.rightCalloutAccessoryView = b
+                    return av
+                }
             }else{
-                let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin-webcam")
-                av.pinTintColor = UIColor(red:0.0, green: 0.60, blue: 0.0, alpha: 1.0)
-                av.canShowCallout = true
-                let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
-                b.setImage(UIImage(named: "Camera"), for: UIControlState())
-                av.rightCalloutAccessoryView = b
-                return av
+                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "webcam"){
+                    av.annotation = annotation
+                    return av
+                }else{
+                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "webcam")
+                    av.pinTintColor = UIColor(red:0.0, green: 0.60, blue: 0.0, alpha: 1.0)
+                    av.canShowCallout = true
+                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                    b.setImage(UIImage(named: "Webcam"), for: UIControlState())
+                    av.rightCalloutAccessoryView = b
+                    return av
+                }
             }
         }else{
-            if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "pin"){
-                av.annotation = annotation
-                return av
+            // camera
+            if(p.visited){
+                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "camera-visited"){
+                    av.annotation = annotation
+                    return av
+                }else{
+                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "camera-visited")
+                    av.pinTintColor = UIColor.brown // Change color of visited pins.
+                    av.canShowCallout = true
+                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                    b.setImage(UIImage(named: "Camera"), for: UIControlState())
+                    av.rightCalloutAccessoryView = b
+                    return av
+                }
             }else{
-                let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-                av.pinTintColor = UIColor.blue
-                av.canShowCallout = true
-                let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
-                b.setImage(UIImage(named: "Camera"), for: UIControlState())
-                av.rightCalloutAccessoryView = b
-                return av
+                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "camera"){
+                    av.annotation = annotation
+                    return av
+                }else{
+                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "camera")
+                    av.pinTintColor = UIColor.blue
+                    av.canShowCallout = true
+                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                    b.setImage(UIImage(named: "Camera"), for: UIControlState())
+                    av.rightCalloutAccessoryView = b
+                    return av
+                }
             }
         }
     }
@@ -245,6 +263,54 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             })
         }
     }
+    
+    // Webcamの写真を撮った後の処理
+    func updateForWebcam(_ success: Bool){
+        self.points.load() // Pointがクラスでなく構造体なので、この瞬間にロードしなおさないとうまくいかない…
+        for a in self.mapView.selectedAnnotations {
+            self.mapView.deselectAnnotation(a, animated: true)
+            self.mapView.removeAnnotation(a)
+            self.mapView.addAnnotation(a)
+        }
+        var title = "Gotcha!"
+        if(!success){
+            title = "Failed to save..."
+        }
+        let ac = UIAlertController(title: title, message: "You've taken a photo from the sky.", preferredStyle: UIAlertControllerStyle.alert)
+        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
+        ac.addAction(aa)
+        self.present(ac, animated: true, completion: nil)
+    }
+    
+    func updateForCamera(_ success: Bool){
+        guard let p = current_spot else {
+            print("current_spot is not set")
+            return
+        }
+        for a in self.mapView.selectedAnnotations {
+            self.mapView.deselectAnnotation(a, animated: true)
+            self.mapView.removeAnnotation(a)
+            self.mapView.addAnnotation(a)
+        }
+        var title = "Gotcha!"
+        if(!success){
+            title = "Failed to save..."
+        }
+        let n = self.points.n_visited()
+        let total = self.points.array.count
+        let ac = UIAlertController(title: title, message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.alert)
+        let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
+        ac.addAction(aa)
+        self.present(ac, animated: true, completion: nil)
+        if (self.points.is_achieved(p.difficulty)) {
+            // Achieve all in the level.
+            self.reportAcheivement(p.difficulty)
+        } else if (n == 1) {
+            // First taken!
+            self.reportAcheivement(0)
+        }
+        self.reportScore("grp.tg.shrines",score: n)
+    }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         guard let p = current_spot else {
@@ -270,29 +336,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             Gods.sharedInstance.load() // 神様もフラグ更新
             DispatchQueue.main.async {
                 picker.dismiss(animated: true, completion: {
-                    for a in self.mapView.selectedAnnotations {
-                        self.mapView.deselectAnnotation(a, animated: true)
-                        self.mapView.removeAnnotation(a)
-                        self.mapView.addAnnotation(a)
-                    }
-                    var title = "Gotcha!"
-                    if(!b){
-                        title = "Failed to save..."
-                    }
-                    let n = self.points.n_visited()
-                    let total = self.points.array.count
-                    let ac = UIAlertController(title: title, message: "You've taken \(n) of \(total) sacred photos.", preferredStyle: UIAlertControllerStyle.alert)
-                    let aa = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
-                    ac.addAction(aa)
-                    self.present(ac, animated: true, completion: nil)
-                    if (self.points.is_achieved(p.difficulty)) {
-                        // Achieve all in the level.
-                        self.reportAcheivement(p.difficulty)
-                    } else if (n == 1) {
-                        // First taken!
-                        self.reportAcheivement(0)
-                    }
-                    self.reportScore("grp.tg.shrines",score: n)
+                    self.updateForCamera(b)
                 })
             }
         }
@@ -339,6 +383,7 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             guard let wvc:WebcamViewController = (segue.destination as? WebcamViewController) else {
                 return
             }
+            wvc.controller = self
             wvc.point = current_spot
         }
     }

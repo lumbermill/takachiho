@@ -176,7 +176,8 @@ class Points {
         array += [Point("Kunimigaoka", kanji:"国見ヶ丘", lat: 32.719649, lng: 131.278288, webcam: uk)]
         let ug = "http://118.21.109.46:50000/SnapshotJpeg?Resolution=640x480&Quality=Standard"
         array += [Point("Takachiho Gorge", kanji:"高千穂峡", lat: 32.702834, lng: 131.300754, webcam: ug)]
-        
+        let us = "http://118.21.109.45:50000/cgi-bin/camera?resolution=640x480&Quality=Standard"
+        array += [Point("Shikimibaru", kanji:"四季見原", lat: 32.7783622, lng: 131.3368301, webcam: us)]
         // Debug
         // array = [Point("Apple",kanji:"アップル",lat:37.330651,lng:-122.030080,difficulty: 1)]
 
