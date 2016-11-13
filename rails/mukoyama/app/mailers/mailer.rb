@@ -24,4 +24,16 @@ class Mailer < ApplicationMailer
       :record => 'false',
       :url => url})
   end
+
+  def line_client
+    require 'line/bot'
+    @line_client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
+
+  def send_line(user_id,message)
+    line_client.push_message(user_id,{type: 'text', text: message})
+  end
 end

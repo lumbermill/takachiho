@@ -9,11 +9,7 @@
         <th>メール(電話番号)</th>
         <td><%= @address.mail %>
           &nbsp;
-          <% if @address.phone? %>
-            <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs call_phone" %>
-          <% else %>
-            <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs send_mail" %>
-          <% end %>
+          <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs send_message" %>
         </td>
       </tr>
       <tr>
@@ -32,28 +28,16 @@
 <%= link_to '戻る', addresses_path(raspi_id: @address.raspi_id), class: "btn btn-default" %>
 </p>
 <script type="text/javascript">
-  $('.call_phone').on('click',function() {
+  $('.send_message').on('click',function() {
     $(".alert").remove();
     $.ajax({
       type: 'GET',
-      url: '/send_testcall?phone=<%= @address.mail %>',
+      url: '/send_message?mail=<%= @address.mail %>',
       dataType: 'text'
     }).done(function(res) {
-      $('.container h1').after('<div class="alert alert-info" role="alert">電話で通知しました。</div>');
+      $('.container h1').after('<div class="alert alert-info" role="alert"><%= @address.type %>で通知しました。</div>');
     }).fail(function(res) {
-      $('.container h1').after('<div class="alert alert-danger" role="alert">電話で通知できませんでした。</div>');
-    });
-  });
-  $('.send_mail').on('click',function() {
-    $(".alert").remove();
-    $.ajax({
-      type: 'GET',
-      url: '/send_testmail?mail=<%= @address.mail %>',
-      dataType: 'text'
-    }).done(function(res) {
-      $('.container h1').after('<div class="alert alert-info" role="alert">メールを送信しました。</div>');
-    }).fail(function(res) {
-      $('.container h1').after('<div class="alert alert-danger" role="alert">メールの送信に失敗しました。</div>');
+      $('.container h1').after('<div class="alert alert-danger" role="alert"><%= @address.type %>で通知できませんでした。</div>');
     });
   });
 </script>

@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  protect_from_forgery :except => [:linebot]
+
   def root
     render layout: 'root'
   end
@@ -20,7 +22,8 @@ class PagesController < ApplicationController
   end
 
   def line_client
-    @client ||= Line::Bot::Client.new { |config|
+    require 'line/bot'
+    @line_client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
@@ -29,7 +32,7 @@ class PagesController < ApplicationController
   def linebot
     body = request.body.read
 
-    signature = request.env['HTTP_X_LINE_SIGNATURE']
+    signature = request.headers['HTTP_X_LINE_SIGNATURE']
     unless line_client.validate_signature(body, signature)
       error 400 do 'Bad Request' end
     end
@@ -43,15 +46,28 @@ class PagesController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: 'Rails: '+event.message['text']
           }
-          line_client.reply_message(event['replyToken'], message)
-          p event
+          # TODO: 登録済みのセンサがある場合、現在の温度を返す。
+          raspi_id = find_raspi_from_message(event.message['text'])
+          if raspi_id.nil?
+            line_client.reply_message(event['replyToken'],{type: 'text', text: '合言葉をどうぞ。'})
+          else
+            # TODO: ユニークのチェックが必要
+            Address.create(raspi_id: raspi_id, mail: event['source']['userId'], active: true)
+            line_client.reply_message(event['replyToken'],{type: 'text', text: '登録しました。'})
+          end
           #client.push_message(,message)
         end
       end
     }
 
-    "OK"
+    render plain: "OK"
   end
+
+  private
+    def find_raspi_from_message(text)
+      # TODO: 合言葉に該当するraspi_idを検索する
+      return 1
+    end
 end

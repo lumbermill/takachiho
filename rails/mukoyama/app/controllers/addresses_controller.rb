@@ -72,16 +72,16 @@ class AddressesController < ApplicationController
     end
   end
 
-  def send_testmail
+  def send_message
     mail = params[:mail]
-    res = Mailer.send_mail(mail, "mukoyama", "メール送信テストです。").deliver_now
-    render text: res, status: 200
-  end
-
-  def send_testcall
-    phone = params[:phone]
-    res = Mailer.make_call(phone, "電話通知のテストです。本日は晴天なり。")
-    render text: res, status: 200
+    if mail.match /^.+@.+$/
+      res = Mailer.send_mail(mail, "mukoyama", "メール送信テストです。").deliver_now
+    elsif mail.match /^+[0-9]+/
+      res = Mailer.make_call(mail, "電話通知のテストです。本日は晴天なり。")
+    else
+      res = Mailer.send_line(mail, "通知のテストです。")
+    end
+    render text: res.body, status: 200
   end
 
   private

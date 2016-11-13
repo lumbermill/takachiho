@@ -3,6 +3,20 @@ class Address < ActiveRecord::Base
   has_many :mail_logs
 
   def phone?
-    mail.match /\+[0-9]+/
+    mail.match /^\+[0-9]+$/
+  end
+
+  def mail?
+    mail.match /^.+@.+$/
+  end
+
+  def type
+    if phone?
+      "電話"
+    elsif mail?
+      "メール"
+    else
+      "LINE"
+    end
   end
 end

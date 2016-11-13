@@ -46,9 +46,11 @@ class TmprCheck
         if address.phone?
           puts " call"
           Mailer.make_call(address.mail, msg)
-        else
+        elsif address.mail?
           subject = "mukoyama"
           Mailer.send_mail(address.mail, subject, msg).deliver_now
+        else
+          Mailer.send_line(address.mail, msg)
         end
       else
         puts " snoozed"
