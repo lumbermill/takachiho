@@ -53,4 +53,4 @@ production:
 
 staging:
   <<: *default
-  database: mukoyama_production
+  database: mukoyama_staging
