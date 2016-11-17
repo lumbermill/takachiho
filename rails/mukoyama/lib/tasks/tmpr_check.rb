@@ -11,6 +11,7 @@ class TmprCheck
 
     Setting.all.each do |setting|
       log = TmprLog.where(raspi_id: setting.raspi_id).order(:time_stamp).last
+      next if log.nil?
       now = Time.now
       print "raspi_id:#{setting.raspi_id} ts:#{log.time_stamp} temp: #{log.temperature}"
       msg = "#{now.hour}時#{now.min}分 #{setting.name} "
@@ -47,9 +48,10 @@ class TmprCheck
           puts " call"
           Mailer.make_call(address.mail, msg)
         elsif address.mail?
-          subject = "mukoyama"
-          Mailer.send_mail(address.mail, subject, msg).deliver_now
+          puts " mail"
+          Mailer.send_mail(address.mail, "Notificaton from Mukoyama", msg).deliver_now
         else
+          puts " line"
           Mailer.send_line(address.mail, msg)
         end
       else
