@@ -90,3 +90,9 @@ guard let a = …, b = … else {
 	throw AnError
 }
 ```
+
+Optionalがnilを返した場合の初期値を与える方法
+```
+let number: Int = Int(str) ?? 999
+let name = user?.name ?? "no name"
+```
