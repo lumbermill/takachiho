@@ -38,3 +38,10 @@ TWILIO_NUMBER=
 1,11,21,31,41,51 * * * * cd /var/www/mukoyama/current && ruby lib/tasks/tmpr_update.rb -e staging
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb
 ```
+
+## 画像アップロード
+必要なパラメータ
+id          - raspi_id
+token       - raspi_token
+upfile      - 画像ファイル
+time_stamp  - time_stamp "%y%m%d_%H%M%S.jpg"

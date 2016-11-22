@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'send_message' => 'addresses#send_message'
   end
   get 'logs/insert' => 'tmpr_logs#insert'
+  post 'upload_jpg' => 'api#upload_jpg'
 
   get 'about' => 'pages#about'
   get 'howto' => 'pages#howto'
