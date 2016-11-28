@@ -41,3 +41,8 @@ $ sudo ldconfig
 した後に./configureからやり直して下さい。
 
 - ネット上の記事にはpyKNPを動作させるためにJUMANとKNPが必要と記載しているものもあるが、実際には不要。
+
+### その他
+```
+$ sudo apt-get install apache2 php libapache2-mod-php
+```
