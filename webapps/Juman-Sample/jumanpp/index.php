@@ -4,7 +4,7 @@
 ?>
     <div class="container">
       <h1><?= $title ?></h1>
-      <textarea id="input" cols=100 rows=20></textarea>
+      <textarea id="input" cols=100 rows=10></textarea>
       <div>
         <p>
           例：申込みと申し込み。粗利と荒利。シミュレーションとシュミレーション。ふんいきとふいんき。売上と売り上げと売上げ。
