@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 from pyknp import Jumanpp
 
@@ -14,7 +14,7 @@ def read_and_anlyze_text():
     midasis = []
     repnames = []
     repname_counts = {}
-
+    row_result = []
     while True:
         input_ = sys.stdin.readline()
         if input_ == '' :
@@ -31,16 +31,19 @@ def read_and_anlyze_text():
             midasis.append("\n")
             repnames.append("\n")
             repname_counts["\n"] = 0
-    result = []
+            row_result.append(result.spec())
+    yure_result = []
     for i, midasi in enumerate(midasis):
         yure = False
         if repname_counts[repnames[i]] > 1:
             yure = True
-        result.append({"midasi":midasi, "repname": repnames[i], "repname_count":repname_counts[repnames[i]], "yure": yure})
-    return result
+        yure_result.append({"midasi":midasi, "repname": repnames[i], "repname_count":repname_counts[repnames[i]], "yure": yure})
+    return row_result, yure_result
 
-def format_to_html(analzed_obj):
-    for obj in analzed_obj:
+def disp_marked_sentence(yure_result):
+    print(u"<h2>表記ゆれ検出結果</h2>")
+    print("<div class='sentence'>")
+    for obj in yure_result:
         if obj["midasi"] == "\n":
             print("<br>")
         elif obj["yure"]:
@@ -49,6 +52,24 @@ def format_to_html(analzed_obj):
             print("</span>", end="")
         else:
             print(obj["midasi"], end="")
-result = read_and_anlyze_text()
-format_to_html(result)
-# pp.pprint(result) #for debug
+    print("</div>")
+
+def disp_yure(yure_result):
+    print(u"<h2>表記ゆれ解析結果</h2>")
+    print("<div class='yure_list'><pre>")
+    for obj in yure_result:
+        if obj["midasi"] != u"" and obj["midasi"] != u"\n":
+            print(u"見出し:%s, 代表表記:%s, 重複数:%d" % (obj["midasi"], obj["repname"], obj["repname_count"]))
+    print("</pre></div>")
+
+def disp_structure(row_result):
+    print(u"<h2>JUMAN++解析結果</h2>")
+    print("<div class='structure'><pre>")
+    for obj in row_result:
+        print(obj)
+    print("</pre></div>")
+
+row_result, yure_result = read_and_anlyze_text()
+disp_marked_sentence(yure_result)
+disp_yure(yure_result)
+disp_structure(row_result) #for debug
