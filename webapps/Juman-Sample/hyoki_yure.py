@@ -20,6 +20,9 @@ def read_and_anlyze_text():
         if input_ == '' :
             break
         else :
+            input_ = input_.strip()
+            if input_ == '' :
+                continue
             result = jumanpp.analysis(input_)
             for mrph in result.mrph_list():
                 if not repname_counts.has_key(mrph.repname):
@@ -32,6 +35,7 @@ def read_and_anlyze_text():
             repnames.append("\n")
             repname_counts["\n"] = 0
             row_result.append(result.spec())
+
     yure_result = []
     for i, midasi in enumerate(midasis):
         yure = False
