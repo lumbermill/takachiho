@@ -1,4 +1,4 @@
-#-*- encoding: utf-8 -*-
+#-*- coding: utf-8 -*-
 from __future__ import print_function
 from pyknp import Jumanpp
 
@@ -24,7 +24,7 @@ def read_and_anlyze_text():
             for mrph in result.mrph_list():
                 if not repname_counts.has_key(mrph.repname):
                     repname_counts[mrph.repname] = 0
-                if not mrph.midasi in midasis:
+                if (not mrph.midasi in midasis) and (mrph.repname != u"") :
                     repname_counts[mrph.repname] += 1
                 midasis.append(mrph.midasi)
                 repnames.append(mrph.repname)
@@ -49,5 +49,6 @@ def format_to_html(analzed_obj):
             print("</span>", end="")
         else:
             print(obj["midasi"], end="")
-
-format_to_html(read_and_anlyze_text())
+result = read_and_anlyze_text()
+format_to_html(result)
+# pp.pprint(result) #for debug
