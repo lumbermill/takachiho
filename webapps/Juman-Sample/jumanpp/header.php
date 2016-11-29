@@ -14,6 +14,14 @@
         border: solid 1px cadetblue;
         padding: 10px;
       }
+      .yure_list table{
+        border: 1px #000000 solid;
+        border-collapse: collapse;
+      }
+      .yure_list td, th{
+        border: 1px #000000 solid;
+        padding: 5px;
+      }
     </style>
   </head>
   <body>

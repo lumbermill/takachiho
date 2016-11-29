@@ -56,11 +56,12 @@ def disp_marked_sentence(yure_result):
 
 def disp_yure(yure_result):
     print(u"<h2>表記ゆれ解析結果</h2>")
-    print("<div class='yure_list'><pre>")
+    print("<div class='yure_list'><table>")
+    print(u"<tr><th>見出し</th><th>代表表記</th><th>重複数</th></tr>")
     for obj in yure_result:
         if obj["midasi"] != u"" and obj["midasi"] != u"\n":
-            print(u"見出し:%s, 代表表記:%s, 重複数:%d" % (obj["midasi"], obj["repname"], obj["repname_count"]))
-    print("</pre></div>")
+            print("<tr><td>%s</td><td>%s</td><td>%d</td></tr>" % (obj["midasi"], obj["repname"], obj["repname_count"]))
+    print("</table></div>")
 
 def disp_structure(row_result):
     print(u"<h2>JUMAN++解析結果</h2>")
