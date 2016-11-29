@@ -24,8 +24,8 @@ $ sudo make install #失敗
 ### PyKNP(Pythonバインディング)インストール
 ```
 $ cd ~/src
-$ # sudo apt install python-pip
-$ # pip install six
+$ sudo pip install --upgrade pip
+$ sudo pip install prettyprint
 $ wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/pyknp-0.3.tar.gz
 $ tar xvf pyknp-0.3.tar.gz
 $ cd pyknp-0.3
@@ -44,5 +44,5 @@ $ sudo ldconfig
 
 ### その他
 ```
-$ sudo apt-get install apache2 php libapache2-mod-php
+$ sudo apt-get install apache2 php libapache2-mod-php php-mbstring
 ```
