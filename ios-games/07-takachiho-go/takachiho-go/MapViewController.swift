@@ -171,32 +171,31 @@ class MapViewController: UIViewController, MKMapViewDelegate,CLLocationManagerDe
             }
         }else{
             // camera
-            if(p.visited){
-                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "camera-visited"){
-                    av.annotation = annotation
-                    return av
-                }else{
-                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "camera-visited")
-                    av.pinTintColor = UIColor.brown // Change color of visited pins.
-                    av.canShowCallout = true
-                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
-                    b.setImage(UIImage(named: "Camera"), for: UIControlState())
-                    av.rightCalloutAccessoryView = b
-                    return av
+            var name = "camera-visited"
+            var color = UIColor.brown
+            if(!p.visited){
+                if(p.difficulty == 1){
+                    name = "camera-d1"
+                    color = UIColor(red: 0.54, green: 0.81, blue: 0.88, alpha: 1.0)
+                }else if(p.difficulty == 2){
+                    name = "camera-d2"
+                    color = UIColor(red: 0.20, green: 0.73, blue: 0.89, alpha: 1.0)
+                }else if(p.difficulty == 3){
+                    name = "camera-d3"
+                    color = UIColor(red: 0.01, green: 0.43, blue: 0.72, alpha: 1.0)
                 }
+            }
+            if let av = mapView.dequeueReusableAnnotationView(withIdentifier: name){
+                av.annotation = annotation
+                return av
             }else{
-                if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "camera"){
-                    av.annotation = annotation
-                    return av
-                }else{
-                    let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "camera")
-                    av.pinTintColor = UIColor.blue
-                    av.canShowCallout = true
-                    let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
-                    b.setImage(UIImage(named: "Camera"), for: UIControlState())
-                    av.rightCalloutAccessoryView = b
-                    return av
-                }
+                let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: name)
+                av.pinTintColor = color // Change color of visited pins.
+                av.canShowCallout = true
+                let b = UIButton(frame: CGRect(x: 0,y: 0,width: 32,height: 32))
+                b.setImage(UIImage(named: "Camera"), for: UIControlState())
+                av.rightCalloutAccessoryView = b
+                return av
             }
         }
     }
