@@ -3,8 +3,9 @@
 <% else %>
   <table class="table">
     <% @mail_logs.each do |m| %>
+    <% a = Address.find(m.address_id) %>
     <tr>
-      <td><%= m.address.mail %></td>
+      <td><%= a ? a.mail : m.address_id %></td>
       <td><%= m.time_stamp %></td>
       <td><%= m.delivered %></td>
     </tr>
