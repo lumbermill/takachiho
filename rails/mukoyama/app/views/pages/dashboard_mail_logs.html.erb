@@ -1,0 +1,13 @@
+<% if @mail_logs.count == 0 %>
+  <p>通知の発信履歴はありません。</p>
+<% else %>
+  <table class="table">
+    <% @mail_logs.each do |m| %>
+    <tr>
+      <td><%= m.address.mail %></td>
+      <td><%= m.time_stamp %></td>
+      <td><%= m.delivered %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>

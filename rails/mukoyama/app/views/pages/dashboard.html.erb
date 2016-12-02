@@ -48,8 +48,30 @@
 </p>
 <% if current_user.admin? %>
 <hr/>
-<p>
-  <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
-  <%= link_to '通知先一覧', addresses_path, class: "btn btn-default" %>
-</p>
+<div class="row">
+  <div class="col-sm-4">
+    <p>
+      <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
+      <%= link_to '通知先一覧', addresses_path, class: "btn btn-default" %>
+    </p>
+  </div>
+  <div class="col-sm-4">
+    <table class="table">
+      <tr>
+        <th>ユーザ数</th><td><%= User.count %></td>
+      </tr>
+      <tr>
+        <th>センサ数</th><td><%= Setting.count %></td>
+      </tr>
+      <tr>
+        <th>通知先数</th><td><%= Address.count %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-sm-4" id="mail_logs">
+  </div>
+  <script>
+    $("#mail_logs").load("dashboard-mail_logs");
+  </script>
+</div>
 <% end %>

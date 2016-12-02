@@ -18,6 +18,11 @@ class PagesController < ApplicationController
     render text: h.to_json
   end
 
+  def dashboard_mail_logs
+    @mail_logs = MailLog.order("time_stamp desc,address_id desc").limit(10)
+    render layout: false
+  end
+
   def usecase
   end
 
