@@ -9,6 +9,7 @@ client = Mysql2::Client.new(host:"localhost",username:"root",database:"t")
 name = client.escape("Y%")
 results = client.query("SELECT * FROM t WHERE name LIKE '#{name}'")
 p results.fields # Array
+p results.count # Number of rows
 results.each do |row|
   p row # Hash with Fixnum, Float, Date, Time etc..
 end

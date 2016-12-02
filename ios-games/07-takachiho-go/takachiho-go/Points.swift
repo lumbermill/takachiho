@@ -168,7 +168,7 @@ class Points {
         array += [Point("Futatsudake", kanji:"二ツ嶽神社", lat:32.7478558, lng:131.3760164,difficulty:2, gods: ["11"])]
         array += [Point("Hoko", kanji:"鉾神社", lat:32.781628, lng:131.38494,difficulty:3, gods: ["10"])]
         array += [Point("Mukouyama", kanji:"向山神社", lat:32.6884439, lng:131.3058391,difficulty:3, gods: ["23","24","25","26"])]
-        array += [Point("Kamino", kanji:"上野神社", lat:32.7649291, lng:131.2995413,difficulty:1, gods: ["28","13","14"])]
+        array += [Point("Kamino", kanji:"上野神社", lat:32.7649291, lng:131.2995413,difficulty:2, gods: ["28","13","14"])]
         array += [Point("Yunokino", kanji:"柚木野神社 ", lat:32.74175, lng:131.292822,difficulty:2, gods: ["30","32","33","31"])]
         array += [Point("Kurokuchi", kanji:"黒口神社 ", lat:32.746172, lng:131.281836,difficulty:3, gods: ["19","20"])]
 
