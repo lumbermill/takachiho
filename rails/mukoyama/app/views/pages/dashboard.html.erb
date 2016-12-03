@@ -49,14 +49,14 @@
 <% if current_user.admin? %>
 <hr/>
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <p>
       <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
       <%= link_to '通知先一覧', addresses_path, class: "btn btn-default" %>
     </p>
   </div>
-  <div class="col-sm-4">
-    <table class="table">
+  <div class="col-sm-3">
+    <table class="table table-condensed">
       <tr>
         <th>ユーザ数</th><td><%= User.count %></td>
       </tr>
@@ -68,7 +68,7 @@
       </tr>
     </table>
   </div>
-  <div class="col-sm-4" id="mail_logs">
+  <div class="col-sm-6" id="mail_logs" style="max-height: 300px; overflow: scroll">
   </div>
   <script>
     $("#mail_logs").load("dashboard-mail_logs");

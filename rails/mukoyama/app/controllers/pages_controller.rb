@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   protect_from_forgery :except => [:linebot]
 
+  include ApplicationHelper # for format_timestamp method.
+
   def root
     render layout: 'root'
   end
@@ -15,11 +17,13 @@ class PagesController < ApplicationController
     sql = "SELECT count(1) AS c, min(time_stamp) AS first, max(time_stamp) AS last FROM tmpr_logs WHERE raspi_id = #{id}"
     h = conn.select_one(sql).to_hash
     h["raspi_id"] = id
+    h["first"] = format_timestamp(h["first"])
+    h["last"] = format_timestamp(h["last"])
     render text: h.to_json
   end
 
   def dashboard_mail_logs
-    @mail_logs = MailLog.order("time_stamp desc,address_id desc").limit(10)
+    @mail_logs = MailLog.order("time_stamp desc,address_id desc").limit(100)
     render layout: false
   end
 

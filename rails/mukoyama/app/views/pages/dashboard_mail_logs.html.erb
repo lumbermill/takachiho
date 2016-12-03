@@ -1,13 +1,20 @@
 <% if @mail_logs.count == 0 %>
   <p>通知の発信履歴はありません。</p>
 <% else %>
-  <table class="table">
+  <table class="table table-condensed">
+    <tr>
+      <th>通知先</th>
+      <th>センサ</th>
+      <th>送信日時</th>
+      <th></th>
+    </tr>
     <% @mail_logs.each do |m| %>
-    <% a = Address.find(m.address_id) %>
+    <% a = Address.find_by(id:m.address_id) %>
     <tr>
       <td><%= a ? a.mail : m.address_id %></td>
-      <td><%= m.time_stamp %></td>
-      <td><%= m.delivered %></td>
+      <td><%= a ? a.raspi_id : "" %></td>
+      <td><%= format_timestamp(m.time_stamp) %></td>
+      <td><%= m.delivered ? "" : "<span title='snoozed'>-<span>".html_safe %></td>
     </tr>
     <% end %>
   </table>
