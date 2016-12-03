@@ -5,6 +5,7 @@ require 'twilio-ruby'
 require 'uri'
 
 class TmprCheck
+  # データ不着とみなすまでの遅延時間(分)
   MAX_DELAY = 60
 
   def self.execute
@@ -16,7 +17,7 @@ class TmprCheck
       print "raspi_id:#{setting.raspi_id} ts:#{log.time_stamp} temp: #{log.temperature}"
       msg = "#{now.hour}時#{now.min}分 #{setting.name} "
       addresses = Address.where(raspi_id: setting.raspi_id,active: true)
-      if log.time_stamp < now - MAX_DELAY.minute && addresses.count > 0
+      if log.time_stamp < now - MAX_DELAY.minute
         puts " [too old]"
         msg += "データの受信を確認できません。最終受信日時は、#{log.time_stamp.hour}時#{log.time_stamp.min}分です。"
       elsif setting.max_tmpr < log.temperature
