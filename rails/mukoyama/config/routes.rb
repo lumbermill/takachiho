@@ -19,15 +19,19 @@ Rails.application.routes.draw do
     get 'login-as' => 'users#login_as'
     get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
     get 'send_message' => 'addresses#send_message'
-  end
-  get 'logs/insert' => 'tmpr_logs#insert'
-  post 'upload_jpg' => 'api#upload_jpg'
 
+    get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
+    get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
+  end
+  # API
+  get 'logs/insert' => 'tmpr_logs#insert'
+  post 'pictures/upload' => 'pictures#upload'
+  post 'linebot' => 'pages#linebot'
+
+  # Pages
   get 'about' => 'pages#about'
   get 'howto' => 'pages#howto'
   get 'usecase' => 'pages#usecase'
-
-  post 'linebot' => 'pages#linebot'
 
   root 'pages#root'
 end

@@ -12,6 +12,7 @@
 <h3>通知設定する</h3>
 <p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
 
+
 <h2>ハードウェア(RaspberryPi)編</h2>
 <h3>必要なもの</h3>
 <ul>
@@ -63,6 +64,7 @@ Inserted {ID} または Updated {ID}
 <h3>受信データを確認する</h3>
 <p>ダッシュボードにセンサごとの受信データ件数、最も古い及び新しいデータの取得日時が表示されています。</p>
 
+
 <h2>ハードウェア(esp8266)編</h2>
 <h3>必要なもの</h3>
 <ul>
@@ -80,3 +82,11 @@ const char* password = "*******";  // Wifiのパスワード
 const char* mukoyama_id    = "*";         // mukoyama.lmlab.netから発行されるセンサーID
 const char* mukoyama_token = "************";   // mukoyama.lmlab.netから発行されるトークン
 </pre>
+
+
+<h2>カメラ編</h2>
+<p></p>
+<pre>
+curl -X POST -F file=@./file.jpg <%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=1&amp;token=abcdef&amp;time_stamp=<%= DateTime.now.to_s %>
+</pre>
+<hr/>

@@ -50,6 +50,11 @@ const int httpsPort = <%= request.port.to_s %>;<br/>
 const char* mukoyama_id    = "<%= @setting.raspi_id %>";<br/>
 const char* mukoyama_token = "<%= @setting.token %>";
 </div>
+<p>
+</p>
+<div class="well">
+curl -X POST -F file=@./file.jpg <%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=<%= @setting.raspi_id %>&amp;token=<%= @setting.token %>&amp;time_stamp=<%= DateTime.now.to_s %>
+</div>
 
 <p>
 <%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>

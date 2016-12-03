@@ -1,7 +1,15 @@
-class ApiController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:upload_jpg]
+class PicturesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:upload]
 
-  def upload_jpg
+  def index
+    # TODO:
+  end
+
+  def show_picture
+    # TODO:
+  end
+
+  def upload
     setting = Setting.find_by(raspi_id: params[:id])
     if setting.nil?
       render status:404, text: "Device not found for raspi_id="+params[:id]

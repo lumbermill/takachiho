@@ -24,6 +24,7 @@
         <td id="<%= r.raspi_id%>-last"></td>
         <td>
           <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default" %>
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
           <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
