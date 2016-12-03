@@ -1,0 +1,13 @@
+<form class="form-inline">
+  <div class="form-group">
+  <%= link_to "再読込","javascript: location.reload()" ,class: "btn btn-success" %>
+  <%= select_tag "p", options_for_select(1..@n_pages,@page), id: "page-select" ,class: "form-control" %>
+  </div>
+</form>
+<script>
+  $("#page-select").change(function(d){
+    console.log(d.target);
+    var p = $(d.target).val();
+    location.href = "?page="+p;
+  });
+</script>
