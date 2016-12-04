@@ -16,7 +16,7 @@ if __name__ == '__main__':
     token = os.environ["MUKOYAMA_TOKEN"]
     filename = "/tmp/photo.jpg"
     take_picture(filename)
-    # Python's datetmie doesn't have timezone info.
+    # Python's datetime doesn't have timezone info.
     # You may need to set system timezone as JST. (hint: sudo raspi-config)
     ts = datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z")
     u = (url+"/pictures/upload?id=%s&token=%s&time_stamp=%s") % (id,token,ts)
