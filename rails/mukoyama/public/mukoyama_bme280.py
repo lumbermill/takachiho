@@ -155,6 +155,8 @@ def get_data():
 
 def get_url_params():
   t,p,h = get_data()
+  # Python's datetmie doesn't have timezone info.
+  # You may need to set system timezone as JST. (hint: sudo raspi-config)
   ts = datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z")
   s = "time_stamp=%s" % (ts)
   s += "&temperature=%s" % (t.strip())

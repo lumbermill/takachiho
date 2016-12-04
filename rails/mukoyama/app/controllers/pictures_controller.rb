@@ -52,7 +52,7 @@ class PicturesController < ApplicationController
       return
     end
     raspi_id = params[:id]
-    file = params[:upfile]
+    file = params[:file]
     time_stamp = DateTime.parse(params[:time_stamp])
     filename = time_stamp.strftime "%y%m%d_%H%M%S.jpg"
 
