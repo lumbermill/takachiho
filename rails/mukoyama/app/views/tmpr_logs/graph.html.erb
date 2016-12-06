@@ -19,7 +19,19 @@ Loading..
 		<th>データの保持範囲</th>
 		<td><%= @min_timestamp %> to <%= @max_timestamp %></td>
 	</tr>
+	<tr>
+		<th>公開用URL</th>
+		<td>
+			<div class="well well-sm">
+				<% token = "TODO" %>
+				<%= request.protocol + request.host + ":" + request.port.to_s+"/"+request.path+"?token="+token %>
+			</div>
+		</td>
+	</tr>
 </table>
+
+
+
 <script>
 var last_timestamp = "";
 var last_timestamp_day = "";

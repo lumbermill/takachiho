@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   # Pages
   get 'about' => 'pages#about'
   get 'howto' => 'pages#howto'
+  get 'rules4tester' => 'pages#rules4tester'
   get 'usecase' => 'pages#usecase'
 
   root 'pages#root'
