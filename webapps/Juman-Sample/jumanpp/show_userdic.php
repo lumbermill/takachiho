@@ -10,7 +10,16 @@
   <div id="userdict">
     <pre><?php
       $midasi_script = "$script_dir/midasi.rb";
-      system("cat $userdic_dir/* | sort -u | $ruby $midasi_script | $jumanpp | grep -v EOS");
+      exec("cat $userdic_dir/* | sort -u | $ruby $midasi_script",$output);
+      foreach ($output as $out) {
+        printf("\n%s:\n", $out);
+        $word = explode(":", $out);
+        $output2 = null;
+        exec("echo $word[0] | $jumanpp | grep -v EOS",$output2);
+        foreach ($output2 as $answer){
+          printf("\t%s\n", $answer);
+        }
+      }
     ?></pre>
   </div>
 </div>

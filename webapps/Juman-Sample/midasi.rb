@@ -1,10 +1,9 @@
 require "#{File.expand_path(File.dirname(__FILE__))}/parse.rb"
 
 def pick_midashi(parsed)
-  #pp parsed
   e = parsed.shift
   if e == "見出し語"
-    puts  parsed[0]
+    return  parsed[0]
   else
     pick_midashi(parsed[0])
   end
@@ -14,7 +13,7 @@ while(line=gets) do
   line.chomp!
   next if line.empty?
   begin
-    pick_midashi(parse(line))
+    puts pick_midashi(parse(line)) + ":" + line
   rescue Exception => e
     puts "文法エラー:#{line}"
     puts e
