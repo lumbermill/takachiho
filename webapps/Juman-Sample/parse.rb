@@ -29,14 +29,16 @@ def read_from(tokens)
   end
 end
 
-while(line=gets) do
-  line.chomp!
-  next if line.empty?
-  begin
-    pp parse(line)
-  rescue Exception => e
-    puts "文法エラー:#{line}"
-    puts e
-    exit -1
+if $0 == __FILE__
+  while(line=gets) do
+    line.chomp!
+    next if line.empty?
+    begin
+      pp parse(line)
+    rescue Exception => e
+      puts "文法エラー:#{line}"
+      puts e
+      exit -1
+    end
   end
 end
