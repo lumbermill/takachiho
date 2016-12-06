@@ -24,7 +24,7 @@
         <td id="<%= r.raspi_id%>-last"></td>
         <td>
           <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default" %>
-          <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default disabled" %>
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
           <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
@@ -38,6 +38,10 @@
             $("#"+json.raspi_id+"-first").text(json.first);
             $("#"+json.raspi_id+"-last").text(json.last);
           }
+        });
+        $.getJSON("dashboard-pictures",{"raspi_id": id},function(json){
+          console.dir(json);
+          // TODO: ここから。写真の枚数をバッヂに表示, 1枚以上存在すれば、disabledを外す
         });
       </script>
     <% end %>
