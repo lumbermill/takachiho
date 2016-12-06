@@ -33,7 +33,7 @@
     </table>
   </div>
 </div>
-<p>当プロジェクトのプログラム(mukoyama_bme280.py)を利用する場合、同プログラムをRaspberryPiに配備してから(「参加方法」参照)、以下の設定をcrontabに登録してください。
+<p>当プロジェクトのプログラム(mukoyama_bme280.py)を利用する場合、同プログラムをRaspberryPiに配備してから(「<%= link_to '参加方法', howto_path %>」参照)、以下の設定をcrontabに登録してください。
 Raspbianの規定の設定では、/var/log/syslogに処理ログが出力されますので、ここで正常にコマンドが動いていることを確認してください。</p>
 <div class="well">
 MUKOYAMA_URL=<%= request.protocol + request.host + ":" + request.port.to_s %><br/>
@@ -41,8 +41,13 @@ MUKOYAMA_ID=<%= @setting.raspi_id %><br/>
 MUKOYAMA_TOKEN=<%= @setting.token %>
 </div>
 <div class="well">
-*/10 * * * * python $HOME/bin/mukoyama.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
+*/10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </div>
+<p>カメラを接続する場合は以下の行も追加します。撮影にはraspistillコマンドを利用しています（画質等の設定調整は同コマンドのマニュアルを参照してください）。</p>
+<div class="well">
+*/10 * * * * python $HOME/bin/mukoyama_camera.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
+</div>
+
 <p>mukoyama_esp8266.inoを利用する場合は、IDとトークンを以下のように設定します。</p>
 <div class="well">
 const char* host = "<%= request.host %>";<br/>
@@ -50,12 +55,6 @@ const int httpsPort = <%= request.port.to_s %>;<br/>
 const char* mukoyama_id    = "<%= @setting.raspi_id %>";<br/>
 const char* mukoyama_token = "<%= @setting.token %>";
 </div>
-<p>
-</p>
-<div class="well">
-curl -X POST -F file=@./file.jpg <%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=<%= @setting.raspi_id %>&amp;token=<%= @setting.token %>&amp;time_stamp=<%= DateTime.now.to_s %>
-</div>
-
 <p>
 <%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>
 <%= link_to t('back'), settings_path, class: "btn btn-default" %>

@@ -60,6 +60,6 @@ class PicturesController < ApplicationController
     FileUtils.mkdir_p(dir) unless File.directory?(dir)
     File.open("#{dir}/#{filename}", 'wb'){|f| f.write(file.read)}
 
-    render text: "save #{filename}.", status: 200
+    render text: "Saved to #{filename}.", status: 200
   end
 end
