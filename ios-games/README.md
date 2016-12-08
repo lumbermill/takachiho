@@ -23,4 +23,10 @@ Just for measuring the size of screen.
 ## 06-word
 Provides quiz framework to learn English words.
 
-Now under creating..
+## 07-takachiho-go
+It's available on App Store.
+
+https://itunes.apple.com/jp/app/id1141766140
+
+The sources has been moved to private repository.
+You can refer them until version 1.0.7 by checking out previous commits in this repository.
