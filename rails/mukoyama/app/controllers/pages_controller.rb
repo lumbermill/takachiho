@@ -27,6 +27,19 @@ class PagesController < ApplicationController
     render layout: false
   end
 
+  def dashboard_pictures
+    id = params[:raspi_id]
+    dir = PicturesController::BASEDIR+"/#{id}"
+    logger.debug(dir)
+    h = {"raspi_id" => id}
+    if File.directory? dir
+      h["n"] = Dir.entries(dir).count - 2 # Number of pictures
+    else
+      h["n"] = 0
+    end
+    render text: h.to_json
+  end
+
   def usecase
   end
 
