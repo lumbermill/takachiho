@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  # API
+  get 'logs/insert' => 'tmpr_logs#insert'
+  get 'pictures/upload-needed' => 'pictures#upload_needed'
+  post 'pictures/upload' => 'pictures#upload'
+  post 'linebot' => 'pages#linebot'
+
+
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
     get 'dashboard-stat1' => 'pages#dashboard_stat1'
@@ -21,14 +28,10 @@ Rails.application.routes.draw do
     get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
     get 'send_message' => 'addresses#send_message'
 
+    get 'pictures/request-upload' => 'pictures#request_upload'
     get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
     get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
   end
-  # API
-  get 'logs/insert' => 'tmpr_logs#insert'
-  post 'pictures/upload' => 'pictures#upload'
-  post 'linebot' => 'pages#linebot'
-
   # Pages
   get 'about' => 'pages#about'
   get 'howto' => 'pages#howto'

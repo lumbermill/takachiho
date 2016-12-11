@@ -1,14 +1,15 @@
 class PicturesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:upload]
+  skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
 
   # sudo mkdir -p /opt/mukoyama.lmlab.net/data
   # sudo chmod 777 /opt/mukoyama.lmlab.net/data
   BASEDIR = "/opt/mukoyama.lmlab.net/data/pictures"
 
+  # TODO: 自分以外のユーザ、tokenを持っていないアクセスは弾く
   def index
     @id = params[:raspi_id]
     @page = (params[:page] || "1").to_i
-    pagesize = 60
+    pagesize = 6
     skipped = 0
     @total = 0
     @files = []
@@ -45,10 +46,10 @@ class PicturesController < ApplicationController
   def upload
     setting = Setting.find_by(raspi_id: params[:id])
     if setting.nil?
-      render status:404, text: "Device not found for raspi_id="+params[:id]
+      render status:404, text: "Device not found for raspi_id="+params[:id].to_s
       return
     elsif setting.token != params[:token]
-      render status:404, text: "Token did not match for raspi_id="+params[:id]
+      render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
       return
     end
     raspi_id = params[:id]
@@ -61,5 +62,35 @@ class PicturesController < ApplicationController
     File.open("#{dir}/#{filename}", 'wb'){|f| f.write(file.read)}
 
     render text: "Saved to #{filename}.", status: 200
+  end
+
+  # Render whether upload is needed or not. By checking the timestamp of file.
+  def upload_needed
+    setting = Setting.find_by(raspi_id: params[:id])
+    if setting.nil?
+      render status:404, text: "Device not found for raspi_id="+params[:id].to_s
+      return
+    elsif setting.token != params[:token]
+      render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
+      return
+    end
+    raspi_id = params[:id]
+
+    f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
+    if File.file?(f) && File.mtime(f) > Time.now - 1.minute
+      render text: "Yes", status: 200
+    else
+      render text: "No", status: 200
+    end
+  end
+
+  def request_upload
+    raspi_id = params[:raspi_id]
+    raise "raspi id is not set." unless raspi_id
+    dir = "#{BASEDIR}/#{raspi_id}"
+    FileUtils.mkdir_p(dir) unless File.directory?(dir)
+    f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
+    `touch #{f}`
+    render text: "Touch #{f}", status: 200
   end
 end

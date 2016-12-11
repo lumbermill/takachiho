@@ -1,5 +1,6 @@
 <form class="form-inline">
   <div class="form-group">
+  <%= link_to "最新画像を取得", "javascript: request_upload()" ,class: "btn btn-primary" %>
   <%= link_to "再読込","javascript: location.reload()" ,class: "btn btn-success" %>
   <%= select_tag "p", options_for_select(1..@n_pages,@page), id: "page-select" ,class: "form-control" %>
   </div>
@@ -10,4 +11,12 @@
     var p = $(d.target).val();
     location.href = "?page="+p;
   });
+
+  function request_upload(){
+      $(".btn-primary").attr("disabled",true);
+      $(".btn-primary").text("送信中..")
+      $.get("request-upload",{"raspi_id": <%= @id %>},function(d){
+        setTimeout(function(){ location.reload() },3000);
+      });
+  }
 </script>
