@@ -16,6 +16,27 @@ dict-build/userdic/ 以下に追加する．同ディレクトリ内に複数の
 % sudo ./install.sh
 ```
 
+## 解析誤りの修正
+JUMAN++の解析誤りのために辞書に登録した単語が分割されてしまうことがある。
+- 例) コーポレート・ガバナンス （ユーザ辞書に登録した単語）
+```
+$ echo "コーポレート・ガバナンス" | jumanpp
+コーポレート コーポレート コーポレート 名詞 6 普通名詞 1 * 0 * 0 "自動獲得:Wikipedia Wikipediaページ内一覧:コナミ"
+・ ・ ・ 特殊 1 記号 5 * 0 * 0 NIL
+ガバナンス ガバナンス ガバナンス 名詞 6 普通名詞 1 * 0 * 0 "自動獲得:Wikipedia Wikipedia上位語:プロセス/ぷろせす"
+EOS
+### 必ずしも誤りとは言えないが、辞書に登録したものと同じ結果が得られない。
+```
+
+このような場合は解析誤りの修正を行う。(JUMAN++マニュアル 5.3 部分アノテーションを用いた訓練に記載の手順に準拠)
+上記の例の場合は以下のようにする。
+```
+$ echo -e "\tコーポレート・ガバナンス\t" > part-sample.txt  # part-sample.txtには複数の単語を登録できる
+$ cat part-sample.txt | jumanpp --partial | ruby script/corpus2train.rb > partial.fmrp
+$ cat train.fmrp partial.fmrp > part_train.fmrp
+$ jumanpp --train part_train.fmrp --outputmodel part_trained.mdl
+```
+詳しくはJUMAN++のマニュアル参照のこと。
 
 ## マニュアルに記載されていない手順(上記手順の前に実施する)
 ### Makefileの修正
