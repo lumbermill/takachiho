@@ -28,14 +28,27 @@ EOS
 ### 必ずしも誤りとは言えないが、辞書に登録したものと同じ結果が得られない。
 ```
 
-このような場合は解析誤りの修正を行う。(JUMAN++マニュアル 5.3 部分アノテーションを用いた訓練に記載の手順に準拠)
+このような場合は解析誤りの修正を行う。(JUMAN++マニュアル 「5.3 部分アノテーションを用いた訓練」に記載の手順に準拠)
 上記の例の場合は以下のようにする。
+(訓練にかかる時間は環境や訓練するコーパスの規模にもよるが、京都大学ウェブ文書リードコーパスとごく小規模な部分アノテーションを使用して
+さくらのクラウド上のUbuntu14.06サーバで実施したところ、7時間程度かかった。) 
 ```
+$ cat xxxx.knp ... yyyy.knp | ruby script/corpus2train.rb > train.fmrp
 $ echo -e "\tコーポレート・ガバナンス\t" > part-sample.txt  # part-sample.txtには複数の単語を登録できる
 $ cat part-sample.txt | jumanpp --partial | ruby script/corpus2train.rb > partial.fmrp
 $ cat train.fmrp partial.fmrp > part_train.fmrp
 $ jumanpp --train part_train.fmrp --outputmodel part_trained.mdl
+$ sudo mv /usr/local/share/jumanpp/weight.mdl.map /usr/local/share/jumanpp/weight.mdl.map.bak #古い訓練データを移動
+$ sudo mv /usr/local/share/jumanpp/weight.mdl /usr/local/share/jumanpp/weight.mdl.bak         #古い訓練データを移動
+$ sudo cp part_trained.mdl /usr/local/share/jumanpp/weight.mdl
+$ sudo su
+# echo "" | jumanpp
+# exit
 ```
+.knpファイルは京都大学テキストコーパス，京都大学ウェブ文書リードコーパスに含まれている。予めダウンロードする。
+- [京都大学テキストコーパス](http://nlp.ist.i.kyoto-u.ac.jp/index.php?京都大学テキストコーパス) 別途有償のCD-ROMが必要
+- [京都大学ウェブ文書リードコーパス](http://nlp.ist.i.kyoto-u.ac.jp/index.php?KWDLC)
+
 詳しくはJUMAN++のマニュアル参照のこと。
 
 ## マニュアルに記載されていない手順(上記手順の前に実施する)
