@@ -1,3 +1,11 @@
+require 'fileutils'
+
+def process_exist?(pid)
+  cmd = "ps #{pid}"
+  `#{cmd}`
+  return ($? == 0)
+end
+
 def upload_needed?
   u = "#{$url}/pictures/upload-needed?id=#{$id}&token=#{$token}"
   cmd = "curl -s -S '#{u}'"
@@ -29,14 +37,34 @@ def send_picture(filename)
   u = "#{$url}/pictures/upload?id=#{$id}&token=#{$token}&time_stamp=#{ts}"
   cmd = "curl -s -S -X POST -F file=@'#{filename}' '#{u}'"
   system(cmd)
+  puts
 end
 
 if $0 == __FILE__
-  #cronから起動。
-  #ロックファイルが存在するとき
-  #  ロックファイルに書かれたPIDが存在するならプログラム終了
-  #  ロックファイルに書かれたPIDが存在しないならロックファイルを削除してOSリブート
-  #ロックファイルがなければロックファイルにPIDを書き出して継続
+  #cronから毎分起動。
+  lockfile = "mcamera.pid"
+  if File.exist?(lockfile)
+    #ロックファイルが存在するとき
+    open(lockfile) do|f|
+      pid = f.readline.chomp
+      if process_exist?(pid)
+        #ロックファイルに書かれたPIDが存在するならプログラム終了
+        puts "This program is already active."
+        exit
+      else
+        #ロックファイルに書かれたPIDが存在しないならロックファイルを削除してOSリブート
+        puts "This program might have aborted. Operating System will reboot."
+        FileUtils.rm(lockfile)
+        system("sudo reboot")
+        exit
+      end
+    end
+  else
+    #ロックファイルがなければロックファイルにPIDを書き出して継続
+    open(lockfile, "w") do|f|
+      f.puts $$
+    end
+  end
 
   filename = "/tmp/photo.jpg"
   $url = ENV["MUKOYAMA_URL"]
