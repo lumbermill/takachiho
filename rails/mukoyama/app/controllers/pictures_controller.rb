@@ -77,7 +77,7 @@ class PicturesController < ApplicationController
     raspi_id = params[:id]
 
     f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
-    if File.file?(f) && File.mtime(f) > Time.now - 1.minute
+    if File.file?(f) && File.mtime(f) > Time.now - 30.second
       render text: "Yes", status: 200
     else
       render text: "No", status: 200
