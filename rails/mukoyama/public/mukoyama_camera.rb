@@ -42,7 +42,7 @@ end
 
 if $0 == __FILE__
   #cronから毎分起動。
-  lockfile = "mcamera.pid"
+  lockfile = "/var/lock/mcamera.pid"
   if File.exist?(lockfile)
     #ロックファイルが存在するとき
     open(lockfile) do|f|
