@@ -14,8 +14,8 @@ def upload_needed?
 end
 
 def interval_elapsed?
-  now = Time.now
-  if now.min % $taking_interval_min == 0 && now.min != $last_taken_time_by_inteval.min
+  now = Time.now.min
+  if now % $taking_interval_min == 0 && now != $last_taken_time_by_inteval
     $last_taken_time_by_inteval = now
     return true
   else
@@ -70,8 +70,8 @@ if $0 == __FILE__
   $url = ENV["MUKOYAMA_URL"]
   $id = ENV["MUKOYAMA_ID"]
   $token = ENV["MUKOYAMA_TOKEN"]
-  $taking_interval_min = 10 #毎10分ごとに撮影
-  $last_taken_time_by_inteval = Time.now
+  $taking_interval_min = 10 #毎10分ごとに撮影 60の役数(10,15,20,30..)のみ指定可能
+  $last_taken_time_by_inteval = -1
   while (true) do
     if uplodable?
       take_picture(filename)
