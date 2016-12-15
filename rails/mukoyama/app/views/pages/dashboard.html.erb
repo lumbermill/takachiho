@@ -7,8 +7,8 @@
       <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
       <th>下限</th>
       <th>上限</th>
-      <th>件数</th>
       <th colspan="2">受信期間</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -16,23 +16,24 @@
     <% @raspi_list.each do |r| %>
       <tr>
         <td><%= r.raspi_id %></td>
-        <td><%= r.name %></td>
+        <td><%= r.name %><% if r.readable? %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span><% end %></td>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
-        <td id="<%= r.raspi_id%>-c"></td>
         <td id="<%= r.raspi_id%>-first"></td>
         <td id="<%= r.raspi_id%>-last"></td>
         <td>
-          <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default", id: "#{r.raspi_id}-nd" %>
           <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default disabled", id: "#{r.raspi_id}-np" %>
-          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
+        </td>
+        <td>
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
+          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
       </tr>
       <script>
         var id = <%= r.raspi_id %>;
         $.getJSON("dashboard-stat1",{"raspi_id": id},function(json){
-          $("#"+json.raspi_id+"-c").text(json.c);
+          $("#"+json.raspi_id+"-nd span.badge").text(json.c);
           if(json.c > 0){
             $("#"+json.raspi_id+"-first").text(json.first);
             $("#"+json.raspi_id+"-last").text(json.last);

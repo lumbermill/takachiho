@@ -95,6 +95,6 @@ const char* mukoyama_token = "************";   // mukoyama.lmlab.netから発行
 curl -X POST -F file=@./photo.jpg <%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=1&amp;token=abcdef&amp;time_stamp=<%= DateTime.now.to_s %>
 </pre>
 <p>raspistillコマンドを使って撮影した写真を送信するスクリプトを用意しています。センサの設定画面に記載された環境変数をセットして利用してください。</p>
-<p><a href="mukoyama_camera.py" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_camera.py</a></p>
+<p><a href="mukoyama_camera.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_camera.rb</a></p>
 </div>
 </div>
