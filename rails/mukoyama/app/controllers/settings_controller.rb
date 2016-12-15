@@ -25,7 +25,12 @@ class SettingsController < ApplicationController
   # POST /settings.json
   def create
     @setting = Setting.new(setting_params)
-    @setting.raspi_id = Setting.order("raspi_id DESC").limit(1).first.id + 1
+    last_setting = Setting.order("raspi_id DESC").limit(1).first
+    if last_setting
+      @setting.raspi_id = last_setting.raspi_id + 1
+    else
+      @setting.raspi_id = 1
+    end
     # パリティ代わりにmd5のトークン(12文字)をくっつける
     require 'digest/md5'
     @setting.token = Digest::MD5.new.update(@setting.raspi_id.to_s).to_s[0,12]
