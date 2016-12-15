@@ -8,8 +8,11 @@ class PicturesController < ApplicationController
   # TODO: 自分以外のユーザ、tokenを持っていないアクセスは弾く
   def index
     @id = params[:raspi_id]
+    # TODO: 日付でも絞り込みしたい、（日付選択されてる場合、ページ番号は、その日付の中だけで採番するのがシンプル？）
+    @date = ""
+    @dates = ["TODO 日付絞り込み"]
     @page = (params[:page] || "1").to_i
-    pagesize = 6
+    pagesize = 24
     skipped = 0
     @total = 0
     @files = []
