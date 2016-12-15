@@ -18,8 +18,8 @@
     <td><%= @setting.max_tmpr %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.token") %></th>
-    <td><div class="well well-sm"><%= @setting.token %></div>
+    <th><%= t("activerecord.attributes.setting.token4write") %></th>
+    <td><div class="well well-sm"><%= @setting.token4write %></div>
     </td>
   </tr>
   <tr>
@@ -38,7 +38,7 @@ Raspbianの規定の設定では、/var/log/syslogに処理ログが出力され
 <div class="well">
 MUKOYAMA_URL=<%= request.protocol + request.host + ":" + request.port.to_s %><br/>
 MUKOYAMA_ID=<%= @setting.raspi_id %><br/>
-MUKOYAMA_TOKEN=<%= @setting.token %>
+MUKOYAMA_TOKEN=<%= @setting.token4write %>
 </div>
 <div class="well">
 */10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
@@ -53,7 +53,7 @@ MUKOYAMA_TOKEN=<%= @setting.token %>
 const char* host = "<%= request.host %>";<br/>
 const int httpsPort = <%= request.port.to_s %>;<br/>
 const char* mukoyama_id    = "<%= @setting.raspi_id %>";<br/>
-const char* mukoyama_token = "<%= @setting.token %>";
+const char* mukoyama_token = "<%= @setting.token4write %>";
 </div>
 <p>
 <%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>

@@ -118,7 +118,7 @@ class TmprLogsController < ApplicationController
     if setting.nil?
       render status:404, text: "Device not found for raspi_id="+params[:id]
       return
-    elsif setting.token != params[:token]
+    elsif setting.token4write != params[:token]
       render status:404, text: "Token did not match for raspi_id="+params[:id]
       return
     end
