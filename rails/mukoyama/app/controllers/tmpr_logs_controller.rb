@@ -148,7 +148,7 @@ class TmprLogsController < ApplicationController
     end
 
     if @tmpr_log.blank?
-      render text: @tmpr_log.errors, status: 500
+      render text: "NO DATA", status: 200
     else
       render text: @tmpr_log.time_stamp, status: 200
     end
