@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  before_action :set_setting, only: [:show, :edit, :update, :destroy]
+  before_action :set_setting, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
 
   # GET /settings
   # GET /settings.json
@@ -67,6 +67,25 @@ class SettingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to settings_url, notice: 'Setting was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def publish
+    token_seed = current_user.encrypted_password + @setting.raspi_id.to_s + Time.now.to_s
+    @setting.token4read = Digest::MD5.new.update(token_seed).to_s[0,12]
+    if @setting.save
+      render text: "This Sensor data was published Successfully.", status: 200
+    else
+      render json: @setting.errors, status: 500
+    end
+  end
+
+  def unpublish
+    @setting.token4read = nil
+    if @setting.save
+      render text: "This Sensor data was unpublished Successfully.", status: 200
+    else
+      render json: @setting.errors, status: 500
     end
   end
 

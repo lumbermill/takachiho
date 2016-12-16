@@ -17,7 +17,12 @@ Rails.application.routes.draw do
     get 'tmpr_logs/graph/:raspi_id' => 'tmpr_logs#graph', as: :tmpr_logs_graph
     get 'tmpr_logs/graph_data'
 
-    resources :settings
+    resources :settings do
+      member do
+        get 'publish'
+        get 'unpublish' 
+      end
+    end
     resources :addresses
     resources :tmpr_monthly_logs
     resources :tmpr_daily_logs
@@ -31,6 +36,7 @@ Rails.application.routes.draw do
     get 'pictures/request-upload' => 'pictures#request_upload'
     get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
     get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
+    #get 'settings/:raspi_id/publish' => 'settings#publish'
   end
   # Pages
   get 'about' => 'pages#about'
