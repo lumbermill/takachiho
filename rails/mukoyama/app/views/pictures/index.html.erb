@@ -7,7 +7,7 @@
 <br/>
 <div class="row">
   <% @files.each do |f| %>
-  <div class="col-xs-2 col-sm-<%= @size %>">
+  <div class="col-xs-4 col-sm-<%= @colsize %>">
     <figure>
       <a href="<%= @id %>/<%= f %>" class="popupimg">
         <img src="<%= @id %>/<%= f %>" alt="<%= f %>" class="img-responsive img-rounded" />

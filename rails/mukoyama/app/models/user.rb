@@ -9,4 +9,11 @@ class User < ActiveRecord::Base
   def admin?
     id == 1
   end
+
+  def mine?(setting)
+    return false if setting.nil?
+    setting = setting.to_i if setting.is_a? String
+    setting = Setting.find(setting) if setting.is_a? Fixnum
+    return id == setting.user_id
+  end
 end
