@@ -4,7 +4,11 @@ class SettingsController < ApplicationController
   # GET /settings
   # GET /settings.json
   def index
-    @settings = current_user.settings
+    if params[:all]
+      @settings = Setting.all
+    else
+      @settings = current_user.settings
+    end
   end
 
   # GET /settings/1
