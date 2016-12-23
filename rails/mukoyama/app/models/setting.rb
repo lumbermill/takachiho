@@ -4,6 +4,6 @@ class Setting < ActiveRecord::Base
 
   # Returns true if the sensor is visible via the link with token(without authentication).
   def readable?
-    token4read != nil && token4read.count > 0
+    token4read != nil && token4read.length > 0
   end
 end

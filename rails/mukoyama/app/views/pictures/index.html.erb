@@ -20,6 +20,24 @@
   <div class="col-xs-12">このIDに登録された写真はありません。登録方法は設定画面を確認してください。</div>
   <% end %>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table">
+      <tr>
+  		<th>公開用URL</th>
+  		<td>
+  			<div class="well well-sm">
+  				<% setting = Setting.find(@id)
+              url = baseurl+request.path+"?token="+setting.token4read %>
+  				<%= (link_to url, url) if setting.readable?%>
+  			</div>
+  		</td>
+    	</tr>
+    </table>
+  </div>
+</div>
+
+
 <div id="popup-background">
 </div>
 <img id="popup-item" src="" />

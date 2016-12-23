@@ -16,7 +16,11 @@
     <% @raspi_list.each do |r| %>
       <tr>
         <td><%= r.raspi_id %></td>
-        <td><%= r.name %><% if r.readable? %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span><% end %></td>
+        <% if r.readable? %>
+        <td><%= r.name %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span></td>
+        <% else %>
+        <td><%= r.name %></td>
+        <% end %>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
         <td id="<%= r.raspi_id%>-first"></td>

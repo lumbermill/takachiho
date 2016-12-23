@@ -77,6 +77,7 @@ class SettingsController < ApplicationController
   def publish
     token_seed = current_user.encrypted_password + @setting.raspi_id.to_s + Time.now.to_s
     @setting.token4read = Digest::MD5.new.update(token_seed).to_s[0,12]
+    @setting.updated_at = Time.now
     if @setting.save
       render text: "This Sensor data was published Successfully.", status: 200
     else
@@ -86,6 +87,7 @@ class SettingsController < ApplicationController
 
   def unpublish
     @setting.token4read = nil
+    @setting.updated_at = Time.now
     if @setting.save
       render text: "This Sensor data was unpublished Successfully.", status: 200
     else
