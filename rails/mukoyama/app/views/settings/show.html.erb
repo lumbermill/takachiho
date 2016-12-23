@@ -23,6 +23,13 @@
     </td>
   </tr>
   <tr>
+    <th><%= t("activerecord.attributes.setting.token4read") %></th>
+    <td><div class="well well-sm"><%= @setting.token4read %></div>
+      <button class="btn btn-success btn-xs">(再)生成</button> <button class="btn btn-danger btn-xs">削除</button>
+      <!-- TODO: トークンが空の時は「生成」のみ、トークンが存在する場合、「再生成」と「削除」 -->
+    </td>
+  </tr>
+  <tr>
     <th><%= t("activerecord.attributes.setting.created_at") %></th>
     <td><%= @setting.created_at %></td>
   </tr>
