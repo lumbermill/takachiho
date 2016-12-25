@@ -23,7 +23,7 @@ Loading..
 		<th>公開用URL</th>
 		<td>
 			<div class="well well-sm">
-				<% url = baseurl+request.path+"?token="+@setting.token4read %>
+				<% url = baseurl+request.path+"?token="+@setting.token4read if @setting.readable? %>
 				<%= (link_to url, url) if @setting.readable?%>
 			</div>
 		</td>
