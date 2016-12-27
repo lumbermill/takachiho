@@ -47,13 +47,13 @@ class TmprCheck
         d_flg = true
         if address.phone?
           puts " call"
-          Mailer.make_call(address.mail, msg)
+          puts Mailer.make_call(address.mail, msg)
         elsif address.mail?
           puts " mail"
           Mailer.send_mail(address.mail, "Notificaton from Mukoyama", msg).deliver_now
         else
           puts " line"
-          Mailer.send_line(address.mail, msg)
+          puts Mailer.send_line(address.mail, msg)
         end
       else
         puts " snoozed"
