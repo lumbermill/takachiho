@@ -4,6 +4,9 @@ class Mailer < ApplicationMailer
     mail(to: to, subject: subject)
   end
 
+  # make_callは遅延評価されます。
+  # このメソッドを呼び出す時はdeliver_now等をつけるようにしてください。
+  # 例) Mailer.make_call(number, msg).deliver_now
   def make_call(number, msg)
     sid = ENV['TWILIO_SID']
     token = ENV['TWILIO_TOKEN']
@@ -33,6 +36,9 @@ class Mailer < ApplicationMailer
     }
   end
 
+  # send_lineは遅延評価されます。
+  # このメソッドを呼び出す時はdeliver_now等をつけるようにしてください。
+  # 例) Mailer.send_line(number, msg).deliver_now
   def send_line(user_id,message)
     line_client.push_message(user_id,{type: 'text', text: message})
   end
