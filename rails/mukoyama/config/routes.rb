@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   post 'pictures/upload' => 'pictures#upload'
   post 'linebot' => 'pages#linebot'
 
+	# グラフ公開
+	get 'tmpr_logs/graph/:raspi_id' => 'tmpr_logs#graph', as: :tmpr_logs_graph
+	get 'tmpr_logs/graph_data' => 'tmpr_logs#graph_data'
+	get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
+
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
@@ -14,7 +19,6 @@ Rails.application.routes.draw do
     get 'dashboard-mail_logs' => 'pages#dashboard_mail_logs'
     get 'dashboard-pictures' => 'pages#dashboard_pictures'
 
-    get 'tmpr_logs/graph/:raspi_id' => 'tmpr_logs#graph', as: :tmpr_logs_graph
     get 'tmpr_logs/graph_data'
 
     resources :settings do
@@ -30,7 +34,6 @@ Rails.application.routes.draw do
 
     get 'users' => 'users#index'
     get 'login-as' => 'users#login_as'
-    get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
     get 'send_message' => 'addresses#send_message'
 
     get 'pictures/request-upload' => 'pictures#request_upload'
