@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 	get 'tmpr_logs/graph_data' => 'tmpr_logs#graph_data'
 	get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
 
+	get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
+	get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
@@ -37,8 +39,6 @@ Rails.application.routes.draw do
     get 'send_message' => 'addresses#send_message'
 
     get 'pictures/request-upload' => 'pictures#request_upload'
-    get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
-    get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
     #get 'settings/:raspi_id/publish' => 'settings#publish'
   end
   # Pages
