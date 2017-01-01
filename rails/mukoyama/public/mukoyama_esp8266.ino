@@ -2,16 +2,17 @@
 /*
  * Posting sensor value to Mukoyama example sketch.
  * コンパイルするためにはArduinoIDEにESP8266 Core for ArduinoとTime Library,SHT31 Libraryをインストールする必要があります。
- * 
+ *
  * ESP8266 Core for Arduino: https://github.com/esp8266/Arduino
  * Time Library: http://playground.arduino.cc/code/time
+ *               https://github.com/PaulStoffregen/Time
  * SHT31 Library: http://cactus.io/hookups/sensors/temperature-humidity/sht31/hookup-arduino-to-sensirion-sht31-temp-humidity-sensor
- * 参考: http://trac.switch-science.com/wiki/esp_dev_arduino_ide
+ * 参考(ビルド設定の調整): http://trac.switch-science.com/wiki/esp_dev_arduino_ide
  */
 
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
-#include <TimeLib.h> 
+#include <TimeLib.h>
 #include <WiFiUdp.h>
 #include <Ticker.h>
 #include "cactus_io_SHT31.h"
@@ -220,7 +221,7 @@ void sendNTPpacket(IPAddress &address){
   packetBuffer[14]  = 49;
   packetBuffer[15]  = 52;
   // all NTP fields have been given values, now
-  // you can send a packet requesting a timestamp:                 
+  // you can send a packet requesting a timestamp:
   Udp.beginPacket(address, 123); //NTP requests are to port 123
   Udp.write(packetBuffer, NTP_PACKET_SIZE);
   Udp.endPacket();
