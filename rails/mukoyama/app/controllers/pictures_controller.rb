@@ -122,9 +122,9 @@ class PicturesController < ApplicationController
     end
 
     def has_token4read?(setting)
-      if params[:token4read]
+      if params[:token]
         # トークンはセッションにセットして使いまわせるようにする
-        session[:token4read] = params[:token4read]
+        session[:token4read] = params[:token]
       end
       return false unless setting.readable?
       return setting.token4read == session[:token4read]
@@ -133,8 +133,8 @@ class PicturesController < ApplicationController
     def set_raspi_id
       @id = params[:raspi_id]
       setting = Setting.find(@id)
-      return if has_token4read? setting
-      return if current_user.mine? setting
-      raise "Invalid raspi_id(#{@id}) for user #{current_user.id}"
+      unless has_token4read? setting
+        authenticate_user!
+      end
     end
 end
