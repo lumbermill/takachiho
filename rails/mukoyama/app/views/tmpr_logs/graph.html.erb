@@ -23,8 +23,8 @@ Loading..
 		<th>公開用URL</th>
 		<td>
 			<div class="well well-sm">
-				<% token = "TODO" %>
-				<%= request.protocol + request.host + ":" + request.port.to_s+"/"+request.path+"?token="+token %>
+				<% url = baseurl+request.path+"?token="+@setting.token4read if @setting.readable? %>
+				<%= (link_to url, url) if @setting.readable?%>
 			</div>
 		</td>
 	</tr>

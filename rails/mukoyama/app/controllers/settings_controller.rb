@@ -1,10 +1,14 @@
 class SettingsController < ApplicationController
-  before_action :set_setting, only: [:show, :edit, :update, :destroy]
+  before_action :set_setting, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
 
   # GET /settings
   # GET /settings.json
   def index
-    @settings = current_user.settings
+    if params[:all]
+      @settings = Setting.all
+    else
+      @settings = current_user.settings
+    end
   end
 
   # GET /settings/1
@@ -25,10 +29,15 @@ class SettingsController < ApplicationController
   # POST /settings.json
   def create
     @setting = Setting.new(setting_params)
-    @setting.raspi_id = Setting.order("raspi_id DESC").limit(1).first.id + 1
+    last_setting = Setting.order("raspi_id DESC").limit(1).first
+    if last_setting
+      @setting.raspi_id = last_setting.raspi_id + 1
+    else
+      @setting.raspi_id = 1
+    end
     # パリティ代わりにmd5のトークン(12文字)をくっつける
     require 'digest/md5'
-    @setting.token = Digest::MD5.new.update(@setting.raspi_id.to_s).to_s[0,12]
+    @setting.token4write = Digest::MD5.new.update(@setting.raspi_id.to_s).to_s[0,12]
     @setting.user = current_user
     respond_to do |format|
       if @setting.save
@@ -62,6 +71,27 @@ class SettingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to settings_url, notice: 'Setting was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def publish
+    token_seed = current_user.encrypted_password + @setting.raspi_id.to_s + Time.now.to_s
+    @setting.token4read = Digest::MD5.new.update(token_seed).to_s[0,12]
+    @setting.updated_at = Time.now
+    if @setting.save
+      render text: "This Sensor data was published Successfully.", status: 200
+    else
+      render json: @setting.errors, status: 500
+    end
+  end
+
+  def unpublish
+    @setting.token4read = nil
+    @setting.updated_at = Time.now
+    if @setting.save
+      render text: "This Sensor data was unpublished Successfully.", status: 200
+    else
+      render json: @setting.errors, status: 500
     end
   end
 

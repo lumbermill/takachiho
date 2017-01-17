@@ -7,8 +7,8 @@
       <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
       <th>下限</th>
       <th>上限</th>
-      <th>件数</th>
       <th colspan="2">受信期間</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -16,23 +16,28 @@
     <% @raspi_list.each do |r| %>
       <tr>
         <td><%= r.raspi_id %></td>
+        <% if r.readable? %>
+        <td><%= r.name %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span></td>
+        <% else %>
         <td><%= r.name %></td>
+        <% end %>
         <td><%= r.min_tmpr %></td>
         <td><%= r.max_tmpr %></td>
-        <td id="<%= r.raspi_id%>-c"></td>
         <td id="<%= r.raspi_id%>-first"></td>
         <td id="<%= r.raspi_id%>-last"></td>
         <td>
-          <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default", id: "#{r.raspi_id}-nd" %>
           <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default disabled", id: "#{r.raspi_id}-np" %>
-          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
+        </td>
+        <td>
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
+          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
       </tr>
       <script>
         var id = <%= r.raspi_id %>;
         $.getJSON("dashboard-stat1",{"raspi_id": id},function(json){
-          $("#"+json.raspi_id+"-c").text(json.c);
+          $("#"+json.raspi_id+"-nd span.badge").text(json.c);
           if(json.c > 0){
             $("#"+json.raspi_id+"-first").text(json.first);
             $("#"+json.raspi_id+"-last").text(json.last);
@@ -49,16 +54,25 @@
     <% end %>
   </tbody>
 </table>
+<div class="row">
+  <div class="col-sm-10">
 <p>
 <%= link_to 'センサの追加', new_setting_path, class: "btn btn-primary" %>
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
 </p>
+  </div>
+  <div class="col-sm-2">
+    <%= image_tag "NuZYAW7_2x.png", class: "img img-responsive" %>
+  </div>
+</div>
+
 <% if current_user.admin? %>
 <hr/>
 <div class="row">
   <div class="col-sm-3">
     <p>
       <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
+      <%= link_to 'センサ一覧', settings_path(all: true), class: "btn btn-default" %>
       <%= link_to '通知先一覧', addresses_path, class: "btn btn-default" %>
     </p>
   </div>

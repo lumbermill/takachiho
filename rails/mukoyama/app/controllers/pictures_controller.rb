@@ -1,15 +1,18 @@
 class PicturesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
+  before_action :set_raspi_id, only: [:index,:show]
 
   # sudo mkdir -p /opt/mukoyama.lmlab.net/data
   # sudo chmod 777 /opt/mukoyama.lmlab.net/data
   BASEDIR = "/opt/mukoyama.lmlab.net/data/pictures"
 
-  # TODO: 自分以外のユーザ、tokenを持っていないアクセスは弾く
   def index
     @id = params[:raspi_id]
+    @date = params[:date] || ""
     @page = (params[:page] || "1").to_i
-    pagesize = 6
+    pagesize = 24
+    @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
+
     skipped = 0
     @total = 0
     @files = []
@@ -21,6 +24,7 @@ class PicturesController < ApplicationController
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
+      next unless f.start_with? @date
       @total += 1
       if skipped < (@page - 1) * pagesize
         skipped += 1
@@ -31,6 +35,10 @@ class PicturesController < ApplicationController
       end
     end
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
+
+    @dates = load_index(dir)
+
+    @n_watchers = 0 # TODO: 閲覧者数はどうやってカウントアップ(ダウン)したら良い？
   end
 
   def show
@@ -48,7 +56,7 @@ class PicturesController < ApplicationController
     if setting.nil?
       render status:404, text: "Device not found for raspi_id="+params[:id].to_s
       return
-    elsif setting.token != params[:token]
+    elsif setting.token4write != params[:token]
       render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
       return
     end
@@ -70,14 +78,14 @@ class PicturesController < ApplicationController
     if setting.nil?
       render status:404, text: "Device not found for raspi_id="+params[:id].to_s
       return
-    elsif setting.token != params[:token]
+    elsif setting.token4write != params[:token]
       render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
       return
     end
     raspi_id = params[:id]
 
     f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
-    if File.file?(f) && File.mtime(f) > Time.now - 1.minute
+    if File.file?(f) && File.mtime(f) > Time.now - 30.second
       render text: "Yes", status: 200
     else
       render text: "No", status: 200
@@ -93,4 +101,40 @@ class PicturesController < ApplicationController
     `touch #{f}`
     render text: "Touch #{f}", status: 200
   end
+
+  private
+    def load_index(dir)
+      f = "#{dir}/index.json"
+      if !File.file?(f) || File.mtime(f).day != Date.today.day
+        # Generate index.json
+        dates = [""]
+        Dir.entries(dir).sort.reverse.each do |f|
+          next if f.start_with? "."
+          next unless f.end_with? ".jpg"
+          d = f[0,6]
+          dates += [d] unless dates[-1] == d
+        end
+        File.open(f,"w") do |fh|
+          fh.write(dates.to_json)
+        end
+      end
+      JSON.parse(File.read(f))
+    end
+
+    def has_token4read?(setting)
+      if params[:token]
+        # トークンはセッションにセットして使いまわせるようにする
+        session[:token4read] = params[:token]
+      end
+      return false unless setting.readable?
+      return setting.token4read == session[:token4read]
+    end
+
+    def set_raspi_id
+      @id = params[:raspi_id]
+      setting = Setting.find(@id)
+      unless has_token4read? setting
+        authenticate_user!
+      end
+    end
 end

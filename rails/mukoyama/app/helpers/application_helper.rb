@@ -10,4 +10,12 @@ module ApplicationHelper
     end
     return ts.strftime("%Y/%m/%d %H:%M")+tz
   end
+
+  def baseurl
+    url = request.protocol + request.host
+    if request.port != 80 || request.port != 443
+      url += ":" + request.port.to_s
+    end
+    return url
+  end
 end

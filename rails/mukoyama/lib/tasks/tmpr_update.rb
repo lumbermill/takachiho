@@ -43,9 +43,9 @@ def insert_monthly(date)
   if date.nil?
     where = ""
   else
-    begin_date = Date.new(date.year,date.month,1) - 1.month
+    begin_date = Date.new(date.year,date.month,1)
     end_date = begin_date + 1.month - 1.day
-    where = year_month.nil? ? "" : "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
+    where = "WHERE time_stamp BETWEEN '#{begin_date}' AND '#{end_date}'"
   end
   print "Inserting into tmpr_monthly_logs "
   monthly_sql = <<EOT

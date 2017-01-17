@@ -1,5 +1,6 @@
 class TmprLogsController < ApplicationController
   before_action :set_tmpr_log, only: [:show, :edit, :update, :destroy]
+  before_action :check_auth, only: [:graph, :graph_data, :last_timestamp]
 
   # GET /tmpr_logs
   # GET /tmpr_logs.json
@@ -105,11 +106,13 @@ class TmprLogsController < ApplicationController
     @t = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
     @p = "{raspi_id: #{params[:raspi_id]},src: 'pressure'}"
     @h = "{raspi_id: #{params[:raspi_id]},src: 'humidity'}"
-    @setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
+    @setting = Setting.find_by(raspi_id: params[:raspi_id])
     @min_tmpr = @setting.min_tmpr
     @max_tmpr = @setting.max_tmpr
     @min_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).minimum(:time_stamp)
     @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
+    @token = params[:token]
+    @raspi_id = params[:raspi_id]
   end
 
   # GET /tmpr_logs/insert
@@ -118,7 +121,7 @@ class TmprLogsController < ApplicationController
     if setting.nil?
       render status:404, text: "Device not found for raspi_id="+params[:id]
       return
-    elsif setting.token != params[:token]
+    elsif setting.token4write != params[:token]
       render status:404, text: "Token did not match for raspi_id="+params[:id]
       return
     end
@@ -148,7 +151,7 @@ class TmprLogsController < ApplicationController
     end
 
     if @tmpr_log.blank?
-      render text: @tmpr_log.errors, status: 500
+      render text: "NO DATA", status: 200
     else
       render text: @tmpr_log.time_stamp, status: 200
     end
@@ -158,6 +161,23 @@ class TmprLogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_log
       @tmpr_log = TmprLog.find(params[:id])
+    end
+
+    def check_auth
+      if params[:token]
+        session[:token4read] = params[:token]
+      end
+      if params[:raspi_id]
+        session[:raspi_id] = params[:raspi_id]
+      end
+      setting = Setting.find_by(raspi_id: session[:raspi_id])
+      if session[:token4read]
+        unless setting.token4read == session[:token4read]
+          authenticate_user!
+        end
+      else
+        authenticate_user!
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

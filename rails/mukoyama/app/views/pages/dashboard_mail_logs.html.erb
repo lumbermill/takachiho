@@ -1,6 +1,16 @@
 <% if @mail_logs.count == 0 %>
   <p>通知の発信履歴はありません。</p>
 <% else %>
+  <style>
+  .maillog-active{
+    color: #d9534f;
+    font-weight: bold;
+  }
+
+  .maillog-muted{
+    color: #ddd;
+  }
+  </style>
   <table class="table table-condensed">
     <tr>
       <th>通知先</th>
@@ -10,7 +20,7 @@
     </tr>
     <% @mail_logs.each do |m| %>
     <% a = Address.find_by(id:m.address_id) %>
-    <tr>
+    <tr class="<%= m.delivered ? "maillog-active" : "maillog-muted" %>">
       <td><%= a ? a.mail : m.address_id %></td>
       <td><%= a ? a.raspi_id : "" %></td>
       <td><%= format_timestamp(m.time_stamp) %></td>

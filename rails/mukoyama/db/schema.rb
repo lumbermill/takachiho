@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104070954) do
+ActiveRecord::Schema.define(version: 20161215014608) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -31,18 +31,18 @@ ActiveRecord::Schema.define(version: 20161104070954) do
   end
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "raspi_id",   limit: 4
-    t.float    "min_tmpr",   limit: 24
-    t.float    "max_tmpr",   limit: 24
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.string   "token",      limit: 255
+    t.integer  "raspi_id",    limit: 4
+    t.float    "min_tmpr",    limit: 24
+    t.float    "max_tmpr",    limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "user_id",     limit: 4
+    t.string   "name",        limit: 255
+    t.string   "token4write", limit: 255
+    t.string   "token4read",  limit: 255
   end
 
   add_index "settings", ["raspi_id"], name: "index_settings_on_raspi_id", unique: true, using: :btree
-  add_index "settings", ["token"], name: "index_settings_on_token", unique: true, using: :btree
 
   create_table "tmpr_daily_logs", force: :cascade do |t|
     t.integer  "raspi_id",            limit: 4
