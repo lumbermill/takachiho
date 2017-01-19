@@ -1,19 +1,17 @@
 # 辞書登録について
 ## 登録手順
-- マニュアルより引用
+- 詳しくはマニュアル参照のこと
  - http://lotus.kuee.kyoto-u.ac.jp/nl-resource/jumanpp/jumanpp-manual-1.01.pdf
 
 ### ユーザ辞書の追加
-ユーザが辞書を追加し，解析を行うには辞書のコンパイルを行う必要がある．辞書のコンパイル
-に必要なスクリプトは，配布アーカイブの展開先にある dict-build
-ディレクトリ内にある．
-ユーザ辞書をシステムに追加するには，ユーザ辞書を 3.2.1 節に従って作成し，そのファイルを
-dict-build/userdic/ 以下に追加する．同ディレクトリ内に複数のユーザ辞書があってもよい．
-その後 dict-build ディレクトリ内で以下の手順を実行し，辞書のコンパイルとインストールを行
-う．インストール先を指定する場合は， install.sh に --prefix /path/to/somewhere/ オプションを付加する．
+ユーザが辞書を追加し，解析を行うには辞書のコンパイルを行う必要がある．辞書のコンパイルに必要なスクリプトは，配布アーカイブの展開先にある dict-buildディレクトリ内にある．
+
+ユーザ辞書をシステムに追加するには，ユーザ辞書を 3.2.1 節に従って作成し，そのファイルをdict-build/userdic/ 以下に追加する．同ディレクトリ内に複数のユーザ辞書があってもよい．ユーザ辞書の作成はこのリポジトリの bin/make_entry.rb を使うと便利です。（後述）
+
+その後 dict-build ディレクトリ内で以下の手順を実行し，辞書のコンパイルとインストールを行う．インストール先を指定する場合は， install.sh に --prefix /path/to/somewhere/ オプションを付加する．
 ```
-% make
-% sudo ./install.sh
+$ make
+$ sudo ./install.sh
 ```
 
 ## 解析誤りの修正
@@ -28,23 +26,32 @@ EOS
 ### 必ずしも誤りとは言えないが、辞書に登録したものと同じ結果が得られない。
 ```
 
-このような場合は解析誤りの修正を行う。(JUMAN++マニュアル 「5.3 部分アノテーションを用いた訓練」に記載の手順に準拠)
+このような場合は解析器の再学習を行うことによって解析誤りの修正を行う。(JUMAN++マニュアル 「5.3 部分アノテーションを用いた訓練」に記載の手順に準拠)
 上記の例の場合は以下のようにする。
-(訓練にかかる時間は環境や訓練するコーパスの規模にもよるが、京都大学ウェブ文書リードコーパスとごく小規模な部分アノテーションを使用して
-さくらのクラウド上のUbuntu14.06サーバで実施したところ、7時間程度かかった。) 
+(再学習にかかる時間は環境や学習するコーパスの規模にもよるが、京都大学ウェブ文書リードコーパスとごく小規模な部分アノテーションを使用して
+さくらのクラウド上のUbuntu14.06サーバで実施したところ、7時間程度かかった。)
+
+- 学習データ作成（part-sample.txtに大量の語彙を追加する場合にはこのリポジトリの bin/make_partial.rb を使うと便利です。（後述））
 ```
 $ cat xxxx.knp ... yyyy.knp | ruby script/corpus2train.rb > train.fmrp
 $ echo -e "\tコーポレート・ガバナンス\t" > part-sample.txt  # part-sample.txtには複数の単語を登録できる
 $ cat part-sample.txt | jumanpp --partial | ruby script/corpus2train.rb > partial.fmrp
+```
+- 再学習（解析器の作成。part_trained.mdlが解析器ファイルです）
+```
 $ cat train.fmrp partial.fmrp > part_train.fmrp
 $ jumanpp --train part_train.fmrp --outputmodel part_trained.mdl
+```
+- 解析器を配備
+```
 $ sudo mv /usr/local/share/jumanpp/weight.mdl.map /usr/local/share/jumanpp/weight.mdl.map.bak #古い訓練データを移動
 $ sudo mv /usr/local/share/jumanpp/weight.mdl /usr/local/share/jumanpp/weight.mdl.bak         #古い訓練データを移動
 $ sudo cp part_trained.mdl /usr/local/share/jumanpp/weight.mdl
 $ sudo su
-# echo "" | jumanpp
+# echo "" | jumanpp #キャッシュ再作成
 # exit
 ```
+
 .knpファイルは京都大学テキストコーパス，京都大学ウェブ文書リードコーパスに含まれている。予めダウンロードする。
 - [京都大学テキストコーパス](http://nlp.ist.i.kyoto-u.ac.jp/index.php?京都大学テキストコーパス) 別途有償のCD-ROMが必要
 - [京都大学ウェブ文書リードコーパス](http://nlp.ist.i.kyoto-u.ac.jp/index.php?KWDLC)
@@ -103,3 +110,33 @@ apt-get install zsh
 > echo "" | jumanpp -D $PREFIX/jumanpp/
 ```
 
+## 辞書ファイル/学習データファイル作成スクリプト
+このリポジトリには辞書ファイルと解析誤りの修正のために使用する学習データファイルを作成するためのスクリプトが存在する。（make_entry.rb, make_partial.rb）
+これらのスクリプトを使用すると、一つのソースファイルから辞書ファイルと学習データファイルの両方を自動で生成できる。
+以下でこれらの使い方を説明する。
+### 下準備
+以下のようなフォーマットのファイル(input.txt)を用意する。辞書の名前、見出し語、代表表記、読みがタブで区切られている。
+```
+地名	青森県	青森県	あおもりけん
+地名	岩手県	岩手県	いわてけん
+地名	秋田県	秋田県	あきたけん
+地名	宮城県	宮城県	みやぎけん
+地名	山形県	山形県	やまがたけん
+地名	福島県	福島県	ふくしまけん
+地名	茨城県	茨城県	いばらぎけん
+```
+Excel等の表計算ソフトを使うと簡単である。Excel上で上記フォーマットのデータを作成し、データの範囲をコピーして以下のコマンドを実行すると簡単に作ることができる。
+```
+pbpaste | tr "\r" "\n" > input.txt
+```
+
+### 辞書ファイルの作成（make_entry.rb）
+input.txt をmake_entry.rbに渡すと標準出力に辞書ファイルの中身が出力される。出力された辞書ファイルはjuman++のソースディレクトリ配下の dict-build/userdicに配置し、辞書登録を行う。
+```
+ruby make_entry.rb input.txt > place-name.dic
+```
+### 学習データファイルの作成（make_partial.rb）
+input.txt をmake_partial.rbに渡すと標準出力に学習データファイルの中身が出力される。解析誤りの修正に使用する。
+```
+ruby make_partial.rb input.txt > part-sample.txt
+```
