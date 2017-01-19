@@ -9,14 +9,6 @@ def entry(line)
   puts entry
 end
 
-def word_adjust(line)
-  data = line.split(/\s+/)
-  midashi = data[1]
-  puts "\t#{midashi}\t"
-end
-entries=%q|
-|
-
 while (line = gets) do
   entry(line.chomp)
 end
