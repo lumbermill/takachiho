@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215014608) do
+ActiveRecord::Schema.define(version: 20170118055941) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20161215014608) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
+
+  create_table "sakura_iot_modules", force: :cascade do |t|
+    t.integer  "raspi_id",   limit: 4
+    t.string   "token",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "sakura_iot_modules", ["raspi_id"], name: "index_sakura_iot_modules_on_raspi_id", unique: true, using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.integer  "raspi_id",    limit: 4
