@@ -19,10 +19,12 @@ class SettingsController < ApplicationController
   # GET /settings/new
   def new
     @setting = Setting.new
+    @setting.sakura_iot_modules.build
   end
 
   # GET /settings/1/edit
   def edit
+    @setting.sakura_iot_modules.build if @setting.sakura_iot_modules.blank?
   end
 
   # POST /settings
@@ -55,6 +57,8 @@ class SettingsController < ApplicationController
   def update
     respond_to do |format|
       if @setting.update(setting_params)
+        # tokenが空なら削除
+        @setting.sakura_iot_modules.first.delete if (@setting.sakura_iot_modules.first.token == "")
         format.html { redirect_to @setting, notice: 'Setting was successfully updated.' }
         format.json { render :show, status: :ok, location: @setting }
       else
@@ -107,6 +111,6 @@ class SettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def setting_params
-      params.require(:setting).permit(:raspi_id, :name, :min_tmpr, :max_tmpr)
+      params.require(:setting).permit(:raspi_id, :name, :min_tmpr, :max_tmpr, sakura_iot_modules_attributes: [:id, :token])
     end
 end
