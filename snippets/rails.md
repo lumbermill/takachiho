@@ -23,7 +23,10 @@ $ rails new sandbox-rails --database=mysql
 gem 'therubyracer', platforms: :ruby
 gem 'devise', '~> 4.0'
 gem 'rmagick', '~> 2.15'
+
+gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
 ```
+https://github.com/seyhunak/twitter-bootstrap-rails
 
 http://www.lumber-mill.co.jp/notes/tips/141006_ruby.html
 
