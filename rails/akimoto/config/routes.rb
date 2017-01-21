@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  get 'pages/howto'
+  get 'howto' => 'pages#howto'
 
   devise_for :users
 
   authenticate :user do
-    get 'pages/dashboard'
+    get 'dashboard' => 'pages#dashboard'
     resources :tags
     resources :items
   end
