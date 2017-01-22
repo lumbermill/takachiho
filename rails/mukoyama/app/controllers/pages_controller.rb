@@ -66,20 +66,10 @@ class PagesController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: 'Rails: '+event.message['text']
-          }
-          # TODO: 登録済みのセンサがある場合、現在の温度を返す。
-          raspi_id = find_raspi_from_message(event.message['text'])
-          if raspi_id.nil?
-            line_client.reply_message(event['replyToken'],{type: 'text', text: '合言葉をどうぞ。'})
-          else
-            # TODO: ユニークのチェックが必要
-            Address.create(raspi_id: raspi_id, mail: event['source']['userId'], active: true)
-            line_client.reply_message(event['replyToken'],{type: 'text', text: '登録しました。'})
-          end
-          #client.push_message(,message)
+          settings = Setting.find_by(mail: event['source']['userId'])
+          bot = LineBot.new(event['source']['userId'],settings)
+          t = bot.reply(event.message['text'])
+          line_client.reply_message(event['replyToken'],{type: 'text', text: t})
         end
       end
     }
@@ -87,9 +77,4 @@ class PagesController < ApplicationController
     render plain: "OK"
   end
 
-  private
-    def find_raspi_from_message(text)
-      # TODO: 合言葉に該当するraspi_idを検索する
-      return 1
-    end
 end

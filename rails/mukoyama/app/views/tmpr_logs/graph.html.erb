@@ -1,6 +1,10 @@
 <% content_for :title, @setting.name %>
 <% content_for :subtitle, "ID: #{@setting.raspi_id}" %>
-
+<div class="row">
+	<div class="col-md-12" style="text-align: right">
+		<%= line_add_frinend_button %>
+ 	</div>
+</div>
 <div id="chart_latest" class="col-md-12">
 Loading..
 </div>

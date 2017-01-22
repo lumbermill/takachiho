@@ -18,4 +18,13 @@ module ApplicationHelper
     end
     return url
   end
+
+  def line_add_frinend_button
+    # Generated on https://media.line.me/en/how_to_install.html#addfriend
+    html =<<-EOT
+    <div class="line-it-button" data-lang="en" data-type="friend" data-lineid="@lut9562u" style="display: none;"></div>
+    <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+    EOT
+    html.html_safe
+  end
 end
