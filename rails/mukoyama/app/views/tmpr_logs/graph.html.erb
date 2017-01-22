@@ -86,6 +86,7 @@ $(function() {
 					chart_latest.addSeries({
 							name: "気温",
 							color: Highcharts.getOptions().colors[3],
+							marker: {enabled: false},
 							showInLegend: true,
 							data: data,
 							yAxis: 0
@@ -95,6 +96,7 @@ $(function() {
 						chart_latest.addSeries({
 								name: "湿度",
 								color: Highcharts.getOptions().colors[0],
+								marker: {enabled: false},
 								showInLegend: true,
 								data: data,
 								yAxis: 1
