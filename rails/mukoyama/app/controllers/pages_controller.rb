@@ -67,7 +67,7 @@ class PagesController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           settings = Setting.find_by(mail: event['source']['userId'])
-          bot = LineBot.new(event['source']['userId'],settings)
+          bot = Linebot.new(event['source']['userId'],settings)
           t = bot.reply(event.message['text'])
           line_client.reply_message(event['replyToken'],{type: 'text', text: t})
         end
