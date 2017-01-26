@@ -20,23 +20,30 @@ class Linebot
     if @settings.count == 0
       setting = find_new_raspi_from_message(text)
       if setting.nil?
-        return "コードを確認できません。"
+        return "コードを確認できません。センサを登録してください。"
       else
         raspi_id = setting.raspi_id
         add_address(@user_id,raspi_id)
         return "コードを確認しました。「#{setting.name}」の通知をお送りします。"
       end
     else
-      # TODO: 状態確認と現在値の返答を実装
       if text == "一覧"
+        m = ""
+        @settings.each do |s|
+          m += "#{s.id} #{s.name}\n"
+        end
+        return m
       else
         s = find_my_raspi_from_message(text)
         if s.nil?
-          # TODO: 適当におしゃべりする？
+          # TODO: 天気予報と連動した言葉を返す
           return '今日も良い天気ですね。'
         else
-          # TODO: 直近の温度と湿度、画像があれば画像を返す
-          return "xx時xx分 「#{s.name}」気温4.5、湿度45%です。"
+          # TODO: 画像があれば画像を返す
+          tl = TmprLog.where(raspi_id: 2).order("time_stamp desc").limit(1).first
+          return "データが見つかりませんでした。" if tl.nil?
+          ts = tl.time_stamp.strftime("%H時%M分")
+          return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
         end
       end
     end

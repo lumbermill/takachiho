@@ -10,6 +10,6 @@ one:
 two:
   raspi_id: 2
   time_stamp: 2016-03-18 10:42:00
-  temperature: 1.5
-  pressure: 1.5
-  humidity: 1.5
+  temperature: 3.5
+  pressure: 990.0
+  humidity: 90.5
