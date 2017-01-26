@@ -8,6 +8,7 @@ class PicturesController < ApplicationController
 
   def index
     @id = params[:raspi_id]
+    @setting = Setting.find_by(raspi_id: params[:raspi_id])
     @date = params[:date] || ""
     @page = (params[:page] || "1").to_i
     pagesize = 24
@@ -93,6 +94,7 @@ class PicturesController < ApplicationController
   end
 
   def request_upload
+    raise 'need to login' unless current_user
     raspi_id = params[:raspi_id]
     raise "raspi id is not set." unless raspi_id
     dir = "#{BASEDIR}/#{raspi_id}"
