@@ -41,7 +41,6 @@ if File.exist?(lockfile)
     pid = f.read
     if process_exist?(pid)
       #ロックファイルに書かれたPIDが存在するならプログラム終了
-      puts "This program is already active."
       exit
     else
       #ロックファイルに書かれたPIDが存在しないならロックファイルを更新してget_tmpr実行
