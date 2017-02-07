@@ -47,6 +47,10 @@
       <% end %>
     </td>
   </tr>
+  <tr> 
+    <th><%= t("activerecord.attributes.setting.token4sakura") %></th>
+    <th><div class="well well-sm"><%= @setting.sakura_iot_modules[0].token %></th>
+  </tr> 
   <tr>
     <th><%= t("activerecord.attributes.setting.created_at") %></th>
     <td><%= @setting.created_at %></td>
