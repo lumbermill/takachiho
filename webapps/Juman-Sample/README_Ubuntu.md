@@ -7,6 +7,7 @@
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt install libboost-dev
+$ sudo apt-get install xz-utils #xz形式のアーカイブを展開するために必要
 $ mkdir ~/src
 ```
 
