@@ -7,7 +7,9 @@
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt install libboost-dev
-$ sudo apt-get install xz-utils #xz形式のアーカイブを展開するために必要
+$ sudo apt install make gcc g++
+sudo apt install python-pip
+$ sudo apt install xz-utils #xz形式のアーカイブを展開するために必要
 $ mkdir ~/src
 ```
 
@@ -19,7 +21,7 @@ $ tar xJfv jumanpp-1.01.tar.xz
 $ cd jumanpp-1.01/
 $ ./configure
 $ make
-$ sudo make install #失敗
+$ sudo make install
 ```
 
 ### PyKNP(Pythonバインディング)インストール
