@@ -11,8 +11,3 @@
 /log/*
 !/log/.keep
 /tmp
-
-.vagrant/
-Vagrantfile
-vendor/ruby/
-_*
