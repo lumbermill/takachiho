@@ -21,6 +21,9 @@ https://github.com/murawaki/lebyr
   - Class::Data::Inheritable 
   - IO::Scalar
 
+### JUMAN++インストール
+- https://github.com/lumbermill/takachiho/blob/master/webapps/Juman-Sample/README_Ubuntu.md
+
 ### JUMANインストール
 ```
 $ wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/juman/juman-7.01.tar.bz2
@@ -30,6 +33,16 @@ $ ./configure
 $ make
 $ sudo make install
 $ ldconfig
+```
+
+### KNPインストール
+```
+$ wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/knp-4.16.tar.bz2
+$ tar xvjf knp-4.16.tar.bz2
+$ cd knp-4.16/
+$ ./configure
+$ make
+$ sudo make install
 ```
 
 ### txインストール
@@ -49,23 +62,11 @@ $ sudo cpan install Class::Accessor::Fast Parse::Yapp CDB_File Unicode::Japanese
 ```
 ## lebyrインストール
 
-### READMEのsetupに従う
-https://github.com/murawaki/lebyr/blob/master/README.md#setup
 ### ソースコードの入手
+本家リポジトリは上手く動作しなかったためForkされた修正版を使用する。
 ```
-$ git clone https://github.com/murawaki/lebyr.git
+$ git clone https://github.com/koki-h/lebyr.git
 ```
-
-### Makefile.PLを修正
-7行目
-```
-our $tx_prefix = '$(HOME)/local'; # bad hack
-```
-を
-```
-our $tx_prefix = '/usr/local/';
-```
-にする。
 
 ### コンパイル
 ```
@@ -82,8 +83,19 @@ $ wget http://lotus.kuee.kyoto-u.ac.jp/~murawaki/lebyr/lebyr-model-20160407.tar.
 $ tar jxvf lebyr-model-20160407.tar.bz2
 ```
 
-### JUMAN++辞書のコンパイル
+### JUMAN辞書のコンパイル
 perlのライブラリパスにJUMAN付属のperlライブラリのパス（juman-7.01/perl/blib/lib）を追加 
+```
+$ cd $LEBYR-ROOT-DIR
+$ mkdir -p data/dic
+$ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir $JUMAN_SOURCE_PATH/dic --outputdir data/dic
+$ mkdir -p data/autodic
+$ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir $JUMAN_SOURCE_PATH/autodic --outputdir data/autodic
+$ mkdir -p data/wikipediadic
+$ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir $JUMAN_SOURCE_PATH/wikipediadic --outputdir data/wikipediadic
+```
+<!--
+###JUMAN++辞書のコンパイル
 ```
 $ mkdir -p data/dic
 $ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir ../jumanpp-1.01/dict-build/dic/  --outputdir data/dic
@@ -95,11 +107,68 @@ $ mkdir -p data/wiktionarydic
 $ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir ../jumanpp-1.01/dict-build/wiktionarydic/  --outputdir data/wiktionarydic
 $ mkdir -p data/onomatopedic
 $ perl -Ilib -I../juman-7.01/perl/blib/lib unknown/makedic.pl --inputdir ../jumanpp-1.01/dict-build/onomatopedic/  --outputdir data/onomatopedic
-````
+```
+-->
 
-## prefs を編集して辞書、モデル等のパスを修正
-（prefsの書式？） 
+### prefs を編集して辞書、モデル等のパスを修正
+```
+$ cp /usr/local/etc/jumanrc ~/.jumanrc
+```
 
-## 環境変数 JUMAN_PREFIX を設定 (JUMAN バイナリの prefix)
-（juman++のフルパスを設定すれば良い？）
+- /home/murawaki/reserch/lebyrをlebyrのソースディレクトリ(ex:/home/ubuntu/src/lebyer)に変更
+- main-dictionary.db-pathをJUMAN辞書のコンパイルで--outputdirに指定したパスに変更
+- juman.rcfileとmain-dictionary.rc-pathを/home/murawaki/.jumanrcから現在ユーザのホームディレクトリ(ex:/home/ubuntu/.jumanrc)に変更
+- analyzer-juman.jumanrc-autodicを/home/murawaki/.jumanrc.autodicから現在ユーザのホームディレクトリ(ex:/home/ubuntu/.jumanrc.autodic)に変更
+
+```
+$ diff prefs_orig prefs
+3c3
+<     'juman.rcfile' => '/home/murawaki/.jumanrc', # must be overridden
+---
+>     'juman.rcfile' => '/home/ubuntu/.jumanrc', # must be overridden
+6,9c6,9
+<     'unknown-word-detector.rule-file' => '/home/murawaki/research/lebyr/data/undefRule.storable',
+<     'unknown-word-detector.decomposition-rule-file' => '/home/murawaki/research/lebyr/data/decomposition.storable',
+<     'unknown-word-detector.repname-list' => '/home/murawaki/research/lebyr/data/cfRepname.storable',
+<     'unknown-word-detector.repname-ngram' => '/home/murawaki/research/lebyr/data/repnameNgram.storable',
+---
+>     'unknown-word-detector.rule-file' => '/home/ubuntu/src/lebyr/data/undefRule.storable',
+>     'unknown-word-detector.decomposition-rule-file' => '/home/ubuntu/src/lebyr/data/decomposition.storable',
+>     'unknown-word-detector.repname-list' => '/home/ubuntu/src/lebyr/data/cfRepname.storable',
+>     'unknown-word-detector.repname-ngram' => '/home/ubuntu/src/lebyr/data/repnameNgram.storable',
+11,16c11,16
+<     'suffix-list.path' => '/home/murawaki/research/lebyr/data',
+<     'main-dictionary.rc-path' => '/home/murawaki/.jumanrc',
+<     'main-dictionary.db-path' => ['/home/murawaki/research/lebyr/data/dic', '/home/murawaki/research/lebyr/data/autodic', '/home/murawaki/research/lebyr/data/wikipediadic'],
+<     'morpheme-variant-checker.unihan-db' => '/home/murawaki/research/lebyr/data/unihan.storable',
+<     'analyzer-juman.jumanrc-autodic' => '/home/murawaki/.jumanrc.autodic',
+<     'morpheme-usage-monitor.fusana-model' => '/home/murawaki/research/lebyr/data/fusana.model',
+---
+>     'suffix-list.path' => '/home/ubuntu/src/lebyr/data',
+>     'main-dictionary.rc-path' => '/home/ubuntu/.jumanrc',
+>     'main-dictionary.db-path' => ['/home/ubuntu/src/lebyr/data/dic', '/home/ubuntu/src/lebyr/data/autodic', '/home/ubuntu/src/lebyr/data/wikipediadic'],
+>     'morpheme-variant-checker.unihan-db' => '/home/ubuntu/src/lebyr/data/unihan.storable',
+>     'analyzer-juman.jumanrc-autodic' => '/home/ubuntu/.jumanrc.autodic',
+>     'morpheme-usage-monitor.fusana-model' => '/home/ubuntu/src/lebyr/data/fusana.model',
+```
+
+### 環境変数 JUMAN_PREFIX を設定 (JUMAN バイナリの prefix)
+jumanバイナリの場所を調べる
+```
+$ which juman
+/usr/local/bin/juman
+```
+.bashrcなどに追記
+```
+JUMAN_PREFIX=/usr/local/bin
+```
+
+### テスト
+unknown/sequential.plを使ってtest/sample.txtを解析し、未知語辞書を作成する。
+juman-perl、knp-perl(JUMAN,KNPのソースコードに付属)のライブラリパスを@INCに入れる必要がある。
+```
+cd $LEBYR-ROOT-DIR
+perl -Ilib  -I../juman-7.01/perl/blib/lib -I../knp-4.16/perl/lib unknown/sequential.pl --conf=prefs --monitor --dicdir=/tmp/adic --raw test/sample.txt --debug
+```
+/tmp/adic/output.dic にラ行動詞「ファボる」が登録されていれば成功。
 
