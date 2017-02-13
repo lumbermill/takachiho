@@ -2,10 +2,10 @@
 
 one:
   raspi_id: 1
-  mail: MyString
+  mail: foo1@bar.com
   active: false
 
 two:
-  raspi_id: 1
-  mail: MyString
+  raspi_id: 2
+  mail: foo2@bar.com
   active: false

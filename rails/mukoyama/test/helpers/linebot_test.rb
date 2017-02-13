@@ -6,7 +6,7 @@ class LinebotTest < ActionController::TestCase
     bot = Linebot.by_userid('dummy-userid')
     assert_nil Address.find_by(mail: 'dummy-userid')
     assert_equal "コードを確認できません。センサを登録してください。", bot.reply('invalid message')
-    assert_equal "コードを確認しました。「test2」の通知をお送りします。", bot.reply('2-asdf')
+    assert_equal "コードを確認しました。「test2」の通知をお送りします。", bot.reply('2-01af')
     assert_equal 1, Address.where(mail: 'dummy-userid').count
   end
 
@@ -19,7 +19,7 @@ class LinebotTest < ActionController::TestCase
     TmprLog.destroy_all
     assert_equal "データが見つかりませんでした。", bot.reply('今test2どんな？')
 
-    assert_equal "298486374 test2\n", bot.reply('一覧')
+    assert_equal "298486374-0000 test2\n", bot.reply('一覧')
   end
 
 end

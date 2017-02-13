@@ -7,7 +7,7 @@ class Linebot
   # 登録 id-tttt, 解除 id-tttt, 一覧
 
   def self.by_userid(user_id)
-    ids = Address.where(mail: user_id).map{|a| a.raspi_id }
+    ids = Address.where(mail: user_id, active: true).map{|a| a.raspi_id }
     settings = Setting.where(raspi_id: ids)
     return Linebot.new(user_id,settings)
   end
@@ -49,7 +49,7 @@ class Linebot
           return '今日も良い天気ですね。'
         else
           # TODO: 画像があれば画像を返す
-          tl = TmprLog.where(raspi_id: raspi_id).order("time_stamp desc").limit(1).first
+          tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
           return "データが見つかりませんでした。" if tl.nil?
           ts = tl.time_stamp.strftime("%H時%M分")
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
