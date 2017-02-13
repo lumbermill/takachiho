@@ -40,7 +40,7 @@ class Linebot
           return '今日も良い天気ですね。'
         else
           # TODO: 画像があれば画像を返す
-          tl = TmprLog.where(raspi_id: 2).order("time_stamp desc").limit(1).first
+          tl = TmprLog.where(raspi_id: raspi_id).order("time_stamp desc").limit(1).first
           return "データが見つかりませんでした。" if tl.nil?
           ts = tl.time_stamp.strftime("%H時%M分")
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
