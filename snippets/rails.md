@@ -28,9 +28,12 @@ gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
 ```
 https://github.com/seyhunak/twitter-bootstrap-rails
 
+```
+rails generate bootstrap:install static
+```
 http://www.lumber-mill.co.jp/notes/tips/141006_ruby.html
 
-
+## ルーティングエラー
 ```
 raise ActionController::RoutingError.new('Not Found')
 ```
