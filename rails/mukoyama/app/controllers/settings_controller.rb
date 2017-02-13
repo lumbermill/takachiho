@@ -14,6 +14,7 @@ class SettingsController < ApplicationController
   # GET /settings/1
   # GET /settings/1.json
   def show
+    @setting.sakura_iot_modules.build if @setting.sakura_iot_modules.blank?
   end
 
   # GET /settings/new

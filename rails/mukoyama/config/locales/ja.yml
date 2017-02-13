@@ -15,6 +15,7 @@ ja:
         max_tmpr: '最高気温'
         token4write: '送信用トークン'
         token4read: '公開用トークン'
+        token4sakura: 'さくらのIoTトークン'
       user:
         email: 'メールアドレス'
         password: 'パスワード'

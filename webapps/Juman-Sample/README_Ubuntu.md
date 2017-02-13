@@ -7,6 +7,10 @@
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt install libboost-dev
+$ sudo apt install make gcc g++
+$ sudo apt install python-pip
+$ sudo apt install ruby
+$ sudo apt install xz-utils #xz形式のアーカイブを展開するために必要
 $ mkdir ~/src
 ```
 
@@ -18,14 +22,14 @@ $ tar xJfv jumanpp-1.01.tar.xz
 $ cd jumanpp-1.01/
 $ ./configure
 $ make
-$ sudo make install #失敗
+$ sudo make install
 ```
 
 ### PyKNP(Pythonバインディング)インストール
 ```
 $ cd ~/src
 $ sudo pip install --upgrade pip
-$ sudo pip install prettyprint
+$ sudo pip install prettyprint six
 $ wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/pyknp-0.3.tar.gz
 $ tar xvf pyknp-0.3.tar.gz
 $ cd pyknp-0.3
