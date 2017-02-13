@@ -4,6 +4,8 @@
 class Linebot
   attr_accessor :debug
 
+  # 登録 id-tttt, 解除 id-tttt, 一覧
+
   def self.by_userid(user_id)
     ids = Address.where(mail: user_id).map{|a| a.raspi_id }
     settings = Setting.where(raspi_id: ids)
@@ -17,20 +19,27 @@ class Linebot
   end
 
   def reply(text)
-    if @settings.count == 0 || text.start_with?("追加")
+    if @settings.count == 0 || text.start_with?("登録")
       setting = find_new_raspi_from_message(text)
       if setting.nil?
         return "コードを確認できません。センサを登録してください。"
       else
-        raspi_id = setting.raspi_id
-        add_address(@user_id,raspi_id)
+        add_address(@user_id,setting.raspi_id)
         return "コードを確認しました。「#{setting.name}」の通知をお送りします。"
+      end
+    elsif text.start_with?("解除")
+      setting = find_new_raspi_from_message(text)
+      if setting.nil?
+        return "コードを確認できません。"
+      else
+        remove_address(@user_id,setting.raspi_id)
+        return "コードを確認しました。「#{setting.name}」からの通知を解除します。"
       end
     else
       if text == "一覧"
         m = ""
         @settings.each do |s|
-          m += "#{s.id} #{s.name}\n"
+          m += "#{s.id}-0000 #{s.name}\n"
         end
         return m
       else
@@ -57,6 +66,15 @@ class Linebot
       address.save
     else
       Address.create(raspi_id: raspi_id, mail: user_id, active: true)
+    end
+  end
+
+  def remove_address(user_id,raspi_id)
+    # Remove
+    address = Address.find_by(raspi_id: raspi_id, mail: user_id)
+    if address
+      address.active = false
+      address.save
     end
   end
 
