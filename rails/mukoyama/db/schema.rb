@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118055941) do
+ActiveRecord::Schema.define(version: 20170213044057) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20170118055941) do
     t.datetime "updated_at",                          null: false
     t.integer  "snooze",     limit: 4,   default: 60, null: false
   end
+
+  add_index "addresses", ["raspi_id", "mail"], name: "index_addresses_on_raspi_id_and_mail", unique: true, using: :btree
 
   create_table "mail_logs", force: :cascade do |t|
     t.integer  "address_id", limit: 4

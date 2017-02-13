@@ -17,7 +17,7 @@ class Linebot
   end
 
   def reply(text)
-    if @settings.count == 0
+    if @settings.count == 0 || text.start_with?("追加")
       setting = find_new_raspi_from_message(text)
       if setting.nil?
         return "コードを確認できません。センサを登録してください。"
@@ -68,7 +68,9 @@ class Linebot
   end
 
   def find_new_raspi_from_message(text)
-    id = text.split("-")[0].to_i
+    m = text.match /[0-9]+-[0-9a-f]{4}/  # id-tttt (4 letters of token)
+    return nil if m.nil?
+    id = m[0].split("-")[0].to_i
     s = Setting.find_by(raspi_id: id)
     return nil if s.nil?
     # TODO: 合言葉に該当するraspi_idを検索する、とりあえず今はIDだけでOK
