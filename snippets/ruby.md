@@ -133,3 +133,12 @@ puts my_hash["hello"] => "goodbye"
 ```
 puts "\e[31m"+"Hello, world."+"\e[m"
 ```
+
+### self navigation operator
+Objectがnilの場合に、エラーとせず、nilを返してくれるようになります。Ruby2.3以降で利用可能です。
+```
+> s&.to_i # s = "1000"
+=> 1000
+> s&.to_i # s = nil
+=> nil
+```
