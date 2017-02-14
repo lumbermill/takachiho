@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213044057) do
+ActiveRecord::Schema.define(version: 20170213232525) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",   limit: 4
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170213044057) do
     t.string   "name",        limit: 255
     t.string   "token4write", limit: 255
     t.string   "token4read",  limit: 255
+    t.integer  "city_id",     limit: 8
   end
 
   add_index "settings", ["raspi_id"], name: "index_settings_on_raspi_id", unique: true, using: :btree

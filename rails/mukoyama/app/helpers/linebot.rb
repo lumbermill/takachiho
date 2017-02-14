@@ -45,8 +45,14 @@ class Linebot
       else
         s = find_my_raspi_from_message(text)
         if s.nil?
-          # TODO: 天気予報と連動した言葉を返す
-          return '今日も良い天気ですね。'
+          city_id = @settings[0].city_id
+          if city_id
+            weather = get_weather(city_id)
+            if weather
+              return weather["weather_main"]
+            end
+          end
+          return 'こんにちは。'
         else
           # TODO: 画像があれば画像を返す
           tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
@@ -95,4 +101,18 @@ class Linebot
     return s
   end
 
+end
+
+# 指定された地点(city_id)、時刻の天気をハッシュで返します。
+# ex. {"dt"=>2017-02-14 09:00:00 UTC, "id"=>1848373, "weather_main"=>"Clear",
+#      "weather_desc"=>"sky is clear", "temp"=>4.03, "pressure"=>1035.61, "humidity"=>100, "wind_speed"=>0.97,
+#      "wind_deg"=>358.504, "cloudiness"=>0, "rain"=>0.0, "snow"=>nil, "modified_at"=>2017-02-13 21:01:39 UTC}
+def get_weather(city_id,ts=nil)
+  raise 'city_id can not be nil.' if city_id.nil?
+  ts = Time.now if ts.nil?
+  t = ts.strftime("%Y-%m-%d %H:%M:%S")
+  sql = "select * from weathers where id = #{city_id} and dt <= '#{t}' order by dt desc limit 1"
+  results = ActiveRecord::Base.connection.select_all(sql)
+  return nil if results.length == 0
+  return results.to_a[0]
 end

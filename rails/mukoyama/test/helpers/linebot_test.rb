@@ -22,4 +22,12 @@ class LinebotTest < ActionController::TestCase
     assert_equal "298486374-0000 test2\n", bot.reply('一覧')
   end
 
+  test "get weathers" do
+    # need to create weathers table on mukoyama_test first.
+    assert_raises RuntimeError do
+      get_weather(nil)
+    end
+    assert_equal 0, get_weather(0).size
+    assert_equal 1848373, get_weather(1848373)["id"]
+  end
 end

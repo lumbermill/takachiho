@@ -16,6 +16,7 @@ ja:
         token4write: '送信用トークン'
         token4read: '公開用トークン'
         token4sakura: 'さくらのIoTトークン'
+        city_id: '設置場所'
       user:
         email: 'メールアドレス'
         password: 'パスワード'
