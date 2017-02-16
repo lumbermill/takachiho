@@ -20,7 +20,7 @@ class Linebot
   end
 
   def reply(text)
-    if @settings.count == 0 || text.start_with?("登録")
+    if @settings.count == 0 || text.start_with?(*["登録","追加"]) || text.end_with?(*["を追加","を追加して","を登録","を登録して"])
       setting = find_new_raspi_from_message(text)
       if setting.nil?
         return "コードを確認できません。センサを登録してください。"
