@@ -101,6 +101,44 @@ class Linebot
     return s
   end
 
+  # Within 30 minutes.
+  def has_new_image(raspi_id)
+    flg = false
+    dir = PicturesController::BASEDIR+"/#{raspi_id}"
+    return false unless File.directory? dir
+    count = 0
+    Dir.entries(dir).sort.reverse.each do |f|
+      break if count > 3 # 30分間（画像3枚分）の確認が終わったらループを抜ける
+      next if f.start_with? "."
+      next unless f.end_with? ".jpg"
+      count += 1
+      # 現在時刻と30分前の時間を取得
+      t = Time.now
+      t_30m_ago = t - 30 * 60
+      # 分の1桁目取得
+      first_digit = t_30m_ago.min.abs.to_s.each_byte.map{|b| b - 0x30}[-1]
+      t_truncate = Time.at(t_30m_ago.to_i / 60 * 60) - first_digit * 60
+      # 現在の日付と30分前の日付のファイル以外はスキップ
+      next unless f.start_with?(*[t.strftime("%y%m%d"),t_truncate.strftime("%y%m%d")])
+      # 170217_012001.jpg
+      # 30分前の時刻 ~ 現在時刻までのファイルを取得
+      if (f.split("_")[0] == t_30m_ago.strftime("%y%m%d") && f.split("_")[1].split(".")[0].to_i >= t_30m_ago.strftime("%H%M00").to_i) ||
+          (f.split("_")[0] == t.strftime("%y%m%d") && f.split("_")[1].split(".")[0].to_i < t.strftime("%H%M00").to_i)
+        flg = true
+      end
+    end
+    return flg
+  end
+
+  def get_latest_image(raspi_id)
+    dir = PicturesController::BASEDIR+"/#{raspi_id}"
+    return nil unless File.directory? dir
+    Dir.entries(dir).sort.reverse.each do |f|
+      next if f.start_with? "."
+      next unless f.end_with? ".jpg"
+      return "#{dir}/#{f}"
+    end
+  end
 end
 
 # 指定された地点(city_id)、時刻の天気をハッシュで返します。
