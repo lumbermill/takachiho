@@ -23,7 +23,6 @@ def get_tmpr
         tmpr_log.save
       end
       loop do
-        ws.send STDIN.gets.strip
       end
     end
     threads << t
