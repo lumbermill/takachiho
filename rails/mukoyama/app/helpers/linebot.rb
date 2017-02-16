@@ -16,6 +16,7 @@ class Linebot
     @user_id = user_id
     @settings = settings || []
     @debug = debug
+    @img_url = 404
   end
 
   def reply(text)
@@ -58,6 +59,9 @@ class Linebot
           tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
           return "データが見つかりませんでした。" if tl.nil?
           ts = tl.time_stamp.strftime("%H時%M分")
+          if has_new_image(s.raspi_id)
+            @img_url = get_latest_image(s.raspi_id)
+          end
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
         end
       end
@@ -132,12 +136,18 @@ class Linebot
 
   def get_latest_image(raspi_id)
     dir = PicturesController::BASEDIR+"/#{raspi_id}"
-    return nil unless File.directory? dir
+    return 404 unless File.directory? dir
+    setting = Setting.find(raspi_id)
+    return 500 unless setting.readable?
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
-      return "#{dir}/#{f}"
+      return "https://mukoyama.lmlab.net/pictures/#{raspi_id}/#{f}?token=#{setting.token4read}"
     end
+  end
+
+  def get_img_url
+    return @img_url
   end
 end
 

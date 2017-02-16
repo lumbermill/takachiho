@@ -69,9 +69,13 @@ class PagesController < ApplicationController
           bot = Linebot.by_userid(event['source']['userId'])
           t = bot.reply(event.message['text'])
           line_client.reply_message(event['replyToken'],{type: 'text', text: t})
-          if bot.has_new_image(bot.find_new_raspi_from_message(event.message['text']))
-            img_url = get_latest_image(bot.find_new_raspi_from_message(event.message['text']))
-            line_client.reply_message(event['replyToken'], {type: 'image', originalContentUrl: img_url, previewImageUrl: img_url})
+          case bot.get_img_url
+          when 404 then
+            line_client.push_message(event['source']['userId'], {type: 'text', text: "画像が見つかりませんでした。"})
+          when 500 then
+            line_client.push_message(event['source']['userId'], {type: 'text', text: "画像が公開されていません。画像を公開してください。"})
+          else
+            line_client.push_message(event['source']['userId'], {type: 'image', originalContentUrl: bot.get_img_url, previewImageUrl: bot.get_img_url})
           end
         end
       end
