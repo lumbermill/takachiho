@@ -69,6 +69,10 @@ class PagesController < ApplicationController
           bot = Linebot.by_userid(event['source']['userId'])
           t = bot.reply(event.message['text'])
           line_client.reply_message(event['replyToken'],{type: 'text', text: t})
+          if bot.has_new_image(bot.find_new_raspi_from_message(event.message['text']))
+            img_url = get_latest_image(bot.find_new_raspi_from_message(event.message['text']))
+            line_client.reply_message(event['replyToken'], {type: 'image', originalContentUrl: img_url, previewImageUrl: img_url})
+          end
         end
       end
     }
