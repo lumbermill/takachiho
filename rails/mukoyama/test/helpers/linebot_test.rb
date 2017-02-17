@@ -25,9 +25,9 @@ class LinebotTest < ActionController::TestCase
   test "get weathers" do
     # need to create weathers table on mukoyama_test first.
     assert_raises RuntimeError do
-      get_weather(nil)
+      Linebot::get_weather(nil)
     end
-    assert_equal 0, get_weather(0).size
-    assert_equal 1848373, get_weather(1848373)["id"]
+    assert_nil Linebot::get_weather(0)
+    assert_equal 1848373, Linebot::get_weather(1848373)["id"]
   end
 end

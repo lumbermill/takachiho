@@ -15,6 +15,8 @@ class Linebot
   def initialize(user_id,settings=[],debug = false)
     @user_id = user_id
     @settings = settings || []
+    @cities = []
+    @settings.each { |s| @cities += [s.city_id] if s.city_id }
     @debug = debug
     @img_url = 404
   end
@@ -40,20 +42,17 @@ class Linebot
       if text == "一覧"
         m = ""
         @settings.each do |s|
-          m += "#{s.id}-0000 #{s.name}\n"
+          m += "#{s.id}-0000 #{s.name} #{s.city_name}\n"
         end
         return m
       else
         s = find_my_raspi_from_message(text)
         if s.nil?
-          city_id = @settings[0].city_id
-          if city_id
-            weather = get_weather(city_id)
-            if weather
-              return weather["weather_main"]
-            end
-          end
-          return 'こんにちは。'
+          # 適当な街があれば天気情報を返す
+          # なければヘルプメッセージ
+          city_id = @cities.shuffle[0]
+          return reply_about_weather(city_id) if city_id
+          return reply_help
         else
           tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
           return "データが見つかりませんでした。" if tl.nil?
@@ -62,10 +61,40 @@ class Linebot
             # 画像があれば、URLをセット
             @img_url = get_latest_image(s.raspi_id)
           end
-          return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
+          if s.city_id
+            # 天気情報があれば追記
+            w = reply_about_weather(s.city_id)
+          else
+            w = ""
+          end
+          return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。" + w
         end
       end
     end
+  end
+
+  def reply_about_weather(city_id)
+    name = Setting.new(city_id: city_id).city_name
+    weather = Linebot::get_weather(city_id)
+    if weather
+      case weather["weather_main"]
+      when "Rain" then
+        w = "雨"
+      when "Cloud" then
+        w = "曇り"
+      else
+        w = weather["weather_main"]
+      end
+
+      temp = weather["temp"]
+      return "#{name}の天気は#{w}、気温は#{temp}度です。"
+    else
+      return "#{name}の天気情報を取得できません。"
+    end
+  end
+
+  def reply_help
+    'センサの「登録」「一覧」「解除」は、そのように話しかけてください。'
   end
 
   def add_address(user_id,raspi_id)
@@ -156,18 +185,18 @@ class Linebot
   def userid
     @user_id
   end
-end
 
-# 指定された地点(city_id)、時刻の天気をハッシュで返します。
-# ex. {"dt"=>2017-02-14 09:00:00 UTC, "id"=>1848373, "weather_main"=>"Clear",
-#      "weather_desc"=>"sky is clear", "temp"=>4.03, "pressure"=>1035.61, "humidity"=>100, "wind_speed"=>0.97,
-#      "wind_deg"=>358.504, "cloudiness"=>0, "rain"=>0.0, "snow"=>nil, "modified_at"=>2017-02-13 21:01:39 UTC}
-def get_weather(city_id,ts=nil)
-  raise 'city_id can not be nil.' if city_id.nil?
-  ts = Time.now if ts.nil?
-  t = ts.strftime("%Y-%m-%d %H:%M:%S")
-  sql = "select * from weathers where id = #{city_id} and dt <= '#{t}' order by dt desc limit 1"
-  results = ActiveRecord::Base.connection.select_all(sql)
-  return nil if results.length == 0
-  return results.to_a[0]
+  # 指定された地点(city_id)、時刻の天気をハッシュで返します。
+  # ex. {"dt"=>2017-02-14 09:00:00 UTC, "id"=>1848373, "weather_main"=>"Clear",
+  #      "weather_desc"=>"sky is clear", "temp"=>4.03, "pressure"=>1035.61, "humidity"=>100, "wind_speed"=>0.97,
+  #      "wind_deg"=>358.504, "cloudiness"=>0, "rain"=>0.0, "snow"=>nil, "modified_at"=>2017-02-13 21:01:39 UTC}
+  def self.get_weather(city_id,ts=nil)
+    raise 'city_id can not be nil.' if city_id.nil?
+    ts = Time.now if ts.nil?
+    t = ts.strftime("%Y-%m-%d %H:%M:%S")
+    sql = "select * from weathers where id = #{city_id} and dt <= '#{t}' order by dt desc limit 1"
+    results = ActiveRecord::Base.connection.select_all(sql)
+    return nil if results.length == 0
+    return results.to_a[0]
+  end
 end
