@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'tempfile'
 LEBYR_ROOT      = ENV['LEBYR_ROOT'] || '/home/ubuntu/src/lebyr'
+LEBYR_PREFS     = ENV['LEBYR_PREFS'] || "#{LEBYR_ROOT}/prefs"
 JUMAN_PERL_ROOT = ENV['JUMAN_PERL_ROOT'] || LEBYR_ROOT + '/../juman-7.01/perl/blib/lib'
 KNP_PERL_ROOT   = ENV['KNP_PERL_ROOT'] || LEBYR_ROOT + '/../knp-4.16/perl/lib'
 
@@ -32,7 +33,7 @@ end
 
 def lebyr(copus_src)
   lebyr_cmd =  "perl -I#{LEBYR_ROOT}/lib -I#{JUMAN_PERL_ROOT} -I#{KNP_PERL_ROOT} #{LEBYR_ROOT}/unknown/sequential.pl"
-  lebyr_cmd += " --conf=#{LEBYR_ROOT}/prefs --monitor --dicdir=/tmp/adic --raw #{copus_src} --debug"
+  lebyr_cmd += " --conf=#{LEBYR_PREFS} --monitor --dicdir=/tmp/adic --raw #{copus_src} --debug"
   system(lebyr_cmd)
 end
 
