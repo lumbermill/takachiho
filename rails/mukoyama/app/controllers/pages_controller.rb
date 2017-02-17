@@ -69,13 +69,15 @@ class PagesController < ApplicationController
           bot = Linebot.by_userid(event['source']['userId'])
           t = bot.reply(event.message['text'])
           line_client.reply_message(event['replyToken'],{type: 'text', text: t})
-          case bot.get_img_url
-          when 404 then
-            line_client.push_message(event['source']['userId'], {type: 'text', text: "画像が見つかりませんでした。"})
-          when 500 then
-            line_client.push_message(event['source']['userId'], {type: 'text', text: "画像が公開されていません。画像を公開してください。"})
+          i = bot.imgurl
+          if i.nil?
+            # do nothing
+          elsif i.start_with?("http")
+            # push image
+            line_client.push_message(bot.userid, {type: 'image', originalContentUrl: i, previewImageUrl: i})
           else
-            line_client.push_message(event['source']['userId'], {type: 'image', originalContentUrl: bot.get_img_url, previewImageUrl: bot.get_img_url})
+            # push message
+            line_client.push_message(bot.userid, {type: 'text', text: i})
           end
         end
       end

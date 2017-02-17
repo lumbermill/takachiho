@@ -55,11 +55,11 @@ class Linebot
           end
           return 'こんにちは。'
         else
-          # TODO: 画像があれば画像を返す
           tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
           return "データが見つかりませんでした。" if tl.nil?
           ts = tl.time_stamp.strftime("%H時%M分")
           if has_new_image(s.raspi_id)
+            # 画像があれば、URLをセット
             @img_url = get_latest_image(s.raspi_id)
           end
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。"
@@ -136,9 +136,9 @@ class Linebot
 
   def get_latest_image(raspi_id)
     dir = PicturesController::BASEDIR+"/#{raspi_id}"
-    return 404 unless File.directory? dir
+    return "画像が登録されていません。" unless File.directory? dir
     setting = Setting.find(raspi_id)
-    return 500 unless setting.readable?
+    return "画像が公開されていません。" unless setting.readable?
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
@@ -146,8 +146,15 @@ class Linebot
     end
   end
 
-  def get_img_url
-    return @img_url
+  # pop latest image url or messages.
+  def imgurl
+    i = @img_url
+    @img_url = nil
+    return i
+  end
+
+  def userid
+    @user_id
   end
 end
 
