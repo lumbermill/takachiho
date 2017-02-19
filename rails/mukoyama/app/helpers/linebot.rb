@@ -55,8 +55,6 @@ class Linebot
           return reply_help
         else
           tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
-          return "データが見つかりませんでした。" if tl.nil?
-          ts = tl.time_stamp.strftime("%H時%M分")
           if has_new_image(s.raspi_id)
             # 画像があれば、URLをセット
             @img_url = get_latest_image(s.raspi_id)
@@ -67,25 +65,22 @@ class Linebot
           else
             w = ""
           end
+          return "温度データが見つかりませんでした。" + w if tl.nil?
+          ts = tl.time_stamp.strftime("%H時%M分")
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。" + w
         end
       end
     end
   end
 
+  WEATHER_JP = {"Clear" => "晴れ", "Cloud" => "曇り", "Rain" => "雨",   "Snow" => "雪", "Thunderstorm" => "雷雨", "Fog" => "霧"}
+
   def reply_about_weather(city_id)
     name = Setting.new(city_id: city_id).city_name
     weather = Linebot::get_weather(city_id)
     if weather
-      case weather["weather_main"]
-      when "Rain" then
-        w = "雨"
-      when "Cloud" then
-        w = "曇り"
-      else
-        w = weather["weather_main"]
-      end
-
+      w = WEATHER_JP[weather["weather_main"]]
+      w = weather["weather_main"] if w.nil?
       temp = weather["temp"]
       return "#{name}の天気は#{w}、気温は#{temp}度です。"
     else
