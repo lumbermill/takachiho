@@ -116,7 +116,7 @@ class Linebot
     @settings.each do |s|
       return s if text.include? s.name
     end
-    return nil
+    return find_new_raspi_from_message(text)
   end
 
   def find_new_raspi_from_message(text)
