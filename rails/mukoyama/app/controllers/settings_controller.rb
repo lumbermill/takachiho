@@ -112,6 +112,6 @@ class SettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def setting_params
-      params.require(:setting).permit(:raspi_id, :name, :min_tmpr, :max_tmpr, sakura_iot_modules_attributes: [:id, :token])
+      params.require(:setting).permit(:raspi_id, :name, :min_tmpr, :max_tmpr, :city_id, sakura_iot_modules_attributes: [:id, :token])
     end
 end
