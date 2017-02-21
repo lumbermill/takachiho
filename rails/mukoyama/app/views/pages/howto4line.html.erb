@@ -1,0 +1,70 @@
+<% content_for :title, "LINEbotの使い方" %>
+<h2>友達になる</h2>
+<div class="row">
+  <div class="col-sm-8">
+    <p>
+      まずは、あなたのLINEアカウントにmukoyamaプロジェクトのLINEアカウントを友達として登録してください。
+      右側の「Add friend（友達追加）」ボタンをクリックするか、QRコードをスキャンします。
+    </p>
+  </div>
+<div class="col-sm-2">
+  <%= line_add_frinend_button %>
+  <%= image_tag "NuZYAW7_2x.png", class: "img img-responsive", style: "border: 1px solid #ccc" %>
+</div>
+</div>
+<h2>センサを登録する</h2>
+<div class="row">
+  <div class="col-sm-8">
+  <p>友達になったら、LINEbotに通知を届けて貰いたいセンサを登録します。
+    このサイトでは、Raspberry PiやArduinoを使ってご自身で構築した機器を登録してデータを蓄積することが出来ます。
+    今回は手軽に試して頂けるよう、2つのセンサを公開しています。以下のいずれか、または両方を追加してみてください。
+  </p>
+  <ul>
+    <li>コード: <code>2-0000</code> 名前: 452室内 (温湿度センサ)</li>
+    <li>コード: <code>11-0000</code> 名前: 高千穂市街 (定点カメラ)</li>
+  </ul>
+  <p>
+    センサを登録するには、「登録 コード」と以下のように話しかけます。
+  </p>
+  <pre>登録 2-0000</pre>
+  <p>「コードを確認しました」と応答が返ってくれば正常に登録されています。</p>
+  </div>
+  <div class="col-sm-4">
+    <%= image_tag "howto4line1.png", class: "img img-responsive" %>
+  </div>
+</div>
+
+<h2>話しかけてみる</h2>
+<div class="row">
+  <div class="col-sm-8">
+<p>使い方は簡単です。登録済みセンサのコードや名前を問いかけると、そのセンサから得られた最新の値や画像を返してくれます。
+センサに位置情報が紐づいていれば、その地域の現在の天気も返します。例えば、以下のように話しかけてみてください。</p>
+<pre>452室内どう？</pre>
+<p>「xx時xx分 『452室内』気温xx、湿度xx..」といった応答が返ってきます。カメラが設置されていれば、最新の画像も送られます。</p>
+<p>他にも幾つか、コマンドが存在します。</p>
+<ul>
+  <li>一覧 - 現在登録されているセンサの一覧を返します</li>
+</ul>
+</div>
+<div class="col-sm-4">
+  <%= image_tag "howto4line2.png", class: "img img-responsive" %>
+</div>
+</div>
+
+<h2>登録を解除するには</h2>
+<div class="row">
+  <div class="col-sm-8">
+<p>当プロジェクトの本来の目的は、温度など各種測定値の異常の検知にあるため、
+  何も話しかけなくても時々通知が届くことがあります（どんな条件で通知を飛ばすかは管理画面から調整可能です）。
+  通知が煩わしい場合には、以下の方法で登録を解除することができます。
+</p>
+<p><strong>1. 解除コマンド:</strong> 「解除 コード」と話しかけます。</p>
+<pre>解除 2-0000</pre>
+
+<p><strong>2. LINE通知をOFFにする:</strong> LINEの設定で、mukoyamaアカウントからの通知をOFFにします。
+  メッセージは届き続けますので、自分の好きなタイミングでのみ確認したい場合はこの設定が役立ちます。</p>
+</div>
+<div class="col-sm-4">
+  <%= image_tag "howto4line3.png", class: "img img-responsive" %>
+</div>
+</div>

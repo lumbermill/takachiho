@@ -40,9 +40,6 @@ class PagesController < ApplicationController
     render text: h.to_json
   end
 
-  def usecase
-  end
-
   def line_client
     require 'line/bot'
     @line_client ||= Line::Bot::Client.new { |config|
