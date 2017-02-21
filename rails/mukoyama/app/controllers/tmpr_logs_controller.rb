@@ -1,6 +1,7 @@
 class TmprLogsController < ApplicationController
   before_action :set_tmpr_log, only: [:show, :edit, :update, :destroy]
   before_action :check_auth, only: [:graph, :graph_data, :last_timestamp]
+  before_action :set_access_log, only: [:graph]
 
   # GET /tmpr_logs
   # GET /tmpr_logs.json
@@ -113,6 +114,8 @@ class TmprLogsController < ApplicationController
     @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
     @token = params[:token]
     @raspi_id = params[:raspi_id]
+
+    @n_watchers = get_access_log
   end
 
   # GET /tmpr_logs/insert

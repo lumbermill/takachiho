@@ -22,9 +22,6 @@ def get_tmpr
         tmpr_log = TmprLog.new({raspi_id: m.raspi_id, time_stamp: data["datetime"], temperature: tmpr_data[0]["value"], pressure: tmpr_data[1]["value"], humidity: tmpr_data[2]["value"],sender: data["module"]})
         tmpr_log.save
       end
-      loop do
-        ws.send STDIN.gets.strip
-      end
     end
     threads << t
   end

@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
   before_action :set_raspi_id, only: [:index,:show]
+  before_action :set_access_log, only: [:index]
 
   # sudo mkdir -p /opt/mukoyama.lmlab.net/data
   # sudo chmod 777 /opt/mukoyama.lmlab.net/data
@@ -39,7 +40,7 @@ class PicturesController < ApplicationController
 
     @dates = load_index(dir)
 
-    @n_watchers = 0 # TODO: 閲覧者数はどうやってカウントアップ(ダウン)したら良い？
+    @n_watchers = get_access_log
   end
 
   def show

@@ -15,9 +15,10 @@ https://github.com/murawaki/lebyr
   - https://code.google.com/archive/p/tx-trie/
   - https://github.com/hillbig/tx-trie
 - CPANモジュール
-  - Class::Accessor::Fast
+  - CDB_File 
   - Parse::Yapp 
-  - CDB_File Unicode::Japanese 
+  - Unicode::Japanese 
+  - Class::Accessor::Fast
   - Class::Data::Inheritable 
   - IO::Scalar
 
