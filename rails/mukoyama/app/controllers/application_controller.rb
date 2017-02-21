@@ -23,17 +23,12 @@ class ApplicationController < ActionController::Base
 
   def set_access_log
     page = "#{controller_name}-#{action_name}"
-    logger.debug("セットするよ！！")
-    logger.debug(page)
-    logger.debug(request.session_options[:id])
     $access_log[request.session_options[:id]] = {page: page, timestamp: Time.now}
   end
 
   def get_access_log
     page = "#{controller_name}-#{action_name}"
     count = 0
-    logger.debug("ゲットだよ！！")
-    logger.debug($access_log)
     $access_log.each do |hash, log|
       if log[:timestamp] < Time.now - 60 * 10
         # 10分以上更新のないレコードは削除する
