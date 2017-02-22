@@ -28,6 +28,9 @@ class LinebotTest < ActionController::TestCase
       Linebot::get_weather(nil)
     end
     assert_nil Linebot::get_weather(0)
-    assert_equal 1848373, Linebot::get_weather(1848373)["id"]
+    assert_equal 1848373, Linebot::get_weather(1848373)["id"] # 四日市
+    assert_equal 1856057, Linebot::find_city_id_from_message("天気 名古屋")
+    assert_equal 1862588, Linebot::find_city_id_from_message("天気 日之影")
   end
+
 end

@@ -38,6 +38,8 @@ class Linebot
         remove_address(@user_id,setting.raspi_id)
         return "コードを確認しました。「#{setting.name}」からの通知を解除します。"
       end
+    elsif text.include?("天気") && (city_id = Linebot::find_city_id_from_message(text)) != nil
+      return reply_about_weather(city_id)
     else
       if text == "一覧"
         m = ""
@@ -73,7 +75,7 @@ class Linebot
     end
   end
 
-  WEATHER_JP = {"Clear" => "晴れ", "Cloud" => "曇り", "Rain" => "雨",   "Snow" => "雪", "Thunderstorm" => "雷雨", "Fog" => "霧"}
+  WEATHER_JP = {"Clear" => "晴れ", "Clouds" => "曇り", "Rain" => "雨", "Snow" => "雪", "Thunderstorm" => "雷雨", "Fog" => "霧"}
 
   def reply_about_weather(city_id)
     name = Setting.new(city_id: city_id).city_name
@@ -110,6 +112,18 @@ class Linebot
       address.active = false
       address.save
     end
+  end
+
+  def self.find_city_id_from_message(text)
+    sql = "select id,name,name_jp from weathers_cities"
+    results = ActiveRecord::Base.connection.select_all(sql)
+    return nil if results.length == 0
+    results.to_a.each do |row|
+      name_jp = row["name_jp"].sub("市","") # 四日市は？まあいい？
+      return row["id"] if !name_jp.empty? && text.include?(name_jp)
+      return row["id"] if !row["name"].empty? && text.include?(row["name"])
+    end
+    return nil
   end
 
   def find_my_raspi_from_message(text)
