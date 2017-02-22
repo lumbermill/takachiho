@@ -18,4 +18,11 @@ class Setting < ActiveRecord::Base
     return row["name_jp"] unless row["name_jp"].empty?
     return row["name"]
   end
+
+  # Returns 0-0000 token for LINE bot if the setting is readable.
+  def id4line
+    return "#{id}" unless readable?
+    t = token4read[0,4]
+    return "#{id}-#{t}"
+  end
 end
