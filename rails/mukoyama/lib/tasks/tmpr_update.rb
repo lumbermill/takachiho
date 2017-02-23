@@ -3,6 +3,7 @@
 require 'date'
 require 'mysql2'
 require 'optparse'
+require 'fileutils'
 
 Version = '1.0.0'
 
@@ -14,6 +15,8 @@ OPTS = {}
 opt.parse!(ARGV)
 
 LOG_RETENTION_PERIOD = 90 # 3months
+IMG_RETENTION_PERIOD = 90 # 3months
+IMG_PATH = "/var/www/mukoyama/data/pictures"
 
 env = OPTS[:e] || "development"
 @client = Mysql2::Client.new(host:"localhost",username:"root",database:"mukoyama_#{env}")
@@ -78,6 +81,21 @@ def clean_logs
   puts @client.affected_rows
 end
 
+def remove_image
+  EXTENSION = ".jpg"
+  b = (Date.today - IMG_RETENTION_PERIOD)
+  print "Cleaning up images older than #{b.strftime("%Y/%m/%d")} .. "
+  c = 0
+  Dir.glob("#{IMG_PATH}/**/*") do |f|
+    next unless f.end_with? EXTENSION
+    date = File.basename(f, EXTENSION).split("_")[0]
+    next if date.to_i > b.strftime("%y%m%d").to_i
+    FileUtils.rm(f)
+    c += 1
+  end
+  puts "ok(#{c})"
+end
+
 def main
   if OPTS[:all]
     insert_daily(nil)
@@ -87,6 +105,8 @@ def main
     insert_daily(yesterday)
     insert_monthly(yesterday) if Date.today.day == 1
     clean_logs
+    # TODO:画像の削除を実装する場合、コメントインしてください。
+    # remove_image
   end
 end
 
