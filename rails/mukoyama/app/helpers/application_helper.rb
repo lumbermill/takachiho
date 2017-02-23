@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def city_list
-    sql = "select id,name from weathers_cities"
+    sql = "select id,name,name_jp from weathers_cities"
     results = ActiveRecord::Base.connection.select_all(sql)
     return {} if results.length == 0
     return results

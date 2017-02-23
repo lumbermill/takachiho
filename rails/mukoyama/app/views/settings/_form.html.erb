@@ -36,7 +36,7 @@
   </div>
   <div class="form-group">
     <%= f.label :city_id, t("activerecord.attributes.setting.city_id") %>
-    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name"], u["id"]] }) %>
+    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name_jp"].present? ? u["name_jp"] : u["name"], u["id"]] }, @setting.city_id), {include_blank: true}, {class: "form-control"} %>
   </div>
   <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>
