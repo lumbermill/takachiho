@@ -10,7 +10,21 @@ https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83%E6%B8%A9%E6%9A%96%E5%8C%96
 ```
 
 ## 実行方法
-設定ファイルをLEBYR_PREFS環境変数に設定します。
 ```
-LEBYR_PREFS=./lebyr_prefs ruby aggrigate.rb
+# 未知語の取得＆辞書作成＆辞書配備
+$ ruby aggrigate.rb
+
+# 解析誤りの修正
+$ cat ~/src/jumanpp-1.01/dict-build/userdic/* | ruby ./bin/make_partial_from_dic.rb > ~/src/jumanpp-1.01/part-sample.txt
+$ cat part-sample.txt | jumanpp --partial | ruby script/corpus2train.rb > partial.fmrp
+$ cat train.fmrp partial.fmrp > part_train.fmrp
+$ nohup jumanpp --train part_train.fmrp --outputmodel part_trained.mdl &
+
+# 修正済み解析機を配備
+$ sudo mv /usr/local/share/jumanpp/weight.mdl.map /usr/local/share/jumanpp/weight.mdl.map.bak #古い訓練データを移動
+$ sudo mv /usr/local/share/jumanpp/weight.mdl /usr/local/share/jumanpp/weight.mdl.bak         #古い訓練データを移動
+$ sudo cp part_trained.mdl /usr/local/share/jumanpp/weight.mdl
+$ sudo su
+# echo "" | jumanpp #キャッシュ再作成
+# exit
 ```
