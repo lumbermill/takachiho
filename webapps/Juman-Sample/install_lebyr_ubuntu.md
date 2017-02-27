@@ -153,23 +153,12 @@ $ diff prefs_orig prefs
 >     'morpheme-usage-monitor.fusana-model' => '/home/ubuntu/src/lebyr/data/fusana.model',
 ```
 
-### 環境変数 JUMAN_PREFIX を設定 (JUMAN バイナリの prefix)
-jumanバイナリの場所を調べる
-```
-$ which juman
-/usr/local/bin/juman
-```
-.bashrcなどに追記
-```
-JUMAN_PREFIX=/usr/local/bin
-```
-
 ### テスト
 unknown/sequential.plを使ってtest/sample.txtを解析し、未知語辞書を作成する。
 juman-perl、knp-perl(JUMAN,KNPのソースコードに付属)のライブラリパスを@INCに入れる必要がある。
 ```
 cd $LEBYR-ROOT-DIR
-perl -Ilib  -I../juman-7.01/perl/blib/lib -I../knp-4.16/perl/lib unknown/sequential.pl --conf=prefs --monitor --dicdir=/tmp/adic --raw test/sample.txt --debug
+JUMAN_PREFIX=/usr/local perl -Ilib  -I../juman-7.01/perl/blib/lib -I../knp-4.16/perl/lib unknown/sequential.pl --conf=prefs --monitor --dicdir=/tmp/adic --raw test/sample.txt --debug
 ```
 /tmp/adic/output.dic にラ行動詞「ファボる」が登録されていれば成功。
 
