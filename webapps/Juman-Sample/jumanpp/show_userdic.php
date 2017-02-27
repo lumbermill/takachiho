@@ -16,7 +16,7 @@
   <div id="userdict">
     <pre><?php
       $midasi_script = "$script_dir/midasi.rb";
-      exec("cat $userdic_dir/* | sort -u | sed -n '${start},${end}p'| $ruby $midasi_script",$output);
+      exec("cat $userdic_dir/* | grep -v '^;' | sort -u | sed -n '${start},${end}p'| $ruby $midasi_script",$output);
       foreach ($output as $out) {
         printf("\n%s:\n", $out);
         $word = explode(":", $out);
