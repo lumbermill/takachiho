@@ -20,3 +20,6 @@
 参考URL:
 http://www.cs.toronto.edu/~kriz/cifar.html
 https://github.com/workpiles/CUCUMBER-9
+
+
+http://qiita.com/lumbermill/items/767ef1420dabffc776af - TensorflowをiOS向けにビルド
