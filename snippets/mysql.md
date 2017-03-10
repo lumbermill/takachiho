@@ -23,6 +23,11 @@ SELECT DISTINCT user FROM mysql.user;
 SHOW GRANTS FOR user;
 ```
 
+## Index
+```
+create index idx_name on table (col1,col2);
+```
+
 # Load and save
 ```
 LOAD DATA INFILE '/tmp/t.csv' REPLACE INTO TABLE t IGNORE 1 LINES;
