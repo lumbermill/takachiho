@@ -1,0 +1,23 @@
+<% content_for :title, "各地の天気" %>
+<table class="table table-striped">
+  <tr>
+    <th>ID</th>
+    <th>名前</th>
+    <th>天気</th>
+    <th>気温</th>
+    <th>更新日時</th>
+  </tr>
+<% @weathers.each do |row| %>
+  <tr>
+    <td><%= row["id"] %></td>
+    <td><%= @cities[row["id"]] %></td>
+    <td><%= row["weather_main"] %></td>
+    <td><%= row["temp"] %></td>
+    <td><%= row["modified_at"] %></td>
+  </tr>
+<% end %>
+</table>
+<p class="well">
+  <%= @sql %>
+</p>
+<p><small>At <%= @datetime %>, from <a href="http://openweathermap.org/">http://openweathermap.org/</a></small></p>

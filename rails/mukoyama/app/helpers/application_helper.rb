@@ -18,4 +18,20 @@ module ApplicationHelper
     end
     return url
   end
+
+  def line_add_frinend_button
+    # Generated on https://media.line.me/en/how_to_install.html#addfriend
+    html =<<-EOT
+    <div class="line-it-button" data-lang="en" data-type="friend" data-lineid="@lut9562u" style="display: none;"></div>
+    <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+    EOT
+    html.html_safe
+  end
+
+  def city_list
+    sql = "select id,name,name_jp from weathers_cities"
+    results = ActiveRecord::Base.connection.select_all(sql)
+    return {} if results.length == 0
+    return results
+  end
 end

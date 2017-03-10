@@ -1,13 +1,11 @@
 <% content_for :title, @setting.name %>
 <% content_for :subtitle, "ID: #{@setting.raspi_id}" %>
-
 <div class="row">
 	<div class="col-md-2" style="text-align: left">
 		<span class="label label-default"><span class="glyphicon glyphicon-user"></span> <%= @n_watchers %> 人が閲覧中</span>
 	</div>
 	<div class="col-md-10" style="text-align: right">
-		<!-- TODO:line-bot-awardsをmargeした際にこれを使います。 -->
-		<%#= line_add_frinend_button %>
+		<%= line_add_frinend_button %>
 	</div>
 </div>
 <div id="chart_latest" class="col-md-12">

@@ -1,35 +1,35 @@
 <% content_for :title, 'ダッシュボード' %>
 <p>ようこそ、 <%= current_user.name.present? ? current_user.name : current_user.email %> さん</p>
-<table class="table">
+<table class="table table-responsive">
   <thead>
     <tr>
       <th>ID</th>
       <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
-      <th>下限</th>
-      <th>上限</th>
-      <th colspan="2">受信期間</th>
-      <th></th>
-      <th></th>
+      <th class="hidden-xs">下限</th>
+      <th class="hidden-xs">上限</th>
+      <th  class="hidden-xs" colspan="2">受信期間</th>
+      <th>データ</th>
+      <th>設定/通知先</th>
     </tr>
   </thead>
   <tbody>
     <% @raspi_list.each do |r| %>
       <tr>
-        <td><%= r.raspi_id %></td>
+        <td><%= r.id4line %></td>
         <% if r.readable? %>
         <td><%= r.name %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span></td>
         <% else %>
         <td><%= r.name %></td>
         <% end %>
-        <td><%= r.min_tmpr %></td>
-        <td><%= r.max_tmpr %></td>
-        <td id="<%= r.raspi_id%>-first"></td>
-        <td id="<%= r.raspi_id%>-last"></td>
-        <td>
+        <td class="hidden-xs"><%= r.min_tmpr %></td>
+        <td class="hidden-xs"><%= r.max_tmpr %></td>
+        <td id="<%= r.raspi_id%>-first" class="hidden-xs"></td>
+        <td id="<%= r.raspi_id%>-last" class="hidden-xs"></td>
+        <td style="white-space: nowrap">
           <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default", id: "#{r.raspi_id}-nd" %>
           <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default disabled", id: "#{r.raspi_id}-np" %>
         </td>
-        <td>
+        <td style="white-space: nowrap">
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
           <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
@@ -59,10 +59,16 @@
 <p>
 <%= link_to 'センサの追加', new_setting_path, class: "btn btn-primary" %>
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
+<%= link_to '天気予報', weather_path, class: "btn btn-default" %>
 </p>
+<ul>
+  <li>右(下)のリンクまたはQRコードからLINEのアカウントを登録してください。</li>
+  <li>IDが「0-0000」形式になっているものはLINEに登録して通知を受け取ることが出来ます。</li>
+</ul>
   </div>
   <div class="col-sm-2">
-    <%= image_tag "NuZYAW7_2x.png", class: "img img-responsive" %>
+    <%= line_add_frinend_button %>
+    <%= image_tag "NuZYAW7_2x.png", class: "img img-responsive", style: "border: 1px solid #ccc"  %>
   </div>
 </div>
 

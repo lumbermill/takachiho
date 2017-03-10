@@ -40,9 +40,6 @@ class PagesController < ApplicationController
     render text: h.to_json
   end
 
-  def usecase
-  end
-
   def line_client
     require 'line/bot'
     @line_client ||= Line::Bot::Client.new { |config|
@@ -66,20 +63,19 @@ class PagesController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: 'Rails: '+event.message['text']
-          }
-          # TODO: 登録済みのセンサがある場合、現在の温度を返す。
-          raspi_id = find_raspi_from_message(event.message['text'])
-          if raspi_id.nil?
-            line_client.reply_message(event['replyToken'],{type: 'text', text: '合言葉をどうぞ。'})
+          bot = Linebot.by_userid(event['source']['userId'])
+          t = bot.reply(event.message['text'])
+          line_client.reply_message(event['replyToken'],{type: 'text', text: t})
+          i = bot.imgurl
+          if i.nil?
+            # do nothing
+          elsif i.start_with?("http")
+            # push image
+            line_client.push_message(bot.userid, {type: 'image', originalContentUrl: i, previewImageUrl: i})
           else
-            # TODO: ユニークのチェックが必要
-            Address.create(raspi_id: raspi_id, mail: event['source']['userId'], active: true)
-            line_client.reply_message(event['replyToken'],{type: 'text', text: '登録しました。'})
+            # push message
+            line_client.push_message(bot.userid, {type: 'text', text: i})
           end
-          #client.push_message(,message)
         end
       end
     }
@@ -87,9 +83,16 @@ class PagesController < ApplicationController
     render plain: "OK"
   end
 
-  private
-    def find_raspi_from_message(text)
-      # TODO: 合言葉に該当するraspi_idを検索する
-      return 1
+  def weather
+    sql = "select dt,id,weather_main,temp,modified_at from weathers where dt = (select max(dt) from weathers where dt <= now()) order by id"
+    @weathers = ActiveRecord::Base.connection.select_all(sql).to_a
+    @sql = sql
+    @datetime = @weathers.size > 0 ? @weathers[0]["dt"] : "No record found."
+
+    sql = "select id,name from weathers_cities order by id"
+    @cities = {}
+    ActiveRecord::Base.connection.select_all(sql).to_a.each do |row|
+      @cities[row["id"]] = row["name"]
     end
+  end
 end

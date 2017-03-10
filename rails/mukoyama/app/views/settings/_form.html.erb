@@ -17,22 +17,26 @@
     <%= f.hidden_field :raspi_id %>
   </div>
   <div class="form-group">
-    <%= f.label :name, "名前" %>
+    <%= f.label :name, t("activerecord.attributes.setting.name") %>
     <%= f.text_field :name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :min_tmpr, "最低気温" %>
+    <%= f.label :min_tmpr, t("activerecord.attributes.setting.min_tmpr") %>
     <%= f.text_field :min_tmpr, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :max_tmpr, "最高気温" %>
+    <%= f.label :max_tmpr, t("activerecord.attributes.setting.max_tmpr") %>
     <%= f.text_field :max_tmpr, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= f.fields_for :sakura_iot_modules do |sim| %>
-      <%= sim.label :token, "さくらのIoT トークン" %>
+      <%= sim.label :token, t("activerecord.attributes.setting.token4sakura") %>
       <%= sim.text_field :token, class: "form-control" %>
     <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :city_id, t("activerecord.attributes.setting.city_id") %>
+    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name_jp"].present? ? u["name_jp"] : u["name"], u["id"]] }, @setting.city_id), {include_blank: true}, {class: "form-control"} %>
   </div>
   <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>
