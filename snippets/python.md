@@ -15,3 +15,11 @@ import datetime
 
 datetime.datetime.now().strftime("%F %T")
 ```
+
+```
+if __name__ == "__main__":
+    main()
+```
+
+
+https://www.python.org/

@@ -1,4 +1,4 @@
-# Tensorflowで珈琲豆選別計画
+mv # Tensorflowで珈琲豆選別計画
 
 ## Goal
 - コンベア上に豆を流す、あるいはシュートを落下させて一粒ずつ写真を撮ります。
@@ -23,3 +23,4 @@ https://github.com/workpiles/CUCUMBER-9
 
 
 http://qiita.com/lumbermill/items/767ef1420dabffc776af - TensorflowをiOS向けにビルド
+http://qiita.com/lumbermill/items/010920d264806b903e5f - cifarから画像を取り出す(extract.py)
