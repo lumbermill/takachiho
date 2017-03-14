@@ -1,6 +1,5 @@
 require 'fileutils'
-SENSOR = 14 # 人感センサーのGPIO番号
-WAIT_LIMIT = 10 # 人感センサーが反応した際の
+MOTION_SENSOR = 14 # 人感センサーのGPIO番号
 
 def process_exist?(pid)
   cmd = "ps #{pid}"
@@ -29,13 +28,13 @@ end
 def sensor_responding?
   @wait_count -= 1 if @wait_count > 0
   # gpioの起動 TODO:毎回起動&停止をしてもいいのか？
-  `echo #{SENSOR} > /sys/class/gpio/export`
+  `echo #{MOTION_SENSOR} > /sys/class/gpio/export`
   # gpioの起動状況を確認
   gpio = `sudo cat /sys/class/gpio/gpio#{SENSOR}/value`.to_i
   # gpioの停止
-  `echo #{SENSOR} > /sys/class/gpio/unexport`
+  `echo #{MOTION_SENSOR} > /sys/class/gpio/unexport`
   if gpio == 1 && @wait_count <= 0
-    @wait_count = 10
+    @wait_count = $motion_sensor_interval
     return true
   else
     return false
@@ -90,6 +89,7 @@ if $0 == __FILE__
   $id = ENV["MUKOYAMA_ID"]
   $token = ENV["MUKOYAMA_TOKEN"]
   $taking_interval_min = 10 #毎10分ごとに撮影 60の役数(10,15,20,30..)のみ指定可能
+  $motion_sensor_interval = 10 #モーションセンサの反応間隔(秒)
   $last_taken_time_by_inteval = -1
   while (true) do
     if uplodable?
