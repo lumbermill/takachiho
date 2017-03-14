@@ -1,4 +1,6 @@
 require 'fileutils'
+SENSOR = 14 # 人感センサーのGPIO番号
+WAIT_LIMIT = 10 # 人感センサーが反応した際の
 
 def process_exist?(pid)
   cmd = "ps #{pid}"
@@ -23,8 +25,25 @@ def interval_elapsed?
   end
 end
 
+@wait_count = 0
+def sensor_responding?
+  @wait_count -= 1 if @wait_count > 0
+  # gpioの起動 TODO:毎回起動&停止をしてもいいのか？
+  `echo #{SENSOR} > /sys/class/gpio/export`
+  # gpioの起動状況を確認
+  gpio = `sudo cat /sys/class/gpio/gpio#{SENSOR}/value`.to_i
+  # gpioの停止
+  `echo #{SENSOR} > /sys/class/gpio/unexport`
+  if gpio == 1 && @wait_count <= 0
+    @wait_count = 10
+    return true
+  else
+    return false
+  end
+end
+
 def uplodable?
-  upload_needed? || interval_elapsed?
+  upload_needed? || interval_elapsed? || sensor_responding?
 end
 
 def take_picture(filename)
