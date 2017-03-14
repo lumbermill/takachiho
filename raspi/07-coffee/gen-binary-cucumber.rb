@@ -17,7 +17,7 @@ Dir.entries(IMG_DIR).each do |f|
   next unless f.end_with? ".jpg"
   buf = String.new
   puts f
-  clazz = names[f.split("_")[0]]
+  clazz = names[f.split("_")[0].to_sym]
   clazz = 9 if clazz.nil?
   buf << [clazz].pack('C')
   img = Magick::Image.read(open(IMG_DIR + f,'rb')).first.resize(SIZE,SIZE)
