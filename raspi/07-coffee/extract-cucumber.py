@@ -10,13 +10,6 @@ def unpickle(file):
     fo.close()
     return dict
 
-def image_from_cifar(index,dic):
-    name = dic['filenames'][index]
-    data = dic['data'][index].reshape(3, 32, 32).transpose(1, 2, 0) # shape=(32, 32, 3)
-    img = Image.fromarray(data, 'RGB')
-    print(name)
-    img.save(name)
-
 def image_from_cucumber(basedir,index,dic):
     name = dic['filenames'][index]
     r = dic['data'][index*3]
