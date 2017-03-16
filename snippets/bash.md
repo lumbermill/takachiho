@@ -1,4 +1,6 @@
 # Bash
+
+
 ```
 ^[ + b - previous word
 ^[ + f - next word
@@ -15,4 +17,11 @@ do
 done
 
 date +%y%m%d_%H%M%S
+```
+
+## at
+
+1分後に処理を実行
+```
+echo 'foo.sh -t bar -e' | at now + 1minute
 ```
