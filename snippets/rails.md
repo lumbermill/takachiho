@@ -14,12 +14,25 @@ results.to_a
 ActiveRecord::Base.connection.execute(sql)
 ```
 
-## railsプロジェクトを新規作成
+## for Ubuntu
 ```
-$ rails new sandbox-rails --database=mysql
+sudo apt install ruby-devise
+rails new railsapp --database=mysql
 ```
 
-```Gemfile
+bundleのインストールが失敗するので、aptでパッケージを追加し、そのバージョンに合わせています。
+``` Gemfile
+gem 'devise', '~> 3.5'
+gem 'rmagick', '~> 2.15'
+gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
+```
+
+## railsプロジェクトを新規作成
+```
+rails new sandbox-rails --database=mysql
+```
+
+``` Gemfile
 gem 'therubyracer', platforms: :ruby
 gem 'devise', '~> 4.0'
 gem 'rmagick', '~> 2.15'
