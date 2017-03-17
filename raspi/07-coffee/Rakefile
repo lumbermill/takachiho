@@ -1,0 +1,20 @@
+
+desc 'Get CUCUMBER-9 dataset(binary for python)'
+task :cucumber do
+  puts `git clone https://github.com/workpiles/CUCUMBER-9.git`
+  puts "Extract.."
+  cd "CUCUMBER-9/prototype_1"
+  puts `tar xzf cucumber-9-python.tar.gz`
+  rm "cucumber-9-python.tar.gz"
+  cd "../prototype_2"
+  puts `tar xzf cucumber-9-p2-python.tar.gz`
+  rm "cucumber-9-p2-python.tar.gz"
+end
+
+desc 'Get coffee beans image set(jpeg)'
+task :coffee do
+  puts "Extract.."
+  cd "coffees"
+  puts `tar xzf images.tgz`
+  rm "images.tgz"
+end
