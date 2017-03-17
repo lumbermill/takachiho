@@ -18,3 +18,15 @@ task :coffee do
   puts `tar xzf images.tgz`
   rm "images.tgz"
 end
+
+# http://yann.lecun.com/exdb/mnist/
+desc 'Get mnist handwritten digits'
+task :mnist do
+  `curl -O http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz`
+end
+
+# https://www.cs.toronto.edu/~kriz/cifar.html
+desc 'Get cifar-10 image dataset'
+task :mnist do
+  `curl -O https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz`
+end
