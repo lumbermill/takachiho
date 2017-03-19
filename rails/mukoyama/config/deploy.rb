@@ -5,7 +5,7 @@ set :application, 'mukoyama'
 set :repo_url, 'https://github.com/lumbermill/takachiho.git'
 set :repo_tree, 'rails/mukoyama'
 
-set :branch, 'line-bot-awards'
+set :branch, 'master'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
