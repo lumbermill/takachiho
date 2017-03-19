@@ -30,7 +30,7 @@ def sensor_responding?
   # gpioの起動 TODO:毎回起動&停止をしてもいいのか？
   `echo #{MOTION_SENSOR} > /sys/class/gpio/export`
   # gpioの起動状況を確認
-  gpio = `sudo cat /sys/class/gpio/gpio#{SENSOR}/value`.to_i
+  gpio = `sudo cat /sys/class/gpio/gpio#{MOTION_SENSOR}/value`.to_i
   # gpioの停止
   `echo #{MOTION_SENSOR} > /sys/class/gpio/unexport`
   if gpio == 1 && @wait_count <= 0
