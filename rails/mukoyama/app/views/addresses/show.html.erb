@@ -20,6 +20,10 @@
         <th>有効</th>
         <td><%= @address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
       </tr>
+      <tr>
+        <th>人感センサー反応時</th>
+        <td><%= @address.motion_sensor ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
+      </tr>
     </table>
   </div>
 </div>
