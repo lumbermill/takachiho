@@ -67,6 +67,12 @@ class PicturesController < ApplicationController
     time_stamp = DateTime.parse(params[:time_stamp])
     filename = time_stamp.strftime "%y%m%d_%H%M%S.jpg"
 
+    if params[:motion_sensor]
+      msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
+      addresses = Address.where(raspi_id: raspi_id,active: true,motion_sensor: true)
+      Mailer.send_message(addresses, msg)
+    end
+
     dir = "#{BASEDIR}/#{raspi_id}"
     FileUtils.mkdir_p(dir) unless File.directory?(dir)
     File.open("#{dir}/#{filename}", 'wb'){|f| f.write(file.read)}
