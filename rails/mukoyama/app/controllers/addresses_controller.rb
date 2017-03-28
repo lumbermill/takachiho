@@ -93,6 +93,6 @@ class AddressesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def address_params
-      params.require(:address).permit(:raspi_id, :mail, :snooze, :active)
+      params.require(:address).permit(:raspi_id, :mail, :snooze, :active, :motion_sensor)
     end
 end

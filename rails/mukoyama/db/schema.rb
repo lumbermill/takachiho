@@ -11,18 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213232525) do
+ActiveRecord::Schema.define(version: 20170328024245) do
 
   create_table "addresses", force: :cascade do |t|
-    t.integer  "raspi_id",   limit: 4
-    t.string   "mail",       limit: 255
+    t.integer  "raspi_id",      limit: 4
+    t.string   "mail",          limit: 255
     t.boolean  "active"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "snooze",     limit: 4,   default: 60, null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "snooze",        limit: 4,   default: 60, null: false
+    t.boolean  "motion_sensor"
   end
 
   add_index "addresses", ["raspi_id", "mail"], name: "index_addresses_on_raspi_id_and_mail", unique: true, using: :btree
+
+  create_table "impressions", force: :cascade do |t|
+    t.string   "impressionable_type", limit: 255
+    t.integer  "impressionable_id",   limit: 4
+    t.integer  "user_id",             limit: 4
+    t.string   "controller_name",     limit: 255
+    t.string   "action_name",         limit: 255
+    t.string   "view_name",           limit: 255
+    t.string   "request_hash",        limit: 255
+    t.string   "ip_address",          limit: 255
+    t.string   "session_hash",        limit: 255
+    t.string   "message",             limit: 255
+    t.string   "referrer",            limit: 255
+    t.string   "params",              limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "impressions", ["controller_name", "action_name", "ip_address"], name: "controlleraction_ip_index", using: :btree
+  add_index "impressions", ["controller_name", "action_name", "request_hash"], name: "controlleraction_request_index", using: :btree
+  add_index "impressions", ["controller_name", "action_name", "session_hash"], name: "controlleraction_session_index", using: :btree
+  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], name: "poly_ip_index", using: :btree
+  add_index "impressions", ["impressionable_type", "impressionable_id", "params"], name: "poly_params_request_index", using: :btree
+  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], name: "poly_request_index", using: :btree
+  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
+  add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
+  add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
 
   create_table "mail_logs", force: :cascade do |t|
     t.integer  "address_id", limit: 4
@@ -127,5 +155,29 @@ ActiveRecord::Schema.define(version: 20170213232525) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "weathers", id: false, force: :cascade do |t|
+    t.datetime "dt",                                    null: false
+    t.integer  "id",           limit: 8,                null: false
+    t.string   "weather_main", limit: 255, default: "", null: false
+    t.string   "weather_desc", limit: 255, default: "", null: false
+    t.float    "temp",         limit: 24
+    t.float    "pressure",     limit: 24
+    t.integer  "humidity",     limit: 4
+    t.float    "wind_speed",   limit: 24
+    t.float    "wind_deg",     limit: 24
+    t.integer  "cloudiness",   limit: 4
+    t.float    "rain",         limit: 24
+    t.float    "snow",         limit: 24
+    t.datetime "modified_at",                           null: false
+  end
+
+  create_table "weathers_cities", force: :cascade do |t|
+    t.string   "name",        limit: 255, default: "", null: false
+    t.string   "name_jp",     limit: 255, default: "", null: false
+    t.float    "lon",         limit: 24
+    t.float    "lat",         limit: 24
+    t.datetime "modified_at",                          null: false
+  end
 
 end
