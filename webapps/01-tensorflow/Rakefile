@@ -1,0 +1,9 @@
+
+
+desc 'Sync files to ubuntu server.'
+task :ubuntu do
+  cmd = "rsync -avz webapp/ ubuntu@133.242.22.108:/var/www/html/tensorflow/"
+  puts `#{cmd}`
+end
+
+task :default => [:ubuntu]
