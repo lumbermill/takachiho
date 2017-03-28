@@ -42,7 +42,8 @@ def sensor_responding?
 end
 
 def uplodable?
-  upload_needed? || interval_elapsed? || sensor_responding?
+  $motion_sensor = sensor_responding?
+  upload_needed? || interval_elapsed? || $motion_sensor
 end
 
 def take_picture(filename)
@@ -52,7 +53,7 @@ end
 
 def send_picture(filename)
   ts = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
-  u = "#{$url}/pictures/upload?id=#{$id}&token=#{$token}&time_stamp=#{ts}"
+  u = "#{$url}/pictures/upload?id=#{$id}&token=#{$token}&time_stamp=#{ts}&motion_sensor=#{$motion_sensor.to_s}"
   cmd = "curl -s -S -X POST -F file=@'#{filename}' '#{u}'"
   system(cmd)
   puts
@@ -91,6 +92,7 @@ if $0 == __FILE__
   $taking_interval_min = 10 #毎10分ごとに撮影 60の役数(10,15,20,30..)のみ指定可能
   $motion_sensor_interval = 10 #モーションセンサの反応間隔(秒)
   $last_taken_time_by_inteval = -1
+  $motion_sensor = false # 人感センサーに反応したかどうか
   while (true) do
     if uplodable?
       take_picture(filename)
