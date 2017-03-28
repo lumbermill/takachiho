@@ -24,17 +24,17 @@ def interval_elapsed?
   end
 end
 
-@wait_count = 0
+$wait_count = 0
 def sensor_responding?
-  @wait_count -= 1 if @wait_count > 0
+  $wait_count -= 1 if $wait_count > 0
   # gpioの起動 TODO:毎回起動&停止をしてもいいのか？
   `echo #{MOTION_SENSOR} > /sys/class/gpio/export`
   # gpioの起動状況を確認
   gpio = `sudo cat /sys/class/gpio/gpio#{MOTION_SENSOR}/value`.to_i
   # gpioの停止
   `echo #{MOTION_SENSOR} > /sys/class/gpio/unexport`
-  if gpio == 1 && @wait_count <= 0
-    @wait_count = $motion_sensor_interval
+  if gpio == 1 && $wait_count <= 0
+    $wait_count = $motion_sensor_interval
     return true
   else
     return false
