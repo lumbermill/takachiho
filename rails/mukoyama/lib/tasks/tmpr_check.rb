@@ -27,7 +27,7 @@ class TmprCheck
         addresses = []
       end
       if addresses.count > 0
-        Mailer.send_message(addresses, msg)
+        Mailer.send_message(addresses, msg).deliver_now
       end
     end
   end
