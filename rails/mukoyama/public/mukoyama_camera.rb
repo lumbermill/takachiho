@@ -1,5 +1,6 @@
 require 'fileutils'
 MOTION_SENSOR = 14 # 人感センサーのGPIO番号
+LED = 17 # LEDのGPIO番号
 
 def process_exist?(pid)
   cmd = "ps #{pid}"
@@ -26,13 +27,16 @@ end
 
 $wait_count = 0
 def sensor_responding?
-  $wait_count -= 1 if $wait_count > 0
   # gpioの起動 TODO:毎回起動&停止をしてもいいのか？
   `echo #{MOTION_SENSOR} > /sys/class/gpio/export`
   # gpioの起動状況を確認
   gpio = `sudo cat /sys/class/gpio/gpio#{MOTION_SENSOR}/value`.to_i
   # gpioの停止
   `echo #{MOTION_SENSOR} > /sys/class/gpio/unexport`
+  # 人感センサーのフラグが立ってたらLEDを点灯
+  puts `echo #{gpio} > /sys/class/gpio/gpio#{LED}/value`
+
+  $wait_count -= 1 if $wait_count > 0
   if gpio == 1 && $wait_count <= 0
     $wait_count = $motion_sensor_interval
     return true
@@ -93,6 +97,8 @@ if $0 == __FILE__
   $motion_sensor_interval = 10 #モーションセンサの反応間隔(秒)
   $last_taken_time_by_inteval = -1
   $motion_sensor = false # 人感センサーに反応したかどうか
+  `echo #{LED} > /sys/class/gpio/export` # LEDが接続されているGPIOをON
+  `echo out > /sys/class/gpio/gpio#{LED}/direction` # LEDのGPIOを出力に切り替え
   while (true) do
     if uplodable?
       take_picture(filename)
