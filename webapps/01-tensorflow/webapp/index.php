@@ -1,5 +1,27 @@
+<?php
+$model_name = "mnist";
+$uploaddir = dirname($_SERVER['SCRIPT_FILENAME']).'/histories';
+$modelsdir = dirname($_SERVER['SCRIPT_FILENAME']).'/models';
+if (isset($_FILES['file'])){
+  $ts = date("ymd_His");
+  $uploadfile = $uploaddir .'/'. $ts . ".jpg";
 
-<!DOCTYPE html>
+  if (!move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+    echo "Possible file upload attack!\n";
+    exit;
+  }
+  // TODO: バックグラウンドでやりたい systemの戻り値が見えてかっこ悪い…
+  system('convert -resize 320x320 '.$uploadfile.' '.$uploadfile);
+  $predicted = system("python3 predict.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
+  $resultfile = $uploaddir . '/' . $ts . ".json";
+  $json = array();
+  $json["predicted_label"] = $predicted;
+  $json["correct_label"] = ""; // Always empty here.
+  $json["model_name"] = "";
+  $json["uploaded_from"] = $_SERVER['REMOTE_ADDR'];
+  file_put_contents($resultfile, json_encode($json));
+}
+?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -16,19 +38,22 @@
 
   <body>
     <div class="container">
-      <h1>Tensorflow</h1>
+      <h1>Tensorflow <small><a href="/" class="text-muted"><span class="glyphicon glyphicon-refresh"></span></a></small></h1>
       <div class="row">
         <div class="col-sm-6">
           <h3>Eval</h3>
-          <form class="form-inline">
+          <form class="form-inline" method="post" enctype="multipart/form-data" action="index.php">
             <input type="file" name="file" class="form-control"/>
+            <span class="text-muted">.jpg</span>
             <button class="btn btn-primary">Upload</button>
           </form>
           <h3>Setting</h3>
           <ul>
-            <li>Model: mnist</li>
+            <li>Model: <?php echo $model_name; ?></li>
             <li>Labels: 0 1 2 3 4 5 6 7 8 9</li>
             <li>Version of Tensorflow: <strong id="version-of-tensorflow"></strong></li>
+            <li>Version of OpenCV: <strong id="version-of-opencv"></strong></li>
+            <li>Basedir: <?php echo $uploaddir ?></li>
           </ul>
           <h4>How to change models</h4>
           <pre>brah brah..
@@ -43,11 +68,15 @@
           </p>
         </div>
       </div>
+      <footer>
+        <a href="https://github.com/lumbermill/takachiho/tree/master/webapps/01-tensorflow">GitHub</a>
+      </footer>
     </div><!-- /.container -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script>
-      $("#version-of-tensorflow").load("index-cmd.php",{"cmd": "version"});
+      $("#version-of-tensorflow").load("index-cmd.php",{"cmd": "version","module": "tensorflow"});
+      $("#version-of-opencv").load("index-cmd.php",{"cmd": "version","module": "cv2"});
       $("#histories").load("index-histories.php");
     </script>
   </body>

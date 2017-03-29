@@ -2,32 +2,24 @@
   <th>Image</th>
   <th>Predicted label / Timestamp</th>
 </tr>
+<?php
+$uploaddir = dirname($_SERVER['SCRIPT_FILENAME']).'/histories';
+foreach (scandir($uploaddir,SCANDIR_SORT_DESCENDING) as $file):
+  if(!preg_match("/.+\.jpg/",$file)) continue;
+  $resultfile = $uploaddir.'/'.str_replace(".jpg",".json",$file);
+  if(is_file($resultfile)){
+    $json = json_decode(file_get_contents($resultfile),true);
+    $predicted_label = $json["predicted_label"];
+    $ip = $json["uploaded_from"];
+  }else{
+    $predicted_label = "";
+    $ip = str_replace(".jpg",".json",$file)." not found";
+  }
+?>
 <tr>
-  <td rowspan="2"><img class="img img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=5&txt=28%C3%9728&w=28&h=28&txtpad=1"/></td>
-  <td>1</td>
+  <td><img class="img img-responsive" src="histories/<?php echo $file; ?>" alt="<?php echo $file; ?>" style="max-width: 64px"/></td>
+  <td><?php echo $predicted_label; ?><br/>
+    <span class="text-muted"><?php echo date("Y-m-d H:i:s", filemtime($uploaddir.'/'.$file))." ".$ip; ?></span>
+  </td>
 </tr>
-<tr>
-  <td class="muted">2017-03-28 17:00:00 192.168.0.12</td>
-</tr>
-<tr>
-  <th>Image</th>
-  <th>Predicted label / Timestamp</th>
-</tr>
-<tr>
-  <td rowspan="2"><img class="img img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=5&txt=28%C3%9728&w=28&h=28&txtpad=1"/></td>
-  <td>1</td>
-</tr>
-<tr>
-  <td class="muted">2017-03-28 17:00:00 192.168.0.12</td>
-</tr>
-<tr>
-  <th>Image</th>
-  <th>Predicted label / Timestamp</th>
-</tr>
-<tr>
-  <td rowspan="2"><img class="img img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=5&txt=28%C3%9728&w=28&h=28&txtpad=1"/></td>
-  <td>1</td>
-</tr>
-<tr>
-  <td class="muted">2017-03-28 17:00:00 192.168.0.12</td>
-</tr>
+<?php endforeach; ?>
