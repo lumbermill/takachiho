@@ -1,8 +1,8 @@
 # Rsync
 
 ```
-# bar.csvだけ
-rsync -avz --include "*/" --include "bar.csv" --exclude "*" foo/ host:foo/
+# .csvだけ
+rsync -avz --include "*/" --include "*.csv" --exclude "*" foo/ host:foo/
 ```
 
 http://tech.nitoyon.com/ja/blog/2013/03/26/rsync-include-exclude/
