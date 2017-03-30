@@ -2,7 +2,7 @@
 
 desc 'Sync files to ubuntu server.'
 task :ubuntu do
-  cmd = "rsync -avz webapp/ ubuntu@133.242.22.108:/var/www/html/tensorflow/"
+  cmd = "rsync -avz --exclude='histories/' --exclude='models/' webapp/ ubuntu@133.242.22.108:/var/www/html/tensorflow/"
   puts `#{cmd}`
 end
 

@@ -22,6 +22,7 @@ def main(_):
 
   img = cv2.imread(FLAGS.image,0) # 0 = grayscale
   img = cv2.resize(img, (28, 28))
+  cv2.imwrite(FLAGS.image.replace(".jpg","p.jpg"),img)
   img = img.flatten().astype(np.float32)/255.0
 
   classification = sess.run(tf.argmax(y, 1), feed_dict={x: [img]})

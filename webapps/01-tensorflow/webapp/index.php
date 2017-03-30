@@ -12,13 +12,16 @@ if (isset($_FILES['file'])){
   }
   // TODO: バックグラウンドでやりたい systemの戻り値が見えてかっこ悪い…
   system('convert -resize 320x320 '.$uploadfile.' '.$uploadfile);
+  $started_at = microtime(true);
   $predicted = system("python3 predict.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
+  $elapsed = round(microtime(true) - $started_at,3);
   $resultfile = $uploaddir . '/' . $ts . ".json";
   $json = array();
   $json["predicted_label"] = $predicted;
   $json["correct_label"] = ""; // Always empty here.
   $json["model_name"] = "";
   $json["uploaded_from"] = $_SERVER['REMOTE_ADDR'];
+  $json["elapsed"] = $elapsed;
   file_put_contents($resultfile, json_encode($json));
 }
 ?><!DOCTYPE html>
@@ -38,7 +41,7 @@ if (isset($_FILES['file'])){
 
   <body>
     <div class="container">
-      <h1>Tensorflow <small><a href="/" class="text-muted"><span class="glyphicon glyphicon-refresh"></span></a></small></h1>
+      <h1>Tensorflow <small><a href="<?php echo $_SERVER["SCRIPT_NAME"] ?>" class="text-muted"><span class="glyphicon glyphicon-refresh"></span></a></small></h1>
       <div class="row">
         <div class="col-sm-6">
           <h3>Eval</h3>
