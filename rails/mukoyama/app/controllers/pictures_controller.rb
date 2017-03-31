@@ -2,6 +2,7 @@ class PicturesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
   before_action :set_raspi_id, only: [:index,:show]
   before_action :set_access_log, only: [:index]
+  include ApplicationHelper
 
   # sudo mkdir -p /opt/mukoyama.lmlab.net/data
   # sudo chmod 777 /opt/mukoyama.lmlab.net/data
@@ -70,7 +71,7 @@ class PicturesController < ApplicationController
     if params[:motion_sensor] == "true"
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
       addresses = Address.where(raspi_id: raspi_id,active: true,motion_sensor: true)
-      Mailer.send_message(addresses, msg).deliver_now
+      send_message(addresses, msg, false)
     end
 
     dir = "#{BASEDIR}/#{raspi_id}"

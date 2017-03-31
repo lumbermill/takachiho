@@ -2,32 +2,6 @@ class Mailer < ApplicationMailer
   # データ不着とみなすまでの遅延時間(分)
   MAX_DELAY = 60
 
-  def send_message(addresses, msg)
-    now = DateTime.now
-    addresses.each do |address|
-      next if (address.active != true)
-      ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
-      d_flg = false
-      print "  #{address.mail}"
-      if ts.nil? || ts + address.snooze.minute < now
-        d_flg = true
-        if address.phone?
-          puts " call"
-          make_call(address.mail, msg).deliver_now
-        elsif address.mail?
-          puts " mail"
-          send_mail(address.mail, "Notificaton from Mukoyama", msg).deliver_now
-        else
-          puts " line"
-          send_line(address.mail, msg).deliver_now
-        end
-      else
-        puts " snoozed"
-      end
-      MailLog.create(address_id: address.id, time_stamp: now, delivered: d_flg)
-    end
-  end
-
   def send_mail(to, subject, msg)
     @content = msg
     mail(to: to, subject: subject)

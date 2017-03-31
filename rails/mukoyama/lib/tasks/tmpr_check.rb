@@ -5,6 +5,8 @@ require 'twilio-ruby'
 require 'uri'
 
 class TmprCheck
+  include ApplicationHelper
+
   def self.execute
     Setting.all.each do |setting|
       log = TmprLog.where(raspi_id: setting.raspi_id).order(:time_stamp).last
@@ -27,7 +29,7 @@ class TmprCheck
         addresses = []
       end
       if addresses.count > 0
-        Mailer.send_message(addresses, msg).deliver_now
+        send_message(addresses, msg, true)
       end
     end
   end
