@@ -98,6 +98,7 @@ if $0 == __FILE__
   $last_taken_time_by_inteval = -1
   $motion_sensor = false # 人感センサーに反応したかどうか
   `echo #{LED} > /sys/class/gpio/export` # LEDが接続されているGPIOをON
+  sleep 1 # GPIOをONにした後、すぐには入出力切り替えができないため、1秒待ちます。
   `echo out > /sys/class/gpio/gpio#{LED}/direction` # LEDのGPIOを出力に切り替え
   while (true) do
     if uplodable?
