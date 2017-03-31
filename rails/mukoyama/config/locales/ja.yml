@@ -25,6 +25,7 @@ ja:
         mail: 'メールアドレス(電話番号)'
         snooze: '通知間隔(分)'
         active: '有効'
+        motion_sensor: '人感センサー反応時の通知有効化'
     errors:
       models:
         user:
