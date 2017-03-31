@@ -70,7 +70,7 @@ class PicturesController < ApplicationController
     if params[:motion_sensor] == "true"
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
       addresses = Address.where(raspi_id: raspi_id,active: true,motion_sensor: true)
-      Mailer.send_message(addresses, msg).deliver_now
+      ApplicationHelper.send_message(addresses, msg).deliver_now
     end
 
     dir = "#{BASEDIR}/#{raspi_id}"
