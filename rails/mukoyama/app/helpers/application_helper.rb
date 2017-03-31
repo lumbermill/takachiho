@@ -35,14 +35,15 @@ module ApplicationHelper
     return results
   end
 
-  def send_message(addresses, msg)
+  def send_message(addresses, msg, snooze = true)
     now = DateTime.now
     addresses.each do |address|
       next if (address.active != true)
       ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
       d_flg = false
       print "  #{address.mail}"
-      if ts.nil? || ts + address.snooze.minute < now
+      snz =  snooze ? (ts.nil? || ts + address.snooze.minute < now) : true
+      if snz
         d_flg = true
         if address.phone?
           puts " call"
