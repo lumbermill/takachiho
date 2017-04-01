@@ -94,7 +94,7 @@ if $0 == __FILE__
   $id = ENV["MUKOYAMA_ID"]
   $token = ENV["MUKOYAMA_TOKEN"]
   $taking_interval_min = 10 #毎10分ごとに撮影 60の役数(10,15,20,30..)のみ指定可能
-  $motion_sensor_interval = 10 #モーションセンサの反応間隔(秒)
+  $motion_sensor_interval = 1 #モーションセンサをチェックする間隔(秒)
   $last_taken_time_by_inteval = -1
   $motion_sensor = false # 人感センサーに反応したかどうか
   `echo #{LED} > /sys/class/gpio/export` # LEDが接続されているGPIOをON
