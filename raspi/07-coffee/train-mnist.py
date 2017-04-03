@@ -43,6 +43,8 @@ def main(_):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
+  if not os.path.isdir(FLAGS.log_dir):
+    os.mkdir(FLAGS.log_dir)
   saver = tf.train.Saver()
   saver.save(sess, os.path.join(FLAGS.log_dir, 'model.ckpt')) # , global_step=1000)
 
@@ -53,10 +55,11 @@ def main(_):
                                       y_: mnist.test.labels}))
 
 if __name__ == '__main__':
+  basedir = os.environ["HOME"]
   parser = argparse.ArgumentParser()
-  parser.add_argument('--data_dir', type=str, default='/tmp/tensorflow/mnist/input_data',
+  parser.add_argument('--data_dir', type=str, default=basedir+'/tensorflow/mnist/input_data',
                       help='Directory for storing input data')
-  parser.add_argument('--log_dir', type=str, default='/tmp/tensorflow/mnist/logs',
+  parser.add_argument('--log_dir', type=str, default=basedir+'/tensorflow/mnist/logs',
                       help='Directory for storing input data')
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
