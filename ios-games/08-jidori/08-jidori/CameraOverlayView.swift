@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class OverlayView: UIView {
+    var controller: CameraViewController!
     var features: [CIFeature]?
     var at: CGAffineTransform!
     var headgear: UIImage!
     var beak: UIImage!
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -43,5 +43,10 @@ class OverlayView: UIView {
                 beak.draw(in: r)
             }
         }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(controller == nil) { return }
+        controller.takePicture()
     }
 }
