@@ -19,7 +19,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
         lm.delegate = self
         lm.desiredAccuracy = kCLLocationAccuracyBest
+
+        Place.load(completion: { (places) in
+            for place in places {
+                let pa = MKPointAnnotation()
+                pa.coordinate = CLLocationCoordinate2DMake(place.lat,place.lng)
+                pa.title = place.name
+                // pa.subtitle = point.kanji
+                self.mapView.addAnnotation(pa)
+            }
+        })
     }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,9 +57,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
 
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let av = mapView.dequeueReusableAnnotationView(withIdentifier: "place"){
+            av.annotation = annotation
+            return av
+        }else{
+            let av = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "place")
+            av.pinTintColor = UIColor.brown
+            av.canShowCallout = true
+            return av
+        }
+    }
+
     @IBAction func targetButtonPushed(_ sender: AnyObject) {
         targetButton.isEnabled = false
     }
-
 }
-

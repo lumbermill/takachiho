@@ -15,6 +15,7 @@
 		1355E0B21E8D324B00D60D3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1355E0B01E8D324B00D60D3C /* LaunchScreen.storyboard */; };
 		1355E0BB1E8D33CB00D60D3C /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1355E0BA1E8D33CB00D60D3C /* CoreImage.framework */; };
 		1355E0BD1E8D34AA00D60D3C /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355E0BC1E8D34AA00D60D3C /* CameraOverlayView.swift */; };
+		139D37A21E9BC2B300912384 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D37A11E9BC2B300912384 /* Place.swift */; };
 		13FE180F1E90691E00809BAE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13FE180E1E90691E00809BAE /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		1355E0B31E8D324B00D60D3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1355E0BA1E8D33CB00D60D3C /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		1355E0BC1E8D34AA00D60D3C /* CameraOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
+		139D37A11E9BC2B300912384 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		13FE180E1E90691E00809BAE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -73,6 +75,7 @@
 				1355E0AE1E8D324B00D60D3C /* Assets.xcassets */,
 				1355E0B01E8D324B00D60D3C /* LaunchScreen.storyboard */,
 				1355E0B31E8D324B00D60D3C /* Info.plist */,
+				139D37A11E9BC2B300912384 /* Place.swift */,
 			);
 			path = "08-jidori";
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				1355E0AA1E8D324B00D60D3C /* CameraViewController.swift in Sources */,
 				1355E0A61E8D324B00D60D3C /* AppDelegate.swift in Sources */,
 				1355E0A81E8D324B00D60D3C /* MapViewController.swift in Sources */,
+				139D37A21E9BC2B300912384 /* Place.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
