@@ -1,0 +1,9 @@
+{
+  "places":
+  [
+    {"name":"Toriyoshi","cood": [31.91742, 131.41852]},
+    {"name":"Shirokiji @ Aozora Market","cood": [31.91252, 131.42166] },
+    {"name":"Gunkei @ Miyazaki Station","cood": [31.91633, 131.43122] }
+  ],
+  "revision": 17041000
+}
