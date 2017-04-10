@@ -13,7 +13,7 @@ if (isset($_FILES['file'])){
   // TODO: バックグラウンドでやりたい systemの戻り値が見えてかっこ悪い…
   system('convert -resize 320x320 '.$uploadfile.' '.$uploadfile);
   $started_at = microtime(true);
-  $predicted = system("python3 predict.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
+  $predicted = system("python3 predict2.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
   $elapsed = round(microtime(true) - $started_at,3);
   $resultfile = $uploaddir . '/' . $ts . ".json";
   $json = array();
