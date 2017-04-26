@@ -51,7 +51,7 @@ def uplodable?
 end
 
 def take_picture(filename)
-  cmd = "raspistill -n -t 1 -q 50 -w 640 -h 480 -ex auto -ev 0 -awb sun -mm spot -o #{filename}"
+  cmd = "raspistill -n -t 1000 -q 50 -w 640 -h 480 -ex auto -ev 0 -awb sun -mm spot -o #{filename}"
   system(cmd)
 end
 
