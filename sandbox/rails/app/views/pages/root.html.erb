@@ -1,0 +1,21 @@
+<% content_for :title do %>Main menu<% end %>
+<div class="row">
+  <div class="col-md-4">
+    <div class="list-group">
+      <%= list_group_item "BME280 at 452","since 2015.09<br/>ラズベリーパイで収集した気温・湿度・気圧の記録",bme280_path(0) %>
+      <%= list_group_item "BME280 at greenhouse","since 2016.01<br/>ラズベリーパイで収集した気温・湿度・気圧の記録",bme280_path(1) %>
+      <%= list_group_item "Webcam at 国見ヶ丘","since 2015.09",webcam_path("kunimi") %>
+      <%= list_group_item "Webcam at 高千穂峡","since 2015.09",webcam_path("gorge") %>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h3>ここは何?</h3>
+    <p>BME280はRaspberry Piに接続して気温・湿度・気圧を測定できるセンサです。
+    これを使って定点観測をしたデータをグラフ化しています。CSVでデータを一括ダウンロードすることも可能です。
+    「Webcam at..」のページでは、高千穂町に設置・公開されているウェブカムのスナップショットを定期的に
+  　　収集したデータを表示しています。毎日AM5:00から7:45まで、15分おきに記録しています。</p>
+    <p><a href="http://lmlab.net">http://lmlab.net</a></p>
+  </div>
+</div>
+
+<p></p>

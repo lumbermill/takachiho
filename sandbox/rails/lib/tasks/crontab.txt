@@ -1,0 +1,4 @@
+*/15 5-7 * * * ./bin/capture-webcams.rb
+0      8 * * * ./bin/parse-webcam_logs.rb -e production
+5      0 * * * ./bin/parse-bme280_logs.rb -e production --daily
+5   1-23 * * * ./bin/parse-bme280_logs.rb -e production

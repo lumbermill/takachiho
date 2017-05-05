@@ -1,0 +1,10 @@
+<% content_for :title do %><%= @id %><% end %>
+<h1><%= @id %></h1>
+<div class="row">
+  <% @data.each do |row| %>
+  <div class="col-md-4">
+  <%= link_to image_tag(row[:path],class: "img-responsive img-rounded"), webcam_day_path(@id,row[:ts])  %>
+  <small><%= row[:ts] %>, <%= row[:n] %>files</small>
+  </div>
+  <% end %>
+</div>

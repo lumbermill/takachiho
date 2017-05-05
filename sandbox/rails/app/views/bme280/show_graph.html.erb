@@ -1,0 +1,137 @@
+<% content_for :title do %>BME280<% end %>
+<table class="table">
+  <tr>
+    <th>RaspberryPi ID</th>
+    <td><%= @id %></td>
+    <th>件数</th>
+    <td><%= @count %></td>
+    <th>保存期間</th>
+    <td><%= @min %> to <%= @max %> (<%= @days %> days)</td>
+  </tr>
+</table>
+<p><%= link_to 'Download CSV', bme280_raw_path(@id,format: :csv), class: "btn btn-default" %></p>
+<div class="row">
+<div id="chart_t" class="col-md-4"></div>
+<div id="chart_h" class="col-md-4"></div>
+<div id="chart_p" class="col-md-4"></div>
+<small><%= @span %></small>
+<div>
+<div class="row">
+  <div id="chart_dt" class="col-md-12"></div>
+<div>
+<script>
+  $.getJSON('data/<%= @id %>.json?src=temperature', <%= @p %> ,function (data) {
+    $('#chart_t').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '気温 (°C)',
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        series: [{
+            name: "気温",
+            color: Highcharts.getOptions().colors[3],
+            showInLegend: false,
+            data: data
+        }]
+    });
+  });
+  $.getJSON('data/<%= @id %>.json?src=humidity', <%= @p %> , function (data) {
+    $('#chart_h').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '湿度 (%)',
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        series: [{
+            name: '湿度',
+            color: Highcharts.getOptions().colors[0],
+            showInLegend: false,
+            data: data
+        }]
+    });
+  });
+  $.getJSON('data/<%= @id %>.json?src=pressure', <%= @p %> , function (data) {
+    $('#chart_p').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '気圧 (hPa)',
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        series: [{
+            name: '気圧',
+            color: Highcharts.getOptions().colors[2],
+            showInLegend: false,
+            data: data
+        }]
+    });
+  });
+  $.getJSON('data/<%= @id %>.json?unit=day', <%= @p %> , function (data) {
+    $('#chart_dt').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '気温 (°C)',
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: [{
+          title: {
+            text: ''
+          }
+        },{
+          title: {
+            text: ''
+          },
+          opposite: true
+        }],
+        series: [{
+            name: "気温差",
+            color: Highcharts.getOptions().colors[6],
+            showInLegend: true,
+            data: data.diff,
+
+            type: 'area',
+            yAxis: 1
+        },{
+            name: "最高気温",
+            color: Highcharts.getOptions().colors[3],
+            showInLegend: true,
+            data: data.max
+        },{
+            name: "最低気温",
+            color: Highcharts.getOptions().colors[4],
+            showInLegend: true,
+            data: data.min
+        }]
+    });
+  });
+</script>

@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <th>UID,RASPI_ID,TIMESTAMP,TEMPERATURE,PRESSURE,HUMIDITY,MODIFIED_AT</th>
+  </tr>
+<% @results.each(as: :array) do |row| %>
+<tr>
+  <td>
+<%= row.join(",") %></td>
+</tr>
+<% end %>
+</table>
