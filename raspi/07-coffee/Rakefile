@@ -27,6 +27,6 @@ end
 
 # https://www.cs.toronto.edu/~kriz/cifar.html
 desc 'Get cifar-10 image dataset'
-task :mnist do
+task :cifar do
   `curl -O https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz`
 end
