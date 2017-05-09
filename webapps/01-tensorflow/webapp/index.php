@@ -1,29 +1,5 @@
 <?php
-$model_name = "mnist";
-$uploaddir = dirname($_SERVER['SCRIPT_FILENAME']).'/histories';
-$modelsdir = dirname($_SERVER['SCRIPT_FILENAME']).'/models';
-if (isset($_FILES['file'])){
-  $ts = date("ymd_His");
-  $uploadfile = $uploaddir .'/'. $ts . ".jpg";
-
-  if (!move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
-    echo "Possible file upload attack!\n";
-    exit;
-  }
-  // TODO: バックグラウンドでやりたい systemの戻り値が見えてかっこ悪い…
-  system('convert -resize 320x320 '.$uploadfile.' '.$uploadfile);
-  $started_at = microtime(true);
-  $predicted = system("python3 predict2.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
-  $elapsed = round(microtime(true) - $started_at,3);
-  $resultfile = $uploaddir . '/' . $ts . ".json";
-  $json = array();
-  $json["predicted_label"] = $predicted;
-  $json["correct_label"] = ""; // Always empty here.
-  $json["model_name"] = "";
-  $json["uploaded_from"] = $_SERVER['REMOTE_ADDR'];
-  $json["elapsed"] = $elapsed;
-  file_put_contents($resultfile, json_encode($json));
-}
+require_once './common.php';
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,7 +21,7 @@ if (isset($_FILES['file'])){
       <div class="row">
         <div class="col-sm-6">
           <h3>Eval</h3>
-          <form class="form-inline" method="post" enctype="multipart/form-data" action="index.php">
+          <form class="form-inline" method="post" enctype="multipart/form-data" action="index_do.php">
             <input type="file" name="file" class="form-control"/>
             <span class="text-muted">.jpg</span>
             <button class="btn btn-primary">Upload</button>
@@ -53,7 +29,7 @@ if (isset($_FILES['file'])){
           <h3>Setting</h3>
           <ul>
             <li>Model: <?php echo $model_name; ?></li>
-            <li>Labels: 0 1 2 3 4 5 6 7 8 9</li>
+            <li>Labels: <?php echo implode(" ",$model_labels); ?></li>
             <li>Version of Tensorflow: <strong id="version-of-tensorflow"></strong></li>
             <li>Version of OpenCV: <strong id="version-of-opencv"></strong></li>
             <li>Basedir: <?php echo $uploaddir ?></li>
