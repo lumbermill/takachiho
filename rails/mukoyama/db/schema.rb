@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328024245) do
+ActiveRecord::Schema.define(version: 20170519120209) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "raspi_id",      limit: 4
@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(version: 20170328024245) do
     t.boolean  "delivered"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "picture_groups", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4,                 null: false
+    t.boolean  "starred",              default: false, null: false
+    t.integer  "head",       limit: 8,                 null: false
+    t.integer  "tail",       limit: 8,                 null: false
+    t.integer  "n",          limit: 4, default: 0,     null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   create_table "sakura_iot_modules", force: :cascade do |t|
