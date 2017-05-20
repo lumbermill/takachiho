@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170519120209) do
   end
 
   create_table "picture_groups", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4,                 null: false
+    t.integer  "raspi_id",   limit: 4,                 null: false
     t.boolean  "starred",              default: false, null: false
     t.integer  "head",       limit: 8,                 null: false
     t.integer  "tail",       limit: 8,                 null: false
