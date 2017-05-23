@@ -17,12 +17,43 @@ class PicturesController < ApplicationController
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
     skipped = 0
+    @total = PictureGroup.where(raspi_id: @setting.raspi_id).count
+    @n_pages = 0
+
+    dir = BASEDIR+"/#{@id}"
+    return unless File.directory? dir
+    if @date == ""
+      cond_date = ""
+    else
+      dmin = @date.to_i * 1000000
+      dmax = dmin + 999999
+      cond_date = "and head between #{dmin} and #{dmax}"
+    end
+
+    @groups = PictureGroup.where("raspi_id = #{@setting.raspi_id} #{cond_date}").order("head desc")
+    @total = @groups.count
+    @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
+
+    @dates = load_index(dir)
+
+    @n_watchers = get_access_log
+  end
+
+  # Show every pictures taken. (former index action)
+  def index_all
+    @id = params[:raspi_id]
+    @setting = Setting.find_by(raspi_id: params[:raspi_id])
+    @date = params[:date] || ""
+    @page = (params[:page] || "1").to_i
+    pagesize = 24
+    @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
+
+    skipped = 0
     @total = 0
     @files = []
     @n_pages = 0
 
     dir = BASEDIR+"/#{@id}"
-    logger.debug(dir)
     return unless File.directory? dir
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
@@ -119,7 +150,7 @@ class PicturesController < ApplicationController
 
   private
     def load_index(dir)
-      f = "#{dir}/index.json"
+      f = "#{dir}/index_all.json"
       if !File.file?(f) || File.mtime(f).day != Date.today.day
         # Generate index.json
         dates = [""]

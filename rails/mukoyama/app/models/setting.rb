@@ -26,10 +26,13 @@ class Setting < ActiveRecord::Base
     return "#{id}-#{t}"
   end
 
+  def picture_groups(offset=0,max_length=24)
+    PictureGroup.where(raspi_id: raspi_id).order("head desc").limit(max_length).offset(offset)
+  end
+
   def picture_group_paths(offset=0,max_length=24)
-    pgs = PictureGroup.where(raspi_id: raspi_id).order("head desc").limit(max_length).offset(offset)
+    pgs = picture_groups(offset,max_length)
     paths = pgs.map { |v| "/pictures/#{raspi_id}/#{v.head}.jpg" }
-    logger.debug(paths)
     return paths
   end
 end
