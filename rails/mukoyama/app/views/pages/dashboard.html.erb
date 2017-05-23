@@ -76,11 +76,11 @@
 <hr/>
 <div class="row">
   <div class="col-sm-3">
-    <p>
-      <%= link_to 'ユーザ一覧', users_path, class: "btn btn-default" %>
-      <%= link_to 'センサ一覧', settings_path(all: true), class: "btn btn-default" %>
-      <%= link_to '通知先一覧', addresses_path, class: "btn btn-default" %>
-    </p>
+    <div class="list-group">
+      <%= link_to 'ユーザ一覧', users_path, class: "list-group-item" %>
+      <%= link_to 'センサ一覧', settings_path(all: true), class: "list-group-item" %>
+      <%= link_to '通知先一覧', addresses_path, class: "list-group-item" %>
+    </div>
   </div>
   <div class="col-sm-3">
     <table class="table table-condensed">

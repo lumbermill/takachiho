@@ -45,7 +45,12 @@ class PicturesController < ApplicationController
   end
 
   def show
-    f = BASEDIR+"/"+params[:raspi_id]+"/"+params[:time_stamp]+".jpg"
+    ts = params[:time_stamp] # 123123_456456 or 123123456456
+    if ts.match /[0-9]{12}/
+      ts = ts[0,6]+"_"+ts[6,6]
+    end
+    f = BASEDIR+"/"+params[:raspi_id]+"/"+ts+".jpg"
+    # TODO: Check current_user's permission.
     unless File.file? f
       render text: f+" not found.", status: 404
       return

@@ -4,10 +4,12 @@
   <thead>
     <tr>
       <th>ID</th>
+      <% if params[:all] %><th>ユーザID</th><% end %>
       <th>名前</th>
       <th><%= t("activerecord.attributes.setting.min_tmpr") %></th>
       <th><%= t("activerecord.attributes.setting.max_tmpr") %></th>
-      <th colspan="3"></th>
+      <th colspan="2">写真</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -15,13 +17,33 @@
     <% @settings.each do |setting| %>
       <tr>
         <td><%= setting.raspi_id %></td>
+        <% if params[:all] %><td><%= setting.user.name %></td><% end %>
         <td><%= setting.name %></td>
         <td><%= setting.min_tmpr %></td>
         <td><%= setting.max_tmpr %></td>
-        <td><%= link_to '表示', setting, class: "btn btn-sm btn-default" %></td>
-        <td><%= link_to '編集', edit_setting_path(setting), class: "btn btn-sm btn-default" %></td>
-        <td><%= link_to '削除', setting, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-sm btn-danger"%></td>
+        <td>
+          <% setting.picture_group_paths(0,3).each do |p| %>
+            <%= image_tag p, class: "img img-rounded", style: "max-width: 120px" %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(setting.raspi_id), title: "写真", class: "btn btn-sm btn-default disabled", id: "#{setting.raspi_id}-np" %>
+        </td>
+        <td>
+          <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, setting,title: "センサ設定の表示/編集" , class: "btn btn-sm btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, setting, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-sm btn-danger"%>
+        </td>
       </tr>
+      <script>
+      var id = <%= setting.raspi_id %>;
+      $.getJSON("dashboard-pictures",{"raspi_id": id},function(json){
+        if(json.n > 0){
+          console.dir("#"+json.raspi_id+"-np");
+          $("#"+json.raspi_id+"-np").removeClass("disabled");
+          $("#"+json.raspi_id+"-np span.badge").text(json.n);
+        }
+      });
+      </script>
     <% end %>
   </tbody>
 </table>

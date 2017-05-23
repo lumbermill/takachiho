@@ -58,5 +58,5 @@ end
 
 if __FILE__ == $0
   # test
-  update(9)
+  update(1)
 end

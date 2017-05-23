@@ -25,4 +25,11 @@ class Setting < ActiveRecord::Base
     t = token4read[0,4]
     return "#{id}-#{t}"
   end
+
+  def picture_group_paths(offset=0,max_length=24)
+    pgs = PictureGroup.where(raspi_id: raspi_id).order("head desc").limit(max_length).offset(offset)
+    paths = pgs.map { |v| "/pictures/#{raspi_id}/#{v.head}.jpg" }
+    logger.debug(paths)
+    return paths
+  end
 end
