@@ -26,7 +26,14 @@ end
 def similar?(p1,p2)
   # TODO: ここ実装する、アルゴリズム色々切り替えられたら面白そう
   # これは10分単位でまとめる場合
-  p1 / 1000 == p2 / 1000
+  # p1 / 1000 == p2 / 1000
+
+  cmd = "python3 #{__dir__}/compare-hist.py #{p1} #{p2}"
+  ret = `#{cmd}`.strip.to_f
+  if $? != 0 || ret == 0
+    raise "Failed: #{cmd}"
+  end
+  ret > 0.95
 end
 
 def update(raspi_id)
@@ -40,6 +47,7 @@ def update(raspi_id)
     next if p.nil? || p <= start
     pictures += [p]
   end
+  return if pictures.count == 0
   puts "#{pictures.count} pictures(on #{basedir}) will be processed."
   tail = pictures[0]
   n = 0
@@ -47,7 +55,7 @@ def update(raspi_id)
     p = pictures[i]
     p_next = pictures[i+1]
     n += 1
-    next if similar?(p,p_next)
+    next if similar?(seq2filepath(basedir,p),seq2filepath(basedir,p_next))
     PictureGroup.create(raspi_id: raspi_id, head: p, tail: tail, n: n)
     n = 0
     tail = p_next
@@ -58,5 +66,6 @@ end
 
 if __FILE__ == $0
   # test
+  clear(1)
   update(1)
 end
