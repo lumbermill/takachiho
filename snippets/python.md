@@ -17,6 +17,18 @@ datetime.datetime.now().strftime("%F %T")
 ```
 
 ```
+import MySQLdb
+
+db = MySQLdb.connect(host,user,pass,db)
+cur = db.cursor()
+cur.execute(sql)
+res = cur.fetchall()
+cur.close()
+db.close()
+
+```
+
+```
 if __name__ == "__main__":
     main()
 ```
