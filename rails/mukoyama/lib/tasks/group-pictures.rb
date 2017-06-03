@@ -1,4 +1,4 @@
-
+# OpenCV呼び出しの速度が遅いため.pyに書き換えました。こちらは使用していません。 
 
 def debug?
   true
@@ -24,7 +24,6 @@ def seq2filepath(basedir,seq)
 end
 
 def similar?(p1,p2)
-  # TODO: ここ実装する、アルゴリズム色々切り替えられたら面白そう
   # これは10分単位でまとめる場合
   # p1 / 1000 == p2 / 1000
 

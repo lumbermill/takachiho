@@ -11,7 +11,7 @@ class PicturesController < ApplicationController
   def index
     @id = params[:raspi_id]
     @setting = Setting.find_by(raspi_id: params[:raspi_id])
-    @date = params[:date] || ""
+    @date = params[:date] || Date.today.strftime("%y%m%d")
     @page = (params[:page] || "1").to_i
     pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
@@ -153,7 +153,7 @@ class PicturesController < ApplicationController
       f = "#{dir}/index_all.json"
       if !File.file?(f) || File.mtime(f).day != Date.today.day
         # Generate index.json
-        dates = [""]
+        dates = []
         Dir.entries(dir).sort.reverse.each do |f|
           next if f.start_with? "."
           next unless f.end_with? ".jpg"

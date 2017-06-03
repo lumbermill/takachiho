@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   get 'pictures/request-upload' => 'pictures#request_upload'
 	get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
+  get 'pictures-all/:raspi_id' => 'pictures#index_all', as: :pictures_all
 	get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
 
   authenticate :user do
