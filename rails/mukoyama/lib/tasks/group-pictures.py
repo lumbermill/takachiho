@@ -1,8 +1,5 @@
 #! /usr/bin/python3 -u
-
 # rubyでやりたかったが、rubyのループ内でpythonを呼び出すと異様に遅いので再実装
-
-# Returns the similarity of 2 images.
 
 import cv2, datetime, MySQLdb, os, re, sys
 
@@ -23,7 +20,7 @@ def compare_hist(p1,p2):
     return cv2.compareHist(h1, h2, method)
 
 def clear(raspi_id):
-    db = MySQLdb.connect("localhost","ubuntu","","mukoyama_development")
+    db = MySQLdb.connect("localhost","ubuntu","",DATABASE)
     cur = db.cursor()
     sql = "delete from picture_groups where raspi_id = %d" % (raspi_id)
     if DEBUG: print(sql)
@@ -52,24 +49,33 @@ def similar(p1,p2):
   return ret > 0.95
 
 def update(raspi_id):
-    db = MySQLdb.connect("localhost","ubuntu","","mukoyama_development")
+    db = MySQLdb.connect("localhost","ubuntu","",DATABASE)
     cur = db.cursor()
     cur.execute("select count(1) from picture_groups where raspi_id = %d" % (raspi_id))
     n_before = cur.fetchone()[0]
-    cur.execute("select max(head) from picture_groups where raspi_id = %d" % (raspi_id))
-    res = cur.fetchone()
-    if res[0] == None: start = 0
-    else: start = res[0]
-    print("start=%d" % (start))
-    basedir = "/opt/mukoyama.lmlab.net/data/pictures/%d" % (raspi_id)
+    sql4max = "select max(head) from picture_groups where raspi_id = %d" % (raspi_id)
+    if n_before > 0:
+        cur.execute(sql4max)
+        res = cur.fetchone()[0]
+        cur.execute("delete from picture_groups where raspi_id = %d and head = %d" % (raspi_id,res))
+        db.commit()
+        n_before -= 1
+    cur.execute(sql4max)
+    res = cur.fetchone()[0]
+    if res == None: start = 0
+    else: start = res
+    print("%d: start=%d" % (raspi_id,start))
+    basedir = "%s/%d" % (BASEDIR,raspi_id)
     if not os.path.isdir(basedir): raise Exception('%s not found.' % (basedir))
     pictures = []
     for f in sorted(os.listdir(basedir)):
         p = filename2seq(f)
         if p == None or p <= start: continue
         pictures += [p]
-    if len(pictures) == 0: return
-    print("%d pictures(on %s) will be processed." % (len(pictures),basedir))
+    if len(pictures) == 0:
+        print("  nothing to update.")
+        return
+    print("  %d pictures(on %s) will be processed." % (len(pictures),basedir))
     tail = pictures[0]
     n = 0
     ts =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -88,10 +94,27 @@ def update(raspi_id):
     db.commit()
     cur.execute("select count(1) from picture_groups where raspi_id = %d" % (raspi_id))
     n_after = cur.fetchone()[0]
-    print("%d rows inserted for raspi_id = %d." % (n_after-n_before,raspi_id))
+    print("  %d rows inserted for raspi_id = %d." % (n_after-n_before,raspi_id))
     cur.close()
     db.close()
 
 if __name__ == "__main__":
-    clear(1)
-    update(1)
+    import argparse
+    parser = argparse.ArgumentParser(description='Inset picture_groups records.')
+    parser.add_argument('-e', '--env', default='development', help='Database name to connect.')
+    parser.add_argument('-i', '--raspi_id', type=int, help='Raspberry Pi ID.')
+    parser.add_argument('--clear', help='Clear all records before inserting.')
+    args = parser.parse_args()
+    DATABASE = "mukoyama_"+args.env
+    BASEDIR = "/opt/mukoyama.lmlab.net/data/pictures"
+    print("database: "+DATABASE)
+    print("basedir: "+BASEDIR)
+    if args.raspi_id:
+        ids = [int(args.raspi_id)]
+    else:
+        ids = sorted(map(int,os.listdir(BASEDIR)))
+    print("targets: "+str(ids))
+
+    for id in ids:
+        if args.clear: clear(id)
+        update(id)
