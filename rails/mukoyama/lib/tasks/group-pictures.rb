@@ -1,4 +1,4 @@
-# OpenCV呼び出しの速度が遅いため.pyに書き換えました。こちらは使用していません。 
+# Deprecated: OpenCV呼び出しの速度が遅いため.pyに書き換えました。こちらは使用していません。 
 
 def debug?
   true
@@ -17,7 +17,7 @@ def filename2seq(name)
   return m[1].to_i
 end
 
-# ex. 123123456456 -> /opt/mukoyama.lmlab.net/data/pictures/9/123123_456456.jpg
+# ex. 123123456456 -> /var/www/mukoyama/data/pictures/9/123123_456456.jpg
 def seq2filepath(basedir,seq)
   n = seq.to_s
   basedir+"/"+n[0,6]+"_"+n[6,6]+".jpg"

@@ -106,7 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('--clear', help='Clear all records before inserting.')
     args = parser.parse_args()
     DATABASE = "mukoyama_"+args.env
-    BASEDIR = "/opt/mukoyama.lmlab.net/data/pictures"
+    BASEDIR = "/var/www/mukoyama/data/pictures"
     print("database: "+DATABASE)
     print("basedir: "+BASEDIR)
     if args.raspi_id:

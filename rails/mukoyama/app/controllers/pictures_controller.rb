@@ -4,9 +4,9 @@ class PicturesController < ApplicationController
   before_action :set_access_log, only: [:index]
   include ApplicationHelper
 
-  # sudo mkdir -p /opt/mukoyama.lmlab.net/data
-  # sudo chmod 777 /opt/mukoyama.lmlab.net/data
-  BASEDIR = "/opt/mukoyama.lmlab.net/data/pictures"
+  # sudo mkdir -p /var/www/mukoyama/data
+  # sudo chmod 777 /var/www/mukoyama/data
+  BASEDIR = "/var/www/mukoyama/data/pictures"
 
   def index
     @id = params[:raspi_id]
