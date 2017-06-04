@@ -39,6 +39,7 @@ LINE_CHANNEL_SECRET=
 LINE_CHANNEL_TOKEN=""
 1,11,21,31,41,51 * * * * cd /var/www/mukoyama/current && ruby lib/tasks/tmpr_update.rb -e staging  2>&1 | logger -p cron.info -t "mukoyama"
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb 2>&1 | logger -p cron.info -t "mukoyama"
+10 0 * * * cd /var/www/mukoyama/current && python3 lib/tasks/group-pictures.py -e staging 2>&1 | logger -p cron.info -t "mukoyama"
 ```
 
 ## 画像アップロード
