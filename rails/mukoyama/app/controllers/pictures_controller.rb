@@ -48,6 +48,11 @@ class PicturesController < ApplicationController
     pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
+    if params[:head] && params[:tail]
+      head = params[:head].to_i
+      tail = params[:tail].to_i
+    end
+
     skipped = 0
     @total = 0
     @files = []
@@ -59,6 +64,13 @@ class PicturesController < ApplicationController
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
       next unless f.start_with? @date
+      if head.is_a? Fixnum
+        m = f.sub("_","").match(/([0-9]{12}).jpg/)
+        seq = m[1].to_i
+        raise "#{f}" if seq.nil?
+        break if seq < tail
+        next if head < seq
+      end
       @total += 1
       if skipped < (@page - 1) * pagesize
         skipped += 1
