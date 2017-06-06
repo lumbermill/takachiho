@@ -3,21 +3,25 @@
 
 import cv2, datetime, MySQLdb, os, re, sys
 
-DEBUG = False
+DEBUG = True
 
-channels = [0]
-histSize = [256]
+channels = [0,1]
+histSize = [50,60]
 mask = None
-ranges = [0,256]
+ranges = [0,180,0,256]
 
 def compare_hist(p1,p2):
     global channels, histSize, mask, ranges
-    i1 = cv2.imread(p1,0)
-    i2 = cv2.imread(p2,0)
+    i1 = cv2.imread(p1,1) # 0=grayscale
+    i2 = cv2.imread(p2,1)
+    i1 = cv2.cvtColor(i1,cv2.COLOR_BGR2HSV)
+    i2 = cv2.cvtColor(i2,cv2.COLOR_BGR2HSV)
+
     h1 = cv2.calcHist([i1], channels, mask, histSize, ranges)
     h2 = cv2.calcHist([i2], channels, mask, histSize, ranges)
-    method = cv2.HISTCMP_CORREL
-    return cv2.compareHist(h1, h2, method)
+    #h1 = cv2.normalize(h1,0,1,cv2.NORM_MINMAX)
+    #h2 = cv2.normalize(h2,0,1,cv2.NORM_MINMAX)
+    return cv2.compareHist(h1, h2, cv2.HISTCMP_CORREL)
 
 def clear(raspi_id):
     db = MySQLdb.connect("localhost","ubuntu","",DATABASE)
@@ -44,9 +48,10 @@ def similar(p1,p2):
   # p1 / 1000 == p2 / 1000
 
   # ヒストグラムの類似度
+
   ret = compare_hist(p1,p2)
   if DEBUG: print(p1+" "+p2+" "+str(ret))
-  return ret > 0.95
+  return ret > 0.70 or ret < 0.20
 
 def update(raspi_id):
     db = MySQLdb.connect("localhost","ubuntu","",DATABASE)
@@ -103,7 +108,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Inset picture_groups records.')
     parser.add_argument('-e', '--env', default='development', help='Database name to connect.')
     parser.add_argument('-i', '--raspi_id', type=int, help='Raspberry Pi ID.')
-    parser.add_argument('--clear', help='Clear all records before inserting.')
+    parser.add_argument('--clear', action="store_true", help='Clear all records before inserting.')
     args = parser.parse_args()
     DATABASE = "mukoyama_"+args.env
     BASEDIR = "/var/www/mukoyama/data/pictures"
