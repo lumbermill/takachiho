@@ -16,12 +16,16 @@ def compare_hist(p1,p2):
     i2 = cv2.imread(p2,1)
     i1 = cv2.cvtColor(i1,cv2.COLOR_BGR2HSV)
     i2 = cv2.cvtColor(i2,cv2.COLOR_BGR2HSV)
+    v1 = i1.T[2].flatten().mean()
+    v2 = i2.T[2].flatten().mean()
+    if v1 < 30 and v2 < 30:
+        return 1.0 # too dark to compare
 
     h1 = cv2.calcHist([i1], channels, mask, histSize, ranges)
     h2 = cv2.calcHist([i2], channels, mask, histSize, ranges)
-    #h1 = cv2.normalize(h1,0,1,cv2.NORM_MINMAX)
-    #h2 = cv2.normalize(h2,0,1,cv2.NORM_MINMAX)
-    return cv2.compareHist(h1, h2, cv2.HISTCMP_CORREL)
+    #h1 = cv2.normalize(h1,0,255,cv2.NORM_MINMAX)
+    #h2 = cv2.normalize(h2,0,255,cv2.NORM_MINMAX)
+    return cv2.compareHist(h1, h2, cv2.HISTCMP_CORREL) # returns 1.0 if images are identical.
 
 def clear(raspi_id):
     db = MySQLdb.connect("localhost","ubuntu","",DATABASE)
