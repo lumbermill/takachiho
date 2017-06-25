@@ -1,6 +1,7 @@
 # Ruby on Rails
 
-## SQLを直接実行する
+## ActiveRecord
+### Execute sql directly
 ```
 results = ActiveRecord::Base.connection.select_all(sql)
 results.to_a
@@ -9,25 +10,18 @@ results.to_a
 #      {"name" => "Bob",   "email" => "bob@example.com"} ]
 ```
 
-更新系のクエリを実行する場合（更新件数は得られない…？）
+When the query is for updating(inserting). (How to get the number of affected rows?)
 ```
 ActiveRecord::Base.connection.execute(sql)
 ```
 
-## for Ubuntu
+## Use blob as response.
 ```
-sudo apt install ruby-devise
-rails new railsapp --database=mysql
-```
-
-bundleのインストールが失敗するので、aptでパッケージを追加し、そのバージョンに合わせています。
-``` Gemfile
-gem 'devise', '~> 3.5'
-gem 'rmagick', '~> 2.15'
-gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
+response.headers['Content-Length'] = @picture.data.length.to_s
+send_data @picture.data, :type => "image/jpeg", :disposition => "inline"
 ```
 
-## railsプロジェクトを新規作成
+## Create new rails project.
 ```
 rails new sandbox-rails --database=mysql
 ```

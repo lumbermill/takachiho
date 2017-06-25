@@ -18,6 +18,22 @@ client.query("INSERT INTO t VALUES (10,'C',now())")
 p client.affected_rows
 ```
 
+write and read blob data.
+```
+stat = client.prepare("insert into t (name,data) values (?,?)")
+File.open("foo.jpg","rb") do |fh|
+  stat.execute("foo.jpg",fh.read)
+end
+
+row = client.query("select name,data from t where id = 1").first
+File.open(row['name'],'wb') do |fh|
+  fh.write(row['data'])
+end
+```
+
+See also rails.md(for using ActiveRecord).
+
+
 ## date
 ```
 started = Time.now
