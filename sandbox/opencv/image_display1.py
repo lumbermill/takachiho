@@ -1,6 +1,6 @@
 import cv2
 
-img = cv2.imread('dog.jpg',0)
+img = cv2.imread('samples/dog.jpg',0)
 
 cv2.imshow('Dog', img)
 k = cv2.waitKey(0) # & 0xFF needed?
