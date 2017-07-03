@@ -50,6 +50,8 @@ test:
 production:
   <<: *default
   database: mukoyama_production
+  host: 35.187.217.76 # gsql01: Google Cloud SQL
+  username: lmuser
 
 staging:
   <<: *default
