@@ -1,7 +1,7 @@
-class Setting < ActiveRecord::Base
-  has_many :addresses, foreign_key: :raspi_id
+class Device < ActiveRecord::Base
+  has_many :addresses, foreign_key: :device_id
   belongs_to :user
-  has_many :sakura_iot_modules, foreign_key: :raspi_id#, dependent: :destroy
+  has_many :sakura_iot_modules, foreign_key: :device_id#, dependent: :destroy
   accepts_nested_attributes_for :sakura_iot_modules, reject_if: :new_record?
 
   # Returns true if the sensor is visible via the link with token(without authentication).
@@ -27,12 +27,12 @@ class Setting < ActiveRecord::Base
   end
 
   def picture_groups(offset=0,max_length=24)
-    PictureGroup.where(raspi_id: raspi_id).order("head desc").limit(max_length).offset(offset)
+    PictureGroup.where(device_id: id).order("head desc").limit(max_length).offset(offset)
   end
 
   def picture_group_paths(offset=0,max_length=24)
     pgs = picture_groups(offset,max_length)
-    paths = pgs.map { |v| "/pictures/#{raspi_id}/#{v.head}.jpg" }
+    paths = pgs.map { |v| "/pictures/#{id}/#{v.head}.jpg" }
     return paths
   end
 end

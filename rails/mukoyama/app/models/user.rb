@@ -4,16 +4,16 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
-  has_many :settings
+  has_many :devices
 
   def admin?
     id == 1
   end
 
-  def mine?(setting)
-    return false if setting.nil?
-    setting = setting.to_i if setting.is_a? String
-    setting = Setting.find(setting) if setting.is_a? Fixnum
-    return id == setting.user_id
+  def mine?(device)
+    return false if device.nil?
+    device = device.to_i if device.is_a? String
+    device = Setting.find(device) if device.is_a? Fixnum
+    return id == device.user_id
   end
 end

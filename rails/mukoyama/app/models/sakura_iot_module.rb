@@ -1,3 +1,3 @@
 class SakuraIotModule < ActiveRecord::Base
-	belongs_to :settings, foreign_key: :raspi_id
+	belongs_to :devices, foreign_key: :device_id
 end

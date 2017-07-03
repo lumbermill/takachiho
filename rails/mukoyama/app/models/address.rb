@@ -1,13 +1,13 @@
 class Address < ActiveRecord::Base
-  belongs_to :settings, foreign_key: :raspi_id
-  has_many :mail_logs
+  belongs_to :device, foreign_key: :device_id
+  has_many :notifications
 
   def phone?
-    mail.match /^\+[0-9]+$/
+    address.match /^\+[0-9]+$/
   end
 
   def mail?
-    mail.match /^.+@.+$/
+    address.match /^.+@.+$/
   end
 
   def type
