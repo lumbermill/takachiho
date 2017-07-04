@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TmprDailyLogsControllerTest < ActionController::TestCase
+class TempsDailysControllerTest < ActionController::TestCase
   setup do
     @tmpr_daily_log = tmpr_daily_logs(:one)
   end
@@ -17,8 +17,8 @@ class TmprDailyLogsControllerTest < ActionController::TestCase
   end
 
   test "should create tmpr_daily_log" do
-    assert_difference('TmprDailyLog.count') do
-      post :create, tmpr_daily_log: { humidity: @tmpr_daily_log.humidity, pressure: @tmpr_daily_log.pressure, raspi_id: @tmpr_daily_log.raspi_id, temperature: @tmpr_daily_log.temperature, time_stamp: @tmpr_daily_log.time_stamp }
+    assert_difference('TempsDaily.count') do
+      post :create, tmpr_daily_log: { humidity: @tmpr_daily_log.humidity, pressure: @tmpr_daily_log.pressure, device_id: @tmpr_daily_log.device_id, temperature: @tmpr_daily_log.temperature, time_stamp: @tmpr_daily_log.time_stamp }
     end
 
     assert_redirected_to tmpr_daily_log_path(assigns(:tmpr_daily_log))
@@ -35,12 +35,12 @@ class TmprDailyLogsControllerTest < ActionController::TestCase
   end
 
   test "should update tmpr_daily_log" do
-    patch :update, id: @tmpr_daily_log, tmpr_daily_log: { humidity: @tmpr_daily_log.humidity, pressure: @tmpr_daily_log.pressure, raspi_id: @tmpr_daily_log.raspi_id, temperature: @tmpr_daily_log.temperature, time_stamp: @tmpr_daily_log.time_stamp }
+    patch :update, id: @tmpr_daily_log, tmpr_daily_log: { humidity: @tmpr_daily_log.humidity, pressure: @tmpr_daily_log.pressure, device_id: @tmpr_daily_log.device_id, temperature: @tmpr_daily_log.temperature, time_stamp: @tmpr_daily_log.time_stamp }
     assert_redirected_to tmpr_daily_log_path(assigns(:tmpr_daily_log))
   end
 
   test "should destroy tmpr_daily_log" do
-    assert_difference('TmprDailyLog.count', -1) do
+    assert_difference('TempsDaily.count', -1) do
       delete :destroy, id: @tmpr_daily_log
     end
 

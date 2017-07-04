@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SettingsControllerTest < ActionController::TestCase
+class DevicesControllerTest < ActionController::TestCase
   setup do
     @setting = settings(:one)
   end
@@ -17,11 +17,11 @@ class SettingsControllerTest < ActionController::TestCase
   end
 
   test "should create setting" do
-    assert_difference('Setting.count') do
-      post :create, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, raspi_id: @setting.raspi_id }
+    assert_difference('Device.count') do
+      post :create, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, device_id: @setting.device_id }
     end
 
-    assert_redirected_to setting_path(assigns(:setting))
+    assert_redirected_to device_path(assigns(:setting))
   end
 
   test "should show setting" do
@@ -35,12 +35,12 @@ class SettingsControllerTest < ActionController::TestCase
   end
 
   test "should update setting" do
-    patch :update, id: @setting, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, raspi_id: @setting.raspi_id }
-    assert_redirected_to setting_path(assigns(:setting))
+    patch :update, id: @setting, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, device_id: @setting.device_id }
+    assert_redirected_to device_path(assigns(:setting))
   end
 
   test "should destroy setting" do
-    assert_difference('Setting.count', -1) do
+    assert_difference('Device.count', -1) do
       delete :destroy, id: @setting
     end
 

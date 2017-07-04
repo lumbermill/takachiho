@@ -36,7 +36,7 @@ def parsefile(f,id)
     humid = row[2]
     ts = row[3]
     sql = "INSERT IGNORE INTO tmpr_logs"
-    sql += " (raspi_id,time_stamp,temperature,pressure,humidity,created_at,updated_at)"
+    sql += " (device_id,time_stamp,temperature,pressure,humidity,created_at,updated_at)"
     sql += " VALUES (#{id},'#{ts}',#{temp},#{press},#{humid},now(),now())"
     begin
       @client.query(sql)
@@ -90,17 +90,17 @@ def insert_daily(date)
   where = date.nil? ? "" : "WHERE DATE(time_stamp) = '#{date}'"
   daily_sql = <<EOT
   INSERT IGNORE INTO tmpr_daily_logs
-    (raspi_id,time_stamp,
+    (device_id,time_stamp,
     temperature_average,pressure_average,humidity_average,
     temperature_max,pressure_max,humidity_max,
     temperature_min,pressure_min,humidity_min,
     created_at,updated_at)
-  SELECT raspi_id,date(time_stamp),
+  SELECT device_id,date(time_stamp),
   avg(temperature),avg(pressure),avg(humidity),
   max(temperature),max(pressure),max(humidity),
   min(temperature),min(pressure),min(humidity),
   now(),now()
-  FROM tmpr_logs #{where} GROUP BY raspi_id,date(time_stamp);
+  FROM tmpr_logs #{where} GROUP BY device_id,date(time_stamp);
 EOT
   @client.query(daily_sql)
 end
@@ -115,17 +115,17 @@ def insert_monthly(date)
   end
   monthly_sql = <<EOT
   INSERT IGNORE INTO tmpr_monthly_logs
-    (raspi_id,`year_month`,
+    (device_id,`year_month`,
     temperature_average,pressure_average,humidity_average,
     temperature_max,pressure_max,humidity_max,
     temperature_min,pressure_min,humidity_min,
     created_at,updated_at)
-  SELECT raspi_id,year(time_stamp)*100 + month(time_stamp),
+  SELECT device_id,year(time_stamp)*100 + month(time_stamp),
   avg(temperature_average),avg(pressure_average),avg(humidity_average),
   max(temperature_max),max(pressure_max),max(humidity_max),
   min(temperature_min),min(pressure_min),min(humidity_min),
   now(),now()
-  FROM tmpr_daily_logs #{where} GROUP BY raspi_id,year(time_stamp),month(time_stamp);
+  FROM tmpr_daily_logs #{where} GROUP BY device_id,year(time_stamp),month(time_stamp);
 EOT
   @client.query(monthly_sql)
 end

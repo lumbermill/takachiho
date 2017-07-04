@@ -11,12 +11,12 @@ class LinebotTest < ActionController::TestCase
   end
 
   test "ask to linebot" do
-    bot = Linebot.new('dummy-userid',Setting.where(raspi_id: 2))
+    bot = Linebot.new('dummy-userid',Device.where(device_id: 2))
     assert_equal "今日も良い天気ですね。", bot.reply('こんにちは')
-    tl = TmprLog.where(raspi_id: 2).order("time_stamp desc").limit(1).first
+    tl = Temp.where(device_id: 2).order("time_stamp desc").limit(1).first
     assert_equal "10時42分 「test2」気温3.5、湿度90.5%です。", bot.reply('今test2どんな？')
 
-    TmprLog.destroy_all
+    Temp.destroy_all
     assert_equal "データが見つかりませんでした。", bot.reply('今test2どんな？')
 
     assert_equal "298486374-0000 test2\n", bot.reply('一覧')

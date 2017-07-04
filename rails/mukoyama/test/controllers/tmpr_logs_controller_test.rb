@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TmprLogsControllerTest < ActionController::TestCase
+class TempsControllerTest < ActionController::TestCase
   setup do
     @tmpr_log = tmpr_logs(:one)
   end
@@ -17,8 +17,8 @@ class TmprLogsControllerTest < ActionController::TestCase
   end
 
   test "should create tmpr_log" do
-    assert_difference('TmprLog.count') do
-      post :create, tmpr_log: { humidity: @tmpr_log.humidity, pressure: @tmpr_log.pressure, raspi_id: @tmpr_log.raspi_id, temperature: @tmpr_log.temperature, time_stamp: @tmpr_log.time_stamp }
+    assert_difference('Temp.count') do
+      post :create, tmpr_log: { humidity: @tmpr_log.humidity, pressure: @tmpr_log.pressure, device_id: @tmpr_log.device_id, temperature: @tmpr_log.temperature, time_stamp: @tmpr_log.time_stamp }
     end
 
     assert_redirected_to tmpr_log_path(assigns(:tmpr_log))
@@ -35,12 +35,12 @@ class TmprLogsControllerTest < ActionController::TestCase
   end
 
   test "should update tmpr_log" do
-    patch :update, id: @tmpr_log, tmpr_log: { humidity: @tmpr_log.humidity, pressure: @tmpr_log.pressure, raspi_id: @tmpr_log.raspi_id, temperature: @tmpr_log.temperature, time_stamp: @tmpr_log.time_stamp }
+    patch :update, id: @tmpr_log, tmpr_log: { humidity: @tmpr_log.humidity, pressure: @tmpr_log.pressure, device_id: @tmpr_log.device_id, temperature: @tmpr_log.temperature, time_stamp: @tmpr_log.time_stamp }
     assert_redirected_to tmpr_log_path(assigns(:tmpr_log))
   end
 
   test "should destroy tmpr_log" do
-    assert_difference('TmprLog.count', -1) do
+    assert_difference('Temp.count', -1) do
       delete :destroy, id: @tmpr_log
     end
 

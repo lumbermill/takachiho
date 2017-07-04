@@ -1,10 +1,10 @@
-class TmprMonthlyLogsController < ApplicationController
+class TempsMonthlysController < ApplicationController
   before_action :set_tmpr_monthly_log, only: [:show, :edit, :update, :destroy]
 
   # GET /tmpr_monthly_logs
   # GET /tmpr_monthly_logs.json
   def index
-    @tmpr_monthly_logs = TmprMonthlyLog.all
+    @tmpr_monthly_logs = TempsMonthly.all
   end
 
   # GET /tmpr_monthly_logs/1
@@ -14,7 +14,7 @@ class TmprMonthlyLogsController < ApplicationController
 
   # GET /tmpr_monthly_logs/new
   def new
-    @tmpr_monthly_log = TmprMonthlyLog.new
+    @tmpr_monthly_log = TempsMonthly.new
   end
 
   # GET /tmpr_monthly_logs/1/edit
@@ -24,7 +24,7 @@ class TmprMonthlyLogsController < ApplicationController
   # POST /tmpr_monthly_logs
   # POST /tmpr_monthly_logs.json
   def create
-    @tmpr_monthly_log = TmprMonthlyLog.new(tmpr_monthly_log_params)
+    @tmpr_monthly_log = TempsMonthly.new(tmpr_monthly_log_params)
 
     respond_to do |format|
       if @tmpr_monthly_log.save
@@ -64,11 +64,11 @@ class TmprMonthlyLogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_monthly_log
-      @tmpr_monthly_log = TmprMonthlyLog.find(params[:id])
+      @tmpr_monthly_log = TempsMonthly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tmpr_monthly_log_params
-      params.require(:tmpr_monthly_log).permit(:raspi_id, :year_month, :temperature, :pressure, :humidity)
+      params.require(:tmpr_monthly_log).permit(:device_id, :year_month, :temperature, :pressure, :humidity)
     end
 end

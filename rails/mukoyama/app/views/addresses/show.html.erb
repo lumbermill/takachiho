@@ -3,7 +3,7 @@
     <table class="table">
       <tr>
         <th>センサID:</th>
-        <td><%= @address.raspi_id %></td>
+        <td><%= @address.device_id %></td>
       </tr>
       <tr>
         <th>メール(電話番号)</th>
@@ -29,7 +29,7 @@
 </div>
 <p>
 <%= link_to '編集', edit_address_path(@address), class: "btn btn-default" %>
-<%= link_to '戻る', addresses_path(raspi_id: @address.raspi_id), class: "btn btn-default" %>
+<%= link_to '戻る', addresses_path(device_id: @address.device_id), class: "btn btn-default" %>
 </p>
 <script type="text/javascript">
   $('.send_message').on('click',function() {

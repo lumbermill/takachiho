@@ -28,7 +28,7 @@
   function request_upload(){
       $(".btn-primary").attr("disabled",true);
       $(".btn-primary").text("送信中..")
-      $.get("request-upload",{"raspi_id": <%= @id %>},function(d){
+      $.get("request-upload",{"device_id": <%= @id %>},function(d){
         setTimeout(function(){ location.reload() },3000);
       });
   }

@@ -1,0 +1,55 @@
+<% content_for :title, "センサ一覧" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <% if params[:all] %><th>ユーザID</th><% end %>
+      <th>名前</th>
+      <th><%= t("activerecord.attributes.setting.min_tmpr") %></th>
+      <th><%= t("activerecord.attributes.setting.max_tmpr") %></th>
+      <th colspan="2">写真</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= device.id %></td>
+        <% if params[:all] %><td><%= device.user&.name %></td><% end %>
+        <td><%= device.name %></td>
+        <td><%= device.temp_min %></td>
+        <td><%= device.temp_max %></td>
+        <td>
+          <% device.picture_group_paths(0,3).each do |p| %>
+            <%= image_tag p, class: "img img-rounded", style: "max-width: 120px" %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(device.id), title: "写真", class: "btn btn-sm btn-default disabled", id: "#{device.id}-np" %>
+        </td>
+        <td>
+          <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, device,title: "センサ設定の表示/編集" , class: "btn btn-sm btn-default" %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, device, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-sm btn-danger"%>
+        </td>
+      </tr>
+      <script>
+      var id = <%= device.id %>;
+      $.getJSON("dashboard-pictures",{"device_id": id},function(json){
+        if(json.n > 0){
+          console.dir("#"+json.device_id+"-np");
+          $("#"+json.device_id+"-np").removeClass("disabled");
+          $("#"+json.device_id+"-np span.badge").text(json.n);
+        }
+      });
+      </script>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<p>
+<%= link_to 'センサを追加する', new_device_path, class: "btn btn-primary" %>
+<%= link_to '戻る', dashboard_path, class: "btn btn-default" %>
+</p>

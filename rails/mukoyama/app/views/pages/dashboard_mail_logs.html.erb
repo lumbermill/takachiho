@@ -22,7 +22,7 @@
     <% a = Address.find_by(id:m.address_id) %>
     <tr class="<%= m.delivered ? "maillog-active" : "maillog-muted" %>">
       <td><%= a ? a.mail : m.address_id %></td>
-      <td><%= a ? a.raspi_id : "" %></td>
+      <td><%= a ? a.device_id : "" %></td>
       <td><%= format_timestamp(m.time_stamp) %></td>
       <td><%= m.delivered ? "" : "<span title='snoozed'>-<span>".html_safe %></td>
     </tr>

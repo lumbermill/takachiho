@@ -1,6 +1,6 @@
 class PicturesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
-  before_action :set_raspi_id, only: [:index,:show]
+  before_action :set_device_id, only: [:index,:show]
   before_action :set_access_log, only: [:index]
   include ApplicationHelper
 
@@ -9,15 +9,15 @@ class PicturesController < ApplicationController
   BASEDIR = "/var/www/mukoyama/data/pictures"
 
   def index
-    @id = params[:raspi_id]
-    @setting = Setting.find_by(raspi_id: params[:raspi_id])
+    @id = params[:device_id]
+    @setting = Device.find_by(device_id: params[:device_id])
     @date = params[:date] || Date.today.strftime("%y%m%d")
     @page = (params[:page] || "1").to_i
     pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
     skipped = 0
-    @total = PictureGroup.where(raspi_id: @setting.raspi_id).count
+    @total = PictureGroup.where(device_id: @setting.device_id).count
     @n_pages = 0
 
     dir = BASEDIR+"/#{@id}"
@@ -30,7 +30,7 @@ class PicturesController < ApplicationController
       cond_date = "and head between #{dmin} and #{dmax}"
     end
 
-    @groups = PictureGroup.where("raspi_id = #{@setting.raspi_id} #{cond_date}").order("head desc")
+    @groups = PictureGroup.where("device_id = #{@setting.device_id} #{cond_date}").order("head desc")
     @total = @groups.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
@@ -41,8 +41,8 @@ class PicturesController < ApplicationController
 
   # Show every pictures taken. (former index action)
   def index_all
-    @id = params[:raspi_id]
-    @setting = Setting.find_by(raspi_id: params[:raspi_id])
+    @id = params[:device_id]
+    @setting = Device.find_by(device_id: params[:device_id])
     @date = params[:date] || ""
     @page = (params[:page] || "1").to_i
     pagesize = 24
@@ -92,7 +92,7 @@ class PicturesController < ApplicationController
     if ts.match /[0-9]{12}/
       ts = ts[0,6]+"_"+ts[6,6]
     end
-    f = BASEDIR+"/"+params[:raspi_id]+"/"+ts+".jpg"
+    f = BASEDIR+"/"+params[:device_id]+"/"+ts+".jpg"
     # TODO: Check current_user's permission.
     unless File.file? f
       render text: f+" not found.", status: 404
@@ -103,26 +103,26 @@ class PicturesController < ApplicationController
   end
 
   def upload
-    setting = Setting.find_by(raspi_id: params[:id])
+    setting = Device.find_by(device_id: params[:id])
     if setting.nil?
-      render status:404, text: "Device not found for raspi_id="+params[:id].to_s
+      render status:404, text: "Device not found for device_id="+params[:id].to_s
       return
     elsif setting.token4write != params[:token]
-      render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
+      render status:404, text: "Token did not match for device_id="+params[:id].to_s
       return
     end
-    raspi_id = params[:id]
+    device_id = params[:id]
     file = params[:file]
     time_stamp = DateTime.parse(params[:time_stamp])
     filename = time_stamp.strftime "%y%m%d_%H%M%S.jpg"
 
     if params[:motion_sensor] == "true"
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
-      addresses = Address.where(raspi_id: raspi_id,active: true,motion_sensor: true)
+      addresses = Address.where(device_id: device_id,active: true,motion_sensor: true)
       send_message(addresses, msg, false)
     end
 
-    dir = "#{BASEDIR}/#{raspi_id}"
+    dir = "#{BASEDIR}/#{device_id}"
     FileUtils.mkdir_p(dir) unless File.directory?(dir)
     File.open("#{dir}/#{filename}", 'wb'){|f| f.write(file.read)}
 
@@ -131,17 +131,17 @@ class PicturesController < ApplicationController
 
   # Render whether upload is needed or not. By checking the timestamp of file.
   def upload_needed
-    setting = Setting.find_by(raspi_id: params[:id])
+    setting = Device.find_by(device_id: params[:id])
     if setting.nil?
-      render status:404, text: "Device not found for raspi_id="+params[:id].to_s
+      render status:404, text: "Device not found for device_id="+params[:id].to_s
       return
     elsif setting.token4write != params[:token]
-      render status:404, text: "Token did not match for raspi_id="+params[:id].to_s
+      render status:404, text: "Token did not match for device_id="+params[:id].to_s
       return
     end
-    raspi_id = params[:id]
+    device_id = params[:id]
 
-    f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
+    f = "#{BASEDIR}/#{device_id}/upload-needed.status"
     if File.file?(f) && File.mtime(f) > Time.now - 30.second
       render text: "Yes", status: 200
     else
@@ -151,11 +151,11 @@ class PicturesController < ApplicationController
 
   def request_upload
     raise 'need to login' unless current_user
-    raspi_id = params[:raspi_id]
-    raise "raspi id is not set." unless raspi_id
-    dir = "#{BASEDIR}/#{raspi_id}"
+    device_id = params[:device_id]
+    raise "raspi id is not set." unless device_id
+    dir = "#{BASEDIR}/#{device_id}"
     FileUtils.mkdir_p(dir) unless File.directory?(dir)
-    f = "#{BASEDIR}/#{raspi_id}/upload-needed.status"
+    f = "#{BASEDIR}/#{device_id}/upload-needed.status"
     `touch #{f}`
     render text: "Touch #{f}", status: 200
   end
@@ -188,9 +188,9 @@ class PicturesController < ApplicationController
       return setting.token4read == session[:token4read]
     end
 
-    def set_raspi_id
-      @id = params[:raspi_id]
-      setting = Setting.find(@id)
+    def set_device_id
+      @id = params[:device_id]
+      setting = Device.find(@id)
       unless has_token4read? setting
         authenticate_user!
       end

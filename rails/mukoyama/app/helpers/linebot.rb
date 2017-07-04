@@ -7,8 +7,8 @@ class Linebot
   # 登録 id-tttt, 解除 id-tttt, 一覧
 
   def self.by_userid(user_id)
-    ids = Address.where(mail: user_id, active: true).map{|a| a.raspi_id }
-    settings = Setting.where(raspi_id: ids)
+    ids = Address.where(mail: user_id, active: true).map{|a| a.device_id }
+    settings = Device.where(device_id: ids)
     return Linebot.new(user_id,settings)
   end
 
@@ -27,7 +27,7 @@ class Linebot
       if setting.nil?
         return "コードを確認できません。センサを登録してください。"
       else
-        add_address(@user_id,setting.raspi_id)
+        add_address(@user_id,setting.device_id)
         return "コードを確認しました。「#{setting.name}」の通知をお送りします。"
       end
     elsif text.start_with?("解除")
@@ -35,7 +35,7 @@ class Linebot
       if setting.nil?
         return "コードを確認できません。"
       else
-        remove_address(@user_id,setting.raspi_id)
+        remove_address(@user_id,setting.device_id)
         return "コードを確認しました。「#{setting.name}」からの通知を解除します。"
       end
     elsif text.include?("天気") && (city_id = Linebot::find_city_id_from_message(text)) != nil
@@ -56,10 +56,10 @@ class Linebot
           return reply_about_weather(city_id) if city_id
           return reply_help
         else
-          tl = TmprLog.where(raspi_id: s.raspi_id).order("time_stamp desc").limit(1).first
-          if has_new_image(s.raspi_id)
+          tl = Temp.where(device_id: s.device_id).order("time_stamp desc").limit(1).first
+          if has_new_image(s.device_id)
             # 画像があれば、URLをセット
-            @img_url = get_latest_image(s.raspi_id)
+            @img_url = get_latest_image(s.device_id)
           end
           if s.city_id
             # 天気情報があれば追記
@@ -78,7 +78,7 @@ class Linebot
   WEATHER_JP = {"Clear" => "晴れ", "Clouds" => "曇り", "Rain" => "雨", "Snow" => "雪", "Thunderstorm" => "雷雨", "Fog" => "霧"}
 
   def reply_about_weather(city_id)
-    name = Setting.new(city_id: city_id).city_name
+    name = Device.new(city_id: city_id).city_name
     weather = Linebot::get_weather(city_id)
     if weather
       w = WEATHER_JP[weather["weather_main"]]
@@ -94,20 +94,20 @@ class Linebot
     'センサの「登録」「一覧」「解除」は、そのように話しかけてください。'
   end
 
-  def add_address(user_id,raspi_id)
+  def add_address(user_id,device_id)
     # Register
-    address = Address.find_by(raspi_id: raspi_id, mail: user_id)
+    address = Address.find_by(device_id: device_id, mail: user_id)
     if address
       address.active = true
       address.save
     else
-      Address.create(raspi_id: raspi_id, mail: user_id, active: true)
+      Address.create(device_id: device_id, mail: user_id, active: true)
     end
   end
 
-  def remove_address(user_id,raspi_id)
+  def remove_address(user_id,device_id)
     # Remove
-    address = Address.find_by(raspi_id: raspi_id, mail: user_id)
+    address = Address.find_by(device_id: device_id, mail: user_id)
     if address
       address.active = false
       address.save
@@ -137,16 +137,16 @@ class Linebot
     m = text.match /[0-9]+-[0-9a-f]{4}/  # id-tttt (4 letters of token)
     return nil if m.nil?
     id = m[0].split("-")[0].to_i
-    s = Setting.find_by(raspi_id: id)
+    s = Device.find_by(device_id: id)
     return nil if s.nil?
-    # TODO: 合言葉に該当するraspi_idを検索する、とりあえず今はIDだけでOK
+    # TODO: 合言葉に該当するdevice_idを検索する、とりあえず今はIDだけでOK
     return s
   end
 
   # Within 30 minutes.
-  def has_new_image(raspi_id)
+  def has_new_image(device_id)
     flg = false
-    dir = PicturesController::BASEDIR+"/#{raspi_id}"
+    dir = PicturesController::BASEDIR+"/#{device_id}"
     return false unless File.directory? dir
     count = 0
     Dir.entries(dir).sort.reverse.each do |f|
@@ -172,15 +172,15 @@ class Linebot
     return flg
   end
 
-  def get_latest_image(raspi_id)
-    dir = PicturesController::BASEDIR+"/#{raspi_id}"
+  def get_latest_image(device_id)
+    dir = PicturesController::BASEDIR+"/#{device_id}"
     return "画像が登録されていません。" unless File.directory? dir
-    setting = Setting.find(raspi_id)
+    setting = Device.find(device_id)
     return "画像が公開されていません。" unless setting.readable?
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
-      return "https://mukoyama.lmlab.net/pictures/#{raspi_id}/#{f}?token=#{setting.token4read}"
+      return "https://mukoyama.lmlab.net/pictures/#{device_id}/#{f}?token=#{setting.token4read}"
     end
   end
 

@@ -4,15 +4,15 @@ class AddressesController < ApplicationController
   # GET /addresses
   # GET /addresses.json
   def index
-    if params[:raspi_id].nil? && current_user.admin?
+    if params[:device_id].nil? && current_user.admin?
       @addresses = Address.all.order("id")
-      @raspi_id = 0
+      @device_id = 0
       return
     end
-    setting = Setting.find_by(raspi_id: params[:raspi_id],user_id: current_user.id)
-    raise 'Setting not found for current user.' unless setting
+    setting = Device.find_by(device_id: params[:device_id],user_id: current_user.id)
+    raise 'Device not found for current user.' unless setting
     @addresses = setting.addresses
-    @raspi_id = params[:raspi_id]
+    @device_id = params[:device_id]
   end
 
   # GET /addresses/1
@@ -22,13 +22,13 @@ class AddressesController < ApplicationController
 
   # GET /addresses/new
   def new
-    @raspi_id = params[:raspi_id]
+    @device_id = params[:device_id]
     @address = Address.new
   end
 
   # GET /addresses/1/edit
   def edit
-    @raspi_id = @address.raspi_id
+    @device_id = @address.device_id
   end
 
   # POST /addresses
@@ -64,10 +64,10 @@ class AddressesController < ApplicationController
   # DELETE /addresses/1
   # DELETE /addresses/1.json
   def destroy
-    raspi_id = @address.raspi_id
+    device_id = @address.device_id
     @address.destroy
     respond_to do |format|
-      format.html { redirect_to addresses_url(raspi_id: raspi_id), notice: '通知先を削除しました。' }
+      format.html { redirect_to addresses_url(device_id: device_id), notice: '通知先を削除しました。' }
       format.json { head :no_content }
     end
   end
@@ -93,6 +93,6 @@ class AddressesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def address_params
-      params.require(:address).permit(:raspi_id, :mail, :snooze, :active, :motion_sensor)
+      params.require(:address).permit(:device_id, :mail, :snooze, :active, :motion_sensor)
     end
 end

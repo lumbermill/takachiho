@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TmprMonthlyLogTest < ActiveSupport::TestCase
+class TempsMonthlyTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

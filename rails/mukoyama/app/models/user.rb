@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   def mine?(device)
     return false if device.nil?
     device = device.to_i if device.is_a? String
-    device = Setting.find(device) if device.is_a? Fixnum
+    device = Device.find(device) if device.is_a? Fixnum
     return id == device.user_id
   end
 end

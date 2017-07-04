@@ -5,7 +5,7 @@
     <table class="table">
   <tr>
     <th>ID</th>
-    <td><%= @setting.raspi_id %></td>
+    <td><%= @device.id %></td>
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.setting.name") %></th>
@@ -73,7 +73,7 @@
 Raspbianの規定の設定では、/var/log/syslogに処理ログが出力されますので、ここで正常にコマンドが動いていることを確認してください。</p>
 <pre>
 MUKOYAMA_URL=<%= baseurl %>
-MUKOYAMA_ID=<%= @setting.raspi_id %>
+MUKOYAMA_ID=<%= @device.id %>
 MUKOYAMA_TOKEN=<%= @setting.token4write %>
 */10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </pre>
@@ -110,10 +110,10 @@ sudo dd bs=1m if=Binaries/2016-11-25-raspbian-jessie-lite.img of=/dev/rdisk2
 <pre>
 const char* host = "<%= request.host %>";
 const int httpsPort = <%= request.port.to_s %>;
-const char* mukoyama_id    = "<%= @setting.raspi_id %>";
+const char* mukoyama_id    = "<%= @device.id %>";
 const char* mukoyama_token = "<%= @setting.token4write %>";
 </pre>
 <p>
-<%= link_to t('edit'), edit_setting_path(@setting), class: "btn btn-default" %>
-<%= link_to t('back'), settings_path, class: "btn btn-default" %>
+<%= link_to t('edit'), edit_device_path(@setting), class: "btn btn-default" %>
+<%= link_to t('back'), devices_path, class: "btn btn-default" %>
 </p>

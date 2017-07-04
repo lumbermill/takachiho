@@ -4,9 +4,9 @@ def debug?
   true
 end
 
-def clear(raspi_id)
+def clear(device_id)
   conn = ActiveRecord::Base.connection
-  conn.execute("delete from picture_groups where raspi_id = #{raspi_id}")
+  conn.execute("delete from picture_groups where device_id = #{device_id}")
 end
 
 # ex. 123123_456456.jpg -> 123123456456
@@ -35,10 +35,10 @@ def similar?(p1,p2)
   ret > 0.95
 end
 
-def update(raspi_id)
-  start = PictureGroup.where(raspi_id: raspi_id).maximum(:head) || 0
+def update(device_id)
+  start = PictureGroup.where(device_id: device_id).maximum(:head) || 0
   puts "start=#{start}" if debug?
-  basedir = PictureGroup.basedir(raspi_id)
+  basedir = PictureGroup.basedir(device_id)
   raise "#{basedir} not found." unless File.directory? basedir
   pictures = []
   Dir.entries(basedir).sort.each do |f|
@@ -55,11 +55,11 @@ def update(raspi_id)
     p_next = pictures[i+1]
     n += 1
     next if similar?(seq2filepath(basedir,p),seq2filepath(basedir,p_next))
-    PictureGroup.create(raspi_id: raspi_id, head: p, tail: tail, n: n)
+    PictureGroup.create(device_id: device_id, head: p, tail: tail, n: n)
     n = 0
     tail = p_next
   end
-  PictureGroup.create(raspi_id: raspi_id, head: pictures[-1], tail: tail, n: n)
+  PictureGroup.create(device_id: device_id, head: pictures[-1], tail: tail, n: n)
 
 end
 

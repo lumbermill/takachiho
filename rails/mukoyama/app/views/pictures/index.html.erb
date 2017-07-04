@@ -1,5 +1,5 @@
 <% content_for :title, @setting.name %>
-<% content_for :subtitle, "ID: #{@setting.raspi_id}" %>
+<% content_for :subtitle, "ID: #{@device.id}" %>
 <div class="row">
   <div class="col-sm-12">
     <%= render 'pagenator' %>
@@ -31,7 +31,7 @@
   		<th>公開用URL</th>
   		<td>
   			<div class="well well-sm">
-  				<% setting = Setting.find(@id)
+  				<% setting = Device.find(@id)
               url = baseurl+request.path+"?token="+setting.token4read if setting.readable? %>
   				<%= (link_to url, url) if setting.readable?%>
   			</div>

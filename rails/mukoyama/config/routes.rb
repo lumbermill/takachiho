@@ -2,20 +2,20 @@ Rails.application.routes.draw do
   devise_for :users
 
   # API
-  get 'logs/insert' => 'tmpr_logs#insert'
+  get 'temps/upload' => 'temps#upload'
   get 'pictures/upload-needed' => 'pictures#upload_needed'
   post 'pictures/upload' => 'pictures#upload'
   post 'linebot' => 'pages#linebot'
 
 	# グラフ公開
-	get 'tmpr_logs/graph/:raspi_id' => 'tmpr_logs#graph', as: :tmpr_logs_graph
-	get 'tmpr_logs/graph_data' => 'tmpr_logs#graph_data'
-	get 'logs/last_timestamp' => 'tmpr_logs#last_timestamp'
+	get 'temps/graph/:device_id' => 'temps#graph', as: :temps_graph
+	get 'temps/graph_data' => 'temps#graph_data'
+	get 'temps/last_timestamp' => 'temps#last_timestamp'
 
   get 'pictures/request-upload' => 'pictures#request_upload'
-	get 'pictures/:raspi_id' => 'pictures#index', as: :pictures
-  get 'pictures-all/:raspi_id' => 'pictures#index_all', as: :pictures_all
-	get 'pictures/:raspi_id/:time_stamp' => 'pictures#show', as: :picture
+	get 'pictures/:device_id' => 'pictures#index', as: :pictures
+  get 'pictures-all/:device_id' => 'pictures#index_all', as: :pictures_all
+	get 'pictures/:device_id/:time_stamp' => 'pictures#show', as: :picture
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
@@ -25,22 +25,22 @@ Rails.application.routes.draw do
 
     get 'tmpr_logs/graph_data'
 
-    resources :settings do
+    resources :devices do
       member do
         get 'publish'
         get 'unpublish'
       end
     end
     resources :addresses
-    resources :tmpr_monthly_logs
-    resources :tmpr_daily_logs
-    resources :tmpr_logs
+    resources :temps
+    resources :temps_dailyes
+    resources :temps_monthlies
 
     get 'users' => 'users#index'
     get 'login-as' => 'users#login_as'
     get 'send_message' => 'addresses#send_message'
 
-    #get 'settings/:raspi_id/publish' => 'settings#publish'
+    #get 'settings/:device_id/publish' => 'settings#publish'
   end
   # Pages
   get 'about' => 'pages#about'

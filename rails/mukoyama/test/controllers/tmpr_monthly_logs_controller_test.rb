@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TmprMonthlyLogsControllerTest < ActionController::TestCase
+class TempsMonthlysControllerTest < ActionController::TestCase
   setup do
     @tmpr_monthly_log = tmpr_monthly_logs(:one)
   end
@@ -17,8 +17,8 @@ class TmprMonthlyLogsControllerTest < ActionController::TestCase
   end
 
   test "should create tmpr_monthly_log" do
-    assert_difference('TmprMonthlyLog.count') do
-      post :create, tmpr_monthly_log: { humidity: @tmpr_monthly_log.humidity, pressure: @tmpr_monthly_log.pressure, raspi_id: @tmpr_monthly_log.raspi_id, temperature: @tmpr_monthly_log.temperature, year_month: @tmpr_monthly_log.year_month }
+    assert_difference('TempsMonthly.count') do
+      post :create, tmpr_monthly_log: { humidity: @tmpr_monthly_log.humidity, pressure: @tmpr_monthly_log.pressure, device_id: @tmpr_monthly_log.device_id, temperature: @tmpr_monthly_log.temperature, year_month: @tmpr_monthly_log.year_month }
     end
 
     assert_redirected_to tmpr_monthly_log_path(assigns(:tmpr_monthly_log))
@@ -35,12 +35,12 @@ class TmprMonthlyLogsControllerTest < ActionController::TestCase
   end
 
   test "should update tmpr_monthly_log" do
-    patch :update, id: @tmpr_monthly_log, tmpr_monthly_log: { humidity: @tmpr_monthly_log.humidity, pressure: @tmpr_monthly_log.pressure, raspi_id: @tmpr_monthly_log.raspi_id, temperature: @tmpr_monthly_log.temperature, year_month: @tmpr_monthly_log.year_month }
+    patch :update, id: @tmpr_monthly_log, tmpr_monthly_log: { humidity: @tmpr_monthly_log.humidity, pressure: @tmpr_monthly_log.pressure, device_id: @tmpr_monthly_log.device_id, temperature: @tmpr_monthly_log.temperature, year_month: @tmpr_monthly_log.year_month }
     assert_redirected_to tmpr_monthly_log_path(assigns(:tmpr_monthly_log))
   end
 
   test "should destroy tmpr_monthly_log" do
-    assert_difference('TmprMonthlyLog.count', -1) do
+    assert_difference('TempsMonthly.count', -1) do
       delete :destroy, id: @tmpr_monthly_log
     end
 

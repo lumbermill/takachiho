@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TmprDailyLogTest < ActiveSupport::TestCase
+class TempsDailyTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

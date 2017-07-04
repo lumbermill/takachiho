@@ -1,4 +1,4 @@
-class TmprLogsController < ApplicationController
+class TempsController < ApplicationController
   before_action :set_tmpr_log, only: [:show, :edit, :update, :destroy]
   before_action :check_auth, only: [:graph, :graph_data, :last_timestamp]
   before_action :set_access_log, only: [:graph]
@@ -6,7 +6,7 @@ class TmprLogsController < ApplicationController
   # GET /tmpr_logs
   # GET /tmpr_logs.json
   def index
-    @tmpr_logs = TmprLog.all
+    @tmpr_logs = Temp.all
   end
 
   # GET /tmpr_logs/1
@@ -16,7 +16,7 @@ class TmprLogsController < ApplicationController
 
   # GET /tmpr_logs/new
   def new
-    @tmpr_log = TmprLog.new
+    @tmpr_log = Temp.new
   end
 
   # GET /tmpr_logs/1/edit
@@ -26,7 +26,7 @@ class TmprLogsController < ApplicationController
   # POST /tmpr_logs
   # POST /tmpr_logs.json
   def create
-    @tmpr_log = TmprLog.new(tmpr_log_params)
+    @tmpr_log = Temp.new(tmpr_log_params)
 
     respond_to do |format|
       if @tmpr_log.save
@@ -64,14 +64,14 @@ class TmprLogsController < ApplicationController
   end
 
   def graph_data
-    raspi_id = params[:raspi_id] || "1"
+    device_id = params[:device_id] || "1"
     src = params[:src] || "temperature"
     unit = params[:unit] || "10min"
     limit = params[:limit] || "-7 day"
     if unit == "day" # 1day
       @data = {avg: [], minmax: []}
-      sql = "raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})"
-      results = TmprDailyLog.where(sql).order(:time_stamp)
+      sql = "device_id = #{device_id} AND time_stamp > date_add(now(),interval #{limit})"
+      results = TempsDaily.where(sql).order(:time_stamp)
       results.each do |row|
         ts = row["time_stamp"].to_time.to_i * 1000
         @data[:avg] += [[ts,row[src+"_average"]]]
@@ -81,8 +81,8 @@ class TmprLogsController < ApplicationController
         @data = {avg: [], minmax: []}
         # limit param doesn't work here.
         ym = (Date.today - 360.days).strftime("%Y%m").to_i
-        sql = "raspi_id = #{raspi_id} AND `year_month` > #{ym}"
-        results = TmprMonthlyLog.where(sql).order(:year_month)
+        sql = "device_id = #{device_id} AND `year_month` > #{ym}"
+        results = TempsMonthly.where(sql).order(:year_month)
         results.each do |row|
           y = row["year_month"] / 100
           m = row["year_month"] - y * 100
@@ -92,7 +92,7 @@ class TmprLogsController < ApplicationController
         end
     else # 10min
       @data = []
-      results = TmprLog.where("raspi_id = #{raspi_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
+      results = Temp.where("device_id = #{device_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
         @data += [[row.time_stamp.to_i * 1000,row.send(src)]]
@@ -104,53 +104,62 @@ class TmprLogsController < ApplicationController
   end
 
   def graph
-    @t = "{raspi_id: #{params[:raspi_id]},src: 'temperature'}"
-    @p = "{raspi_id: #{params[:raspi_id]},src: 'pressure'}"
-    @h = "{raspi_id: #{params[:raspi_id]},src: 'humidity'}"
-    @setting = Setting.find_by(raspi_id: params[:raspi_id])
+    @t = "{device_id: #{params[:device_id]},src: 'temperature'}"
+    @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
+    @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
+    @setting = Device.find_by(device_id: params[:device_id])
     @min_tmpr = @setting.min_tmpr
     @max_tmpr = @setting.max_tmpr
-    @min_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).minimum(:time_stamp)
-    @max_timestamp = TmprLog.where(raspi_id: params[:raspi_id]).maximum(:time_stamp)
+    @min_timestamp = Temp.where(device_id: params[:device_id]).minimum(:time_stamp)
+    @max_timestamp = Temp.where(device_id: params[:device_id]).maximum(:time_stamp)
     @token = params[:token]
-    @raspi_id = params[:raspi_id]
+    @device_id = params[:device_id]
 
     @n_watchers = get_access_log
   end
 
-  # GET /tmpr_logs/insert
-  def insert
-    setting = Setting.find_by(raspi_id: params[:id])
-    if setting.nil?
-      render status:404, text: "Device not found for raspi_id="+params[:id]
+  # GET /temps/upload
+  def upload
+    device = Device.find(params[:id])
+    if device.nil?
+      render status:404, text: "Device not found for id="+params[:id]
       return
-    elsif setting.token4write != params[:token]
-      render status:404, text: "Token did not match for raspi_id="+params[:id]
+    elsif device.token4write != params[:token]
+      render status:404, text: "Token did not match for id="+params[:id]
       return
     end
-    raspi_id = params[:id]
-    time_stamp = DateTime.parse(params[:time_stamp])
-    @tmpr_log = TmprLog.find_or_initialize_by(raspi_id: raspi_id, time_stamp: time_stamp)
-    insert_or_update = @tmpr_log.id.nil? ? "Inserted" : "Updated"
-    @tmpr_log.temperature = params[:temperature]
-    @tmpr_log.pressure = params[:pressure]
-    @tmpr_log.humidity = params[:humidity]
-    @tmpr_log.sender = request.remote_ip
 
-    if @tmpr_log.save
-      render text: "#{insert_or_update} #{@tmpr_log.id}", status: 200
+    begin
+      dt = DateTime.parse(params[:dt] || params[:time_stamp])
+    rescue
+      dt = DateTime.now.to_s
+      render status:500, text: "dt=#{dt}&temperature=12.3&pressure=23.4&humidity=34.5&illuminance=45.6&voltage=56.7"
+      return
+    end
+
+    @temp = Temp.find_or_initialize_by(device_id: device.id, dt: dt)
+    insert_or_update = @temp.id.nil? ? "Inserted" : "Updated"
+    @temp.temperature = params[:temperature]
+    @temp.pressure = params[:pressure]
+    @temp.humidity = params[:humidity]
+    @temp.illuminance = params[:illuminance]
+    @temp.voltage = params[:voltage]
+    @temp.sender = request.remote_ip
+
+    if @temp.save
+      render text: "#{insert_or_update} #{@temp.id}", status: 200
     else
-      render text: @tmpr_log.errors, status: 500
+      render text: @temp.errors, status: 500
     end
   end
 
   def last_timestamp
-    raspi_id = params[:id]
+    device_id = params[:id]
     unit = params[:unit] || "10min"
     if unit == "day" # 1day
-      @tmpr_log = TmprDailyLog.where(raspi_id: raspi_id).order(:time_stamp).last
+      @tmpr_log = TempsDaily.where(device_id: device_id).order(:time_stamp).last
     else # 10min
-      @tmpr_log = TmprLog.where(raspi_id: raspi_id).order(:time_stamp).last
+      @tmpr_log = Temp.where(device_id: device_id).order(:time_stamp).last
     end
 
     if @tmpr_log.blank?
@@ -163,17 +172,17 @@ class TmprLogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_log
-      @tmpr_log = TmprLog.find(params[:id])
+      @tmpr_log = Temp.find(params[:id])
     end
 
     def check_auth
       if params[:token]
         session[:token4read] = params[:token]
       end
-      if params[:raspi_id]
-        session[:raspi_id] = params[:raspi_id]
+      if params[:device_id]
+        session[:device_id] = params[:device_id]
       end
-      setting = Setting.find_by(raspi_id: session[:raspi_id])
+      setting = Device.find_by(device_id: session[:device_id])
       if session[:token4read]
         unless setting.token4read == session[:token4read]
           authenticate_user!
@@ -185,6 +194,6 @@ class TmprLogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tmpr_log_params
-      params.require(:tmpr_log).permit(:raspi_id, :time_stamp, :temperature, :pressure, :humidity)
+      params.require(:tmpr_log).permit(:device_id, :time_stamp, :temperature, :pressure, :humidity)
     end
 end

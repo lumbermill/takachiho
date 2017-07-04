@@ -23,31 +23,31 @@
         <% end %>
         <td class="hidden-xs"><%= r.min_tmpr %></td>
         <td class="hidden-xs"><%= r.max_tmpr %></td>
-        <td id="<%= r.raspi_id%>-first" class="hidden-xs"></td>
-        <td id="<%= r.raspi_id%>-last" class="hidden-xs"></td>
+        <td id="<%= r.device_id%>-first" class="hidden-xs"></td>
+        <td id="<%= r.device_id%>-last" class="hidden-xs"></td>
         <td style="white-space: nowrap">
-          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.raspi_id),title: "グラフ", class: "btn btn-default", id: "#{r.raspi_id}-nd" %>
-          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.raspi_id), title: "写真", class: "btn btn-default disabled", id: "#{r.raspi_id}-np" %>
+          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.device_id),title: "グラフ", class: "btn btn-default", id: "#{r.device_id}-nd" %>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.device_id), title: "写真", class: "btn btn-default disabled", id: "#{r.device_id}-np" %>
         </td>
         <td style="white-space: nowrap">
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
-          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(raspi_id: r.raspi_id),title: "通知先一覧", class: "btn btn-default" %>
+          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(device_id: r.device_id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
       </tr>
       <script>
-        var id = <%= r.raspi_id %>;
-        $.getJSON("dashboard-stat1",{"raspi_id": id},function(json){
-          $("#"+json.raspi_id+"-nd span.badge").text(json.c);
+        var id = <%= r.device_id %>;
+        $.getJSON("dashboard-stat1",{"device_id": id},function(json){
+          $("#"+json.device_id+"-nd span.badge").text(json.c);
           if(json.c > 0){
-            $("#"+json.raspi_id+"-first").text(json.first);
-            $("#"+json.raspi_id+"-last").text(json.last);
+            $("#"+json.device_id+"-first").text(json.first);
+            $("#"+json.device_id+"-last").text(json.last);
           }
         });
-        $.getJSON("dashboard-pictures",{"raspi_id": id},function(json){
+        $.getJSON("dashboard-pictures",{"device_id": id},function(json){
           if(json.n > 0){
-            console.dir("#"+json.raspi_id+"-np");
-            $("#"+json.raspi_id+"-np").removeClass("disabled");
-            $("#"+json.raspi_id+"-np span.badge").text(json.n);
+            console.dir("#"+json.device_id+"-np");
+            $("#"+json.device_id+"-np").removeClass("disabled");
+            $("#"+json.device_id+"-np span.badge").text(json.n);
           }
         });
       </script>
@@ -57,7 +57,7 @@
 <div class="row">
   <div class="col-sm-10">
 <p>
-<%= link_to 'センサの追加', new_setting_path, class: "btn btn-primary" %>
+<%= link_to 'センサの追加', new_device_path, class: "btn btn-primary" %>
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
 <%= link_to '天気予報', weather_path, class: "btn btn-default" %>
 </p>
@@ -78,7 +78,7 @@
   <div class="col-sm-3">
     <div class="list-group">
       <%= link_to 'ユーザ一覧', users_path, class: "list-group-item" %>
-      <%= link_to 'センサ一覧', settings_path(all: true), class: "list-group-item" %>
+      <%= link_to 'センサ一覧', devices_path(all: true), class: "list-group-item" %>
       <%= link_to '通知先一覧', addresses_path, class: "list-group-item" %>
     </div>
   </div>
@@ -88,7 +88,7 @@
         <th>ユーザ数</th><td><%= User.count %></td>
       </tr>
       <tr>
-        <th>センサ数</th><td><%= Setting.count %></td>
+        <th>センサ数</th><td><%= Device.count %></td>
       </tr>
       <tr>
         <th>通知先数</th><td><%= Address.count %></td>

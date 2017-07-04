@@ -1,10 +1,10 @@
-<%= form_for(@tmpr_log) do |f| %>
-  <% if @tmpr_log.errors.any? %>
+<%= form_for(@tmpr_monthly_log) do |f| %>
+  <% if @tmpr_monthly_log.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@tmpr_log.errors.count, "error") %> prohibited this tmpr_log from being saved:</h2>
+      <h2><%= pluralize(@tmpr_monthly_log.errors.count, "error") %> prohibited this tmpr_monthly_log from being saved:</h2>
 
       <ul>
-      <% @tmpr_log.errors.full_messages.each do |message| %>
+      <% @tmpr_monthly_log.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :raspi_id %><br>
-    <%= f.number_field :raspi_id %>
+    <%= f.label :device_id %><br>
+    <%= f.number_field :device_id %>
   </div>
   <div class="field">
-    <%= f.label :time_stamp %><br>
-    <%= f.datetime_select :time_stamp %>
+    <%= f.label :year_month %><br>
+    <%= f.number_field :year_month %>
   </div>
   <div class="field">
     <%= f.label :temperature %><br>

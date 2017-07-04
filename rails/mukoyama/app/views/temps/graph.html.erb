@@ -1,5 +1,5 @@
 <% content_for :title, @setting.name %>
-<% content_for :subtitle, "ID: #{@setting.raspi_id}" %>
+<% content_for :subtitle, "ID: #{@device.id}" %>
 <div class="row">
 	<div class="col-md-2" style="text-align: left">
 		<span class="label label-default"><span class="glyphicon glyphicon-user"></span> <%= @n_watchers %> 人が閲覧中</span>
@@ -51,7 +51,7 @@ $(function() {
 	function update_graph() {
 		$.ajax({
 			type: 'GET',
-			url: '/logs/last_timestamp?id=<%= @setting.raspi_id %>&unit=10min',
+			url: '/logs/last_timestamp?id=<%= @device.id %>&unit=10min',
 			dataType: 'text'
 		}).done(function(res) {
 			console.log("10min!");
@@ -119,7 +119,7 @@ $(function() {
 		if (today != get_today()){
 			$.ajax({
 				type: 'GET',
-				url: '/logs/last_timestamp?id=<%= @setting.raspi_id %>&unit=day',
+				url: '/logs/last_timestamp?id=<%= @device.id %>&unit=day',
 				dataType: 'text'
 			}).done(function(res) {
 				console.log("day!");

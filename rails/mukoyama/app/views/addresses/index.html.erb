@@ -1,5 +1,5 @@
 <% content_for :title, "通知先アドレス" %>
-<% content_for :subtitle, "センサID: #{@raspi_id}" %>
+<% content_for :subtitle, "センサID: #{@device_id}" %>
 
 <table class="table">
   <thead>
@@ -16,7 +16,7 @@
   <tbody>
     <% @addresses.each do |address| %>
       <tr>
-        <td><%= address.raspi_id %></td>
+        <td><%= address.device_id %></td>
         <td><%= address.mail %></td>
         <td><%= address.snooze %></td>
         <td><%= address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
@@ -29,5 +29,5 @@
   </tbody>
 </table>
 <p>
-<%= (link_to '通知先を追加する', new_address_path(raspi_id: @raspi_id), class: "btn btn-primary") unless @raspi_id == 0 %>
+<%= (link_to '通知先を追加する', new_address_path(device_id: @device_id), class: "btn btn-primary") unless @device_id == 0 %>
 </p>

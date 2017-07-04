@@ -8,15 +8,15 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @raspi_list = Setting.where(user_id: current_user.id).order("id")
+    @raspi_list = Device.where(user_id: current_user.id).order("id")
   end
 
   def dashboard_stat1
     conn = ActiveRecord::Base.connection
-    id = params[:raspi_id]
-    sql = "SELECT count(1) AS c, min(time_stamp) AS first, max(time_stamp) AS last FROM tmpr_logs WHERE raspi_id = #{id}"
+    id = params[:device_id]
+    sql = "SELECT count(1) AS c, min(time_stamp) AS first, max(time_stamp) AS last FROM tmpr_logs WHERE device_id = #{id}"
     h = conn.select_one(sql).to_hash
-    h["raspi_id"] = id
+    h["device_id"] = id
     h["first"] = format_timestamp(h["first"])
     h["last"] = format_timestamp(h["last"])
     render text: h.to_json
@@ -28,10 +28,10 @@ class PagesController < ApplicationController
   end
 
   def dashboard_pictures
-    id = params[:raspi_id]
+    id = params[:device_id]
     dir = PicturesController::BASEDIR+"/#{id}"
     logger.debug(dir)
-    h = {"raspi_id" => id}
+    h = {"device_id" => id}
     if File.directory? dir
       h["n"] = Dir.entries(dir).count - 2 # Number of pictures
     else

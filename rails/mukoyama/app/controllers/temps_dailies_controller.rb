@@ -1,10 +1,10 @@
-class TmprDailyLogsController < ApplicationController
+class TempsDailysController < ApplicationController
   before_action :set_tmpr_daily_log, only: [:show, :edit, :update, :destroy]
 
   # GET /tmpr_daily_logs
   # GET /tmpr_daily_logs.json
   def index
-    @tmpr_daily_logs = TmprDailyLog.all
+    @tmpr_daily_logs = TempsDaily.all
   end
 
   # GET /tmpr_daily_logs/1
@@ -14,7 +14,7 @@ class TmprDailyLogsController < ApplicationController
 
   # GET /tmpr_daily_logs/new
   def new
-    @tmpr_daily_log = TmprDailyLog.new
+    @tmpr_daily_log = TempsDaily.new
   end
 
   # GET /tmpr_daily_logs/1/edit
@@ -24,7 +24,7 @@ class TmprDailyLogsController < ApplicationController
   # POST /tmpr_daily_logs
   # POST /tmpr_daily_logs.json
   def create
-    @tmpr_daily_log = TmprDailyLog.new(tmpr_daily_log_params)
+    @tmpr_daily_log = TempsDaily.new(tmpr_daily_log_params)
 
     respond_to do |format|
       if @tmpr_daily_log.save
@@ -64,11 +64,11 @@ class TmprDailyLogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tmpr_daily_log
-      @tmpr_daily_log = TmprDailyLog.find(params[:id])
+      @tmpr_daily_log = TempsDaily.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tmpr_daily_log_params
-      params.require(:tmpr_daily_log).permit(:raspi_id, :time_stamp, :temperature, :pressure, :humidity)
+      params.require(:tmpr_daily_log).permit(:device_id, :time_stamp, :temperature, :pressure, :humidity)
     end
 end

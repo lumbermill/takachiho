@@ -19,7 +19,7 @@ def get_tmpr
         data = JSON.parse(msg.data)
         next unless data["type"] == "channels"
         tmpr_data = data["payload"]["channels"]
-        tmpr_log = TmprLog.new({raspi_id: m.raspi_id, time_stamp: data["datetime"], temperature: tmpr_data[0]["value"], pressure: tmpr_data[1]["value"], humidity: tmpr_data[2]["value"],sender: data["module"]})
+        tmpr_log = Temp.new({device_id: m.device_id, time_stamp: data["datetime"], temperature: tmpr_data[0]["value"], pressure: tmpr_data[1]["value"], humidity: tmpr_data[2]["value"],sender: data["module"]})
         tmpr_log.save
       end
     end
