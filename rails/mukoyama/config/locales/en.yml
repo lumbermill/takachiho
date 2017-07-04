@@ -29,5 +29,5 @@ en:
     attributes:
       setting:
         name: 'Name'
-        min_tmpr: 'Minumum Tempareture'
-        max_tmpr: 'Max Tempareture'
+        temp_min: 'Minumum Tempareture'
+        temp_max: 'Max Tempareture'

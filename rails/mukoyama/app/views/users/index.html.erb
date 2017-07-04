@@ -12,8 +12,8 @@
   <tbody>
   <% @users.each do |user| %>
   <%
-    addresses = user.settings.map {|s| s.addresses}.flatten.map {|a| a.id}
-    n = MailLog.where(address_id: addresses, delivered: true).count
+    addresses = user.devices.map {|s| s.addresses}.flatten.map {|a| a.id}
+    n = Notification.where(address_id: addresses, delivered: true).count
   %>
   <tr>
     <td><%= user.id %></td>
@@ -22,7 +22,7 @@
     <% else %>
     <td><strong><%= user.email %></strong></td>
     <% end %>
-    <td><%= user.settings.count %></td>
+    <td><%= user.devices.count %></td>
     <td><%= n %></td>
     <td><%= user.confirmed_at %></td>
     <td><%= user.current_sign_in_at %></td>

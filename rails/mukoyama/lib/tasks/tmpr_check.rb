@@ -18,10 +18,10 @@ class TmprCheck
       if log.time_stamp < now - Mailer.MAX_DELAY.minute
         puts " [too old]"
         msg += "データの受信を確認できません。最終受信日時は、#{log.time_stamp.hour}時#{log.time_stamp.min}分です。"
-      elsif setting.max_tmpr < log.temperature
+      elsif setting.temp_max < log.temperature
         puts " [over]"
         msg += "#{log.temperature}°Cです。設定を上回りました。"
-      elsif setting.min_tmpr > log.temperature
+      elsif setting.temp_min > log.temperature
         puts " [below]"
         msg += "#{log.temperature}°Cです。設定を下回りました。"
       else

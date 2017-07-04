@@ -2,12 +2,12 @@
 
 one:
   raspi_id: 1
-  min_tmpr: 1.5
-  max_tmpr: 1.5
+  temp_min: 1.5
+  temp_max: 1.5
   name: 'test1'
 
 two:
   raspi_id: 2
-  min_tmpr: 1.5
-  max_tmpr: 1.5
+  temp_min: 1.5
+  temp_max: 1.5
   name: 'test2'

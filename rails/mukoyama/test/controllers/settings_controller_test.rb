@@ -18,7 +18,7 @@ class DevicesControllerTest < ActionController::TestCase
 
   test "should create setting" do
     assert_difference('Device.count') do
-      post :create, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, device_id: @setting.device_id }
+      post :create, setting: { temp_max: @setting.temp_max, temp_min: @setting.temp_min, device_id: @setting.device_id }
     end
 
     assert_redirected_to device_path(assigns(:setting))
@@ -35,7 +35,7 @@ class DevicesControllerTest < ActionController::TestCase
   end
 
   test "should update setting" do
-    patch :update, id: @setting, setting: { max_tmpr: @setting.max_tmpr, min_tmpr: @setting.min_tmpr, device_id: @setting.device_id }
+    patch :update, id: @setting, setting: { temp_max: @setting.temp_max, temp_min: @setting.temp_min, device_id: @setting.device_id }
     assert_redirected_to device_path(assigns(:setting))
   end
 

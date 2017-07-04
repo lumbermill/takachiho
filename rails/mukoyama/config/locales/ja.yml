@@ -11,8 +11,8 @@ ja:
     attributes:
       setting:
         name: '名前'
-        min_tmpr: '最低気温'
-        max_tmpr: '最高気温'
+        temp_min: '最低気温'
+        temp_max: '最高気温'
         token4write: '送信用トークン'
         token4read: '公開用トークン'
         token4sakura: 'さくらのIoTトークン'

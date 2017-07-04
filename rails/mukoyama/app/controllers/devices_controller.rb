@@ -112,6 +112,6 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:setting).permit(:device_id, :name, :min_tmpr, :max_tmpr, :city_id, sakura_iot_modules_attributes: [:id, :token])
+      params.require(:setting).permit(:device_id, :name, :temp_min, :temp_max, :city_id, sakura_iot_modules_attributes: [:id, :token])
     end
 end

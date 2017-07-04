@@ -8,7 +8,13 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @raspi_list = Device.where(user_id: current_user.id).order("id")
+    if current_user.admin?
+      @devices = Device.all.order("id")
+      @all = true
+    else
+      @devices = Device.where(user_id: current_user.id).order("id")
+      @all = false
+    end
   end
 
   def dashboard_stat1

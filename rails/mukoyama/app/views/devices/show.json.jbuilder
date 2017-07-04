@@ -1,1 +1,1 @@
-json.extract! @setting, :id, :raspi_id, :min_tmpr, :max_tmpr, :created_at, :updated_at
+json.extract! @setting, :id, :raspi_id, :temp_min, :temp_max, :created_at, :updated_at

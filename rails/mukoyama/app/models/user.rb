@@ -16,4 +16,9 @@ class User < ActiveRecord::Base
     device = Device.find(device) if device.is_a? Fixnum
     return id == device.user_id
   end
+
+  def name4display
+    return email if name.empty?
+    return name
+  end
 end

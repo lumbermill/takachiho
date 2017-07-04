@@ -108,8 +108,8 @@ class TempsController < ApplicationController
     @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
     @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
     @setting = Device.find_by(device_id: params[:device_id])
-    @min_tmpr = @setting.min_tmpr
-    @max_tmpr = @setting.max_tmpr
+    @temp_min = @setting.temp_min
+    @temp_max = @setting.temp_max
     @min_timestamp = Temp.where(device_id: params[:device_id]).minimum(:time_stamp)
     @max_timestamp = Temp.where(device_id: params[:device_id]).maximum(:time_stamp)
     @token = params[:token]

@@ -1,4 +1,4 @@
-<% content_for :title, "センサ一覧" %>
+<% content_for :title, "デバイス一覧" %>
 
 <table class="table">
   <thead>
@@ -6,8 +6,8 @@
       <th>ID</th>
       <% if params[:all] %><th>ユーザID</th><% end %>
       <th>名前</th>
-      <th><%= t("activerecord.attributes.setting.min_tmpr") %></th>
-      <th><%= t("activerecord.attributes.setting.max_tmpr") %></th>
+      <th><%= t("activerecord.attributes.setting.temp_min") %></th>
+      <th><%= t("activerecord.attributes.setting.temp_max") %></th>
       <th colspan="2">写真</th>
       <th colspan="2"></th>
     </tr>

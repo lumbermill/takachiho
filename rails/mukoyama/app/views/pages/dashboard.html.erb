@@ -13,29 +13,34 @@
     </tr>
   </thead>
   <tbody>
-    <% @raspi_list.each do |r| %>
+    <% @devices.each do |r| %>
       <tr>
         <td><%= r.id4line %></td>
         <% if r.readable? %>
         <td><%= r.name %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span></td>
         <% else %>
-        <td><%= r.name %></td>
+        <td><%= r.name %>
+          <% if @all %><br/><span class="text-muted"><%= r.user&.name4display %></span><% end %>
+        </td>
         <% end %>
-        <td class="hidden-xs"><%= r.min_tmpr %></td>
-        <td class="hidden-xs"><%= r.max_tmpr %></td>
-        <td id="<%= r.device_id%>-first" class="hidden-xs"></td>
-        <td id="<%= r.device_id%>-last" class="hidden-xs"></td>
+        <td class="hidden-xs"><%= r.temp_min %></td>
+        <td class="hidden-xs"><%= r.temp_max %></td>
+        <td id="<%= r.id%>-first" class="hidden-xs"></td>
+        <td id="<%= r.id%>-last" class="hidden-xs"></td>
         <td style="white-space: nowrap">
-          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, tmpr_logs_graph_path(r.device_id),title: "グラフ", class: "btn btn-default", id: "#{r.device_id}-nd" %>
-          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.device_id), title: "写真", class: "btn btn-default disabled", id: "#{r.device_id}-np" %>
+          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, temps_graph_path(r.id),title: "グラフ", class: "btn btn-default", id: "#{r.id}-nd" %>
+          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.id), title: "写真", class: "btn btn-default disabled", id: "#{r.id}-np" %>
+          <% r.picture_group_paths(0,3).each do |p| %>
+            <%= image_tag p, class: "img img-rounded", style: "max-width: 120px" %>
+          <% end %>
         </td>
         <td style="white-space: nowrap">
           <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
-          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(device_id: r.device_id),title: "通知先一覧", class: "btn btn-default" %>
+          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(device_id: r.id),title: "通知先一覧", class: "btn btn-default" %>
         </td>
       </tr>
       <script>
-        var id = <%= r.device_id %>;
+        var id = <%= r.id %>;
         $.getJSON("dashboard-stat1",{"device_id": id},function(json){
           $("#"+json.device_id+"-nd span.badge").text(json.c);
           if(json.c > 0){
@@ -57,7 +62,7 @@
 <div class="row">
   <div class="col-sm-10">
 <p>
-<%= link_to 'センサの追加', new_device_path, class: "btn btn-primary" %>
+<%= link_to 'デバイスの追加', new_device_path, class: "btn btn-primary" %>
 <%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
 <%= link_to '天気予報', weather_path, class: "btn btn-default" %>
 </p>
