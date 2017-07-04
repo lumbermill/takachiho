@@ -36,17 +36,12 @@ ask :user, `whoami`.chomp
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 2
 
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  after :deploy, :restart do
+    on roles(:web), in: :sequence, wait: 10 do
+      execute :sudo, 'service apache2 restart'
     end
   end
-
 end
