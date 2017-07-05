@@ -1,13 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  raspi_id: 1
+  id: 1
+  token4write: '123456'
   temp_min: 1.5
   temp_max: 1.5
   name: 'test1'
 
 two:
-  raspi_id: 2
+  id: 2
   temp_min: 1.5
   temp_max: 1.5
   name: 'test2'

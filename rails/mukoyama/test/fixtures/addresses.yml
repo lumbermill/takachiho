@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  raspi_id: 1
-  mail: foo1@bar.com
-  active: false
+  device_id: 1
+  address: foo1@bar.com
+  active: true
 
 two:
-  raspi_id: 2
-  mail: foo2@bar.com
+  device_id: 2
+  address: foo2@bar.com
   active: false

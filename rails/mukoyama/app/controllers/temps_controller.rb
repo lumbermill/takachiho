@@ -120,12 +120,13 @@ class TempsController < ApplicationController
 
   # GET /temps/upload
   def upload
-    device = Device.find(params[:id])
+    fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage]
+    device = Device.find_by(id: params[:id])
     if device.nil?
-      render status:404, text: "Device not found for id="+params[:id]
+      render status:404, text: "Device not found for id=#{params[:id]}"
       return
     elsif device.token4write != params[:token]
-      render status:404, text: "Token did not match for id="+params[:id]
+      render status:404, text: "Token did not match for id=#{params[:id]}"
       return
     end
 
@@ -139,11 +140,7 @@ class TempsController < ApplicationController
 
     @temp = Temp.find_or_initialize_by(device_id: device.id, dt: dt)
     insert_or_update = @temp.id.nil? ? "Inserted" : "Updated"
-    @temp.temperature = params[:temperature]
-    @temp.pressure = params[:pressure]
-    @temp.humidity = params[:humidity]
-    @temp.illuminance = params[:illuminance]
-    @temp.voltage = params[:voltage]
+    fnames.each { |n| @temp[n] = params[n] }
     @temp.sender = request.remote_ip
 
     if @temp.save

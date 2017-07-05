@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # API
   get 'temps/upload' => 'temps#upload'
   get 'pictures/upload-needed' => 'pictures#upload_needed'
+  get 'pictures/request-upload' => 'pictures#request_upload'
+  get  'pictures/upload' => 'pictures#upload'
   post 'pictures/upload' => 'pictures#upload'
   post 'linebot' => 'pages#linebot'
 
@@ -12,10 +14,8 @@ Rails.application.routes.draw do
 	get 'temps/graph_data' => 'temps#graph_data'
 	get 'temps/last_timestamp' => 'temps#last_timestamp'
 
-  get 'pictures/request-upload' => 'pictures#request_upload'
-	get 'pictures/:device_id' => 'pictures#index', as: :pictures
+	get 'pictures/:id' => 'pictures#show', as: :picture
   get 'pictures-all/:device_id' => 'pictures#index_all', as: :pictures_all
-	get 'pictures/:device_id/:time_stamp' => 'pictures#show', as: :picture
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'

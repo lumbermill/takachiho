@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:upload,:upload_needed]
-  before_action :set_device_id, only: [:index,:show]
+  before_action :set_device_id, only: [:index]
+  before_action :set_picture, only: [:show]
   before_action :set_access_log, only: [:index]
   include ApplicationHelper
 
@@ -10,14 +11,14 @@ class PicturesController < ApplicationController
 
   def index
     @id = params[:device_id]
-    @setting = Device.find_by(device_id: params[:device_id])
+    @device = Device.find_by(id: params[:device_id])
     @date = params[:date] || Date.today.strftime("%y%m%d")
     @page = (params[:page] || "1").to_i
     pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
     skipped = 0
-    @total = PictureGroup.where(device_id: @setting.device_id).count
+    @total = PictureGroup.where(device_id: @device.id).count
     @n_pages = 0
 
     dir = BASEDIR+"/#{@id}"
@@ -30,7 +31,7 @@ class PicturesController < ApplicationController
       cond_date = "and head between #{dmin} and #{dmax}"
     end
 
-    @groups = PictureGroup.where("device_id = #{@setting.device_id} #{cond_date}").order("head desc")
+    @groups = PictureGroup.where("device_id = #{@device.id} #{cond_date}").order("head desc")
     @total = @groups.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
@@ -88,45 +89,46 @@ class PicturesController < ApplicationController
   end
 
   def show
-    ts = params[:time_stamp] # 123123_456456 or 123123456456
-    if ts.match /[0-9]{12}/
-      ts = ts[0,6]+"_"+ts[6,6]
-    end
-    f = BASEDIR+"/"+params[:device_id]+"/"+ts+".jpg"
-    # TODO: Check current_user's permission.
-    unless File.file? f
-      render text: f+" not found.", status: 404
-      return
-    end
-    send_file(f, type: "image/jpeg")
-    # render file: f, content_type: "image/jpeg", layout: false
+    response.headers['Content-Length'] = @picture.data.length.to_s
+    send_data(@picture.data, type: @picture.data_type, disposition: "inline")
   end
 
   def upload
-    setting = Device.find_by(device_id: params[:id])
-    if setting.nil?
+    device = Device.find_by(id: params[:id])
+    if device.nil?
       render status:404, text: "Device not found for device_id="+params[:id].to_s
       return
-    elsif setting.token4write != params[:token]
+    elsif device.token4write != params[:token]
       render status:404, text: "Token did not match for device_id="+params[:id].to_s
       return
     end
-    device_id = params[:id]
     file = params[:file]
-    time_stamp = DateTime.parse(params[:time_stamp])
-    filename = time_stamp.strftime "%y%m%d_%H%M%S.jpg"
+    begin
+      dt = DateTime.parse(params[:dt] || params[:time_stamp])
+    rescue
+      dt = DateTime.now.to_s
+      render status:500, text: "dt=#{dt}&data=(file)&data_type=image/jpeg&detected=false&info=(optional)"
+      return
+    end
 
     if params[:motion_sensor] == "true"
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
-      addresses = Address.where(device_id: device_id,active: true,motion_sensor: true)
+      addresses = Address.where(device_id: device.id,active: true,motion_sensor: true)
       send_message(addresses, msg, false)
     end
 
-    dir = "#{BASEDIR}/#{device_id}"
-    FileUtils.mkdir_p(dir) unless File.directory?(dir)
-    File.open("#{dir}/#{filename}", 'wb'){|f| f.write(file.read)}
+    @picture = Picture.find_or_initialize_by(device_id: device.id, dt: dt)
+    insert_or_update = @picture.id.nil? ? "Inserted" : "Updated"
+    @picture.detected = params[:detected]
+    @picture.data = params[:data] # TODO: need to type check?
+    @picture.data_type = params[:data_type] if params[:data_type]
+    @picture.info = params[:info] if params[:info]
 
-    render text: "Saved to #{filename}.", status: 200
+    if @picture.save
+      render text: "#{insert_or_update} #{@picture.id}", status: 200
+    else
+      render text: @picture.errors, status: 500
+    end
   end
 
   # Render whether upload is needed or not. By checking the timestamp of file.
@@ -192,6 +194,13 @@ class PicturesController < ApplicationController
       @id = params[:device_id]
       setting = Device.find(@id)
       unless has_token4read? setting
+        authenticate_user!
+      end
+    end
+
+    def set_picture
+      @picture = Picture.find(params[:id])
+      unless @picture.device.readable?
         authenticate_user!
       end
     end
