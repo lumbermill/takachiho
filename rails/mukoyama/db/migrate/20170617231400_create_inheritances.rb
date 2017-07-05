@@ -6,7 +6,7 @@ class CreateInheritances < ActiveRecord::Migration
 
     create_table "addresses", force: :cascade do |t|
       t.integer  "device_id",     limit: 4
-      t.string   "type",          limit: 255, default: "", null: false # phone, email, LINE, etc..
+      t.string   "address_type",  limit: 255, default: "", null: false # phone, email, LINE, etc..
       t.string   "address",       limit: 255, default: "", null: false
       t.integer  "snooze",        limit: 4,   default: 60, null: false # interval(min) for notifications
       t.boolean  "active",        null: false, default: true
@@ -18,7 +18,7 @@ class CreateInheritances < ActiveRecord::Migration
     create_table "devices", force: :cascade do |t|
       t.integer  "user_id",     limit: 4
       t.integer  "city_id",     limit: 8
-      t.string   "type",        limit: 255, null: false, default: "" # raspi, arduino, sakuraio, etc..
+      t.string   "device_type", limit: 255, null: false, default: "" # raspi, arduino, sakuraio, etc..
       t.string   "name",        limit: 255, null: false, default: ""
       t.string   "token4read",  limit: 255, null: false, default: ""
       t.string   "token4write", limit: 255, null: false, default: ""
@@ -38,12 +38,13 @@ class CreateInheritances < ActiveRecord::Migration
       t.boolean  "detected",         default: false, null: false # true if something moved
       t.boolean  "starred",          default: false, null: false
       t.binary   "data",  limit: 16777215
-      t.string   "type",  limit: 64, default: "image/jpeg", null: false  # movie gif etc..
+      t.string   "data_type",  limit: 64, default: "image/jpeg", null: false  # movie gif etc..
       t.text     "info",  limit: 60000  # additional information
       t.string   "memo",  limit: 255,default: "",    null: false
       t.datetime "created_at",                       null: false
       t.datetime "updated_at",                       null: false
     end
+    add_index "pictures", ["device_id", "dt"], name: "index_pictures_on_device_id_and_dt", unique: true, using: :btree
 
     create_table "picture_groups", force: :cascade do |t|
       t.integer  "device_id",  limit: 4,                 null: false
@@ -101,7 +102,7 @@ class CreateInheritances < ActiveRecord::Migration
       t.datetime "updated_at",              null: false
     end
 
-    add_index "temps", ["device_id", "dt"], name: "index_logs_temps_on_device_id_and_dt", unique: true, using: :btree
+    add_index "temps", ["device_id", "dt"], name: "index_temps_on_device_id_and_dt", unique: true, using: :btree
 
     create_table "temps_dailies", force: :cascade do |t|
       t.integer  "device_id",            limit: 4
