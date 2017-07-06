@@ -9,7 +9,7 @@ class AddressesController < ApplicationController
       @device_id = 0
       return
     end
-    setting = Device.find_by(device_id: params[:device_id],user_id: current_user.id)
+    setting = Device.find_by(id: params[:device_id],user_id: current_user.id)
     raise 'Device not found for current user.' unless setting
     @addresses = setting.addresses
     @device_id = params[:device_id]

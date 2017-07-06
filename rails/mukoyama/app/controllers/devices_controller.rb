@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
+  before_action :set_device, only: [:show, :edit, :update, :destroy, :publish, :unpublish, :picture]
 
   # GET /settings
   # GET /settings.json
@@ -100,8 +100,13 @@ class DevicesController < ApplicationController
     end
   end
 
-  def root
-
+  def picture
+    if @device.picture
+      response.headers['Content-Length'] = @device.picture.length
+      send_data(@device.picture, type: 'image/jpeg', disposition: "inline")
+    else
+      send_file(Rails.root.join('app', 'assets', 'images', 'no-photo.png'), type: 'image/jpeg', disposition: "inline")
+    end
   end
 
   private

@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   protect_from_forgery :except => [:linebot]
 
   include ApplicationHelper # for format_timestamp method.
+  include ActionView::Helpers::DateHelper
 
   def root
     render layout: 'root'
@@ -20,11 +21,19 @@ class PagesController < ApplicationController
   def dashboard_stat1
     conn = ActiveRecord::Base.connection
     id = params[:device_id]
-    sql = "SELECT count(1) AS c, min(time_stamp) AS first, max(time_stamp) AS last FROM tmpr_logs WHERE device_id = #{id}"
+    sql = "SELECT count(1) AS c, min(dt) AS first, max(dt) AS last FROM temps WHERE device_id = #{id}"
     h = conn.select_one(sql).to_hash
     h["device_id"] = id
     h["first"] = format_timestamp(h["first"])
     h["last"] = format_timestamp(h["last"])
+    h["ago"] = time_ago_in_words(h["last"])
+    latest = Device.find(id).temps.order("id desc").first
+    if latest
+      fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage]
+      fnames.each do |n|
+        h[n] = latest[n] || "-"
+      end
+    end
     render text: h.to_json
   end
 

@@ -15,7 +15,10 @@ Rails.application.routes.draw do
 	get 'temps/last_timestamp' => 'temps#last_timestamp'
 
 	get 'pictures/:id' => 'pictures#show', as: :picture
-  get 'pictures-all/:device_id' => 'pictures#index_all', as: :pictures_all
+  # グループ化は一旦置いといて、こっちをメインに使う(motionの利用を主とする方針)
+  get 'pictures' => 'pictures#index_all', as: :pictures
+
+  get 'devices/:id/picture' => 'devices#picture', as: :device_picture
 
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'

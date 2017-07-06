@@ -8,7 +8,6 @@
       <th>メール</th>
       <th>送信間隔(分)</th>
       <th>有効</th>
-      <th>人感センサー反応時</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,10 +16,9 @@
     <% @addresses.each do |address| %>
       <tr>
         <td><%= address.device_id %></td>
-        <td><%= address.mail %></td>
+        <td><%= address.address %></td>
         <td><%= address.snooze %></td>
         <td><%= address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
-        <td><%= address.motion_sensor ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
         <td><%= link_to '表示', address, class: "btn btn-sm btn-default" %></td>
         <td><%= link_to '編集', edit_address_path(address), class: "btn btn-sm btn-default" %></td>
         <td><%= link_to '削除', address, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %></td>

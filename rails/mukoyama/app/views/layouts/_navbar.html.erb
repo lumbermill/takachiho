@@ -19,6 +19,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
+          <li><%= link_to current_user.name4display, edit_user_registration_path %></li>
           <li><%= link_to '<span class="glyphicon glyphicon-log-out"></span> 退室'.html_safe, destroy_user_session_path, method: "delete" %></li>
         <% else %>
           <li><%= link_to '<span class="glyphicon glyphicon-log-in"></span> 入室'.html_safe, new_user_session_path %></li>

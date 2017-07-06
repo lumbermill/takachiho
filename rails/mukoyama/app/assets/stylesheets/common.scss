@@ -3,3 +3,19 @@ footer{
   padding: 20px 0 20px 0;
   background-color: #F4F5E7;
 }
+
+table.device1, table.device2, table.device3{
+  margin-bottom: 0;
+}
+
+table.device1 th{
+  font-weight: normal;
+  font-size: smaller;
+}
+
+table.device3 th,table.device3 td{
+  font-weight: normal;
+  font-size: 9px;
+  color: #777;
+  //white-space: nowrap;
+}

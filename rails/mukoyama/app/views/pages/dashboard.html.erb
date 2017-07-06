@@ -1,70 +1,113 @@
 <% content_for :title, 'ダッシュボード' %>
-<p>ようこそ、 <%= current_user.name.present? ? current_user.name : current_user.email %> さん</p>
-<table class="table table-responsive">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th title="Rasiberry Piの名前や設置場所の情報">名前</th>
-      <th class="hidden-xs">下限</th>
-      <th class="hidden-xs">上限</th>
-      <th  class="hidden-xs" colspan="2">受信期間</th>
-      <th>データ</th>
-      <th>設定/通知先</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @devices.each do |r| %>
-      <tr>
-        <td><%= r.id4line %></td>
-        <% if r.readable? %>
-        <td><%= r.name %> <span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span></td>
-        <% else %>
-        <td><%= r.name %>
-          <% if @all %><br/><span class="text-muted"><%= r.user&.name4display %></span><% end %>
-        </td>
-        <% end %>
-        <td class="hidden-xs"><%= r.temp_min %></td>
-        <td class="hidden-xs"><%= r.temp_max %></td>
-        <td id="<%= r.id%>-first" class="hidden-xs"></td>
-        <td id="<%= r.id%>-last" class="hidden-xs"></td>
-        <td style="white-space: nowrap">
-          <%= link_to '<span class="glyphicon glyphicon-signal"></span> <span class="badge">0</span>'.html_safe, temps_graph_path(r.id),title: "グラフ", class: "btn btn-default", id: "#{r.id}-nd" %>
-          <%= link_to '<span class="glyphicon glyphicon-picture"></span> <span class="badge">0</span>'.html_safe, pictures_path(r.id), title: "写真", class: "btn btn-default disabled", id: "#{r.id}-np" %>
-          <% r.picture_group_paths(0,3).each do |p| %>
-            <%= image_tag p, class: "img img-rounded", style: "max-width: 120px" %>
+<div class="row">
+  <% @devices.each do |d| %>
+  <div class="col-md-3 col-sm-6">
+    <div class="thumbnail">
+      <figure>
+        <%= image_tag device_picture_path(d.id), alt: "", class: "img-responsive" %>
+        <figcaption>
+          <%= d.name %>
+          <% if d.readable? %><span class="glyphicon glyphicon-globe" title="リンクを知っているユーザに閲覧を許可した状態です"></span><% end %>
+          <span class="text-muted"><%= d.id4line %></span>
+        </figcaption>
+      </figure>
+      <table class="table device1">
+        <tr>
+          <th>気温</th>
+          <td id="<%= d.id %>-temperature"></td>
+          <th>湿度</th>
+          <td id="<%= d.id %>-humidity"></td>
+        </tr>
+        <tr>
+          <th>気圧</th>
+          <td id="<%= d.id %>-pressure"></td>
+          <th>照度</th>
+          <td id="<%= d.id %>-illuminance"></td>
+        </tr>
+        <tr>
+          <th>電圧</th>
+          <td id="<%= d.id %>-voltage"></td>
+          <th></th>
+          <td>-</td>
+        </tr>
+      </table>
+      <table class="table device2">
+        <tr>
+          <% d.latest_pictures(3).each do |p| %>
+          <td><%= image_tag picture_path(p.id), alt: "", class: "img-responsive img-rounded" %></td>
           <% end %>
-        </td>
-        <td style="white-space: nowrap">
-          <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, r,title: "センサ設定の表示/編集" , class: "btn btn-default" %>
-          <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{r.addresses.count}</span>".html_safe, addresses_path(device_id: r.id),title: "通知先一覧", class: "btn btn-default" %>
-        </td>
-      </tr>
-      <script>
-        var id = <%= r.id %>;
-        $.getJSON("dashboard-stat1",{"device_id": id},function(json){
-          $("#"+json.device_id+"-nd span.badge").text(json.c);
-          if(json.c > 0){
-            $("#"+json.device_id+"-first").text(json.first);
-            $("#"+json.device_id+"-last").text(json.last);
-          }
-        });
-        $.getJSON("dashboard-pictures",{"device_id": id},function(json){
-          if(json.n > 0){
-            console.dir("#"+json.device_id+"-np");
-            $("#"+json.device_id+"-np").removeClass("disabled");
-            $("#"+json.device_id+"-np span.badge").text(json.n);
-          }
-        });
-      </script>
-    <% end %>
-  </tbody>
-</table>
+        </tr>
+      </table>
+      <p>
+        <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, temps_graph_path(d.id),title: "グラフ", class: "btn btn-default disabled", id: "#{d.id}-nd" %>
+        <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(d.id), title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np" %>
+      </p>
+      <table class="table device3">
+        <tr>
+          <th>登録日</th>
+          <td><%= d.created_at.strftime("%y/%m/%d") %></td>
+          <th>地域</th>
+          <td><%= d.city_name %></td>
+        </tr>
+        <tr>
+          <th>温度範囲</th>
+          <td><%= d.temp_min %>-<%= d.temp_max %></td>
+          <th>温度件数</th>
+          <td id="<%= d.id %>-n-temps"></td>
+        </tr>
+        <tr>
+          <th>最終受信</th>
+          <td id="<%= d.id %>-ago"></td>
+          <th>写真数</th>
+          <td id="<%= d.id %>-n-pictures"></td>
+        </tr>
+        <% if @all %>
+        <tr>
+          <th>所有者</th>
+          <td colspan="3"><%= d.user&.name4display %></td>
+        </tr>
+        <% end %>
+      </table>
+      <p>
+        <%= link_to '<span class="glyphicon glyphicon-cog"></span>'.html_safe, d, title: "デバイス設定の表示/編集" , class: "btn btn-default" %>
+        <%= link_to "<span class='glyphicon glyphicon-send'></span> <span class='badge'>#{d.addresses.count}</span>".html_safe, addresses_path(device_id: d.id),title: "通知先一覧", class: "btn btn-default" %>
+      </p>
+    </div>
+  </div>
+  <script>
+    var id = <%= d.id %>;
+    $.getJSON("dashboard-stat1",{"device_id": id},function(json){
+      $("#"+json.device_id+"-n-temps").text(json.c);
+      $("#"+json.device_id+"-nd").removeClass("disabled");
+      if(json.c > 0){
+        $("#"+json.device_id+"-first").text(json.first);
+        $("#"+json.device_id+"-last").text(json.last);
+        $("#"+json.device_id+"-ago").text(json.ago);
+      }
+      $("#"+json.device_id+"-temperature").text(json.temperature);
+      $("#"+json.device_id+"-humidity").text(json.humidity);
+      $("#"+json.device_id+"-pressure").text(json.pressure);
+      $("#"+json.device_id+"-illuminance").text(json.illuminance);
+      $("#"+json.device_id+"-voltage").text(json.voltage);
+    });
+    $.getJSON("dashboard-pictures",{"device_id": id},function(json){
+      if(json.n > 0){
+        console.dir("#"+json.device_id+"-np");
+        $("#"+json.device_id+"-np").removeClass("disabled");
+        $("#"+json.device_id+"-n-pictures").text(json.n);
+      }
+    });
+  </script>
+  <% end %>
+</div>
+
+
 <div class="row">
   <div class="col-sm-10">
 <p>
-<%= link_to 'デバイスの追加', new_device_path, class: "btn btn-primary" %>
-<%= link_to 'ユーザ情報の編集', edit_user_registration_path, class: "btn btn-default" %>
-<%= link_to '天気予報', weather_path, class: "btn btn-default" %>
+<%= link_to '<span class="glyphicon glyphicon-phone"></span> デバイスの追加'.html_safe, new_device_path, class: "btn btn-primary" %>
+<%= link_to '<span class="glyphicon glyphicon-user"></span> ユーザ情報の編集'.html_safe, edit_user_registration_path, class: "btn btn-default" %>
+<%= link_to '<span class="glyphicon glyphicon-cloud"></span> 天気予報'.html_safe, weather_path, class: "btn btn-default" %>
 </p>
 <ul>
   <li>右(下)のリンクまたはQRコードからLINEのアカウントを登録してください。</li>

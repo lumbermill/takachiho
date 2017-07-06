@@ -1,7 +1,9 @@
 class Device < ActiveRecord::Base
-  has_many :addresses, foreign_key: :device_id
   belongs_to :user
+  has_many :addresses, foreign_key: :device_id
   has_many :sakura_iot_modules, foreign_key: :device_id#, dependent: :destroy
+  has_many :temps
+  has_many :pictures
   accepts_nested_attributes_for :sakura_iot_modules, reject_if: :new_record?
 
   # Returns true if the sensor is visible via the link with token(without authentication).
@@ -34,5 +36,9 @@ class Device < ActiveRecord::Base
     pgs = picture_groups(offset,max_length)
     paths = pgs.map { |v| "/pictures/#{id}/#{v.head}.jpg" }
     return paths
+  end
+
+  def latest_pictures(limit=3)
+    Picture.where(device_id: id).order("dt desc").limit(limit)
   end
 end
