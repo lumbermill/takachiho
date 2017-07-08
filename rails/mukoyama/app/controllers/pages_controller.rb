@@ -44,14 +44,8 @@ class PagesController < ApplicationController
 
   def dashboard_pictures
     id = params[:device_id]
-    dir = PicturesController::BASEDIR+"/#{id}"
-    logger.debug(dir)
     h = {"device_id" => id}
-    if File.directory? dir
-      h["n"] = Dir.entries(dir).count - 2 # Number of pictures
-    else
-      h["n"] = 0
-    end
+    h["n"] = Device.find(id).pictures.count
     render text: h.to_json
   end
 
