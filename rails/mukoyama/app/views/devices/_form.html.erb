@@ -1,42 +1,48 @@
 <div class="row">
 <div class="col-sm-6">
-<%= form_for(@setting) do |f| %>
-  <% if @setting.errors.any? %>
+<%= form_for(@device) do |f| %>
+  <% if @device.errors.any? %>
     <div class="alert alert-warning">
-      <h2><%= pluralize(@setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+      <h2><%= pluralize(@device.errors.count, "error") %> prohibited this device from being saved:</h2>
       <ul>
-      <% @setting.errors.full_messages.each do |message| %>
+      <% @device.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
   <div class="form-group">
-    <%= f.label :device_id, "ID" %>
-    <input type="text" value="<%= @setting.id.present? ? @setting.id : "*(自動割当)" %>" class="form-control" disabled="disabled"/>
-    <%= f.hidden_field :device_id %>
+    <%= f.label :id, "ID" %>
+    <input type="text" value="<%= @device.id.present? ? @device.id : "(自動割当)" %>" class="form-control" disabled="disabled"/>
+    <%= f.hidden_field :id %>
   </div>
   <div class="form-group">
-    <%= f.label :name, t("activerecord.attributes.setting.name") %>
+    <%= f.label :name, t("activerecord.attributes.device.name") %>
     <%= f.text_field :name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :temp_min, t("activerecord.attributes.setting.temp_min") %>
+    <%= f.label :device_type, t("activerecord.attributes.device.device_type") %>
+    <%= f.text_field :device_type, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :temp_min, t("activerecord.attributes.device.temp_min") %>
     <%= f.text_field :temp_min, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :temp_max, t("activerecord.attributes.setting.temp_max") %>
+    <%= f.label :temp_max, t("activerecord.attributes.device.temp_max") %>
     <%= f.text_field :temp_max, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.fields_for :sakura_iot_modules do |sim| %>
-      <%= sim.label :token, t("activerecord.attributes.setting.token4sakura") %>
-      <%= sim.text_field :token, class: "form-control" %>
-    <% end %>
+    <%= f.label :token4sakura, t("activerecord.attributes.device.token4sakura") %>
+    <%= f.text_field :token4sakura, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :city_id, t("activerecord.attributes.setting.city_id") %>
-    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name_jp"].present? ? u["name_jp"] : u["name"], u["id"]] }, @setting.city_id), {include_blank: true}, {class: "form-control"} %>
+    <%= f.label :city_id, t("activerecord.attributes.device.city_id") %>
+    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name_jp"].present? ? u["name_jp"] : u["name"], u["id"]] }, @device.city_id), {include_blank: true}, {class: "form-control"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :picture, t("activerecord.attributes.device.picture") %>
+    <%= f.file_field :picture, class: "form-control" %>
   </div>
   <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>

@@ -8,25 +8,25 @@
     <td><%= @device.id %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.name") %></th>
-    <td><%= @setting.name %></td>
+    <th><%= t("activerecord.attributes.device.name") %></th>
+    <td><%= @device.name %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.temp_min") %></th>
-    <td><%= @setting.temp_min %></td>
+    <th><%= t("activerecord.attributes.device.temp_min") %></th>
+    <td><%= @device.temp_min %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.temp_max") %></th>
-    <td><%= @setting.temp_max %></td>
+    <th><%= t("activerecord.attributes.device.temp_max") %></th>
+    <td><%= @device.temp_max %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.token4write") %></th>
-    <td><div class="well well-sm"><%= @setting.token4write %></div>
+    <th><%= t("activerecord.attributes.device.token4write") %></th>
+    <td><div class="well well-sm"><%= @device.token4write %></div>
     </td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.token4read") %></th>
-    <td><div class="well well-sm"><%= @setting.token4read %></div>
+    <th><%= t("activerecord.attributes.device.token4read") %></th>
+    <td><div class="well well-sm"><%= @device.token4read %></div>
       <script>
       function generate_token4read(){
         $.get(location.pathname+"/publish",function(d){
@@ -39,7 +39,7 @@
         });
       }
       </script>
-      <% if @setting.readable? %>
+      <% if @device.readable? %>
         <button class="btn btn-success btn-xs" onclick="generate_token4read();">再生成</button>
         <button class="btn btn-danger btn-xs" onclick="delete_token4read();">削除</button>
       <% else %>
@@ -48,22 +48,25 @@
     </td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.token4sakura") %></th>
-    <td><div class="well well-sm"><%= @setting.sakura_iot_modules[0].token %></td>
+    <th><%= t("activerecord.attributes.device.token4sakura") %></th>
+    <td><div class="well well-sm"><%= @device.token4sakura %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.city_id") %></th>
-    <td><div class="well well-sm"><%= @setting.city_id %> <%= @setting.city_name %></td>
+    <th><%= t("activerecord.attributes.device.city_id") %></th>
+    <td><div class="well well-sm"><%= @device.city_id %> <%= @device.city_name %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.created_at") %></th>
-    <td><%= @setting.created_at %></td>
+    <th><%= t("activerecord.attributes.device.created_at") %></th>
+    <td><%= @device.created_at %></td>
   </tr>
   <tr>
-    <th><%= t("activerecord.attributes.setting.updated_at") %></th>
-    <td><%= @setting.updated_at %></td>
+    <th><%= t("activerecord.attributes.device.updated_at") %></th>
+    <td><%= @device.updated_at %></td>
   </tr>
     </table>
+  </div>
+  <div class="col-sm-6">
+    <%= image_tag device_picture_path(@device.id), alt: "", class: "img-responsive img-thumbnail" %>
   </div>
 </div>
 <h3>Raspberry Pi</h3>
@@ -74,7 +77,7 @@ Raspbianの規定の設定では、/var/log/syslogに処理ログが出力され
 <pre>
 MUKOYAMA_URL=<%= baseurl %>
 MUKOYAMA_ID=<%= @device.id %>
-MUKOYAMA_TOKEN=<%= @setting.token4write %>
+MUKOYAMA_TOKEN=<%= @device.token4write %>
 */10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </pre>
 <p>カメラを接続する場合は以下の行も追加します。撮影にはraspistillコマンドを利用しています（画質等の設定調整は同コマンドのマニュアルを参照してください）。</p>
@@ -111,9 +114,9 @@ sudo dd bs=1m if=Binaries/2016-11-25-raspbian-jessie-lite.img of=/dev/rdisk2
 const char* host = "<%= request.host %>";
 const int httpsPort = <%= request.port.to_s %>;
 const char* mukoyama_id    = "<%= @device.id %>";
-const char* mukoyama_token = "<%= @setting.token4write %>";
+const char* mukoyama_token = "<%= @device.token4write %>";
 </pre>
 <p>
-<%= link_to t('edit'), edit_device_path(@setting), class: "btn btn-default" %>
+<%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>
 <%= link_to t('back'), devices_path, class: "btn btn-default" %>
 </p>

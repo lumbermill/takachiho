@@ -16,12 +16,12 @@ db = "mukoyama_" + (OPTS[:e] || "development")
 exit if ENV["HOSTNAME"] == hostname
 
 cmds = []
-cmds += ["ssh #{hostname} mysqldump -uroot k_exports weathers_cities | mysql -uroot #{db}"]
+cmds += ["ssh #{hostname} mysqldump -uroot k_exports weathers_cities | mysql #{db}"]
 if OPTS[:all]
-  cmds += ["ssh #{hostname} mysqldump -uroot k_exports weathers | mysql -uroot #{db}"]
+  cmds += ["ssh #{hostname} mysqldump -uroot k_exports weathers | mysql #{db}"]
 else
   # Fetch only latest(within a day) records.
-  cmds += ["ssh #{hostname} \"mysqldump -uroot k_exports weathers -t --replace --where 'modified_at >= date_add(now(),interval -1 day)'\" | mysql -uroot #{db}"]
+  cmds += ["ssh #{hostname} \"mysqldump -uroot k_exports weathers -t --replace --where 'modified_at >= date_add(now(),interval -1 day)'\" | mysql #{db}"]
 end
 cmds.each do |cmd|
   puts cmd

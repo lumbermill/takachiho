@@ -1,5 +1,4 @@
 ja:
-  hello: "こんにちは"
   root: 'トップ'
   edit: '編集'
   back: '戻る'
@@ -7,10 +6,11 @@ ja:
   activerecord:
     models:
       user: '会員'
-      setting: '設定'
+      device: 'デバイス'
     attributes:
-      setting:
+      device:
         name: '名前'
+        device_type: 'タイプ'
         temp_min: '最低気温'
         temp_max: '最高気温'
         token4write: '送信用トークン'
@@ -22,7 +22,8 @@ ja:
         password: 'パスワード'
         password_confirmation: '確認パスワード'
       address:
-        mail: 'メールアドレス(電話番号)'
+        address: '通知先'
+        address_type: '通知タイプ'
         snooze: '通知間隔(分)'
         active: '有効'
         motion_sensor: '人感センサー反応時の通知有効化'

@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170617231400) do
     t.string   "name",           limit: 255,      default: "", null: false
     t.string   "token4read",     limit: 255,      default: "", null: false
     t.string   "token4write",    limit: 255,      default: "", null: false
+    t.string   "token4sakura",   limit: 255,      default: "", null: false
     t.integer  "port4console",   limit: 4,        default: 0,  null: false
     t.integer  "port4streaming", limit: 4,        default: 0,  null: false
     t.float    "temp_min",       limit: 24

@@ -22,6 +22,7 @@ class CreateInheritances < ActiveRecord::Migration
       t.string   "name",        limit: 255, null: false, default: ""
       t.string   "token4read",  limit: 255, null: false, default: ""
       t.string   "token4write", limit: 255, null: false, default: ""
+      t.string   "token4sakura",limit: 255, null: false, default: ""
       t.integer "port4console",   limit: 4, null: false, default: 0
       t.integer "port4streaming", limit: 4, null: false, default: 0
       t.float    "temp_min",    limit: 24

@@ -1,10 +1,8 @@
 class Device < ActiveRecord::Base
   belongs_to :user
   has_many :addresses, foreign_key: :device_id
-  has_many :sakura_iot_modules, foreign_key: :device_id#, dependent: :destroy
   has_many :temps
   has_many :pictures
-  accepts_nested_attributes_for :sakura_iot_modules, reject_if: :new_record?
 
   # Returns true if the sensor is visible via the link with token(without authentication).
   def readable?
