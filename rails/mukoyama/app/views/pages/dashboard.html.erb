@@ -40,7 +40,7 @@
       </table>
       <p>
         <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, temps_graph_path(d.id),title: "温湿度グラフ", class: "btn btn-default disabled", id: "#{d.id}-nd" %>
-        <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(d.id), title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np" %>
+        <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(device_id: d.id), title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np" %>
       </p>
       <table class="table device3">
         <tr>

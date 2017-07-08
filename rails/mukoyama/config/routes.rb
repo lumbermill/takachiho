@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
 	get 'pictures/:id' => 'pictures#show', as: :picture
   # グループ化は一旦置いといて、こっちをメインに使う(motionの利用を主とする方針)
-  get 'pictures' => 'pictures#index_all', as: :pictures
+  get 'pictures' => 'pictures#index', as: :pictures
 
   get 'devices/:id/picture' => 'devices#picture', as: :device_picture
 

@@ -47,4 +47,10 @@ class APITest < ActionDispatch::IntegrationTest
     assert_equal f.size, response.content_length
     assert_response :success
   end
+
+  test "devices/id/publish" do
+    # TODO: 認証エリアのテストはどうする？今はここで落ちてしまう
+    get '/devices/1/publish'
+    assert_response :success
+  end
 end

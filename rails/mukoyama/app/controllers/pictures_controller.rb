@@ -11,6 +11,37 @@ class PicturesController < ApplicationController
 
   def index
     @id = params[:device_id]
+    @device = Device.find_by(id: @id)
+    @date = params[:date] || "" # Date.today.strftime("%Y-%m-%d")
+    @page = (params[:page] || "1").to_i
+    pagesize = 24
+    @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
+
+    skipped = 0
+    @n_pages = 0
+
+    if @date == ""
+      cond_date = ""
+    else
+      dmin = @date.to_i * 1000000
+      dmax = dmin + 999999
+      cond_date = "and date(dt) = '#{@date}'" # TODO: インジェクション対策?
+    end
+
+    @pictures = Picture.where("device_id = #{@device.id} #{cond_date}").order("dt desc").limit(1000)
+    @total = @pictures.count
+    @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
+
+    sql = "select distinct date(dt) as d from pictures where device_id = #{@device.id} order by d"
+    results = ActiveRecord::Base.connection.select_all(sql)
+    @dates = results.to_a.map { |v| v["d"] }
+
+    @n_watchers = get_access_log
+  end
+
+  def index_grouped
+    # picture_groupsの代表写真を並べる(motionの登場で要らなくなった…)
+    @id = params[:device_id]
     @device = Device.find_by(id: params[:device_id])
     @date = params[:date] || Date.today.strftime("%y%m%d")
     @page = (params[:page] || "1").to_i

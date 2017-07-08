@@ -70,7 +70,7 @@ class DevicesController < ApplicationController
   end
 
   def publish
-    token_seed = current_user.encrypted_password + @device.device_id.to_s + Time.now.to_s
+    token_seed = current_user.encrypted_password + @device.id.to_s + Time.now.to_s
     @device.token4read = Digest::MD5.new.update(token_seed).to_s[0,12]
     @device.updated_at = Time.now
     if @device.save
