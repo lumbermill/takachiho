@@ -19,6 +19,33 @@ class APITest < ActionDispatch::IntegrationTest
     assert_equal(5, t.voltage)
   end
 
+  test "temps/:id/latest" do
+    get '/temps/1/latest'
+    assert_response :redirect
+
+    # 公開状態に
+    d = Device.find(1)
+    d.token4read = '123456'
+    d.save
+
+    get '/temps/1/latest', {token: '123456'}
+    assert_response :success
+  end
+
+  test "temps/graph_data" do
+    # 公開状態に
+    d = Device.find(1)
+    d.token4read = '123456'
+    d.save
+
+    # セッションに入れてみたけど効かない
+    get '/'
+    session[:token4read] = '123456'
+    
+    get '/temps/graph_data.json?device_id=1&unit=day&token=123456'
+    assert_response :success
+  end
+
   test "pictures/upload" do
     get '/pictures/upload'
     assert_response :missing
@@ -48,9 +75,10 @@ class APITest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "devices/id/publish" do
+  test "devices/:id/publish" do
     # TODO: 認証エリアのテストはどうする？今はここで落ちてしまう
     get '/devices/1/publish'
-    assert_response :success
+    assert_response :redirect
   end
+
 end

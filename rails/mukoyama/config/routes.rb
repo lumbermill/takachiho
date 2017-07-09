@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 	# グラフ公開
 	get 'temps/graph/:device_id' => 'temps#graph', as: :temps_graph
 	get 'temps/graph_data' => 'temps#graph_data'
-	get 'temps/last_timestamp' => 'temps#last_timestamp'
+	get 'temps/:id/latest' => 'temps#latest'
 
 	get 'pictures/:id' => 'pictures#show', as: :picture
   # グループ化は一旦置いといて、こっちをメインに使う(motionの利用を主とする方針)

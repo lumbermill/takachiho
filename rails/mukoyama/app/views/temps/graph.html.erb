@@ -1,4 +1,4 @@
-<% content_for :title, @setting.name %>
+<% content_for :title, @device.name %>
 <% content_for :subtitle, "ID: #{@device.id}" %>
 <div class="row">
 	<div class="col-md-2" style="text-align: left">
@@ -30,14 +30,12 @@ Loading..
 		<th>公開用URL</th>
 		<td>
 			<div class="well well-sm">
-				<% url = baseurl+request.path+"?token="+@setting.token4read if @setting.readable? %>
-				<%= (link_to url, url) if @setting.readable?%>
+				<% url = baseurl+request.path+"?token="+@device.token4read if @device.readable? %>
+				<%= (link_to url, url) if @device.readable?%>
 			</div>
 		</td>
 	</tr>
 </table>
-
-
 
 <script>
 var last_timestamp = "";
@@ -51,10 +49,9 @@ $(function() {
 	function update_graph() {
 		$.ajax({
 			type: 'GET',
-			url: '/logs/last_timestamp?id=<%= @device.id %>&unit=10min',
+			url: '/temps/<%= @device.id %>/latest?unit=10min',
 			dataType: 'text'
 		}).done(function(res) {
-			console.log("10min!");
 			if (last_timestamp != res) {
 				var chart_latest = new Highcharts.Chart({
 						chart: {
@@ -119,7 +116,7 @@ $(function() {
 		if (today != get_today()){
 			$.ajax({
 				type: 'GET',
-				url: '/logs/last_timestamp?id=<%= @device.id %>&unit=day',
+				url: '/temps/<%= @device.id %>/latest?unit=day',
 				dataType: 'text'
 			}).done(function(res) {
 				console.log("day!");

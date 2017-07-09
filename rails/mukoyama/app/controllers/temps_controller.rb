@@ -1,6 +1,6 @@
 class TempsController < ApplicationController
-  before_action :set_tmpr_log, only: [:show, :edit, :update, :destroy]
-  before_action :check_auth, only: [:graph, :graph_data, :last_timestamp]
+  before_action :set_temp, only: [:show, :edit, :update, :destroy]
+  before_action :check_auth, only: [:graph, :graph_data, :latest]
   before_action :set_access_log, only: [:graph]
 
   # GET /tmpr_logs
@@ -70,10 +70,10 @@ class TempsController < ApplicationController
     limit = params[:limit] || "-7 day"
     if unit == "day" # 1day
       @data = {avg: [], minmax: []}
-      sql = "device_id = #{device_id} AND time_stamp > date_add(now(),interval #{limit})"
-      results = TempsDaily.where(sql).order(:time_stamp)
+      sql = "device_id = #{device_id} AND d > date_add(now(),interval #{limit})"
+      results = TempsDaily.where(sql).order(:d)
       results.each do |row|
-        ts = row["time_stamp"].to_time.to_i * 1000
+        ts = row["d"].to_time.to_i * 1000
         @data[:avg] += [[ts,row[src+"_average"]]]
         @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
       end
@@ -92,10 +92,10 @@ class TempsController < ApplicationController
         end
     else # 10min
       @data = []
-      results = Temp.where("device_id = #{device_id} AND time_stamp > date_add(now(),interval #{limit})").order(:time_stamp)
+      results = Temp.where("device_id = #{device_id} AND dt > date_add(now(),interval #{limit})").order(:dt)
       results.each do |row|
         # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
-        @data += [[row.time_stamp.to_i * 1000,row.send(src)]]
+        @data += [[row.dt.to_i * 1000,row.send(src)]]
       end
     end
     respond_to do |format|
@@ -107,11 +107,11 @@ class TempsController < ApplicationController
     @t = "{device_id: #{params[:device_id]},src: 'temperature'}"
     @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
     @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
-    @setting = Device.find_by(device_id: params[:device_id])
-    @temp_min = @setting.temp_min
-    @temp_max = @setting.temp_max
-    @min_timestamp = Temp.where(device_id: params[:device_id]).minimum(:time_stamp)
-    @max_timestamp = Temp.where(device_id: params[:device_id]).maximum(:time_stamp)
+    @device = Device.find(params[:device_id])
+    @temp_min = @device.temp_min
+    @temp_max = @device.temp_max
+    @min_timestamp = Temp.where(device_id: params[:device_id]).minimum(:dt)
+    @max_timestamp = Temp.where(device_id: params[:device_id]).maximum(:dt)
     @token = params[:token]
     @device_id = params[:device_id]
 
@@ -150,38 +150,40 @@ class TempsController < ApplicationController
     end
   end
 
-  def last_timestamp
+  def latest
+    # 最新のレコードを返す、ようにしたいが、今のところ更新確認用にタイムスタンプのみ返します
     device_id = params[:id]
-    unit = params[:unit] || "10min"
+    unit = params[:unit] || "min"
     if unit == "day" # 1day
-      @tmpr_log = TempsDaily.where(device_id: device_id).order(:time_stamp).last
+      @tmpr_log = TempsDaily.where(device_id: device_id).order("d desc").limit(1).first
     else # 10min
-      @tmpr_log = Temp.where(device_id: device_id).order(:time_stamp).last
+      @tmpr_log = Temp.where(device_id: device_id).order("dt desc").limit(1).first
     end
 
     if @tmpr_log.blank?
-      render text: "NO DATA", status: 200
+      render text: "No data found for #{device_id} #{unit}", status: 200
     else
-      render text: @tmpr_log.time_stamp, status: 200
+      render text: @tmpr_log.created_at, status: 200
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_tmpr_log
+    def set_temp
       @tmpr_log = Temp.find(params[:id])
     end
 
     def check_auth
+      id = params[:id] || params[:device_id]
+      if id
+        session[:device_id] = id
+      end
       if params[:token]
         session[:token4read] = params[:token]
       end
-      if params[:device_id]
-        session[:device_id] = params[:device_id]
-      end
-      setting = Device.find_by(device_id: session[:device_id])
+      device = Device.find(session[:device_id])
       if session[:token4read]
-        unless setting.token4read == session[:token4read]
+        unless device.token4read == session[:token4read]
           authenticate_user!
         end
       else
