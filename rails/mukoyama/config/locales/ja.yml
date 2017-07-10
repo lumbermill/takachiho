@@ -58,39 +58,39 @@ ja:
   datetime:
     distance_in_words:
       about_x_hours:
-        one: about 1 hour
-        other: about %{count} hours
+        one: 約1時間
+        other: 約%{count}時間
       about_x_months:
-        one: about 1 month
-        other: about %{count} months
+        one: 約1ヶ月
+        other: 約%{count}ヶ月
       about_x_years:
-        one: about 1 year
-        other: about %{count} years
+        one: 約1年
+        other: 約%{count}年
       almost_x_years:
-        one: almost 1 year
-        other: almost %{count} years
-      half_a_minute: half a minute
+        one: ほぼ1年
+        other: ほぼ%{count}年
+      half_a_minute: 30秒
       less_than_x_minutes:
-        one: less than a minute
-        other: less than %{count} minutes
+        one: 1分以内
+        other: %{count}分以内
       less_than_x_seconds:
-        one: less than 1 second
-        other: less than %{count} seconds
+        one: 1秒以内
+        other: %{count}秒以内
       over_x_years:
-        one: over 1 year
-        other: over %{count} years
+        one: 1年以上
+        other: %{count}年以上
       x_days:
-        one: 1 day
-        other: "%{count} days"
+        one: 1日
+        other: "%{count}日"
       x_minutes:
-        one: 1 minute
-        other: "%{count} minutes"
+        one: 1分
+        other: "%{count}分"
       x_months:
-        one: 1 month
-        other: "%{count} months"
+        one: 1月
+        other: "%{count}月"
       x_years:
-        one: 1 year
-        other: "%{count} years"
+        one: 1年
+        other: "%{count}年"
       x_seconds:
-        one: 1 second
-        other: "%{count} seconds"
+        one: 1秒
+        other: "%{count}秒"
