@@ -21,6 +21,7 @@ ja:
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: '確認パスワード'
+        current_password: '現在のパスワード'
       address:
         address: '通知先'
         address_type: '通知タイプ'
@@ -39,6 +40,9 @@ ja:
               too_short: 'が短すぎます。'
             password_confirmation:
               confirmation: 'が一致しません。'
+            current_password:
+              invalid: 'が正しくありません。'
+              blank: 'を入力してください。'
 #    errors:
 # 以下は効かない？
   helpers:
@@ -72,13 +76,13 @@ ja:
       half_a_minute: 30秒
       less_than_x_minutes:
         one: 1分以内
-        other: %{count}分以内
+        other: "%{count}分以内"
       less_than_x_seconds:
         one: 1秒以内
-        other: %{count}秒以内
+        other: "%{count}秒以内"
       over_x_years:
         one: 1年以上
-        other: %{count}年以上
+        other: "%{count}年以上"
       x_days:
         one: 1日
         other: "%{count}日"
