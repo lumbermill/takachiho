@@ -41,13 +41,13 @@ LINE_CHANNEL_TOKEN=""
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb 2>&1 | logger -p cron.info -t "mukoyama"
 10 0 * * * cd /var/www/mukoyama/current && python3 lib/tasks/group-pictures.py -e staging 2>&1 | logger -p cron.info -t "mukoyama"
 */10 * * * *             cd /var/www/mukoyama/current && rails runner -e production lib/tasks/sakura_tmpr_insert.rb 2>&1 | logger -p cron.info -t "mukoyama"
-10 */3 * * * cd /var/www/mukoyama/current && ruby lib/tasks/copy_weathers.rb -e production 2>&1 | logger -p cron.info -t "mukoyama"  # fetch weathers from
+10 */3 * * * cd /var/www/mukoyama/current && rails runner -e production lib/tasks/copy_weathers.rb 2>&1 | logger -p cron.info -t "mukoyama"  # fetch weathers from
  ```
 
 ## 天気予報データの取得
-別のプロジェクトで蓄積しているデータを借りています。いずれはこちらを中心にすべき？
+別のプロジェクトで蓄積しているデータを借りています。いずれは単体でデータ取得ができるようにします。
 ```
-ruby lib/tasks/copy_weathers.rb
+rails runner -e production lib/tasks/copy_weathers.rb
 ```
 
 ## 画像アップロード
