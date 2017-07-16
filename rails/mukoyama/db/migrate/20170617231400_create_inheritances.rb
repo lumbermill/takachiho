@@ -19,14 +19,16 @@ class CreateInheritances < ActiveRecord::Migration
       t.integer  "user_id",     limit: 4
       t.integer  "city_id",     limit: 8
       t.string   "device_type", limit: 255, null: false, default: "" # raspi, arduino, sakuraio, etc..
+      t.integer  "disp_order",  limit: 4,   null: false, default: 0 # display order
       t.string   "name",        limit: 255, null: false, default: ""
       t.string   "token4read",  limit: 255, null: false, default: ""
       t.string   "token4write", limit: 255, null: false, default: ""
       t.string   "token4sakura",limit: 255, null: false, default: ""
-      t.integer "port4console",   limit: 4, null: false, default: 0
-      t.integer "port4streaming", limit: 4, null: false, default: 0
+      t.integer  "port4console",   limit: 4, null: false, default: 0
+      t.integer  "port4streaming", limit: 4, null: false, default: 0
       t.float    "temp_min",    limit: 24
       t.float    "temp_max",    limit: 24
+      t.float    "voltage_min", limit: 24 # for checking health
       t.binary   "picture",     limit: 16777215 # image/jpeg 640x640, used for storing the picture of the device itself.
       t.string   "memo",        limit: 1024,null: false, default: ""
       t.datetime "created_at",              null: false

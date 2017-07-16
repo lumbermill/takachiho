@@ -77,22 +77,21 @@
   <script>
     var id = <%= d.id %>;
     $.getJSON("dashboard-stat1",{"device_id": id},function(json){
-      $("#"+json.device_id+"-n-temps").text(json.c);
+      $("#"+json.device_id+"-n-temps").text(json.n_temps);
       $("#"+json.device_id+"-nd").removeClass("disabled");
-      if(json.c > 0){
+      if(json.n_temps > 0){
         $("#"+json.device_id+"-first").text(json.first);
         $("#"+json.device_id+"-last").text(json.last);
-        $("#"+json.device_id+"-ago").text(json.ago);
+        $("#"+json.device_id+"-ago").text(json.ago+"前");
       }
       $("#"+json.device_id+"-temperature").text(json.temperature);
       $("#"+json.device_id+"-humidity").text(json.humidity);
       $("#"+json.device_id+"-pressure").text(json.pressure);
       $("#"+json.device_id+"-illuminance").text(json.illuminance);
       $("#"+json.device_id+"-voltage").text(json.voltage);
-    });
-    $.getJSON("dashboard-pictures",{"device_id": id},function(json){
-      $("#"+json.device_id+"-n-pictures").text(json.n);
-      if(json.n > 0){
+      
+      $("#"+json.device_id+"-n-pictures").text(json.n_pictures);
+      if(json.n_pictures > 0){
         console.dir("#"+json.device_id+"-np");
         $("#"+json.device_id+"-np").removeClass("disabled");
       }

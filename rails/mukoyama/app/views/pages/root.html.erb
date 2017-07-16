@@ -8,7 +8,7 @@
       <div class="alert alert-danger" role="alert"><%= alert %></div>
     <% end %>
     <h1>Project Mukoyama</h1>
-    <p>ビニールハウスや生産設備の温度監視システム</p>
+    <p>生産設備のモニタリングシステム</p>
   </div>
 </div>
 <div class="root2">
@@ -18,9 +18,9 @@
       <div class="col-sm-6">
         <h3>概要</h3>
         <p>
-        Raspberry PiやArduino(ESP8266)に温度センサと通信モジュール(3G,Wifi)をつけて、ビニールハウスなどの温度変化を記録し、
+        RaspberryPiやArduinoに各種センサと通信モジュール(3G,Wifi)をつけて、ビニールハウスや工場などの状態を監視するプラットフォームです。
         異常を検知したら設備管理者のところへメール、LINE、電話などでお知らせする仕組みを構築しています。
-        廉価に購入できる部品を組み合わせて、様々な環境やニーズに柔軟に適応できるようになることを目指しています。
+        廉価に購入できる部品を組み合わせて、DIY感覚で端末を構築でき、様々な環境やニーズに柔軟に適応できる仕組みを目指しています。
         </p>
         <p>
           現在、<%= link_to "β版のテスト参加者", rules4tester_path %>を募集中です。機器の構築を代行しリース致します。
@@ -46,7 +46,6 @@
     <div class="row">
       <div class="col-sm-6">
         <h3>開発者向け</h3>
-        <p>ビニールハウス農家さんの協力で実際の現場に設置してデータを収集しています。</p>
         <p>プロジェクトのコードや現在取り組んでいる課題はGitHubで公開しています。不明な点などあれば、お気軽にお問い合わせください。
 当初はRaspberryPiとホストサーバ間をrsyncでデータ転送していましたが、Arduino等の利用も視野に入れてhttpsベースのデータ転送方式に変更しています。
 <a href="https://www.twilio.com">Twilio API</a>で電話通知、
@@ -60,7 +59,7 @@
       <div class="col-sm-3">
         <%= image_tag 'about.png', class: 'img img-responsive img-rounded' %>
         <br/>
-        <%= image_tag 'IMG_0979.JPG', class: 'img img-responsive img-rounded' %>
+        <%= image_tag 'IMG_0979.jpg', class: 'img img-responsive img-rounded' %>
         <br/>
         <%= image_tag 'pic3.jpg', class: 'img img-responsive img-rounded' %>
         <br/>
@@ -68,7 +67,7 @@
       <div class="col-sm-3">
         <%= image_tag 'pic2.jpg', class: 'img img-responsive img-rounded' %>
         <br/>
-        <%= image_tag 'IMG_0983.JPG', class: 'img img-responsive img-rounded' %>
+        <%= image_tag 'IMG_0983.jpg', class: 'img img-responsive img-rounded' %>
         <br/>
         <%= image_tag 'pic4.png', class: 'img img-responsive img-rounded' %>
         <br/>

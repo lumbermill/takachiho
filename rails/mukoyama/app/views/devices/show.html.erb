@@ -1,5 +1,5 @@
 
-<% content_for :title, "センサ設定" %>
+<% content_for :title, "デバイスの設定" %>
 <div class="row">
   <div class="col-sm-6">
     <table class="table">
@@ -67,8 +67,25 @@
   </div>
   <div class="col-sm-6">
     <%= image_tag device_picture_path(@device.id), alt: "", class: "img-responsive img-thumbnail" %>
+    <br/><br/>
+    <p>
+    <%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>
+    <%= link_to t('back'), devices_path, class: "btn btn-default" %>
+    </p>
   </div>
 </div>
+<h2>APIのテスト</h2>
+<p>温度、湿度、気圧、照度、電圧を送信します。</p>
+<pre>
+curl "<%= request.protocol + request.host + ":" + request.port.to_s %>/temps/upload?id=<%= @device.id %>&amp;token=<%= @device.token4write %>&amp;dt=<%= DateTime.now.to_s %>&amp;temperature=12.3&amp;pressure=123.4&amp;humidity=12.3&amp;illuminance=123.4&amp;voltage=1.23"
+</pre>
+<p>画像データを送信します。カレントディレクトリにphoto.jpgというファイルが存在する状態を想定しています。</p>
+<pre>
+curl -X POST -F file=@./photo.jpg "<%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=<%= @device.id %>&amp;token=<%= @device.token4write %>&amp;dt=<%= DateTime.now.to_s %>&amp;detected=true"
+</pre>
+
+<h2>設定のスニペット</h2>
+
 <h3>Raspberry Pi</h3>
 
 
@@ -84,29 +101,6 @@ MUKOYAMA_TOKEN=<%= @device.token4write %>
 <pre>
 * * * * * ruby $HOME/bin/mukoyama_camera.rb 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </pre>
-<p>以下はRaspberryPiにスクリプトを導入するまでの手順の例です。必ずしもこの通りに実行する必要はありません。</p>
-<pre>
-sudo raspi-config
-  # ssh,camera,i2cを有効化
-  # keyboard layoutとtimezonをJapanに
-vi /etc/wpa_supplicant/wpa_supplicant.conf
-  # network={ssid="your-ssid" psk="your-pre-shared-key"}
-sudo apt-get install ruby
-mkdir bin &amp;&amp; cd bin
-curl -O <%= baseurl %>/mukoyama_camera.rb
-</pre>
-<p>Wifiに接続済みでsshが有効化されていれば、以下のコマンドで他の端末から接続可能です。</p>
-<pre>
-  ssh pi@raspberrypi.local
-</pre>
-<p>以下はRaspbianのSDカードを作成するためのコマンドのメモ書きです。
-  ディスクイメージは<a href="https://www.raspberrypi.org/downloads/raspbian/">Raspberry Pi公式サイト</a>で入手可能です。
-  デバイスの番号は環境ごとに違います。
-<strong>絶対にこのままコピーして利用しないでください。</strong><code>diskutil list</code>でデバイス番号を確認してください。</p>
-<pre>
-diskutil umountDisk /dev/disk2
-sudo dd bs=1m if=Binaries/2016-11-25-raspbian-jessie-lite.img of=/dev/rdisk2
-</pre>
 
 <h3>ESP8266</h3>
 <p>mukoyama_esp8266.inoを利用する場合は、IDとトークンを以下のように設定します。</p>
@@ -116,7 +110,3 @@ const int httpsPort = <%= request.port.to_s %>;
 const char* mukoyama_id    = "<%= @device.id %>";
 const char* mukoyama_token = "<%= @device.token4write %>";
 </pre>
-<p>
-<%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>
-<%= link_to t('back'), devices_path, class: "btn btn-default" %>
-</p>

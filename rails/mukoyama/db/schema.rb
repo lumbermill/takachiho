@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170617231400) do
     t.integer  "user_id",        limit: 4
     t.integer  "city_id",        limit: 8
     t.string   "device_type",    limit: 255,      default: "", null: false
+    t.integer  "disp_order",     limit: 4,        default: 0,  null: false
     t.string   "name",           limit: 255,      default: "", null: false
     t.string   "token4read",     limit: 255,      default: "", null: false
     t.string   "token4write",    limit: 255,      default: "", null: false
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20170617231400) do
     t.integer  "port4streaming", limit: 4,        default: 0,  null: false
     t.float    "temp_min",       limit: 24
     t.float    "temp_max",       limit: 24
+    t.float    "voltage_min",    limit: 24
     t.binary   "picture",        limit: 16777215
     t.string   "memo",           limit: 1024,     default: "", null: false
     t.datetime "created_at",                                   null: false

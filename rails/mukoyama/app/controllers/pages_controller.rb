@@ -21,12 +21,11 @@ class PagesController < ApplicationController
   def dashboard_stat1
     conn = ActiveRecord::Base.connection
     id = params[:device_id]
-    sql = "SELECT count(1) AS c, min(dt) AS first, max(dt) AS last FROM temps WHERE device_id = #{id}"
+    sql = "SELECT count(1) AS n_temps, min(dt) AS first, max(dt) AS last FROM temps WHERE device_id = #{id}"
     h = conn.select_one(sql).to_hash
     h["device_id"] = id
     h["first"] = format_timestamp(h["first"])
     h["last"] = format_timestamp(h["last"])
-    h["ago"] = time_ago_in_words(h["last"])
     latest = Device.find(id).temps.order("id desc").first
     if latest
       fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage]
@@ -34,19 +33,18 @@ class PagesController < ApplicationController
         h[n] = latest[n] || "-"
       end
     end
+    # Append stats of pictures
+    sql = "SELECT count(1) AS n_pictures, min(dt) AS first, max(dt) AS last FROM pictures WHERE device_id = #{id}"
+    hp = conn.select_one(sql).to_hash
+    h["n_pictures"] = hp["n_pictures"] || 0
+    h["ago"] = time_ago_in_words([h["last"],hp["last"]].compact.max)
+
     render text: h.to_json
   end
 
   def dashboard_mail_logs
-    @mail_logs = MailLog.order("time_stamp desc,address_id desc").limit(100)
+    @mail_logs = Notification.order("ts desc,address_id desc").limit(100)
     render layout: false
-  end
-
-  def dashboard_pictures
-    id = params[:device_id]
-    h = {"device_id" => id}
-    h["n"] = Device.find(id).pictures.count
-    render text: h.to_json
   end
 
   def line_client
@@ -104,4 +102,22 @@ class PagesController < ApplicationController
       @cities[row["id"]] = row["name"]
     end
   end
+
+  # Show markdown content.
+  def doc
+    name = params[:name]
+    f = "#{Rails.root}/assets/#{name}.md"
+    raise 'Page not found' unless File.file? f
+    require 'redcarpet'
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {fenced_code_blocks: true})
+    @headers = []
+    File.open(f).readlines.each do |line|
+      next unless line.start_with? "#"
+      @headers += [line.strip.sub(/^#+ +/,'')]
+    end
+    fh = File.open(f)
+    fh.readline
+    @body = markdown.render(fh.read).html_safe
+  end
+
 end

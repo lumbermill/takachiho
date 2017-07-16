@@ -13,10 +13,13 @@ ja:
         device_type: 'タイプ'
         temp_min: '最低気温'
         temp_max: '最高気温'
+        voltage_min: '最低電圧'
         token4write: '送信用トークン'
         token4read: '公開用トークン'
         token4sakura: 'さくらのIoTトークン'
         city_id: '設置場所'
+        created_at: '登録日時'
+        updated_at: '最終更新日時'
       user:
         email: 'メールアドレス'
         password: 'パスワード'

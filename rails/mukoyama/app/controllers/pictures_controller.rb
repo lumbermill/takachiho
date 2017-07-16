@@ -120,6 +120,10 @@ class PicturesController < ApplicationController
   end
 
   def show
+    unless @picture.data
+      render text: 'data is empty.', status: 404
+      return
+    end
     response.headers['Content-Length'] = @picture.data.length.to_s
     send_data(@picture.data, type: @picture.data_type, disposition: "inline")
   end
@@ -151,8 +155,12 @@ class PicturesController < ApplicationController
     @picture = Picture.find_or_initialize_by(device_id: device.id, dt: dt)
     insert_or_update = @picture.id.nil? ? "Inserted" : "Updated"
     @picture.detected = params[:detected]
-    @picture.data = params[:data] # TODO: need to type check?
-    @picture.data_type = params[:data_type] if params[:data_type]
+    @picture.data = params[:data].tempfile.read # TODO: need to type check?
+    if params[:data_type]
+      @picture.data_type = params[:data_type]
+    else
+      @picture.data_type = params[:data].content_type
+    end
     @picture.info = params[:info] if params[:info]
 
     if @picture.save
