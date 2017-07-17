@@ -85,28 +85,36 @@ curl -X POST -F file=@./photo.jpg "<%= request.protocol + request.host + ":" + r
 </pre>
 
 <h2>設定のスニペット</h2>
-
+<p>デバイス側の設定時に利用される変数の設定例です。設定全体の流れは「<%= link_to '参加方法', howto_path %>」を参照してください。</p>
 <h3>Raspberry Pi</h3>
+<p></p>
+<figure>
+<figcaption>For shell script</figcaption>
+<pre>
+export MUKOYAMA_URL=<%= baseurl %>
+export MUKOYAMA_ID=<%= @device.id %>
+export MUKOYAMA_TOKEN=<%= @device.token4write %>
+</pre>
+</figure>
 
-
-<p>当プロジェクトのプログラム(mukoyama_bme280.py)を利用する場合、同プログラムをRaspberryPiに配備してから(「<%= link_to '参加方法', howto_path %>」参照)、以下の設定をcrontabに登録してください。
-Raspbianの規定の設定では、/var/log/syslogに処理ログが出力されますので、ここで正常にコマンドが動いていることを確認してください。</p>
+<figure>
+<figcaption>For crontab</figcaption>
 <pre>
 MUKOYAMA_URL=<%= baseurl %>
 MUKOYAMA_ID=<%= @device.id %>
 MUKOYAMA_TOKEN=<%= @device.token4write %>
 */10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
+*    * * * * ruby $HOME/bin/mukoyama_camera.rb 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </pre>
-<p>カメラを接続する場合は以下の行も追加します。撮影にはraspistillコマンドを利用しています（画質等の設定調整は同コマンドのマニュアルを参照してください）。</p>
-<pre>
-* * * * * ruby $HOME/bin/mukoyama_camera.rb 2>&amp;1 | logger -p cron.info -t "mukoyama"
-</pre>
-
+</figure>
+<p>Raspbianではloggerの出力は <code>/var/log/syslog</code> に記録されます。</p>
 <h3>ESP8266</h3>
-<p>mukoyama_esp8266.inoを利用する場合は、IDとトークンを以下のように設定します。</p>
+<figure>
+<figcaption>For .ino</figcaption>
 <pre>
 const char* host = "<%= request.host %>";
 const int httpsPort = <%= request.port.to_s %>;
 const char* mukoyama_id    = "<%= @device.id %>";
 const char* mukoyama_token = "<%= @device.token4write %>";
 </pre>
+</figure>

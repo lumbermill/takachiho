@@ -16,7 +16,8 @@ sudo dd bs=1m if=2017-07-05-raspbian-jessie-lite.img of=/dev/rdisk2
 ```
 sudo apt update
 sudo apt upgrade
-sudo apt install ruby
+sudo rpi-update
+sudo apt install ruby git
 sudo raspi-config
   # ssh,camera,i2cを有効化
   # keyboard layoutとtimezoneをJapanに

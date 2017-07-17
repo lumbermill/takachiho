@@ -16,7 +16,8 @@
 <p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
 
 <h2>デバイスの準備</h2>
-
+<p>デバイスとセンサの組み合わせ毎にプログラムを用意しています。
+<a href="doc/raspi-setup">RaspberryPiのセットアップ</a>の手順でセットアップされていることが前提です。</p>
 <table class="table table-striped">
   <tr>
     <th>デバイス</th>
@@ -46,42 +47,19 @@
     <td><a href="mukoyama_esp8266.ino" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_esp8266.ino</a></td>
   </tr>
   <tr>
-    <td><a href="doc/raspi-camera">RaspberryPi + hc-sr501</a></td>
-    <td>非推奨です。raspi + motionを利用してください。<br/>カメラ(動体検知)画像</td>
+    <td><a href="doc/raspi-hc-sr501">RaspberryPi + hc-sr501</a></td>
+    <td><strong>非推奨</strong>です。raspi + motionを利用してください。<br/>カメラ(動体検知)画像</td>
     <td><a href="mukoyama_camera.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_camera.rb</a></td>
   </tr>
 </table>
 
-<p>現在時刻をベースにリクエスト送信するスクリプトを用意しています。下記の実行ファイルをRaspberryPi上の任意の位置に配置してください。
-センサごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
-(開発者向け: このスクリプトは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はこちらを確認してください)
-</p>
-
-<h3>設定</h3>
-<p>サンプルスケッチを掲載します。Wifiの接続情報と当ホストで発行されたセンサID、トークンを書き換えてインストールしてください。</p>
-<p></p>
-<pre>
-const char* ssid     = "*******";  // WifiのSSID
-const char* password = "*******";  // Wifiのパスワード
-
-const char* mukoyama_id    = "*";         // mukoyama.lmlab.netから発行されるセンサーID
-const char* mukoyama_token = "************";   // mukoyama.lmlab.netから発行されるトークン
-</pre>
-
-
-<h2>カメラ編</h2>
-<p>raspistillコマンドを使って以下のような条件で撮影した写真を送信するスクリプトを用意しています。
-  センサの設定画面に記載された環境変数をセットして利用してください。</p>
-<ul>
-  <li>一定の間隔(規定値:10分毎)</li>
-  <li>ブラウザからの要求(「最新画像を取得」ボタンを押した時)</li>
-  <li>モーションセンサが反応した時</li>
-</ul>
-<p></p>
+<p>デバイスごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
+これらスクリプトは別プロジェクトまたは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はそれぞれのリポジトリを確認してください</p>
 </div>
+<div class="col-sm-4">
+  <p>
+  <a href="doc/histories">これまでの更新履歴</a>
+  </p>
 </div>
 
-
-<p>
-<a href="doc/histories">これまでの更新履歴</a>
-</p>
+</div>
