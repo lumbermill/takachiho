@@ -137,16 +137,16 @@ class PicturesController < ApplicationController
       render status:404, text: "Token did not match for device_id="+params[:id].to_s
       return
     end
-    file = params[:file]
+    file = params[:file] || params[:data]
     begin
       dt = DateTime.parse(params[:dt] || params[:time_stamp])
     rescue
       dt = DateTime.now.to_s
-      render status:500, text: "dt=#{dt}&data=(file)&data_type=image/jpeg&detected=false&info=(optional)"
+      render status:500, text: "dt=#{dt}&file=(file)&data_type=image/jpeg&detected=false&info=(optional)"
       return
     end
 
-    if params[:motion_sensor] == "true"
+    if params[:motion_sensor] == "true" # deprecated. use detected flag instead.
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
       addresses = Address.where(device_id: device.id,active: true,motion_sensor: true)
       send_message(addresses, msg, false)
@@ -154,12 +154,12 @@ class PicturesController < ApplicationController
 
     @picture = Picture.find_or_initialize_by(device_id: device.id, dt: dt)
     insert_or_update = @picture.id.nil? ? "Inserted" : "Updated"
-    @picture.detected = params[:detected]
-    @picture.data = params[:data].tempfile.read # TODO: need to type check?
+    @picture.detected = params[:detected] || false
+    @picture.data = file.tempfile.read # TODO: need to type check?
     if params[:data_type]
       @picture.data_type = params[:data_type]
     else
-      @picture.data_type = params[:data].content_type
+      @picture.data_type = file.content_type
     end
     @picture.info = params[:info] if params[:info]
 
