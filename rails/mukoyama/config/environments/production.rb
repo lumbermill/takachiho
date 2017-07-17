@@ -77,5 +77,15 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'mukoyama.lmlab.net', port: 80 }
+  config.action_mailer.default_url_options = {
+      :host => 'iot.lmlab.net', :protocol => 'https'}
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'apikey',
+    :password => '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',
+    :domain => 'iot.lmlab.net',
+    :address => 'smtp.sendgrid.net',
+    :port => 2525,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end
