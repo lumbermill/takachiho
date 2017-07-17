@@ -81,7 +81,7 @@ Rails.application.configure do
       :host => 'iot.lmlab.net', :protocol => 'https'}
   ActionMailer::Base.smtp_settings = {
     :user_name => 'apikey',
-    :password => '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',
+    :password => ENV['SENDGRID_PASSWORD'],
     :domain => 'iot.lmlab.net',
     :address => 'smtp.sendgrid.net',
     :port => 2525,
