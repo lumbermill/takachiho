@@ -24,8 +24,6 @@ class PagesController < ApplicationController
     sql = "SELECT count(1) AS n_temps, min(dt) AS first, max(dt) AS last FROM temps WHERE device_id = #{id}"
     h = conn.select_one(sql).to_hash
     h["device_id"] = id
-    h["first"] = format_timestamp(h["first"])
-    h["last"] = format_timestamp(h["last"])
     latest = Device.find(id).temps.order("id desc").first
     if latest
       fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage]
@@ -38,6 +36,8 @@ class PagesController < ApplicationController
     hp = conn.select_one(sql).to_hash
     h["n_pictures"] = hp["n_pictures"] || 0
     h["ago"] = time_ago_in_words([h["last"],hp["last"]].compact.max)
+    h["first"] = format_timestamp(h["first"])
+    h["last"] = format_timestamp(h["last"])
 
     render text: h.to_json
   end

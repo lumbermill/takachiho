@@ -78,23 +78,23 @@
     var id = <%= d.id %>;
     $.getJSON("dashboard-stat1",{"device_id": id},function(json){
       $("#"+json.device_id+"-n-temps").text(json.n_temps);
-      $("#"+json.device_id+"-nd").removeClass("disabled");
       if(json.n_temps > 0){
+        $("#"+json.device_id+"-nd").removeClass("disabled");
         $("#"+json.device_id+"-first").text(json.first);
         $("#"+json.device_id+"-last").text(json.last);
-        $("#"+json.device_id+"-ago").text(json.ago+"前");
       }
       $("#"+json.device_id+"-temperature").text(json.temperature);
       $("#"+json.device_id+"-humidity").text(json.humidity);
       $("#"+json.device_id+"-pressure").text(json.pressure);
       $("#"+json.device_id+"-illuminance").text(json.illuminance);
       $("#"+json.device_id+"-voltage").text(json.voltage);
-      
+
       $("#"+json.device_id+"-n-pictures").text(json.n_pictures);
       if(json.n_pictures > 0){
         console.dir("#"+json.device_id+"-np");
         $("#"+json.device_id+"-np").removeClass("disabled");
       }
+      $("#"+json.device_id+"-ago").text(json.ago+"前");
     });
   </script>
   <% end %>
@@ -105,7 +105,6 @@
   <div class="col-sm-10">
 <p>
 <%= link_to '<span class="glyphicon glyphicon-phone"></span> デバイスの追加'.html_safe, new_device_path, class: "btn btn-primary" %>
-<%= link_to '<span class="glyphicon glyphicon-user"></span> ユーザ情報の編集'.html_safe, edit_user_registration_path, class: "btn btn-default" %>
 <%= link_to '<span class="glyphicon glyphicon-cloud"></span> 天気予報'.html_safe, weather_path, class: "btn btn-default" %>
 </p>
 <ul>
