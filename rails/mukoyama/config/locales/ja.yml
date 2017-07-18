@@ -20,6 +20,7 @@ ja:
         city_id: '設置場所'
         created_at: '登録日時'
         updated_at: '最終更新日時'
+        picture: '写真'
       user:
         email: 'メールアドレス'
         password: 'パスワード'
