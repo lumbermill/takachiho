@@ -41,7 +41,7 @@ class APITest < ActionDispatch::IntegrationTest
     # セッションに入れてみたけど効かない
     get '/'
     session[:token4read] = '123456'
-    
+
     get '/temps/graph_data.json?device_id=1&unit=day&token=123456'
     assert_response :success
   end
@@ -51,8 +51,8 @@ class APITest < ActionDispatch::IntegrationTest
     assert_response :missing
     post '/pictures/upload', {id:1, token:'123456'}
     assert_response :error
-    f = File.open('app/assets/images/about.png','rb')
-    post '/pictures/upload', {id:1, token:'123456', dt: '2017-07-05T00:37:37+09:00', data: f.read , data_type: 'image/jpeg', detected: true, info: "{foo: bar}"}
+    f = fixture_file_upload('app/assets/images/about.png','image/png')
+    post '/pictures/upload', {id:1, token:'123456', dt: '2017-07-05T00:37:37+09:00', file: f , data_type: 'image/jpeg', detected: true, info: "{foo: bar}"}
     assert_response :success
 
     # データベースに格納されたことを確認
