@@ -59,6 +59,18 @@ class APITest < ActionDispatch::IntegrationTest
     p = Picture.last
     assert_equal f.size, p.data.length
     assert_equal 'image/jpeg', p.data_type
+    assert_equal '2017-07-05 00:37:37 +0900', p.dt.to_s
+    assert p.detected
+    assert_equal "{foo: bar}", p.info
+
+    # UTCでアップロード
+    post '/pictures/upload', {id:1, token:'123456', dt: '2017-07-05T00:37:37+00:00', file: f , data_type: 'image/jpeg', detected: true, info: "{foo: bar}"}
+    assert_response :success
+
+    p = Picture.last
+    assert_equal f.size, p.data.length
+    assert_equal 'image/jpeg', p.data_type
+    assert_equal '2017-07-05 09:37:37 +0900', p.dt.to_s # JSTで取り出せることを確認
     assert p.detected
     assert_equal "{foo: bar}", p.info
 

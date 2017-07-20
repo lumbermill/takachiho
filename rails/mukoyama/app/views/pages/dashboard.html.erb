@@ -111,6 +111,15 @@
   <li>右(下)のリンクまたはQRコードからLINEのアカウントを登録してください。</li>
   <li>IDが「0-0000」形式になっているものはLINEに登録して通知を受け取ることが出来ます。</li>
 </ul>
+    <table class="table">
+      <tr>
+        <th>現在時刻(UTC)</th><td><%= Time.now %></td>
+        <th>現在時刻(<%= Rails.configuration.time_zone %>)</th><td><%= Time.zone.now %></td>
+      </tr>
+      <tr>
+        <th>ディスク使用量</th><td colspan="3">TODO</td>
+      </tr>
+    </table>
   </div>
   <div class="col-sm-2">
     <%= line_add_frinend_button %>

@@ -77,11 +77,11 @@
 <h2>APIのテスト</h2>
 <p>温度、湿度、気圧、照度、電圧を送信します。</p>
 <pre>
-curl "<%= request.protocol + request.host + ":" + request.port.to_s %>/temps/upload?id=<%= @device.id %>&amp;token=<%= @device.token4write %>&amp;dt=<%= DateTime.now.to_s %>&amp;temperature=12.3&amp;pressure=123.4&amp;humidity=12.3&amp;illuminance=123.4&amp;voltage=1.23"
+curl -G -d "id=<%= @device.id %>" -d "token=<%= @device.token4write %>" --data-urlencode "dt=<%= Time.zone.now.iso8601 %>" -d "temperature=12.3" -d "pressure=123.4" -d "humidity=12.3" -d "illuminance=123.4" -d "voltage=1.23" "<%= request.protocol + request.host + ":" + request.port.to_s %>/temps/upload"
 </pre>
 <p>画像データを送信します。カレントディレクトリにphoto.jpgというファイルが存在する状態を想定しています。</p>
 <pre>
-curl -X POST -F file=@./photo.jpg "<%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload?id=<%= @device.id %>&amp;token=<%= @device.token4write %>&amp;dt=<%= DateTime.now.to_s %>&amp;detected=true"
+curl -X POST -F file=@./photo.jpg -F "id=<%= @device.id %>" -F "token=<%= @device.token4write %>" -F "dt=<%= Time.zone.now.iso8601 %>" -F "detected=true" "<%= request.protocol + request.host + ":" + request.port.to_s %>/pictures/upload"
 </pre>
 
 <h2>設定のスニペット</h2>
