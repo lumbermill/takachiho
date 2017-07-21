@@ -4,7 +4,7 @@
 #----------------------------------------------------------------------
 
 require 'i2c' # http://rubydoc.info/gems/i2c/0.2.22/I2C/Dev
-require 'base64'
+require 'uri'
 
 class LightSensor
   # Lightsensor: TAOS TSL2561
@@ -253,13 +253,14 @@ def sensor_tmpr
 end
 
 # mukoyamaへのリクエストパラメータを作成
-def get_url_params(lux, t, p, h)
-  ts = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
-  s = "time_stamp=#{ts}"
+def get_url_params(lux, t, p, h, v)
+  ts = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z").sub("+","%2B")
+  s = "dt=#{ts}"
   s += "&temperature=#{t}" if t
   s += "&pressure=#{p}" if p
   s += "&humidity=#{h}" if h
   s += "&illuminance=#{lux}" if lux
+  s += "&voltage=#{v}" if v
   return s
 end
 
@@ -281,7 +282,7 @@ rescue => e
 end
 
 # URLを作成してリクエスト送信
-u = url + "/temps/upload?id=#{id}&token=#{token}&" + get_url_params(lux, t, p, h)
+u = url + "/temps/upload?id=#{id}&token=#{token}&" + get_url_params(lux, t, p, h, nil)
 puts u
 cmd = 'curl -s -S "' + u + '"'
 system(cmd)
