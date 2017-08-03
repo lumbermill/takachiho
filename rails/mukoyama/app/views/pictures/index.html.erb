@@ -112,9 +112,19 @@ $('.popupimg').bind('click', function(e){
 
   show_image($(this).data("index"));
   show_slideview();
+  $(document).keydown(function(e) {
+    if (e.keyCode == 37) {
+      previous_image();
+    } else if (e.keyCode == 39) {
+      next_image();
+    }
+  });
 });
 
-$('#back2listview').bind('click', show_listview);
+$('#back2listview').bind('click', function() {
+  show_listview();
+  $(document).off("keydown");
+});
 
 // リスト(一覧)ビューを表示
 show_listview();
