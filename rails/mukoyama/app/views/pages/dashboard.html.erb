@@ -156,9 +156,11 @@
     $("#mail_logs").load("dashboard-mail_logs");
 
     // 高さを揃える
-    var max_height = 0;
-    $("div.thumbnail").each(function(i,e){ var h = $(e).height(); if(h > max_height) max_height = h});
-    $("div.thumbnail").each(function(i,e){ $(e).height(max_height) });
+    $(window).load(function () {
+      var max_height = 0;
+      $("div.thumbnail").each(function(i,e){ var h = $(e).height(); if(h > max_height) max_height = h});
+      $("div.thumbnail").each(function(i,e){ $(e).height(max_height) });
+    });
   </script>
 </div>
 <% end %>
