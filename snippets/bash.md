@@ -25,3 +25,11 @@ date +%y%m%d_%H%M%S
 ```
 echo 'foo.sh -t bar -e' | at now + 1minute
 ```
+
+## cron
+
+毎日0時10分に処理を実行
+```
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin
+10 0 * * * foo.sh 2>&1 | logger -p cron.info -t "foo"
+```
