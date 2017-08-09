@@ -13,6 +13,14 @@ Loading..
 </div>
 <p><small><%= @notice %></small></p>
 
+<div id="chart_latest-illuminance" class="col-md-6">
+Loading..
+</div>
+
+<div id="chart_latest-voltage" class="col-md-6">
+Loading..
+</div>
+
 <div id="chart_daily" class="col-md-12">
 Loading..
 </div>
@@ -45,6 +53,82 @@ $(function() {
 	update_graph();
 	// 毎分テーブルの更新をチェックする
 	setInterval(update_graph, 60000);
+
+	function draw_graphs(){
+		// 照度と電圧のグラフ描画
+		var chart_latest_illuminance = new Highcharts.Chart({
+				chart: {
+						renderTo: 'chart_latest-illuminance',
+						alignTicks: false,
+						type: 'line'
+				},
+				title: {
+						text: '直近7日間の照度(lux)',
+				},
+				xAxis: {
+						type: 'datetime'
+				},
+				yAxis: [{
+						title: {
+								text: ''
+						},
+				}, {
+					title: {
+							text: ''
+					},
+					opposite: true
+				}],
+				tooltip: {
+						crosshairs: true,
+						shared: true
+				},
+				series: []
+		});
+		$.getJSON('../graph_data.json', <%= @i.html_safe %> ,function (data) {
+			chart_latest_illuminance.addSeries({
+					name: "照度",
+					showInLegend: true,
+					data: data,
+					yAxis: 0
+			});
+		});
+		var chart_latest_voltage = new Highcharts.Chart({
+				chart: {
+						renderTo: 'chart_latest-voltage',
+						alignTicks: false,
+						type: 'line'
+				},
+				title: {
+						text: '直近7日間の電圧(V)',
+				},
+				xAxis: {
+						type: 'datetime'
+				},
+				yAxis: [{
+						title: {
+								text: ''
+						},
+				}, {
+					title: {
+							text: ''
+					},
+					opposite: true
+				}],
+				tooltip: {
+						crosshairs: true,
+						shared: true
+				},
+				series: []
+		});
+		$.getJSON('../graph_data.json', <%= @v.html_safe %> ,function (data) {
+				chart_latest_voltage.addSeries({
+						name: "電圧",
+						showInLegend: true,
+						data: data,
+						yAxis: 1
+				});
+		});
+	}
 
 	function update_graph() {
 		$.ajax({
@@ -106,6 +190,7 @@ $(function() {
 								yAxis: 1
 						});
 				});
+				draw_graphs();
 				last_timestamp = res;
 			}
 		}).fail(function(res) {
