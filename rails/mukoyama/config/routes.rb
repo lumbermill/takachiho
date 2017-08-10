@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       member do
         get 'publish'
         get 'unpublish'
+        get 'destroy_data'
       end
     end
     resources :addresses

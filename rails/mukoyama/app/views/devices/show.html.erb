@@ -71,7 +71,7 @@
     <p>
     <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 温湿度'.html_safe, temps_download_path(format: :csv, device_id: @device.id), class: "btn btn-success" %>
     <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 写真'.html_safe, "#", class: "btn btn-success" %>
-    <%= link_to '<span class="glyphicon glyphicon-trash"></span> 全件削除'.html_safe, "#", class: "btn btn-danger" %>
+    <%= button_tag '<span class="glyphicon glyphicon-trash"></span> 全件削除'.html_safe, class: "btn btn-danger", data: {toggle: "modal", target: "#myModal"} %>
     <%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>
     <%= link_to t('back'), devices_path, class: "btn btn-default" %>
     </p>
@@ -121,3 +121,37 @@ const char* mukoyama_id    = "<%= @device.id %>";
 const char* mukoyama_token = "<%= @device.token4write %>";
 </pre>
 </figure>
+
+<!-- 全件削除ダイアログ -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">全件削除しますか？</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" id="alert">この操作は取り消しできません。</div>
+        <p>確認のため、端末IDを入力してください。</p>
+        <input class="form-control" type="text" name="id" value=""/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="delete">削除</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+  $("#delete").on("click",function() {
+    if ($("input[name=id]").val() == "<%= @device.id %>") {
+      $.get("/devices/<%= @device.id %>/destroy_data", function(data) {
+        alert("削除しました。");
+        $("button.close").click();
+      });
+    } else {
+      $("#alert").text("端末IDが違います。");
+    }
+  });
+</script>

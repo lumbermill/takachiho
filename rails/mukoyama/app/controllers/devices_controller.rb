@@ -99,6 +99,18 @@ class DevicesController < ApplicationController
     end
   end
 
+  def destroy_data
+    device_id = params[:id]
+    unless current_user.mine?(Device.find(device_id)) || current_user.admin?
+      render file: 'public/403.html', status: 403, layout: 'application', content_type: 'text/html'
+      return
+    end
+
+    Temp.where(device_id: device_id).destroy_all
+    Picture.where(device_id: device_id).destroy_all
+    render text: "Successfully destroy device data.", status: 200
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
