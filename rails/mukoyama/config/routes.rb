@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   # API
   get 'temps/upload' => 'temps#upload'
-  get 'temps/download' => 'temps#download'
   get 'pictures/upload-needed' => 'pictures#upload_needed'
   get 'pictures/request-upload' => 'pictures#request_upload'
   get  'pictures/upload' => 'pictures#upload'
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
     get 'dashboard-pictures' => 'pages#dashboard_pictures'
 
     get 'tmpr_logs/graph_data'
+
+    get 'temps/download' => 'temps#download'
 
     resources :devices do
       member do

@@ -162,7 +162,7 @@ class TempsController < ApplicationController
     require 'csv'
     device_id = params[:device_id]
 
-    unless Device.find(device_id).user_id == current_user.id
+    unless current_user.mine?(Device.find(device_id)) || current_user.admin?
       render file: 'public/403.html', status: 403, layout: 'application', content_type: 'text/html'
       return
     end
