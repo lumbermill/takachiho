@@ -69,7 +69,7 @@
     <%= image_tag device_picture_path(@device.id), alt: "", class: "img-responsive img-thumbnail" %>
     <br/><br/>
     <p>
-    <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 温湿度'.html_safe, "#", class: "btn btn-success" %>
+    <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 温湿度'.html_safe, temps_download_path(format: :csv, device_id: @device.id), class: "btn btn-success" %>
     <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 写真'.html_safe, "#", class: "btn btn-success" %>
     <%= link_to '<span class="glyphicon glyphicon-trash"></span> 全件削除'.html_safe, "#", class: "btn btn-danger" %>
     <%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>

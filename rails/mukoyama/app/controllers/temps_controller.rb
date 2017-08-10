@@ -157,6 +157,20 @@ class TempsController < ApplicationController
     end
   end
 
+  # GET /temps/download
+  def download
+    require 'csv'
+    device_id = params[:device_id]
+
+    unless Device.find(device_id).user_id == current_user.id
+      render file: 'public/403.html', status: 403, layout: 'application', content_type: 'text/html'
+      return
+    end
+
+    @data = Temp.where(device_id: device_id).order("id")
+    logger.debug(@data)
+  end
+
   def latest
     # 最新のレコードを返す、ようにしたいが、今のところ更新確認用にタイムスタンプのみ返します
     device_id = params[:id]
