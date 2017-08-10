@@ -1,35 +1,35 @@
-<p id="notice"><%= notice %></p>
+<% content_for :title, "最新の受信データ" %>
+<% content_for :subtitle, (@device ? "ID: #{@device.id}" : "") %>
 
-<h1>Listing Tmpr Logs</h1>
+<button class="btn btn-success" onclick="location.reload()"><span class="glyphicon glyphicon-refresh"></span> 再読み込み</button>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Raspi</th>
-      <th>Time stamp</th>
-      <th>Temperature</th>
-      <th>Pressure</th>
-      <th>Humidity</th>
-      <th colspan="3"></th>
+      <th>デバイスID</th>
+      <th>日時</th>
+      <th>気温</th>
+      <th>気圧</th>
+      <th>湿度</th>
+      <th>照度</th>
+      <th>電圧</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @tmpr_logs.each do |tmpr_log| %>
+    <% @temps.each do |temp| %>
       <tr>
-        <td><%= tmpr_log.device_id %></td>
-        <td><%= tmpr_log.time_stamp %></td>
-        <td><%= tmpr_log.temperature %></td>
-        <td><%= tmpr_log.pressure %></td>
-        <td><%= tmpr_log.humidity %></td>
-        <td><%= link_to 'Show', tmpr_log %></td>
-        <td><%= link_to 'Edit', edit_tmpr_log_path(tmpr_log) %></td>
-        <td><%= link_to 'Destroy', tmpr_log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= temp.device_id %></td>
+        <td><%= temp.dt %></td>
+        <td><%= temp.temperature %></td>
+        <td><%= temp.pressure %></td>
+        <td><%= temp.humidity %></td>
+        <td><%= temp.illuminance %></td>
+        <td><%= temp.voltage %></td>
+        <td><%= temp.created_at %></td>
+        <td><%= temp.updated_at %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Tmpr log', new_tmpr_log_path %>

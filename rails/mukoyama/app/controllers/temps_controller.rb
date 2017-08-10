@@ -6,7 +6,13 @@ class TempsController < ApplicationController
   # GET /tmpr_logs
   # GET /tmpr_logs.json
   def index
-    @tmpr_logs = Temp.all
+    if params[:device_id]
+      @temps = Temp.where(device_id: params[:device_id]).order("created_at desc").limit(10)
+      @device = Device.find(params[:device_id])
+    else
+      @temps = Temp.order("created_at desc").limit(10)
+      @device = nil
+    end
   end
 
   # GET /tmpr_logs/1
@@ -94,8 +100,7 @@ class TempsController < ApplicationController
       @data = []
       results = Temp.where("device_id = #{device_id} AND dt > date_add(now(),interval #{limit})").order(:dt)
       results.each do |row|
-        # @data += [["Date.parse('"+row["ts"].to_s+"')",row[src]]]
-        @data += [[row.dt.to_i * 1000,row.send(src)]]
+        @data += [[(row.dt.to_i + row.dt.utc_offset) * 1000,row.send(src)]]
       end
     end
     respond_to do |format|
@@ -107,6 +112,8 @@ class TempsController < ApplicationController
     @t = "{device_id: #{params[:device_id]},src: 'temperature'}"
     @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
     @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
+    @i = "{device_id: #{params[:device_id]},src: 'illuminance'}"
+    @v = "{device_id: #{params[:device_id]},src: 'voltage'}"
     @device = Device.find(params[:device_id])
     @temp_min = @device.temp_min
     @temp_max = @device.temp_max

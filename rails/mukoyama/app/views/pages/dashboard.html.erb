@@ -40,6 +40,7 @@
       </table>
       <p>
         <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, temps_graph_path(d.id),title: "温湿度グラフ", class: "btn btn-default disabled", id: "#{d.id}-nd" %>
+        <%= link_to '<span class="glyphicon glyphicon-list"></span>'.html_safe, temps_path(device_id: d.id),title: "最新のデータ", class: "btn btn-default disabled", id: "#{d.id}-nt" %>
         <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(device_id: d.id), title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np" %>
       </p>
       <table class="table device3">
@@ -80,6 +81,7 @@
       $("#"+json.device_id+"-n-temps").text(json.n_temps);
       if(json.n_temps > 0){
         $("#"+json.device_id+"-nd").removeClass("disabled");
+        $("#"+json.device_id+"-nt").removeClass("disabled");
         $("#"+json.device_id+"-first").text(json.first);
         $("#"+json.device_id+"-last").text(json.last);
       }
@@ -154,6 +156,13 @@
   </div>
   <script>
     $("#mail_logs").load("dashboard-mail_logs");
+
+    // 高さを揃える
+    $(window).load(function () {
+      var max_height = 0;
+      $("div.thumbnail").each(function(i,e){ var h = $(e).height(); if(h > max_height) max_height = h});
+      $("div.thumbnail").each(function(i,e){ $(e).height(max_height) });
+    });
   </script>
 </div>
 <% end %>
