@@ -6,7 +6,13 @@ class TempsController < ApplicationController
   # GET /tmpr_logs
   # GET /tmpr_logs.json
   def index
-    @tmpr_logs = Temp.all
+    if params[:device_id]
+      @temps = Temp.where(device_id: params[:device_id]).order("created_at desc").limit(10)
+      @device = Device.find(params[:device_id])
+    else
+      @temps = Temp.order("created_at desc").limit(10)
+      @device = nil
+    end
   end
 
   # GET /tmpr_logs/1
