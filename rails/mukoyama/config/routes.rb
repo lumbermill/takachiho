@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # API
   get 'temps/upload' => 'temps#upload'
+  get 'temps/download' => 'temps#download'
   get 'pictures/upload-needed' => 'pictures#upload_needed'
   get 'pictures/request-upload' => 'pictures#request_upload'
   get  'pictures/upload' => 'pictures#upload'
