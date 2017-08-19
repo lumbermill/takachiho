@@ -7,11 +7,17 @@ class TempsController < ApplicationController
   # GET /tmpr_logs.json
   def index
     if params[:device_id]
-      @temps = Temp.where(device_id: params[:device_id]).order("created_at desc").limit(10)
+      @temps = Temp.where(device_id: params[:device_id]).order("id desc").limit(10)
       @device = Device.find(params[:device_id])
+
+      @temps_dailies = TempsDaily.where(device_id: params[:device_id]).order("id desc").limit(3)
+      @temps_monthlies = TempsMonthly.where(device_id: params[:device_id]).order("id desc").limit(3)
     else
-      @temps = Temp.order("created_at desc").limit(10)
+      @temps = Temp.order("id desc").limit(10)
       @device = nil
+
+      @temps_dailies = TempsDaily.order("id desc").limit(3)
+      @temps_monthlies = TempsMonthly.order("id desc").limit(3)
     end
   end
 
