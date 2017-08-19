@@ -67,7 +67,6 @@ def insert_monthly(date)
   now(),now()
   FROM temps_dailies #{where} GROUP BY device_id,year(d)*100+month(d);
 EOT
-  puts monthly_sql
   @client.query(monthly_sql)
   puts @client.affected_rows
 end
