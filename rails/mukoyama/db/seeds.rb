@@ -4,9 +4,9 @@ admin = User.create(email:'info@lmlab.net', password:'secret',confirmed_at:t)
 if Rails.env == 'development'
 	p1 = File.read("#{Rails.root}/app/assets/images/IMG_0983.jpg")
 	Device.create(id: 1, name: "温度センサ", temp_min: 12, temp_max: 28, user:admin, token4write: 'secret', picture: p1)
-	t = Time.now - 1.day
-	100.times do
-		Temp.create(device_id: 1, dt: t, temperature: rand(100..300)/10.0)
+	t = Time.now - 3.day
+	430.times do
+		Temp.create(device_id: 1, dt: t, temperature: rand(100..300)/10.0, humidity: 80.2, illuminance: rand(20..500), voltage: rand(40..50)/10.0)
 		t += 10.minutes
 	end
 	Address.create(device_id: 1, address: 's-kai@lumber-mill.co.jp', active: true)
