@@ -19,7 +19,7 @@ IMG_RETENTION_PERIOD = 90 # 3months
 IMG_PATH = "/var/www/mukoyama/data/pictures"
 
 env = OPTS[:e] || "development"
-@client = Mysql2::Client.new(host:"localhost",username:"root",database:"mukoyama_#{env}")
+@client = Mysql2::Client.new(host:"localhost",username:"ubuntu",database:"mukoyama_#{env}")
 
 def insert_daily(date)
   print "Inserting into tmpr_daily_logs "
@@ -82,13 +82,13 @@ def clean_logs
 end
 
 def remove_image
-  EXTENSION = ".jpg"
+  suffix = ".jpg"
   b = (Date.today - IMG_RETENTION_PERIOD)
   print "Cleaning up images older than #{b.strftime("%Y/%m/%d")} .. "
   c = 0
   Dir.glob("#{IMG_PATH}/**/*") do |f|
-    next unless f.end_with? EXTENSION
-    date = File.basename(f, EXTENSION).split("_")[0]
+    next unless f.end_with? suffix
+    date = File.basename(f, suffix).split("_")[0]
     next if date.to_i > b.strftime("%y%m%d").to_i
     FileUtils.rm(f)
     c += 1
