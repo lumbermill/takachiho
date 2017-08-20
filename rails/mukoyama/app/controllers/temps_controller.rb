@@ -104,9 +104,18 @@ class TempsController < ApplicationController
         end
     else # 10min
       @data = []
+      # @data += [["Timestamp","Value"]]
       results = Temp.where("device_id = #{device_id} AND dt > date_add(now(),interval #{limit})").order(:dt)
       results.each do |row|
-        @data += [[(row.dt.to_i + row.dt.utc_offset) * 1000,row.send(src)]]
+        ts = (row.dt.to_i) * 1000 # + row.dt.utc_offset
+        r = [ts]
+        if src.is_a? Array
+          r += [row.send(src[0])]
+          r += [row.send(src[1])]
+        else
+          r += [row.send(src)]
+        end
+        @data += [r]
       end
     end
     respond_to do |format|
@@ -115,7 +124,7 @@ class TempsController < ApplicationController
   end
 
   def graph
-    @t = "{device_id: #{params[:device_id]},src: 'temperature'}"
+    @t = "{device_id: #{params[:device_id]},src: ['temperature','humidity']}"
     @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
     @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
     @i = "{device_id: #{params[:device_id]},src: 'illuminance'}"
