@@ -144,7 +144,9 @@ class TempsController < ApplicationController
     end
 
     begin
-      dt = DateTime.parse(params[:dt] || params[:time_stamp])
+      dt_str = params[:dt] || params[:time_stamp]
+      # 「+」記号のURLエンコーディングに失敗しているケースが散見されるため救済（+はスペースになる）
+      dt = DateTime.parse(dt_str.sub(" ","+"))
     rescue
       dt = DateTime.now.to_s
       render status:500, text: "dt=#{dt}&temperature=12.3&pressure=23.4&humidity=34.5&illuminance=45.6&voltage=56.7"
