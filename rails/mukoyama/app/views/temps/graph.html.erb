@@ -46,7 +46,7 @@ Loading..
 </table>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', {'packages':['line', 'corechart']});
 google.charts.setOnLoadCallback(update_all_graphs);
 setInterval(update_graphs, 60000);
 
@@ -55,13 +55,29 @@ var today = "";
 
 function draw_temp_and_humid(){
 	var options = {
-		title: '直近7日間の気温(°C)と湿度(%)',
+		chart: {
+			title: '直近7日間の気温(°C)と湿度(%)'
+		},
 		legend: { position: 'bottom' },
 		colors: ['orange', 'steelblue'],
+		series: {
+			0: {axis: 'Temps'},
+			1: {axis: 'Humidity'}
+		},
 		hAxis: { format: 'M/d'},
+		axes: {
+			y: {
+				Humidity: {
+					range: {
+						max: 100,
+						min: 0
+					}
+				}
+			}
+		},
 		height: 300
 	};
-	var chart = new google.visualization.LineChart(document.getElementById('chart_latest'));
+	var chart = new google.charts.Line(document.getElementById('chart_latest'));
 
 	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
 		var dt = new google.visualization.DataTable();
@@ -77,13 +93,15 @@ function draw_temp_and_humid(){
 
 function draw_illuminance(){
 	var options = {
-		title: '直近7日間の照度(lux)',
+		chart: {
+			title: '直近7日間の照度(lux)'
+		},
 		legend: { position: 'bottom' },
 		colors: ['skyblue'],
 		hAxis: { format: 'M/d'},
 		height: 300
 	};
-	var chart = new google.visualization.LineChart(document.getElementById('chart_latest-illuminance'));
+	var chart = new google.charts.Line(document.getElementById('chart_latest-illuminance'));
 
 	$.getJSON('../graph_data.json', <%= @i.html_safe %> ,function (data) {
 		var dt = new google.visualization.DataTable();
@@ -98,13 +116,15 @@ function draw_illuminance(){
 
 function draw_voltage(){
 	var options = {
-		title: '直近7日間の電圧(V)',
+		chart: {
+			title: '直近7日間の電圧(V)'
+		},
 		legend: { position: 'bottom' },
 		colors: ['goldenrod'],
 		hAxis: { format: 'M/d'},
 		height: 300
 	};
-	var chart = new google.visualization.LineChart(document.getElementById('chart_latest-voltage'));
+	var chart = new google.charts.Line(document.getElementById('chart_latest-voltage'));
 
 	$.getJSON('../graph_data.json', <%= @v.html_safe %> ,function (data) {
 		var dt = new google.visualization.DataTable();
@@ -124,18 +144,37 @@ function draw_daily(){
 		title: '日次の気温(°C)と湿度(%)',
 		legend: { position: 'bottom' },
 		colors: ['orange', 'steelblue'],
+		series: {
+			0: {targetAxisIndex: 0},
+			1: {targetAxisIndex: 1}
+		},
+		vAxes: {
+			0: {title: 'Temps'},
+			1: {
+				title: 'Humidity',
+				viewWindow: {
+					max:100,
+					min:0
+				}
+			}
+		},
 		hAxis: { format: 'M/d'},
+		intervals: { 'style':'area' },
+		theme: 'material',
 		height: 300
 	};
 	var chart = new google.visualization.LineChart(document.getElementById('chart_daily'));
 
-	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
+	$.getJSON('../graph_data.json?unit=day', <%= @t.html_safe %> ,function (data) {
+		console.log(data);
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '温度');
+					dt.addColumn({id: "min", type:'number', role:'interval'});
+					dt.addColumn({id: "max", type:'number', role:'interval'});
 					dt.addColumn('number', '湿度');
 					for(var i=0; i<data.length;i++){
-						dt.addRow([new Date(data[i][0]), data[i][1],data[i][2]]);
+						dt.addRow([new Date(data[i][0]), data[i][1],data[i][3],data[i][4],data[i][2]]);
 					}
 		chart.draw(dt, options);
 	});
@@ -146,18 +185,35 @@ function draw_monthly(){
 		title: '月次の気温(°C)と湿度(%)',
 		legend: { position: 'bottom' },
 		colors: ['orange', 'steelblue'],
-		hAxis: { format: 'M/d'},
+		series: {
+			0: {targetAxisIndex: 0},
+			1: {targetAxisIndex: 1}
+		},
+		vAxes: {
+			0: {title: 'Temps'},
+			1: {
+				title: 'Humidity',
+				viewWindow: {
+					max:100,
+					min:0
+				}
+			}
+		},
+		hAxis: { format: 'y/M'},
+		theme: 'material',
 		height: 300
 	};
 	var chart = new google.visualization.LineChart(document.getElementById('chart_monthly'));
 
-	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
+	$.getJSON('../graph_data.json?unit=month', <%= @t.html_safe %> ,function (data) {
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '温度');
+					dt.addColumn({id: "min", type:'number', role:'interval'});
+					dt.addColumn({id: "max", type:'number', role:'interval'});
 					dt.addColumn('number', '湿度');
 					for(var i=0; i<data.length;i++){
-						dt.addRow([new Date(data[i][0]), data[i][1],data[i][2]]);
+						dt.addRow([new Date(data[i][0]), data[i][1],data[i][3],data[i][4],data[i][2]]);
 					}
 		chart.draw(dt, options);
 	});
