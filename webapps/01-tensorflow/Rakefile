@@ -1,4 +1,18 @@
 
+desc 'Sync files to local web root(/var/www/html/tensorflow).'
+task :install do
+  basedir = "/var/www/html/tensorflow"
+  unless File.directory? basedir
+    puts `sudo mkdir #{basedir}`
+    puts `sudo chown ubuntu:ubuntu #{basedir}`
+  end
+  cmd = "rsync -avz --exclude='histories/' --exclude='models/' webapp/ #{basedir}/"
+  puts cmd
+  puts `#{cmd}`
+  cmd = "mkdir -p #{basedir}/{models,histories} && chmod 777 #{basedir}/histories"
+  puts cmd
+  puts `#{cmd}`
+end
 
 desc 'Sync files to ubuntu server.'
 task :ubuntu do
