@@ -28,14 +28,15 @@ require_once './common.php';
           </form>
           <h3>Setting</h3>
           <ul>
-            <li>Model: <?php echo $model_name; ?></li>
+            <li>Model: <?php echo $modelsdir."/".$model_name; ?></li>
             <li>Labels: <?php echo implode(" ",$model_labels); ?></li>
             <li>Version of Tensorflow: <strong id="version-of-tensorflow"></strong></li>
             <li>Version of OpenCV: <strong id="version-of-opencv"></strong></li>
-            <li>Basedir: <?php echo $uploaddir ?></li>
+            <li>Histories: <?php echo $uploaddir ?></li>
           </ul>
           <h4>How to change models</h4>
-          <pre>brah brah..
+          <pre>1. Place your model.ckpt and other files into model directory.<br/>
+            2. Edit <i>common.php</i> to switch the model and labels.
           </pre>
         </div>
         <div class="col-sm-6">

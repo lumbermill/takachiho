@@ -106,7 +106,7 @@ def main(_):
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('--model', type=str, default='models/mnist.ckpt',
+  parser.add_argument('--model', type=str, default='model.ckpt',
                       help='Saved model')
   parser.add_argument('--image', type=str, default='historyes/yyyymmdd_hhmmss.jpg',
                       help='jpg image for input')

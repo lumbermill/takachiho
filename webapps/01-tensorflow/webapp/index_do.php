@@ -9,7 +9,7 @@ if (isset($_FILES['file'])){
     exit;
   }
   $started_at = microtime(true);
-  $predicted = system("python3 predict2.py --image $uploadfile --model $modelsdir/$model_name.ckpt");
+  $predicted = system("python3 predict2.py --image $uploadfile --model $modelsdir/$model_name/model.ckpt");
   $elapsed = round(microtime(true) - $started_at,3);
   $resultfile = $uploaddir . '/' . $ts . ".json";
   $json = array();
