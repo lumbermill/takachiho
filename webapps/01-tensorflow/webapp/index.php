@@ -35,9 +35,10 @@ require_once './common.php';
             <li>Histories: <?php echo $uploaddir ?></li>
           </ul>
           <h4>How to change models</h4>
-          <pre>1. Place your model.ckpt and other files into model directory.<br/>
-            2. Edit <i>common.php</i> to switch the model and labels.
-          </pre>
+          <ol>
+            <li>Place your model.ckpt and other files into <a href="models/">models directory</a>.</li>
+            <li>Edit <i>common.php</i> to switch the model and labels.</li>
+          </ol>
         </div>
         <div class="col-sm-6">
           <h3>Histories</h3>
