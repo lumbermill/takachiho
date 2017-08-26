@@ -120,4 +120,11 @@ class PagesController < ApplicationController
     @body = markdown.render(fh.read).html_safe
   end
 
+  def howto
+    @histories = []
+    File.open("#{Rails.root}/assets/histories.md").each do |line|
+      next unless line.start_with? "- "
+      @histories += [line.sub("- ","")]
+    end
+  end
 end

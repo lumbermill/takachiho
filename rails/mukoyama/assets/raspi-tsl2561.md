@@ -1,5 +1,5 @@
 # RaspberryPi + tsl2561
-Raspberry PiのGPIOに照度センサを接続し、
+Raspberry PiのGPIOに照度センサを接続する手順です。
 
 ## 部品リスト
 - RaspberryPi

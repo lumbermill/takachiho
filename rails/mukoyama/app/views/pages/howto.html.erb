@@ -1,65 +1,95 @@
 <% content_for :title, "参加方法" %>
 <div class="row">
-  <div class="col-sm-8">
-<div class="alert alert-warning">
-このプロジェクトはβ版の運用中です。仕様は随時変更される可能性があります。<br/>
-ユーザの登録やデータ送信は自由に行って頂けますが、正式版移行時の互換性は保証されません。
-</div>
+<div class="col-sm-8">
+  <div class="alert alert-warning">
+  このプロジェクトはβ版の運用中です。仕様は随時変更される可能性があります。<br/>
+  ユーザの登録やデータ送信は自由に行って頂けますが、正式版移行時の互換性は保証されません。
+  </div>
 
-<h2>クラウドサービスの準備</h2>
-<h3>アカウントを作成する</h3>
-<p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
-<h3>デバイスを登録する</h3>
-<p>作成したアカウントでログインし、メイン画面（ダッシュボード）からデバイスを追加してください。
-  追加時に自動発行されます。同時に付与されたIDとペアでデータ送信に使用します。</p>
-<h3>通知設定する</h3>
-<p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
+  <h2>クラウドサービスの準備</h2>
+  <h3>アカウントを作成する</h3>
+  <p>画面右上の「登録」ボタンからアカウントの作成ができます。メールアドレスが必要です。</p>
+  <h3>デバイスを登録する</h3>
+  <p>作成したアカウントでログインし、メイン画面（ダッシュボード）からデバイスを追加してください。
+    追加時に自動発行されます。同時に付与されたIDとペアでデータ送信に使用します。</p>
+  <h3>通知設定する</h3>
+  <p>追加したセンサの「通知先」ボタンを押して連絡先一覧に遷移します。「通知先を追加する」ボタンを押して新しい通知先を設定します。</p>
 
-<h2>デバイスの準備</h2>
-<p>デバイスとセンサの組み合わせ毎にプログラムを用意しています。
-<a href="doc/raspi-setup">RaspberryPiのセットアップ</a>の手順でセットアップされていることが前提です。</p>
-<table class="table table-striped">
-  <tr>
-    <th>デバイス</th>
-    <th>用途</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td><a href="doc/raspi-tsl2561">RaspberryPi + tsl2561</a></td>
-    <td>照度</td>
-    <td><a href="mukoyama_tsl2561.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_tsl2561.rb</a></td>
-  </tr>
-  <tr>
-    <td><a href="doc/raspi-bme280">RaspberryPi + bme280</a></td>
-    <td>温度・湿度・気圧</td>
-    <td>
-      <a href="mukoyama_bme280.py" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_bme280.py</a>
-    </td>
-  </tr>
-  <tr>
-    <td><a href="doc/raspi-motion">RaspberryPi + motion</a></td>
-    <td>カメラ(動体検知)画像</td>
-    <td><a href="mukoyama_motion.py" class="btn btn-success" target="_blank" disabled="disabled"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_motion.py</a></td>
-  </tr>
-  <tr>
-    <td><a href="doc/esp8266-sht31">esp8266 + sht31</a></td>
-    <td>温度・湿度・気圧</td>
-    <td><a href="mukoyama_esp8266.ino" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_esp8266.ino</a></td>
-  </tr>
-  <tr>
-    <td><a href="doc/raspi-hc-sr501">RaspberryPi + hc-sr501</a></td>
-    <td><strong>非推奨</strong>です。raspi + motionを利用してください。<br/>カメラ(動体検知)画像</td>
-    <td><a href="mukoyama_camera.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_camera.rb</a></td>
-  </tr>
-</table>
+  <h2>デバイスの準備</h2>
+  <p>デバイスとセンサの組み合わせ毎にプログラムを用意しています。
+  <a href="doc/raspi-setup">RaspberryPiのセットアップ</a>の手順でセットアップされていることが前提です。</p>
+  <table class="table table-striped">
+    <tr>
+      <th>デバイス</th>
+      <th>用途</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><a href="doc/raspi-tsl2561">RaspberryPi + tsl2561</a></td>
+      <td>照度</td>
+      <td><a href="mukoyama_tsl2561.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_tsl2561.rb</a></td>
+    </tr>
+    <tr>
+      <td><a href="doc/raspi-bme280">RaspberryPi + bme280</a></td>
+      <td>温度・湿度・気圧</td>
+      <td>
+        <a href="mukoyama_bme280.py" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_bme280.py</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="doc/raspi-motion">RaspberryPi + motion</a></td>
+      <td>カメラ(動体検知)画像</td>
+      <td><a href="mukoyama_motion.py" class="btn btn-success" target="_blank" disabled="disabled"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_motion.py</a></td>
+    </tr>
+    <tr>
+      <td><a href="doc/esp8266-sht31">esp8266 + sht31</a></td>
+      <td>温度・湿度・気圧</td>
+      <td><a href="mukoyama_esp8266.ino" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_esp8266.ino</a></td>
+    </tr>
+    <tr>
+      <td><a href="doc/raspi-hc-sr501">RaspberryPi + hc-sr501</a></td>
+      <td><strong>非推奨</strong>です。raspi + motionを利用してください。<br/>カメラ(動体検知)画像</td>
+      <td><a href="mukoyama_camera.rb" class="btn btn-success" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> mukoyama_camera.rb</a></td>
+    </tr>
+  </table>
 
-<p>デバイスごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
-これらスクリプトは別プロジェクトまたは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はそれぞれのリポジトリを確認してください</p>
+  <p>デバイスごとの固有の設定(トークンなど)は各センサの詳細画面で確認できます。
+  これらスクリプトは別プロジェクトまたは同プロジェクトの<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">raspi/04-bosch</a>で開発されたものです。最新情報はそれぞれのリポジトリを確認してください</p>
 </div>
 <div class="col-sm-4">
   <p>
-  <a href="doc/histories">これまでの更新履歴</a>
   </p>
-</div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">有料ベータテスタ</h3>
+    </div>
+    <div class="panel-body">
+      <p>
+        機器の貸与から設定までを代行するサービスを行っています。
+        詳細は下記リンクを参照してください。
+      </p>
+      <p>
+        <%= link_to '有料ベータテスタ募集要項', rules4tester_path, class: "btn btn-primary" %>
+      </p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">更新履歴</h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <% @histories.each do |line| %>
+        <li><%= line.html_safe %></li>
+        <% end %>
+      </ul>
+      <p style="text-align: right">
+        <a href="doc/histories"><small>これまでの更新履歴</small></a>
+      </p>
+    </div>
+  </div>
+
+</div>
 </div>
