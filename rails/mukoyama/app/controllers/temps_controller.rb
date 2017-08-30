@@ -81,32 +81,51 @@ class TempsController < ApplicationController
     unit = params[:unit] || "10min"
     limit = params[:limit] || "-7 day"
     if unit == "day" # 1day
-      @data = {avg: [], minmax: []}
-      sql = "device_id = #{device_id} AND d > date_add(now(),interval #{limit})"
+      @data = []
+      sql = "device_id = #{device_id} AND d > date_add(now(),interval -30 day)" #FIXME: とりあえず30決め打ち
       results = TempsDaily.where(sql).order(:d)
       results.each do |row|
         ts = row["d"].to_time.to_i * 1000
-        @data[:avg] += [[ts,row[src+"_average"]]]
-        @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
+        r = [ts]
+        r += [row["temperature_average"]]
+        r += [row["humidity_average"]]
+        r += [row["temperature_min"]]
+        r += [row["temperature_max"]]
+        @data += [r]
+        # @data[:avg] += [[ts,row[src+"_average"]]]
+        # @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
       end
     elsif unit == "month" # 1month
-        @data = {avg: [], minmax: []}
-        # limit param doesn't work here.
-        ym = (Date.today - 360.days).strftime("%Y%m").to_i
-        sql = "device_id = #{device_id} AND `year_month` > #{ym}"
-        results = TempsMonthly.where(sql).order(:year_month)
-        results.each do |row|
-          y = row["year_month"] / 100
-          m = row["year_month"] - y * 100
-          ts = Time.new(y,m,1).to_i * 1000
-          @data[:avg] += [[ts,row[src+"_average"]]]
-          @data[:minmax] += [[ts,row[src+"_max"],row[src+"_min"]]]
-        end
+      @data = []
+      # limit param doesn't work here.
+      ym = (Date.today - 360.days).strftime("%Y%m").to_i
+      sql = "device_id = #{device_id} AND `year_month` > #{ym}"
+      results = TempsMonthly.where(sql).order(:year_month)
+      results.each do |row|
+        y = row["year_month"] / 100
+        m = row["year_month"] - y * 100
+        ts = Time.new(y,m,1).to_i * 1000
+        r = [ts]
+        r += [row["temperature_average"]]
+        r += [row["humidity_average"]]
+        r += [row["temperature_min"]]
+        r += [row["temperature_max"]]
+        @data += [r]
+      end
     else # 10min
       @data = []
+      # @data += [["Timestamp","Value"]]
       results = Temp.where("device_id = #{device_id} AND dt > date_add(now(),interval #{limit})").order(:dt)
       results.each do |row|
-        @data += [[(row.dt.to_i + row.dt.utc_offset) * 1000,row.send(src)]]
+        ts = (row.dt.to_i) * 1000 # + row.dt.utc_offset
+        r = [ts]
+        if src.is_a? Array
+          r += [row.send(src[0])]
+          r += [row.send(src[1])]
+        else
+          r += [row.send(src)]
+        end
+        @data += [r]
       end
     end
     respond_to do |format|
@@ -115,7 +134,7 @@ class TempsController < ApplicationController
   end
 
   def graph
-    @t = "{device_id: #{params[:device_id]},src: 'temperature'}"
+    @t = "{device_id: #{params[:device_id]},src: ['temperature','humidity']}"
     @p = "{device_id: #{params[:device_id]},src: 'pressure'}"
     @h = "{device_id: #{params[:device_id]},src: 'humidity'}"
     @i = "{device_id: #{params[:device_id]},src: 'illuminance'}"
