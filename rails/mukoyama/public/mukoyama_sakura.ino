@@ -40,9 +40,14 @@ void setup(){
 
 void loop() {
   float temp = bme280.readTempC();
+  float humi = bme280.readFloatHumidity();
+
   sakuraio.enqueueTx(0,temp);
+  sakuraio.enqueueTx(1,humi);
   sakuraio.send();
   Serial.print(temp);
+  Serial.print("  ");
+  Serial.print(humi);
   Serial.print("  ");
   Serial.print(sakuraio.getSignalQuality());
   Serial.print("  ");
