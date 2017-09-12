@@ -106,8 +106,8 @@ class DevicesController < ApplicationController
       return
     end
 
-    Temp.where(device_id: device_id).destroy_all
-    Picture.where(device_id: device_id).destroy_all
+    Temp.where(device_id: device_id).delete_all
+    Picture.where(device_id: device_id).delete_all
     render text: "Successfully destroy device data.", status: 200
   end
 
