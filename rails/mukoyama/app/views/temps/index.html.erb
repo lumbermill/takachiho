@@ -35,6 +35,26 @@
             <% end %>
           </tr>
         <% end %>
+        <tr class="text-muted">
+          <td>:</td>
+          <td colspan="7">(<%= @temps_count %>件のレコード)</td>
+        </tr>
+        <% @temps_oldest.each do |temp| %>
+          <tr>
+            <td><%= temp.device_id %></td>
+            <td><%= temp.dt %></td>
+            <td><%= temp.temperature %></td>
+            <td><%= temp.pressure %></td>
+            <td><%= temp.humidity %></td>
+            <td><%= temp.illuminance %></td>
+            <td><%= temp.voltage %></td>
+            <% if temp.created_at == temp.updated_at %>
+              <td><%= temp.created_at %></td>
+            <% else %>
+              <td title="created_at: <%= temp.created_at%>"><strong><%= temp.updated_at %><strong></td>
+            <% end %>
+          </tr>
+        <% end %>
       </tbody>
     </table>
     <ul>
