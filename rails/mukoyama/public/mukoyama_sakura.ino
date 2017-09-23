@@ -10,9 +10,10 @@ BME280 bme280;
 
 void setup(){
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+//シリアルのオープンを待っていると本番環境でデータ送信できない
+//  while (!Serial) {
+//    ; // wait for serial port to connect. Needed for native USB port only
+//  }
 
   // Setup BME280
   bme280.settings.commInterface = I2C_MODE; // Use I2C Interface
@@ -23,10 +24,10 @@ void setup(){
   bme280.settings.humidOverSample = 1;
 
   delay(10);
-  if (bme280.begin() != 0x60)
+  while (bme280.begin() != 0x60)
   {
     Serial.println("BME280 communication error!");
-    while (1);
+    delay(1000);
   }
 
   Serial.print("Waiting to come online");
