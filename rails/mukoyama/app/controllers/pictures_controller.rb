@@ -172,7 +172,7 @@ class PicturesController < ApplicationController
 
   # Render whether upload is needed or not. By checking the timestamp of file.
   def upload_needed
-    setting = Device.find_by(device_id: params[:id])
+    setting = Device.find_by(id: params[:id])
     if setting.nil?
       render status:404, text: "Device not found for device_id="+params[:id].to_s
       return
