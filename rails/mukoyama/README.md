@@ -57,3 +57,9 @@ id          - raspi_id
 token       - raspi_token
 upfile      - 画像ファイル
 time_stamp  - time_stamp "%y%m%d_%H%M%S.jpg"
+
+
+## ログの整理
+logrotateでproduction.logが肥大化しないよう調整が必要です。
+
+https://qiita.com/lumbermill/items/e05357577d16d702c16c
