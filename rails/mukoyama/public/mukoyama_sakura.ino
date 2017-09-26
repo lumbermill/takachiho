@@ -41,10 +41,12 @@ void setup(){
 
 void loop() {
   float temp = bme280.readTempC();
+  float pressure = bme280.readFloatPressure();
   float humi = bme280.readFloatHumidity();
 
   sakuraio.enqueueTx(0,temp);
-  sakuraio.enqueueTx(1,humi);
+  sakuraio.enqueueTx(1,pressure);
+  sakuraio.enqueueTx(2,humi);
   sakuraio.send();
   Serial.print(temp);
   Serial.print("  ");
@@ -53,7 +55,6 @@ void loop() {
   Serial.print(sakuraio.getSignalQuality());
   Serial.print("  ");
   Serial.println(sakuraio.getConnectionStatus());
-  // 15秒おきに送信しておいて、クラウド側から10分置きに適当なものをピックアップ
-  // ESP8266同様のタイミング(NTP使用)でデータ送信できるようにすべきか？
-  delay(15000);
+  // 1分おきに送信
+  delay(60000);
 }
