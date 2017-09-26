@@ -32,4 +32,10 @@ if Rails.env == 'development'
 		Picture.create(device_id: 2, dt: t, data:p)
 		t += 10.minutes
 	end
+	seeds = ["109058.jpg","109077.jpg","109091.jpg","109093.jpg","109094.jpg","109096.jpg","109015.jpg"]
+	t -= 1.days
+	seeds.each do |s|
+		Picture.create(device_id: 2, dt: t, data:File.read("#{Rails.root}/db/seeds/#{s}"))
+		t += 10.minutes
+	end
 end
