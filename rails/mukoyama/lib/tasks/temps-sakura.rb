@@ -38,8 +38,8 @@ def get_tmpr
           next unless data["type"] == "channels"
           channels = data["payload"]["channels"]
           temperature = value(channels[0])
-          humidity = value(channels[1])
-          pressure = value(channels[2])
+          pressure = value(channels[1])
+          humidity = value(channels[2])
           illuminance = value(channels[3])
           voltage = value(channels[4])
           t = Temp.new({device_id: d.id, dt: data["datetime"], temperature: temperature, humidity: humidity, pressure: pressure, illuminance: illuminance, voltage: voltage, sender: data["module"]})
