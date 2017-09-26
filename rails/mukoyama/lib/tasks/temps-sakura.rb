@@ -17,6 +17,11 @@ def process_exist?(pid)
   return ($? == 0)
 end
 
+def value(channel)
+  return nil if channel.nil?
+  return channel["value"]
+end
+
 def get_tmpr
   Thread.abort_on_exception = true if OPTS[:debug]
   threads = []
@@ -28,11 +33,24 @@ def get_tmpr
       ws = WebSocket::Client::Simple.connect url
       ws.on :message do |msg|
         puts "#{d.id}: #{msg}" if OPTS[:debug]
-        data = JSON.parse(msg.data)
-        next unless data["type"] == "channels"
-        tmpr_data = data["payload"]["channels"]
-        tmpr_log = Temp.new({device_id: d.id, time_stamp: data["datetime"], temperature: tmpr_data[0]["value"], humidity: tmpr_data[1]["value"], pressure: tmpr_data[2]["value"], sender: data["module"]})
-        tmpr_log.save
+        begin
+          data = JSON.parse(msg.data)
+          next unless data["type"] == "channels"
+          channels = data["payload"]["channels"]
+          temperature = value(channels[0])
+          humidity = value(channels[1])
+          pressure = value(channels[2])
+          illuminance = value(channels[3])
+          voltage = value(channels[4])
+          t = Temp.new({device_id: d.id, dt: data["datetime"], temperature: temperature, humidity: humidity, pressure: pressure, illuminance: illuminance, voltage: voltage, sender: data["module"]})
+          t.save
+          puts "#{d.id}: #{t}" if OPTS[:debug]
+        rescue => e
+          STDERR.puts e
+        end
+      end
+      loop do
+        ws.send STDIN.gets.strip
       end
       puts "id: #{d.id} finished." if OPTS[:debug]
     end
