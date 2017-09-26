@@ -16,6 +16,7 @@ class PagesController < ApplicationController
       @devices = Device.where(user_id: current_user.id).order("id")
       @all = false
     end
+    @disk_usage = @devices.map{|d| d.pictures.sum("length(data)")}.sum
   end
 
   def dashboard_stat1

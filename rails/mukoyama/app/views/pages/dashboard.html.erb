@@ -34,7 +34,7 @@
       <table class="table device2">
         <tr>
           <% d.latest_pictures(3).each do |p| %>
-          <td><%= image_tag picture_path(p.id), alt: "", class: "img-responsive img-rounded" %></td>
+          <td><%= link_to image_tag(picture_path(p.id), alt: "", class: "img-responsive img-rounded"), pictures_path(device_id: d.id) %></td>
           <% end %>
         </tr>
       </table>
@@ -119,7 +119,7 @@
         <th>現在時刻(<%= Rails.configuration.time_zone %>)</th><td><%= Time.zone.now %></td>
       </tr>
       <tr>
-        <th>ディスク使用量</th><td colspan="3">TODO</td>
+        <th>ディスク使用量</th><td colspan="3" id="disk_usage"><%= @disk_usage %></td>
       </tr>
     </table>
   </div>
