@@ -50,7 +50,7 @@ def get_tmpr
         end
       end
       loop do
-        ws.send STDIN.gets.strip
+        sleep 60
       end
       puts "id: #{d.id} finished." if OPTS[:debug]
     end
