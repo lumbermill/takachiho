@@ -119,7 +119,7 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      p = params.require(:device).permit(:device_id, :name, :temp_min, :temp_max, :city_id, :picture)
+      p = params.require(:device).permit(:device_id, :name, :temp_min, :temp_max, :city_id, :picture, :token4sakura, :device_type)
       if p[:picture]
         i = Magick::Image.from_blob(p[:picture].read)[0]
         i = i.resize_to_fill(640,480)
