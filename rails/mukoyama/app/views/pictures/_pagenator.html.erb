@@ -11,14 +11,14 @@
   $("#date-select").change(function(d){
     console.log(d.target);
     var date = $(d.target).val();
-    location.href = "?date="+date;
+    location.href = "?date="+date+"&device_id=<%= @id %>";
   });
 
   $("#page-select").change(function(d){
     console.log(d.target);
     var date = $("#date-select").val();
     var p = $(d.target).val();
-    location.href = "?date="+date+"&page="+p;
+    location.href = "?date="+date+"&page="+p+"&device_id=<%= @id %>";
   });
 
   function request_upload(){

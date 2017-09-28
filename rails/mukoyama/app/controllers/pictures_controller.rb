@@ -28,11 +28,11 @@ class PicturesController < ApplicationController
       cond_date = "and date(dt) = '#{@date}'" # TODO: インジェクション対策?
     end
 
-    @pictures = Picture.where("device_id = #{@device.id} #{cond_date}").order("dt desc").limit(1000)
+    @pictures = Picture.where("device_id = #{@device.id} #{cond_date}").order("dt desc").limit(120)
     @total = @pictures.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
-    sql = "select distinct date(dt) as d from pictures where device_id = #{@device.id} order by d"
+    sql = "select distinct date(dt) as d from pictures where device_id = #{@device.id} order by d desc"
     results = ActiveRecord::Base.connection.select_all(sql)
     @dates = results.to_a.map { |v| v["d"] }
 
