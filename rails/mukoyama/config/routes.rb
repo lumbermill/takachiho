@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   authenticate :user do
     get 'dashboard' => 'pages#dashboard'
     get 'dashboard-stat1' => 'pages#dashboard_stat1'
+    get 'dashboard-stat2' => 'pages#dashboard_stat2'
     get 'dashboard-mail_logs' => 'pages#dashboard_mail_logs'
     get 'dashboard-pictures' => 'pages#dashboard_pictures'
 

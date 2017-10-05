@@ -119,7 +119,7 @@
         <th>現在時刻(<%= Rails.configuration.time_zone %>)</th><td><%= Time.zone.now %></td>
       </tr>
       <tr>
-        <th>ディスク使用量</th><td colspan="3" id="disk_usage"><%= @disk_usage %></td>
+        <th>ディスク使用量</th><td colspan="3" id="disk_usage">..</td>
       </tr>
     </table>
   </div>
@@ -137,6 +137,7 @@
       <%= link_to 'ユーザ一覧', users_path, class: "list-group-item" %>
       <%= link_to 'センサ一覧', devices_path(all: true), class: "list-group-item" %>
       <%= link_to '通知先一覧', addresses_path, class: "list-group-item" %>
+      <a href="https://console.cloud.google.com" class="list-group-item" target="_blank">Google Cloud Platform</a>
     </div>
   </div>
   <div class="col-sm-3">
@@ -156,6 +157,10 @@
   </div>
   <script>
     $("#mail_logs").load("dashboard-mail_logs");
+
+    $.getJSON("dashboard-stat2",function(json){
+      $("#disk_usage").text(json.disk_usage.toLocaleString());
+    });
 
     // 高さを揃える
     $(window).load(function () {

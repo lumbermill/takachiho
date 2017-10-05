@@ -16,7 +16,6 @@ class PagesController < ApplicationController
       @devices = Device.where(user_id: current_user.id).order("id")
       @all = false
     end
-    @disk_usage = @devices.map{|d| d.pictures.sum("length(data)")}.sum
   end
 
   def dashboard_stat1
@@ -40,6 +39,18 @@ class PagesController < ApplicationController
     h["first"] = format_timestamp(h["first"])
     h["last"] = format_timestamp(h["last"])
 
+    render text: h.to_json
+  end
+
+  def dashboard_stat2
+    if current_user.admin?
+      @devices = Device.all.order("id")
+    else
+      @devices = Device.where(user_id: current_user.id).order("id")
+    end
+
+    h = {}
+    h["disk_usage"] = @devices.map{|d| d.pictures.sum("length(data)")}.sum
     render text: h.to_json
   end
 
