@@ -96,3 +96,16 @@ Optionalがnilを返した場合の初期値を与える方法
 let number: Int = Int(str) ?? 999
 let name = user?.name ?? "no name"
 ```
+
+```
+let df = DateFormatter()
+df.dateStyle = .long
+df.timeStyle = .long
+// or df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+let now = Date()
+
+let s = df.string(from: now)
+
+let d = df.date(from: s)
+```
