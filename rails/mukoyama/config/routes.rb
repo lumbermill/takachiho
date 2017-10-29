@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'pictures/request-upload' => 'pictures#request_upload'
   get  'pictures/upload' => 'pictures#upload'
   post 'pictures/upload' => 'pictures#upload'
+  get 'pictures/download' => 'pictures#download'
   post 'linebot' => 'pages#linebot'
 
 	# グラフ公開

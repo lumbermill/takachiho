@@ -7,3 +7,8 @@ end
 # Removal based on default contract.
 Temp.where("datediff(now(),dt) > 370").delete_all
 Picture.where("datediff(now(),dt) > 94").delete_all
+
+# Clean up downloads.
+dir = "/var/www/mukoyama/downloads"
+cmd = "find #{dir} -name \"*.zip\" -mtime +2 --delete"
+puts `#{cmd}`

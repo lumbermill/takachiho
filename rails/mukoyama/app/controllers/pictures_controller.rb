@@ -8,6 +8,7 @@ class PicturesController < ApplicationController
   # sudo mkdir -p /var/www/mukoyama/data
   # sudo chmod 777 /var/www/mukoyama/data
   BASEDIR = "/var/www/mukoyama/data/pictures"
+  DOWNLOAD_DIR = "/var/www/mukoyama/downloads"
 
   def index
     @id = params[:device_id]
@@ -199,6 +200,39 @@ class PicturesController < ApplicationController
     f = "#{BASEDIR}/#{device_id}/upload-needed.status"
     `touch #{f}`
     render text: "Touch #{f}", status: 200
+  end
+
+  def download
+    raise 'need to login.' unless current_user
+    device_id = params[:device_id]
+    raise "device_id is not set." unless device_id
+    path_zip = DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
+    path_lock = path_zip.sub(".zip","") # directory
+
+    if params[:exec] == "true"
+      # exec=trueの場合、状態に合わせた処理を実行
+      if File.file? path_zip
+        # ダウンロード
+        response.headers['Content-Length'] = File.size(path_zip)
+        send_file(path_zip, type: "application/zip", disposition: "inline")
+        return
+      elsif File.directory? path_lock
+        # 何もしない
+      else
+        # アーカイブタスクをバックグラウンド起動。これでいいのかな… active_job?
+        Thread.new { `cd #{Rails.root} && rails runner lib/tasks/zip-pictures.rb #{device_id}` }
+        sleep(1)
+      end
+    end
+
+    # ボタン文字列の表示切り替えに利用
+    if File.file? path_zip
+      render text: "ready"
+    elsif File.directory? path_lock
+      render text: "archiving"
+    else
+      render text: "idle"
+    end
   end
 
   private

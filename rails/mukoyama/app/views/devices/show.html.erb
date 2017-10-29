@@ -70,11 +70,12 @@
     <br/><br/>
     <p>
     <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 温湿度'.html_safe, temps_download_path(format: :csv, device_id: @device.id), class: "btn btn-success" %>
-    <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 写真'.html_safe, "#", class: "btn btn-success" %>
+    <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> 写真'.html_safe, "#",id: "download-pictures", class: "btn btn-success", disabled: "disabled" %>
     <%= button_tag '<span class="glyphicon glyphicon-trash"></span> 全件削除'.html_safe, class: "btn btn-danger", data: {toggle: "modal", target: "#myModal"} %>
     <%= link_to t('edit'), edit_device_path(@device), class: "btn btn-default" %>
     <%= link_to t('back'), devices_path, class: "btn btn-default" %>
     </p>
+    <p class="text-muted" id="notices"></p>
   </div>
 </div>
 <h2>APIのテスト</h2>
@@ -154,4 +155,27 @@ const char* mukoyama_token = "<%= @device.token4write %>";
       $("#alert").text("端末IDが違います。");
     }
   });
+  $.get("/pictures/download",{"device_id":<%= @device.id %>},function(data){
+    var btn = $("#download-pictures")
+    if(data.startsWith("idle")){
+      btn.html("<span class=\"glyphicon glyphicon-cloud-download\"></span> 写真(予約)");
+      btn.removeAttr("disabled"); // prop did not work.
+      btn.attr("href","javascript: void(0)");
+      btn.attr("onclick","start_archiving()");
+      $("#notices").text("写真(予約)ボタンを押すとダウンロード用データの準備を開始します。48時間以内にダウンロードしてください。");
+    }else if(data.startsWith("ready")){
+      btn.html("<span class=\"glyphicon glyphicon-cloud-download\"></span> 写真");
+      btn.removeAttr("disabled"); // prop did not work.
+      btn.attr("href","/pictures/download?device_id=<%= @device.id %>&exec=true");
+      $("#notices").text("写真のダウンロードが可能です。このファイルは2日後に削除されます。[今すぐ削除(未実装)]");
+    }else{
+      $("#notices").text("写真データの準備中です。");
+    }
+  })
+
+  function start_archiving(){
+    $.get("/pictures/download",{"device_id":<%= @device.id %>,"exec":true},function(data){
+      location.reload();
+    });
+  }
 </script>
