@@ -14,10 +14,16 @@ wget https://ja.wordpress.org/wordpress-4.8.2-ja.zip
 create database foo;
 ```
 
-vsftpdをインストールします。本体やプラグインの更新に
+vsftpdをインストールします。本体やプラグインの更新に利用します。
 
 ```
 apt install vsftpd
+```
+
+wp-contentフォルダに書き込みを許可します。
+
+```
+chmod 777 wp-content
 ```
 
 /etc/vsftpd.confを編集し、書き込みを許可します。
