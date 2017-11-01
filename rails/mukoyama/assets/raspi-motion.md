@@ -2,7 +2,7 @@
 
 下記URLのドキュメントを参考にRaspberryPiをセットアップします。
 
-[https://github.com/koki-h/motion\_for_mukoyama](https://github.com/koki-h/motion_for_mukoyama)
+<https://github.com/koki-h/motion_for_mukoyama>
 
 以下は設定の抜粋です（詳細は上記URLを）。
 

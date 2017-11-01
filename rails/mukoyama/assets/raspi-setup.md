@@ -23,7 +23,7 @@ sudo raspi-config
   # keyboard layoutとtimezoneをJapanに
 vi /etc/wpa_supplicant/wpa_supplicant.conf
   # network={ssid="your-ssid" psk="your-pre-shared-key"}
-mkdir bin &amp;&amp; cd bin
+mkdir bin
 ```
 
 Wifiに接続済みでsshが有効化されていれば、以下のコマンドで他の端末から接続可能です。
@@ -36,3 +36,9 @@ ssh pi@raspberrypi.local
 不特定のマシンが接続可能な環境に設置する場合は、パスワードを変更するか公開鍵認証など別の方法を使用してください。
 
 - 必要なスクリプトは `curl -O` コマンドで取得して `$HOME/bin` に設置します。
+
+
+## GPIO
+ピンの配置については、以下のURLなどを参照してください。
+
+<https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/>
