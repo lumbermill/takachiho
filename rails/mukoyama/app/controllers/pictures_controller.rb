@@ -22,21 +22,17 @@ class PicturesController < ApplicationController
     @n_pages = 0
 
     if @date == ""
-      cond_date = ""
+      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").limit(120)
     else
-      dmin = @date.to_i * 1000000
-      dmax = dmin + 999999
-      cond_date = "and date(dt) = '#{@date}'" # TODO: インジェクション対策?
+      time_start = Time.zone.parse(@date) # ex. Time.zone.parse('2017-11-07') => 2017-11-07 00:00:00 +0900
+      time_end = time_start.tomorrow
+      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").limit(120)
     end
 
-    @pictures = Picture.where("device_id = #{@device.id} #{cond_date}").order("dt desc").limit(120)
     @total = @pictures.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
-    sql = "select distinct date(dt) as d from pictures where device_id = #{@device.id} order by d desc"
-    results = ActiveRecord::Base.connection.select_all(sql)
-    @dates = results.to_a.map { |v| v["d"] }
-
+    @dates = Picture.pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.sort{|a, b| b <=> a }.uniq
     @n_watchers = get_access_log
   end
 
@@ -208,7 +204,6 @@ class PicturesController < ApplicationController
     raise "device_id is not set." unless device_id
     path_zip = DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
     path_lock = path_zip.sub(".zip","") # directory
-
     if params[:exec] == "true"
       # exec=trueの場合、状態に合わせた処理を実行
       if File.file? path_zip
