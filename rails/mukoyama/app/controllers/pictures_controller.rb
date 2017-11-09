@@ -8,7 +8,6 @@ class PicturesController < ApplicationController
   # sudo mkdir -p /var/www/mukoyama/data
   # sudo chmod 777 /var/www/mukoyama/data
   BASEDIR = "/var/www/mukoyama/data/pictures"
-  DOWNLOAD_DIR = "/var/www/mukoyama/downloads"
 
   def index
     @id = params[:device_id]
@@ -32,8 +31,20 @@ class PicturesController < ApplicationController
     @total = @pictures.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
-    @dates = Picture.pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.sort{|a, b| b <=> a }.uniq
+    @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
     @n_watchers = get_access_log
+  end
+
+  def download_this
+    @id = params[:device_id]
+    @date = params[:date] || ""
+    zip_path = ""
+    if @date == ""
+      zip_path = Picture.save_to_zip(@id, @date, 120) #日付指定がない場合は120件までにする
+    else
+      zip_path = Picture.save_to_zip(@id, @date)
+    end
+    send_file(zip_path, type: "application/zip", disposition: "inline", length:File.size(zip_path))
   end
 
   def index_grouped
@@ -202,14 +213,13 @@ class PicturesController < ApplicationController
     raise 'need to login.' unless current_user
     device_id = params[:device_id]
     raise "device_id is not set." unless device_id
-    path_zip = DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
+    path_zip = Mukoyama::DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
     path_lock = path_zip.sub(".zip","") # directory
     if params[:exec] == "true"
       # exec=trueの場合、状態に合わせた処理を実行
       if File.file? path_zip
         # ダウンロード
-        response.headers['Content-Length'] = File.size(path_zip)
-        send_file(path_zip, type: "application/zip", disposition: "inline")
+        send_file(path_zip, type: "application/zip", disposition: "inline", length:File.size(path_zip))
         return
       elsif File.directory? path_lock
         # 何もしない
