@@ -219,8 +219,7 @@ class PicturesController < ApplicationController
       # exec=trueの場合、状態に合わせた処理を実行
       if File.file? path_zip
         # ダウンロード
-        response.headers['Content-Length'] = File.size(path_zip)
-        send_file(path_zip, type: "application/zip", disposition: "inline")
+        send_file(path_zip, type: "application/zip", disposition: "inline", length:File.size(path_zip))
         return
       elsif File.directory? path_lock
         # 何もしない
