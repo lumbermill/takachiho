@@ -21,11 +21,11 @@ class PicturesController < ApplicationController
     @n_pages = 0
 
     if @date == ""
-      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").limit(120)
+      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(50)
     else
       time_start = Time.zone.parse(@date) # ex. Time.zone.parse('2017-11-07') => 2017-11-07 00:00:00 +0900
       time_end = time_start.tomorrow
-      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").limit(120)
+      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(50)
     end
 
     @total = @pictures.count
