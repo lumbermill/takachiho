@@ -32,7 +32,7 @@ class PicturesController < ApplicationController
     @total = @pictures.count
     @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
-    @dates = Picture.pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.sort{|a, b| b <=> a }.uniq
+    @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
     @n_watchers = get_access_log
   end
 
