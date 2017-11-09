@@ -14,6 +14,9 @@ class Picture < ActiveRecord::Base
       time_end = time_start.tomorrow
       pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", device_id, time_start, time_end).order("dt desc").limit(limit)
     end
+    if pictures.empty?
+      raise "No Pictures found."
+    end
     Dir.mktmpdir do |dir|
       pic_files = []
       pictures.each do |p|

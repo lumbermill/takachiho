@@ -25,15 +25,23 @@ class PictureTest < ActiveSupport::TestCase
       Picture.create(device_id: 2, dt: t, data:File.read("#{Rails.root}/db/seeds/#{s}"))
       t += 10.minutes
     end
-    puts "setup OK"
   end
 
-  test "shuld zip some pictures" do
+  test "should zip some pictures" do
     device_id = 2
     date = Time.now.strftime("%Y-%m-%d")
     zip_path = Picture.save_to_zip(device_id, date) 
     assert_equal Picture::DOWNLOAD_DIR+"/#{device_id}-#{date}-pictures.zip", zip_path
     assert File.exist?(zip_path)
+  end
+
+  test "should raise exception if no pictures found" do
+    device_id = 3
+    date = Time.now.strftime("%Y-%m-%d")
+    ex = assert_raises{
+      Picture.save_to_zip(device_id, date) 
+    }
+    assert_equal("No Pictures found.", ex.message)
   end
 end
 
