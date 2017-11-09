@@ -36,6 +36,18 @@ class PicturesController < ApplicationController
     @n_watchers = get_access_log
   end
 
+  def download_this
+    @id = params[:device_id]
+    @date = params[:date] || ""
+    zip_path = ""
+    if @date == ""
+      zip_path = Picture.save_to_zip(@id, @date, 120) #日付指定がない場合は120件までにする
+    else
+      zip_path = Picture.save_to_zip(@id, @date)
+    end
+    send_file(zip_path, type: "application/zip", disposition: "inline", length:File.size(zip_path))
+  end
+
   def index_grouped
     # picture_groupsの代表写真を並べる(motionの登場で要らなくなった…)
     @id = params[:device_id]
