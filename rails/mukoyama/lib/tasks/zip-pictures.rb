@@ -13,7 +13,7 @@ def main(device_id)
     print "device_id is not determined."
     return
   end
-  dir = "/var/www/mukoyama/downloads/#{device_id}-pictures"
+  dir = "#{Mukoyama::DOWNLOAD_DIR}/#{device_id}-pictures"
 
   # 作業用ディレクトリを作成、既存のものがあれば削除
   cmd("rm #{dir}.zip") if File.file? dir+".zip"

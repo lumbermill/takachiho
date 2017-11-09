@@ -8,7 +8,6 @@ class PicturesController < ApplicationController
   # sudo mkdir -p /var/www/mukoyama/data
   # sudo chmod 777 /var/www/mukoyama/data
   BASEDIR = "/var/www/mukoyama/data/pictures"
-  DOWNLOAD_DIR = "/var/www/mukoyama/downloads"
 
   def index
     @id = params[:device_id]
@@ -214,7 +213,7 @@ class PicturesController < ApplicationController
     raise 'need to login.' unless current_user
     device_id = params[:device_id]
     raise "device_id is not set." unless device_id
-    path_zip = DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
+    path_zip = Mukoyama::DOWNLOAD_DIR+"/#{device_id}-pictures.zip"
     path_lock = path_zip.sub(".zip","") # directory
     if params[:exec] == "true"
       # exec=trueの場合、状態に合わせた処理を実行

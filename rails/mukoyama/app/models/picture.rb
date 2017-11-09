@@ -1,10 +1,9 @@
 require 'zip' #何故か自動でロードされない
 class Picture < ActiveRecord::Base
   belongs_to :device
-  DOWNLOAD_DIR = "/var/www/mukoyama/downloads"
 
   def self.save_to_zip(device_id, date="", limit=nil)
-    zip_path = DOWNLOAD_DIR+"/#{device_id}-#{date}-pictures.zip"
+    zip_path = Mukoyama::DOWNLOAD_DIR+"/#{device_id}-#{date}-pictures.zip"
     FileUtils.rm(zip_path) if File.exist?(zip_path)
 
     if date == ""

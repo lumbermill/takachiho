@@ -31,7 +31,7 @@ class PictureTest < ActiveSupport::TestCase
     device_id = 2
     date = Time.now.strftime("%Y-%m-%d")
     zip_path = Picture.save_to_zip(device_id, date) 
-    assert_equal Picture::DOWNLOAD_DIR+"/#{device_id}-#{date}-pictures.zip", zip_path
+    assert_equal Mukoyama::DOWNLOAD_DIR+"/#{device_id}-#{date}-pictures.zip", zip_path
     assert File.exist?(zip_path)
   end
 
