@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get  'pictures/upload' => 'pictures#upload'
   post 'pictures/upload' => 'pictures#upload'
   get 'pictures/download' => 'pictures#download'
-  get 'pictures/download_this' => 'pictures#download_this'
+  get 'pictures/download_this/:device_id(/:date)' => 'pictures#download_this', :as => 'pictures_download_this'
   post 'linebot' => 'pages#linebot'
 
 	# グラフ公開
