@@ -16,11 +16,11 @@ class PicturesController < ApplicationController
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
     if @date == ""
-      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(50)
+      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(60)
     else
       time_start = Time.zone.parse(@date) # ex. Time.zone.parse('2017-11-07') => 2017-11-07 00:00:00 +0900
       time_end = time_start.tomorrow
-      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(50)
+      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(60)
     end
 
     @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
