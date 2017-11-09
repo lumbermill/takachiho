@@ -13,12 +13,7 @@ class PicturesController < ApplicationController
     @id = params[:device_id]
     @device = Device.find_by(id: @id)
     @date = params[:date] || "" # Date.today.strftime("%Y-%m-%d")
-    @page = (params[:page] || "1").to_i
-    pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
-
-    skipped = 0
-    @n_pages = 0
 
     if @date == ""
       @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(50)
@@ -27,9 +22,6 @@ class PicturesController < ApplicationController
       time_end = time_start.tomorrow
       @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(50)
     end
-
-    @total = @pictures.count
-    @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
 
     @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
     @n_watchers = get_access_log
