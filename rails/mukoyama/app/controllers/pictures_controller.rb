@@ -23,7 +23,9 @@ class PicturesController < ApplicationController
       @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(60)
     end
 
+    # 日付セレクトボックス用の日付配列
     @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
+    @dates.unshift("")
     @n_watchers = get_access_log
   end
 
