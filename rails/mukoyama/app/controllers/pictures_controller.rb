@@ -10,17 +10,18 @@ class PicturesController < ApplicationController
   BASEDIR = "/var/www/mukoyama/data/pictures"
 
   def index
+    pict_per_page = 60
     @id = params[:device_id]
     @device = Device.find_by(id: @id)
     @date = params[:date] || "" # Date.today.strftime("%Y-%m-%d")
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
     if @date == ""
-      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(60)
+      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(pict_per_page)
     else
       time_start = Time.zone.parse(@date) # ex. Time.zone.parse('2017-11-07') => 2017-11-07 00:00:00 +0900
       time_end = time_start.tomorrow
-      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(60)
+      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(pict_per_page)
     end
 
     # 日付セレクトボックス用の日付配列
