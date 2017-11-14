@@ -5,7 +5,7 @@
   <%= select_tag "date", options_for_select(@dates,@date), id: "date-select" ,class: "form-control" %>
   <% unless @pictures.empty? %>
     <%= link_to pictures_download_this_path(@id, @date), class: "btn btn-default " do %>
-      <span class="glyphicon glyphicon-cloud-download">&nbsp;画像を一括ダウンロード</span>
+      <span class="glyphicon glyphicon-cloud-download">&nbsp;一括ダウンロード</span>
     <% end %>
   <% end %>
   <button type="button" id="back2listview" class="btn btn-default">一覧表示に戻る</button>
