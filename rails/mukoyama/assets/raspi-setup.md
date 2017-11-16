@@ -41,4 +41,6 @@ ssh pi@raspberrypi.local
 ## GPIO
 ピンの配置については、以下のURLなどを参照してください。
 
+<img src="/physical-pin-numbers.png"/>
+
 <https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/>
