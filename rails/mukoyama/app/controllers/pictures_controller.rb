@@ -220,7 +220,7 @@ class PicturesController < ApplicationController
         # 何もしない
       else
         # アーカイブタスクをバックグラウンド起動。これでいいのかな… active_job?
-        Thread.new { `cd #{Rails.root} && rails runner lib/tasks/zip-pictures.rb #{device_id}` }
+        Thread.new { `cd #{Rails.root} && rails runner lib/tasks/zip-pictures.rb #{device_id} #{path_zip}` }
         sleep(1)
       end
     end
