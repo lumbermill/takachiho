@@ -10,28 +10,23 @@ class PicturesController < ApplicationController
   BASEDIR = "/var/www/mukoyama/data/pictures"
 
   def index
+    pict_per_page = 60
     @id = params[:device_id]
     @device = Device.find_by(id: @id)
     @date = params[:date] || "" # Date.today.strftime("%Y-%m-%d")
-    @page = (params[:page] || "1").to_i
-    pagesize = 24
     @colsize = 2 # col-sm-#{@colsize}, the size for bootstrap column.
 
-    skipped = 0
-    @n_pages = 0
-
     if @date == ""
-      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").limit(120)
+      @pictures = Picture.where("device_id = ?", @device.id).order("dt desc").page(params[:page]).per(pict_per_page)
     else
       time_start = Time.zone.parse(@date) # ex. Time.zone.parse('2017-11-07') => 2017-11-07 00:00:00 +0900
       time_end = time_start.tomorrow
-      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").limit(120)
+      @pictures = Picture.where("device_id = ? and ? <= dt and dt < ?", @device.id, time_start, time_end).order("dt desc").page(params[:page]).per(pict_per_page)
     end
 
-    @total = @pictures.count
-    @n_pages = @total / pagesize + (@total % pagesize == 0 ? 0 : 1)
-
+    # 日付セレクトボックス用の日付配列
     @dates = Picture.where("device_id = ?", @device.id).order("dt DESC").pluck(:dt).map{|dt| dt.strftime('%Y-%m-%d')}.uniq
+    @dates.unshift("")
     @n_watchers = get_access_log
   end
 
@@ -225,7 +220,7 @@ class PicturesController < ApplicationController
         # 何もしない
       else
         # アーカイブタスクをバックグラウンド起動。これでいいのかな… active_job?
-        Thread.new { `cd #{Rails.root} && rails runner lib/tasks/zip-pictures.rb #{device_id}` }
+        Thread.new { `cd #{Rails.root} && rails runner lib/tasks/zip-pictures.rb #{device_id} #{path_zip}` }
         sleep(1)
       end
     end
