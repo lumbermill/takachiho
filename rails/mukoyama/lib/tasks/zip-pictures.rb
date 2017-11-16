@@ -3,7 +3,7 @@ def main(device_id ,zip_filename)
     print "device_id is not determined."
     return
   end
-  Picture.save_to_zip(device_id, zip_filename)
+  Picture.save_to_zip(device_id, "", nil, zip_filename)
 
 end
 
