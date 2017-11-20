@@ -7,6 +7,6 @@ module Mukoyama
     Kashima_shi: 1860748, Tsukuba: 2110683, Saitama: 6940394, Nagoya: 1856057,
     Miyazaki: 1856717, Nobeoka: 1855095, Hinokage:1862588, Owase: 1853514,
     Gifu: 1863641, Tsu:1849796, Toyohashi: 1849846, Takayama: 1850892,
-    Yokkaichi: 1848373
+    Yokkaichi: 1848373, Takatoricho: 1850924
   }
 end
