@@ -103,16 +103,18 @@ class PagesController < ApplicationController
   end
 
   def weather
-    sql = "select dt,id,weather_main,temp,modified_at from weathers where dt = (select max(dt) from weathers where dt <= now()) order by id"
-    @weathers = ActiveRecord::Base.connection.select_all(sql).to_a
-    @sql = sql
-    @datetime = @weathers.size > 0 ? @weathers[0]["dt"] : "No record found."
-
-    sql = "select id,name from weathers_cities order by id"
-    @cities = {}
-    ActiveRecord::Base.connection.select_all(sql).to_a.each do |row|
-      @cities[row["id"]] = row["name"]
+    @cities = Mukoyama::CITY_IDS.invert
+    @datetime = nil
+    @weathers = @cities.keys.map do |city_id|
+      w = Weather.where(id: city_id).order("dt desc").first
+      if w
+        @datetime ||= w.dt
+        @datetime = [@datetime, w.dt].max
+      end
+      w
     end
+    @weathers.delete(nil)
+    @datetime = "No record found." unless @datetime
   end
 
   # Show markdown content.

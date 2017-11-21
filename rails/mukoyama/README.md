@@ -42,7 +42,7 @@ SENDGRID_PASSWORD=
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb 2>&1 | logger -p cron.info -t "mukoyama"
 10 0 * * * cd /var/www/mukoyama/current && python3 lib/tasks/group-pictures.py -e staging 2>&1 | logger -p cron.info -t "mukoyama"
 */10 * * * *             cd /var/www/mukoyama/current && rails runner -e production lib/tasks/sakura_tmpr_insert.rb 2>&1 | logger -p cron.info -t "mukoyama"
-10 */3 * * * cd /var/www/mukoyama/current && rails runner -e production lib/tasks/copy_weathers.rb 2>&1 | logger -p cron.info -t "mukoyama"  # fetch weathers from
+10 */3 * * * cd /var/www/mukoyama/current && rails runner -e production lib/tasks/weather_aggrigation.rb 2>&1 | logger -p cron.info -t "mukoyama"  # fetch weathers from
  ```
 
 ## 天気予報データの取得
