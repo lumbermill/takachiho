@@ -38,7 +38,7 @@
   </div>
   <div class="form-group">
     <%= f.label :city_id, t("activerecord.attributes.device.city_id") %>
-    <%= f.select :city_id, options_for_select(city_list.collect { |u| [u["name_jp"].present? ? u["name_jp"] : u["name"], u["id"]] }, @device.city_id), {include_blank: true}, {class: "form-control"} %>
+    <%= f.select :city_id, options_for_select(Mukoyama::CITY_IDS, @device.city_id), {include_blank: true}, {class: "form-control"} %>
     <small>天気予報データの参照に使用する地域です。なるべく近いと思われる場所を選んでください。</small>
   </div>
   <div class="form-group">

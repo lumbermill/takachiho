@@ -53,7 +53,7 @@
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.device.city_id") %></th>
-    <td><div class="well well-sm"><%= @device.city_id %> <%= @device.city_name %></td>
+    <td><div class="well well-sm"><%= @device.city_id %> <%= Mukoyama::CITY_IDS.invert[@device.city_id] %></td>
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.device.created_at") %></th>
