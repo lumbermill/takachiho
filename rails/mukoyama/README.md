@@ -38,26 +38,28 @@ TWILIO_NUMBER=
 LINE_CHANNEL_SECRET=
 LINE_CHANNEL_TOKEN=""
 SENDGRID_PASSWORD=
+WEATHER_KEY=
 1 0 * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/temps-daily.rb  2>&1 | logger -p cron.info -t "mukoyama"
 2,12,22,32,42,52 * * * * cd /var/www/mukoyama/current && rails runner -e staging lib/tasks/tmpr_check.rb 2>&1 | logger -p cron.info -t "mukoyama"
 10 0 * * * cd /var/www/mukoyama/current && python3 lib/tasks/group-pictures.py -e staging 2>&1 | logger -p cron.info -t "mukoyama"
 */10 * * * *             cd /var/www/mukoyama/current && rails runner -e production lib/tasks/sakura_tmpr_insert.rb 2>&1 | logger -p cron.info -t "mukoyama"
-10 */3 * * * cd /var/www/mukoyama/current && rails runner -e production lib/tasks/weather_aggrigation.rb 2>&1 | logger -p cron.info -t "mukoyama"  # fetch weathers from
+10 */3 * * * cd /var/www/mukoyama/current && rails runner -e production lib/tasks/weather_aggrigation.rb 2>&1 | logger -p cron.info -t "mukoyama"
  ```
 
-## 天気予報データの取得
-別のプロジェクトで蓄積しているデータを借りています。いずれは単体でデータ取得ができるようにします。
+## 天気データの取得
+WEATHER_KEY環境変数がセットされた状態で、以下のコマンドを実行します。
 ```
-rails runner -e production lib/tasks/copy_weathers.rb
+rails runner -e production lib/tasks/weather_aggrigation.rb
 ```
 
 ## 画像アップロード
 必要なパラメータ
+```
 id          - raspi_id
 token       - raspi_token
 upfile      - 画像ファイル
 time_stamp  - time_stamp "%y%m%d_%H%M%S.jpg"
-
+```
 
 ## ログの整理
 logrotateでproduction.logが肥大化しないよう調整が必要です。
