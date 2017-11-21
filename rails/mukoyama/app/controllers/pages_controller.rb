@@ -104,10 +104,17 @@ class PagesController < ApplicationController
 
   def weather
     @cities = Mukoyama::CITY_IDS.invert
+    @datetime = nil
     @weathers = @cities.keys.map do |city_id|
-      Weather.where(id: city_id).order("dt desc").first
+      w = Weather.where(id: city_id).order("dt desc").first
+      if w
+        @datetime ||= w.dt
+        @datetime = [@datetime, w.dt].max
+      end
+      w
     end
-    @datetime = @weathers.size > 0 ? @weathers[0].dt : "No record found."
+    @weathers.delete(nil)
+    @datetime = "No record found." unless @datetime
   end
 
   # Show markdown content.
