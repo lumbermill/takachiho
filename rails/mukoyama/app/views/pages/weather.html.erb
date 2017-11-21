@@ -9,15 +9,12 @@
   </tr>
 <% @weathers.each do |row| %>
   <tr>
-    <td><%= row["id"] %></td>
-    <td><%= @cities[row["id"]] %></td>
-    <td><%= row["weather_main"] %></td>
-    <td><%= row["temp"] %></td>
-    <td><%= row["modified_at"] %></td>
+    <td><%= row.id %></td>
+    <td><%= @cities[row.id] %></td>
+    <td><%= row.weather_main %></td>
+    <td><%= row.temp %></td>
+    <td><%= row.modified_at %></td>
   </tr>
 <% end %>
 </table>
-<p class="well">
-  <%= @sql %>
-</p>
 <p><small>At <%= @datetime %>, from <a href="http://openweathermap.org/">http://openweathermap.org/</a></small></p>
