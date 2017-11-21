@@ -43,5 +43,10 @@ def aggregate(id)
 end
 
 Mukoyama::CITY_IDS.values.each do |city_id|
-  aggregate(city_id)
+  begin
+    aggregate(city_id)
+  rescue => e
+    $log.error("aggrigation failed. (id:#{city_id} #{Mukoyama::CITY_IDS.invert[city_id]})")
+    $log.error(e)
+  end
 end
