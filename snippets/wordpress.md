@@ -5,7 +5,7 @@
 公式サイトからzipを入手し、適当なディレクトリ (/var/www/wordpressなど)に展開します。
 
 ```
-wget https://ja.wordpress.org/wordpress-4.8.2-ja.zip
+wget https://ja.wordpress.org/wordpress-4.9-ja.zip
 ```
 
 データベースを作成しておきます。
