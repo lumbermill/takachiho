@@ -13,7 +13,7 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     var rows : Array<Array<Int>> = []
-    var blockColor = UIColor.grayColor()
+    var blockColor = UIColor.gray
     var level = "" // レベル easy, medium, hard
     var mazeSize = 31 // 迷路短辺のブロック数
     
@@ -25,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     var yOffset:CGFloat = 0
     
     var status = 0 // 0:not yet started. 1:gaming 2:reached to goal
-    var started:NSTimeInterval = 0.0
+    var started:TimeInterval = 0.0
     
     let mm = CMMotionManager()
     
@@ -35,90 +35,90 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     var timer:SKLabelNode!
     var audioPlayer:AVAudioPlayer!
 
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         // ブロックを配置
         for i in 0..<numberOfRows {
             for j in 0..<mazeSize {
                 if rows[i][j] == 1{
-                    putBlock(i, j)
+                    putBlock(row: i, j)
                 }
             }
         }
         
-        if self.childNodeWithName("title") == nil {
+        if self.childNode(withName: "title") == nil {
             // 戻るボタン
             let b = SKLabelNode(text: "< Back to Title")
             b.fontSize = 16
-            b.position = CGPointMake(b.frame.size.width / 2 + 12, 0)
+            b.position = CGPoint(x: b.frame.size.width / 2 + 12,y: 0)
             b.name = "title"
             self.addChild(b)
             
             timer = SKLabelNode(text: "000.00")
             timer.fontSize = 16
-            timer.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-            timer.position = CGPointMake(frame.size.width - timer.frame.size.width - 12, 0)
+            timer.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            timer.position = CGPoint(x: frame.size.width - timer.frame.size.width - 12,y: 0)
             timer.name = "time"
             self.addChild(timer)
         }
-        if let b = self.childNodeWithName("ball") {
+        if let b = self.childNode(withName: "ball") {
             b.removeFromParent()
         }
         // 音の準備
-        prepareSound("se_maoudamashii_se_sound11")
+        prepareSound(name: "se_maoudamashii_se_sound11")
         
-        self.physicsWorld.gravity = CGVectorMake(0, -9.8)
+        self.physicsWorld.gravity = CGVector(dx: 0,dy: -9.8)
         self.physicsWorld.contactDelegate = self
         
-        let wait = NSTimeInterval((numberOfRows) * mazeSize / 500)
-        self.runAction(SKAction.waitForDuration(wait), completion: {
+        let wait = TimeInterval((numberOfRows) * mazeSize / 500)
+        self.run(SKAction.wait(forDuration: wait), completion: {
             // ボール
             let r = CGFloat(self.blockSize) * 0.95 / 2.0
             let ball = SKShapeNode(circleOfRadius: r)
             ball.position = self.CGPointFromPoint(self.numberOfRows - 3, 2)
-            ball.fillColor = UIColor.orangeColor()
+            ball.fillColor = UIColor.orange
             ball.lineWidth = 0
             ball.name = "ball"
             ball.xScale = 3.0
             ball.yScale = 3.0
-            ball.runAction(SKAction.scaleTo(1.0, duration: 0.4), completion: {
+            ball.run(SKAction.scale(to: 1.0, duration: 0.4), completion: {
                 ball.physicsBody = SKPhysicsBody(circleOfRadius: r)
-                ball.physicsBody?.dynamic = true
+                ball.physicsBody?.isDynamic = true
                 ball.physicsBody?.categoryBitMask = self.CAT_BALL
                 ball.physicsBody?.contactTestBitMask = self.CAT_GOAL
             })
             self.addChild(ball)
             
             // ゴール
-            let w = SKAction.waitForDuration(1 / 500.0)
-            self.putBlock(1, self.mazeSize - 3,color: UIColor.blueColor(),wait:w)
+            let w = SKAction.wait(forDuration: 1 / 500.0)
+            self.putBlock(1, self.mazeSize - 3,color: UIColor.blue,wait:w)
 
             // 加速度センサ
-            let cq = NSOperationQueue.currentQueue()
-            let h = {(data:CMAccelerometerData?, error:NSError?) -> Void in
+            let cq = OperationQueue.current
+            let h = {(data:CMAccelerometerData?, error:Error?) -> Void in
                 if let d = data {
                     //NSLog("x,y,z = %.1f,%.1f,%.1f,",d.acceleration.x,d.acceleration.y, d.acceleration.z)
                     let G = 18.0
                     let dx = CGFloat(d.acceleration.x * G)
                     let dy = CGFloat(d.acceleration.y * G)
-                    self.physicsWorld.gravity = CGVectorMake(dx, dy)
+                    self.physicsWorld.gravity = CGVector(dx:dx,dy:dy)
                 }
             }
             self.mm.accelerometerUpdateInterval = 0.1
-            self.mm.startAccelerometerUpdatesToQueue(cq!, withHandler: h)
+            self.mm.startAccelerometerUpdates(to: cq!, withHandler: h)
             
             // 音
             self.audioPlayer.play()
             
-            self.started = NSDate.timeIntervalSinceReferenceDate()
+            self.started = NSDate.timeIntervalSinceReferenceDate
             self.status = 1 // started
         })
     }
     
     func prepareSound(name: String) {
-        let sound_path = NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!
+        let sound_path = Bundle.main.path(forResource: name, ofType: "mp3")!
         let sound_url = NSURL(fileURLWithPath: sound_path)
         do{
-            audioPlayer = try AVAudioPlayer(contentsOfURL: sound_url)
+            audioPlayer = try AVAudioPlayer(contentsOf: sound_url as URL)
             audioPlayer.delegate = self
             audioPlayer.prepareToPlay()
         }catch{
@@ -126,7 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         }
     }
     
-    override func willMoveFromView(view: SKView) {
+    override func willMove(from view: SKView) {
         // 加速度センサを止める
         mm.stopAccelerometerUpdates()
         // 開始時刻をリセット
@@ -134,17 +134,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         status = 0
         // 不要なノードを消す
         for name in ["ball","goal","retry","score"] {
-            if let node = self.childNodeWithName(name) {
+            if let node = self.childNode(withName: name) {
                 node.removeFromParent()
             }
         }
     }
     
-    func nameFromPoint(row: Int,_ col :Int) -> String{
+    func nameFromPoint(_ row: Int,_ col :Int) -> String{
         return String(format: "b-%03d,%03d", arguments: [row,col])
     }
     
-    func CGPointFromPoint(row: Int,_ col: Int) -> CGPoint{
+    func CGPointFromPoint(_ row: Int,_ col: Int) -> CGPoint{
         let y = CGFloat(row * blockSize)
         let x = CGFloat(col * blockSize)
         
@@ -152,14 +152,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
 
     func putBlock(row: Int,_ col: Int){
-        let w = SKAction.waitForDuration(NSTimeInterval(row * mazeSize + col) / 500.0)
+        let w = SKAction.wait(forDuration: TimeInterval(row * mazeSize + col) / 500.0)
         putBlock(row,col,color: blockColor,wait:w)
     }
 
-    func putBlock(row: Int,_ col: Int, color: UIColor,wait: SKAction){
+    func putBlock(_ row: Int,_ col: Int, color: UIColor,wait: SKAction){
         rows[row][col] = 1
         let name = nameFromPoint(row, col)
-        if self.childNodeWithName(name) != nil{
+        if self.childNode(withName: name) != nil{
             return;
         }
         let b = SKSpriteNode(color: color , size: CGSize(width: blockSize, height: blockSize))
@@ -168,19 +168,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         b.xScale = 1.5
         b.yScale = 1.5
         b.alpha = 0.0
-        b.physicsBody = SKPhysicsBody(rectangleOfSize: b.size)
-        b.physicsBody?.dynamic = false
-        if(color == UIColor.blueColor()){
+        b.physicsBody = SKPhysicsBody(rectangleOf: b.size)
+        b.physicsBody?.isDynamic = false
+        if(color == UIColor.blue){
             b.physicsBody?.categoryBitMask = CAT_GOAL
             b.physicsBody?.contactTestBitMask = CAT_BALL
         }
-        b.runAction(SKAction.sequence([wait,SKAction.scaleTo(1.0, duration: 0.5)]))
-        b.runAction(SKAction.sequence([wait,SKAction.fadeAlphaTo(1.0, duration: 0.5)]))
+        b.run(SKAction.sequence([wait,SKAction.scale(to: 1.0, duration: 0.5)]))
+        b.run(SKAction.sequence([wait,SKAction.fadeAlpha(to: 1.0, duration: 0.5)]))
         self.addChild(b)
     }
     
     
-    func dig(row: Int,_ col: Int){
+    func dig(_ row: Int,_ col: Int){
         var crow = row
         var ccol = col
         while true{
@@ -282,30 +282,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     func touched(touches: Set<UITouch>,node: SKNode?) -> Bool{
         if node != nil {
             for t in touches{
-                if(CGRectContainsPoint(node!.frame, t.locationInNode(self))){
+                if(node!.frame.contains(t.location(in: self))){
                     return true
                 }
             }
         }
         return false
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(status == 0) { return }
-        if touched(touches,node: self.childNodeWithName("title")){
+        if touched(touches: touches,node: self.childNode(withName: "title")){
             // タイトルに戻る
             transitToTitleScene()
-        }else if touched(touches,node: self.childNodeWithName("retry")){
-            self.willMoveFromView(self.view!)
+        }else if touched(touches: touches,node: self.childNode(withName: "retry")){
+            self.willMove(from: self.view!)
             self.generate()
-            self.didMoveToView(self.view!)
+            self.didMove(to: self.view!)
         }
     }
 
     func transitToTitleScene(){
         if let s = scenes["title"] as! TitleScene?{
             if let v = self.view{
-                let t = SKTransition.crossFadeWithDuration(0.5)
+                let t = SKTransition.crossFade(withDuration: 0.5)
                 v.presentScene(s,transition:t)
             }
         }
@@ -326,68 +326,69 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             started = 0.0
             status = 2
             // ゴールの文字を出す。 スコアを見る リトライ
-            let x = CGRectGetMidX(self.frame)
-            var y = CGRectGetMidY(self.frame) + 32
+
+            let x = self.frame.midX
+            var y = self.frame.midY + 32
             
             var elapsed:Int = 99999
-            if let t = self.childNodeWithName("time") as! SKLabelNode?{
+            if let t = self.childNode(withName: "time") as! SKLabelNode?{
                 elapsed = Int(Double(t.text!)! * 100)
             }
-            let ud = NSUserDefaults.standardUserDefaults()
-            let last_elapsed = ud.integerForKey(level+".hiscore")
+            let ud = UserDefaults.standard
+            let last_elapsed = ud.integer(forKey: level+".hiscore")
             
             let goal = SKLabelNode(text: elapsed < last_elapsed ? "Great!!" : "Goal!")
             goal.fontSize = 48
             goal.xScale = 10.0
             goal.xScale = 5.0
-            goal.position = CGPointMake(x,y)
+            goal.position = CGPoint(x:x,y:y)
             goal.name = "goal"
             
             y -= 64
             let retry = SKLabelNode(text: "Retry")
             retry.fontSize = 24
-            retry.position = CGPointMake(x, y)
+            retry.position = CGPoint(x: x, y:y)
             retry.name = "retry"
 
             self.addChild(goal)
             self.addChild(retry)
             
-            let a = SKAction.scaleTo(1.0, duration: 0.4)
-            goal.runAction(a)
+            let a = SKAction.scale(to: 1.0, duration: 0.4)
+            goal.run(a)
             
             if last_elapsed == 0 || elapsed < last_elapsed {
                 // Stores to local.
-                ud.setInteger(elapsed, forKey: level+".hiscore")
+                ud.set(elapsed, forKey: level+".hiscore")
                 
             }
-            reportScore(elapsed)
+            reportScore(elapsed: elapsed)
         }
     }
 
     func reportScore(elapsed: Int){
         // unless it is highest score(minimum time), do nothing.
         // Send Game Center
-        if (!GKLocalPlayer.localPlayer().authenticated) { return }
+        if (!GKLocalPlayer.localPlayer().isAuthenticated) { return }
         let s = GKScore(leaderboardIdentifier: "grp.automaze."+level)
         s.value = Int64(elapsed)
-        GKScore.reportScores([s], withCompletionHandler: {(error: NSError?) -> Void in
+        GKScore.report([s], withCompletionHandler: {(error: Error?) -> Void in
             if error != nil {
-                print(error)
+                print(error ?? "")
             }
         })
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         if(status == 1) {
-            let elapsed = NSDate.timeIntervalSinceReferenceDate() - started
-            if let t = self.childNodeWithName("time") as! SKLabelNode?{
+            let elapsed = NSDate.timeIntervalSinceReferenceDate - started
+            if let t = self.childNode(withName: "time") as! SKLabelNode?{
                 t.text = String(format: "%06.2f", arguments: [elapsed])
             }
         }
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        self.prepareSound("se_maoudamashii_se_sound09")
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        self.prepareSound(name: "se_maoudamashii_se_sound09")
     }
 }

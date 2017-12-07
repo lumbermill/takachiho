@@ -13,58 +13,58 @@ class TitleScene: SKScene, GKGameCenterControllerDelegate {
     let level_names = ["Easy","Medium","Hard"]
     let levels = ["Easy":11,"Medium":25,"Hard":37]
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         self.removeAllChildren()
         authPlayer()
         
-        let x = CGRectGetMidX(self.frame)
-        var y = CGRectGetMidY(self.frame) + 96
+        let x = self.frame.midX
+        var y = self.frame.midY + 96
         let title = SKLabelNode(text: "Maze")
         title.fontSize = 65
-        title.fontColor = SKColor.grayColor()
-        title.position = CGPointMake(x,y);
+        title.fontColor = SKColor.gray
+        title.position = CGPoint(x:x,y:y);
         self.addChild(title)
         
         y -= 96
         let hiscore = SKLabelNode(text: "Hiscore")
         hiscore.fontSize = 20
-        hiscore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        hiscore.position = CGPointMake(x+32, y)
+        hiscore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        hiscore.position = CGPoint(x:x+32,y:y)
         hiscore.name = "hiscore"
         self.addChild(hiscore)
         
-        let ud = NSUserDefaults.standardUserDefaults()
+        let ud = UserDefaults.standard
         
         y -= 32
         for l in level_names{
-            let score = ud.integerForKey(l.lowercaseString+".hiscore")
+            let score = ud.integer(forKey: l.lowercased()+".hiscore")
             let b = SKLabelNode(text: l)
             b.fontSize = 32
-            b.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-            b.position = CGPointMake(x-32, y)
+            b.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            b.position = CGPoint(x:x-32,y:y)
             b.name = l
             let s = SKLabelNode(text: String(format: "%.2f", arguments: [score > 0 ? Double(score) / 100.0 : 999.99]))
             s.fontSize = 20
-            s.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+            s.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
             s.fontColor = title.fontColor
-            s.position = CGPointMake(x+32, y)
+            s.position = CGPoint(x:x+32,y:y)
             y -= 84
             self.addChild(b)
             self.addChild(s)
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches{
             for l in levels.keys{
-                if let node = self.childNodeWithName(l){
-                    if(CGRectContainsPoint(node.frame, t.locationInNode(self))){
-                        transitToGameScene(node)
+                if let node = self.childNode(withName: l){
+                    if(node.frame.contains(t.location(in: self))){
+                        transitToGameScene(level: node)
                     }
                 }
             }
-            if let node = self.childNodeWithName("hiscore"){
-                if(CGRectContainsPoint(node.frame, t.locationInNode(self))){
+            if let node = self.childNode(withName: "hiscore"){
+                if(node.frame.contains(t.location(in: self))){
                     showScore()
                 }
             }
@@ -74,27 +74,26 @@ class TitleScene: SKScene, GKGameCenterControllerDelegate {
     func transitToGameScene(level: SKNode){
         if let s = scenes["game"] as! GameScene?{
             if let v = self.view{
-                level.runAction(SKAction.fadeAlphaTo(0.3, duration: 0.1))
+                level.run(SKAction.fadeAlpha(to: 0.3, duration: 0.1))
                 let message = SKLabelNode(text: "Generating the maze..")
                 message.fontSize = 18
-                message.fontColor = SKColor.grayColor()
-                let x = CGRectGetMidX(self.frame)
-                let y = CGRectGetMidY(self.frame) + 32.0
-                message.position = CGPointMake(x,y);
+                message.fontColor = SKColor.gray
+                let x = self.frame.midX
+                let y = self.frame.midY + 32.0
+                message.position = CGPoint(x:x,y:y);
                 self.addChild(message)
 
-                s.level = level.name!.lowercaseString
+                s.level = level.name!.lowercased()
                 s.mazeSize = levels[level.name!]!
                 
-                let p = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                dispatch_async(dispatch_get_global_queue(p, 0), {
+                DispatchQueue.global().async {
                     s.generate()
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async {
                         message.removeFromParent()
-                        let t = SKTransition.crossFadeWithDuration(0.5)
+                        let t = SKTransition.crossFade(withDuration: 0.5)
                         v.presentScene(s,transition: t)
-                    })
-                })
+                    }
+                }
             }
         }
     }
@@ -103,11 +102,11 @@ class TitleScene: SKScene, GKGameCenterControllerDelegate {
         let p = GKLocalPlayer.localPlayer()
         p.authenticateHandler = {(viewController, error) -> Void in
             if (viewController != nil){
-                if let vc = UIApplication.sharedApplication().delegate?.window??.rootViewController {
-                    vc.presentViewController(viewController!, animated: true, completion: nil)
+                if let vc = UIApplication.shared.delegate?.window??.rootViewController {
+                    vc.present(viewController!, animated: true, completion: nil)
                 }
             } else {
-                NSLog("%d",GKLocalPlayer.localPlayer().authenticated)
+                print("%d",GKLocalPlayer.localPlayer().isAuthenticated)
             }
         }
     }
@@ -116,10 +115,10 @@ class TitleScene: SKScene, GKGameCenterControllerDelegate {
         let vc = self.view?.window?.rootViewController
         let gc = GKGameCenterViewController()
         gc.gameCenterDelegate = self
-        vc?.presentViewController(gc, animated: true, completion: nil)
+        vc?.present(gc, animated: true, completion: nil)
     }
     
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController){
-        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController){
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

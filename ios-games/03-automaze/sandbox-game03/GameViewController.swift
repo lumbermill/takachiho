@@ -21,7 +21,7 @@ class GameViewController: UIViewController {
         
         for key in scenes.keys{
             if let s:SKScene = scenes[key] {
-                s.scaleMode = .AspectFit
+                s.scaleMode = .aspectFit
                 s.size = CGSize(width: 375, height: 500)
                 // TODO: How to disable muititouch?
             }
@@ -36,12 +36,12 @@ class GameViewController: UIViewController {
 
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool {
         return false
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +49,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 }
