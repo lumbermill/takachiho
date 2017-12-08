@@ -34,9 +34,9 @@ def insert_daily(date)
     temperature_min,pressure_min,humidity_min,
     created_at,updated_at)
   SELECT device_id,date(dt),
-  avg(temperature),avg(pressure),avg(humidity),
-  max(temperature),max(pressure),max(humidity),
-  min(temperature),min(pressure),min(humidity),
+  round(avg(temperature),2),round(avg(pressure),2),round(avg(humidity),2),
+  round(max(temperature),2),round(max(pressure),2),round(max(humidity),2),
+  round(min(temperature),2),round(min(pressure),2),round(min(humidity),2),
   now(),now()
   FROM temps #{where} GROUP BY device_id,date(dt);
 EOT
@@ -61,9 +61,9 @@ def insert_monthly(date)
     temperature_min,pressure_min,humidity_min,
     created_at,updated_at)
   SELECT device_id,year(d)*100 + month(d),
-  avg(temperature_average),avg(pressure_average),avg(humidity_average),
-  max(temperature_max),max(pressure_max),max(humidity_max),
-  min(temperature_min),min(pressure_min),min(humidity_min),
+  round(avg(temperature_average),2),round(avg(pressure_average),2),round(avg(humidity_average),2),
+  round(max(temperature_max),2),round(max(pressure_max),2),round(max(humidity_max),2),
+  round(min(temperature_min),2),round(min(pressure_min),2),round(min(humidity_min),2),
   now(),now()
   FROM temps_dailies #{where} GROUP BY device_id,year(d)*100+month(d);
 EOT

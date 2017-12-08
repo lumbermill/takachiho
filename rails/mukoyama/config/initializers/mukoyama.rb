@@ -9,4 +9,12 @@ module Mukoyama
     Gifu: 1863641, Tsu:1849796, Toyohashi: 1849846, Takayama: 1850892,
     Yokkaichi: 1848373, Takatoricho: 1850924
   }
+
+  CITY_NAMES = {
+    Tokyo: "東京",Osaka_shi: "大阪市", Toyonaka: "豊中", Nishinomiya: "西宮",
+    Kashima_shi: "鹿嶋市", Tsukuba: "筑波", Saitama: "埼玉", Nagoya: "名古屋",
+    Miyazaki: "宮崎", Nobeoka: "延岡", Hinokage: "日之影", Owase: "尾鷲",
+    Gifu: "岐阜", Tsu: "津", Toyohashi: "豊橋", Takayama: "高山",
+    Yokkaichi: "四日市", Takatoricho: "鷹取町"
+  }
 end
