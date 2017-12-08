@@ -1,0 +1,21 @@
+<% content_for :title, "#{@city_name}の天気" %>
+<% content_for :subtitle, "ID:#{@city_id}" %>
+<p class="text-muted">直近の100件を表示しています。</p>
+<table class="table table-striped">
+  <tr>
+    <th>日時</th>
+    <th>天気</th>
+    <th>気温</th>
+    <th>更新日時</th>
+  </tr>
+<% @weathers.each do |row| %>
+  <tr>
+    <td><%= row.dt %></td>
+    <td><%= row.weather_main %></td>
+    <td><%= row.temp %></td>
+    <td><%= row.modified_at %></td>
+  </tr>
+<% end %>
+</table>
+<p><small>From <a href="http://openweathermap.org/">http://openweathermap.org/</a></small></p>
+<p><%= link_to "戻る", weather_path, class: "btn btn-default" %></p>

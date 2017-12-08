@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   get 'rules4tester' => 'pages#rules4tester'
   get 'usecase' => 'pages#usecase'
   get 'weather' => 'pages#weather'
+  get 'weather4city' => 'pages#weather4city'
   get 'howto4line' => 'pages#howto4line'
   get 'doc/:name' => 'pages#doc'
 

@@ -3,14 +3,16 @@
   <tr>
     <th>ID</th>
     <th>名前</th>
+    <th>名前(日本語)</th>
     <th>天気</th>
     <th>気温</th>
     <th>更新日時</th>
   </tr>
 <% @weathers.each do |row| %>
   <tr>
-    <td><%= row.id %></td>
+    <td><%= link_to row.id, weather4city_path(city_id: row.id) %></td>
     <td><%= @cities[row.id] %></td>
+    <td><%= Mukoyama::CITY_NAMES[@cities[row.id]] %></td>
     <td><%= row.weather_main %></td>
     <td><%= row.temp %></td>
     <td><%= row.modified_at %></td>

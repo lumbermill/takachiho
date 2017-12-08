@@ -117,6 +117,14 @@ class PagesController < ApplicationController
     @datetime = "No record found." unless @datetime
   end
 
+  def weather4city
+    @city_id = params[:city_id]
+    city_name = Mukoyama::CITY_IDS.invert[@city_id.to_i]
+    city_name_jp = Mukoyama::CITY_NAMES[city_name]
+    @city_name = "#{city_name_jp}(#{city_name})"
+    @weathers = Weather.where(id: @city_id).order("dt desc").limit(100)
+  end
+
   # Show markdown content.
   def doc
     name = params[:name]
