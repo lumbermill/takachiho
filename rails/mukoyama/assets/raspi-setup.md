@@ -33,7 +33,14 @@ Wifiに接続済みでsshが有効化されていれば、以下のコマンド�
 ssh pi@raspberrypi.local
 ```
 
-不特定のマシンが接続可能な環境に設置する場合は、パスワードを変更するか公開鍵認証など別の方法を使用してください。
+不特定のマシンが接続可能な環境に設置する場合は、必ずパスワードを変更するか公開鍵認証など別の安全な方法を使用してください。
+
+複数台のマシンを扱っていると、sshでの接続時に警告( `REMOTE HOST IDENTIFICATION HAS CHANGED! ` )が出ることがあります。
+その場合、下記のコマンドを使用するなどしてknown_hostsから既存のホスト情報を削除してください。
+
+```
+ssh-keygen -R raspberrypi.local
+```
 
 - 必要なスクリプトは `curl -O` コマンドで取得して `$HOME/bin` に設置します。
 
@@ -41,6 +48,6 @@ ssh pi@raspberrypi.local
 ## GPIO
 ピンの配置については、以下のURLなどを参照してください。
 
-<img src="/physical-pin-numbers.png"/>
+<img src="/physical-pin-numbers.png" class="img img-responsive"/>
 
 <https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/>
