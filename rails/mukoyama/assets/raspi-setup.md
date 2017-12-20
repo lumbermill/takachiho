@@ -11,19 +11,23 @@ sudo dd bs=1m if=2017-07-05-raspbian-jessie-lite.img of=/dev/rdisk2
 ```
 
 ## Raspbianの初期設定
-必要な部分だけ実行してください。
+Wifiに接続して、ソフトウェアのアップデートと導入を行う手順です。環境に応じて、必要な部分だけ実行してください。
 
 ```
-sudo apt update
-sudo apt upgrade
-sudo rpi-update
-sudo apt install ruby git
+wpa_passphrase "your-ssid" "your-pre-shared-key" >> /etc/wpa_supplicant/wpa_supplicant.conf
+vi /etc/wpa_supplicant/wpa_supplicant.conf
+  # 暗号化前のパスワードを隠したい場合、個別にコメント行を消してください
+  # 接続を試行する場合: `service wpa_supplicant restart`
 sudo raspi-config
   # ssh,camera,i2cを有効化
   # keyboard layoutとtimezoneをJapanに
-vi /etc/wpa_supplicant/wpa_supplicant.conf
-  # network={ssid="your-ssid" psk="your-pre-shared-key"}
+reboot
+apt update
+apt -y upgrade
+sudo rpi-update
+sudo apt install ruby git
 mkdir bin
+reboot
 ```
 
 Wifiに接続済みでsshが有効化されていれば、以下のコマンドで他の端末から接続可能です。
@@ -42,8 +46,7 @@ ssh pi@raspberrypi.local
 ssh-keygen -R raspberrypi.local
 ```
 
-- 必要なスクリプトは `curl -O` コマンドで取得して `$HOME/bin` に設置します。
-
+- 必要なスクリプトは `curl -O` や `git` コマンドで取得して `$HOME/bin` に設置します。
 
 ## GPIO
 ピンの配置については、以下のURLなどを参照してください。
