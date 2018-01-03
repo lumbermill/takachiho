@@ -1,0 +1,6 @@
+
+
+desc "Send scripts to raspberrypi.local (for development)"
+task :raspi do
+  puts `rsync -avz bin/ pi@raspberrypi.local:bin/`
+end
