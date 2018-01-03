@@ -18,16 +18,20 @@ wpa_passphrase "your-ssid" "your-pre-shared-key" >> /etc/wpa_supplicant/wpa_supp
 vi /etc/wpa_supplicant/wpa_supplicant.conf
   # 暗号化前のパスワードを隠したい場合、個別にコメント行を消してください
   # 接続を試行する場合: `service wpa_supplicant restart`
-sudo raspi-config
+raspi-config
   # ssh,camera,i2cを有効化
   # keyboard layoutとtimezoneをJapanに
 reboot
 apt update
 apt -y upgrade
-sudo rpi-update
-sudo apt install ruby git
-mkdir bin
+rpi-update
+apt install ruby git
 reboot
+```
+
+piユーザのHOMEにbinディレクトリを作っておきます。
+```
+mkdir bin
 ```
 
 Wifiに接続済みでsshが有効化されていれば、以下のコマンドで他の端末から接続可能です。
