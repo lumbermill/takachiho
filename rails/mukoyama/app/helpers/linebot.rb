@@ -18,7 +18,7 @@ class Linebot
     @cities = []
     @settings.each { |s| @cities += [s.city_id] if s.city_id }
     @debug = debug
-    @img_url = 404
+    @img_url = "404"
   end
 
   def reply(text)
@@ -173,14 +173,14 @@ class Linebot
   end
 
   def get_latest_image(device_id)
-    dir = PicturesController::BASEDIR+"/#{device_id}"
-    return "画像が登録されていません。" unless File.directory? dir
+    pic = Picture.where("device_id = ?", device_id).order("dt desc").first
+    return "画像が登録されていません。" unless pic
     setting = Device.find(device_id)
     return "画像が公開されていません。" unless setting.readable?
     Dir.entries(dir).sort.reverse.each do |f|
       next if f.start_with? "."
       next unless f.end_with? ".jpg"
-      return "https://mukoyama.lmlab.net/pictures/#{device_id}/#{f}?token=#{setting.token4read}"
+      return "https://mukoyama.lmlab.net/pictures/#{pic.id}?token=#{setting.token4read}"
     end
   end
 
