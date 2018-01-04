@@ -7,8 +7,8 @@ class Linebot
   # 登録 id-tttt, 解除 id-tttt, 一覧
 
   def self.by_userid(user_id)
-    ids = Address.where(mail: user_id, active: true).map{|a| a.device_id }
-    settings = Device.where(device_id: ids)
+    ids = Address.where(address: user_id, active: true).map{|a| a.device_id }
+    settings = Device.where(id: ids)
     return Linebot.new(user_id,settings)
   end
 
