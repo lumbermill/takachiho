@@ -137,7 +137,7 @@ class Linebot
     m = text.match /[0-9]+-[0-9a-f]{4}/  # id-tttt (4 letters of token)
     return nil if m.nil?
     id = m[0].split("-")[0].to_i
-    s = Device.find_by(device_id: id)
+    s = Device.find(id)
     return nil if s.nil?
     # TODO: 合言葉に該当するdevice_idを検索する、とりあえず今はIDだけでOK
     return s
