@@ -11,7 +11,7 @@ def imread(name,flag=0):
 
 # Print properties of the image.
 def print_props(prefix,img):
-    if img == None: return
+    if img is None: return
     elif len(img.shape) == 2:
         # grayscale
         h,w = img.shape
