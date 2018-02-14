@@ -9,6 +9,15 @@ Vim
 :q
 :x
 
+== move ==
+gg  first line
+G  last line
+Ctrl + f / b  page
+^ / $  line
+w / b  word
+f ;  character
+%  parenthesis
+
 == search ==
 :%s/foo/bar/gc
 
