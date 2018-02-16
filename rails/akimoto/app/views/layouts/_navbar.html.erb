@@ -21,8 +21,8 @@
         <% if user_signed_in? %>
           <li><%= link_to '<span class="glyphicon glyphicon-log-out"></span> 退室'.html_safe, destroy_user_session_path, method: "delete" %></li>
         <% else %>
-          <li><%= link_to '<span class="glyphicon glyphicon-log-in"></span> 入室'.html_safe, new_user_session_path %></li>
-          <li><%= link_to '<span class="glyphicon glyphicon-pencil"></span> 登録'.html_safe, new_user_registration_path %></li>
+          <li><%= link_to '<span class="fa fa-home"></span> 入室'.html_safe, new_user_session_path %></li>
+          <li><%= link_to '<span class="fa fa-pencil"></span> 登録'.html_safe, new_user_registration_path %></li>
         <% end %>
       </ul>
     </div><!--/.nav-collapse -->

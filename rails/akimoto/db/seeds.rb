@@ -1,6 +1,3 @@
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
 u = User.create(email: "info@lmlab.net", name: "Admin", password:"secret", confirmed_at: Time.now)
 
 Dir.glob("db/seeds/*.tsv").each do |t|
