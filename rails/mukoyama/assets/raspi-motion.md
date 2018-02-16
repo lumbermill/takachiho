@@ -1,5 +1,9 @@
 # RaspberryPi + motion
 
+<div class="alert alert-info">
+<a href="https://github.com/lumbermill/takachiho/tree/master/raspi/08-motion">Google Driveのフォルダに画像を溜めていく方法</a> もオススメです。
+</div>
+
 下記URLのドキュメントを参考にRaspberryPiをセットアップします。
 
 <https://github.com/koki-h/motion_for_mukoyama>
