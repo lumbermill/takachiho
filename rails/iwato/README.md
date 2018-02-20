@@ -1,24 +1,17 @@
-# README
+# Project iwato
+notesの後継としてデザインしています。（tipsとか汎用的なデータ)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## 初期導入時のメモ
 
-* Ruby version
+```
+rails new iwato --database=mysql
+cd iwato
+# Add some gems to Gemfile
+bundle update
+cap install
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+./bin/rails db:create
+./bin/rails g bootstrap:install
+./bin/rails generate paper_trail:install  #失敗する
+```
