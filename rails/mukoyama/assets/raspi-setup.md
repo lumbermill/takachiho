@@ -24,7 +24,6 @@ raspi-config
 reboot
 apt update
 apt -y upgrade
-rpi-update
 apt install ruby git
 reboot
 ```

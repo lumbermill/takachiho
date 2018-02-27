@@ -1,7 +1,6 @@
 # インストール手順 #
 
 ```bash
-$ sudo rpi-update
 $ sudo raspi-config Enable I2C
 
 $ cat /etc/modules

@@ -22,16 +22,12 @@ http://qiita.com/hiroyasu55/items/e0ad9d04a9d8feb5c654
 $ sudo apt-get update
 $ sudo apt-get upgrade ＃2時間位かかるかも。。。
 ```
-- ファームウェア最新化(コンソールより)
-```
-$ sudo rpi-update
-　　　:
-$ sudo reboot #再起動して新ファームを有効化
-```
+
 - L-05Aで通信するために必要なパッケージをインストール
 ```
 $ sudo apt-get install -y eject wvdial dnsutils
 ```
+
 - /etc/wvdial.conf を編集
 ```
 $ sudo vi /etc/wvdial.conf

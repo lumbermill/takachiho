@@ -1,4 +1,3 @@
-$ sudo rpi-update
 $ sudo raspi-config Enable I2C
 
 $ sudo vi /etc/modules

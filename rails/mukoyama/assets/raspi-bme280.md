@@ -20,7 +20,6 @@ Vio,CSB -> 3.3v
 以下の手順でセンサを有効化します。
 
 ```
-sudo rpi-update
 sudo raspi-config Enable I2C
 ```
 
