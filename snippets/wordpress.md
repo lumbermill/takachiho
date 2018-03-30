@@ -61,6 +61,17 @@ https://bizvektor.com/ - コーポレートサイトっぽいサイトに
 https://wordpress.org/themes/simple-bootstrap/ - シンプルなBootstrapテーマ
 
 
+自作のテーマ内に置いたファイルを参照するには以下の関数を使用します。
+子テーマを使って居る場合、templateだと親、stylesheetだと子のパスが返ってきます。
+
+```
+get_template_directory_uri() => /wp-content/themes/parent
+get_stylesheet_directory_uri() => /wp-content/themes/child
+```
+
+https://developer.wordpress.org/reference/functions/get_template_directory_uri/
+https://developer.wordpress.org/reference/functions/get_stylesheet_directory_uri/
+
 ## plugins
 
 https://wordpress.org/plugins/wp-slimstat/ - アクセスログ
