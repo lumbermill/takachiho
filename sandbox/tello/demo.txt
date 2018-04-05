@@ -1,0 +1,14 @@
+command
+takeoff
+speed?
+battery?
+down 30
+left 30
+forward 30
+right 30
+back 30
+down 30
+land
+time?
+end
+
