@@ -20,8 +20,8 @@ def print_props(prefix,img):
         h,w,ch = img.shape
     s = img.size
     dt = img.dtype
-    print prefix+" width: %d, height: %d, channel: %d, size: %d, dtype: %s" \
-        % (w,h,ch,s,str(dt))
+    print(prefix+" width: %d, height: %d, channel: %d, size: %d, dtype: %s" \
+        % (w,h,ch,s,str(dt)))
 
 # Display images and save the result.
 def imshow(name, img1, img2):
@@ -42,5 +42,5 @@ def imshow(name, img1, img2):
     cv2.imshow(name,img)
     cv2.waitKey(0)
     cv2.imwrite(DSTDIR+"/"+name+".jpg",img)
-    print "Saved the image to: "+DSTDIR+"/"+name+".jpg"
+    print("Saved the image to: "+DSTDIR+"/"+name+".jpg")
     cv2.destroyAllWindows()
