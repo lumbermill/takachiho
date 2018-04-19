@@ -23,7 +23,7 @@ vi ~/fullscreen.sh
 
 # 下記を記入
 sudo -u pi epiphany-browser -a -i --profile ~/.config http://360.lmlab.net/for-raspi --display=:0 &
-sleep 15s;
+sleep 15s; #画面がフルスクリーン表示されない場合はここの数字を大きくします
 xte "key F11" -x:0
 ```
 下記のコマンドで、先ほど作ったshファイルに実行権限を付与します。
