@@ -155,6 +155,30 @@ html = <<~"EOT"
 EOT
 ```
 
+## csv
+
+```
+require 'csv'
+  
+
+data = <<EOT
+a,b,c
+1,2,3
+EOT
+
+data = CSV.parse(data,headers: true)
+
+# Read from file.
+# data = CSV.read("example.csv", headers: true, encoding: "utf-8")
+
+p data.headers
+data.each do |row|
+  p row
+end
+```
+~                              
+
+
 ## その他
 
 ### エスケープシーケンスで文字に色をつける
