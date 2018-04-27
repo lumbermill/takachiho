@@ -39,8 +39,11 @@ ask :user, `whoami`.chomp
 set :keep_releases, 2
 
 namespace :deploy do
-  after :deploy, :restart do
-    on roles(:web), in: :sequence, wait: 10 do
+  after :publishing, :restart
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
       execute :sudo, 'service apache2 restart'
     end
   end
