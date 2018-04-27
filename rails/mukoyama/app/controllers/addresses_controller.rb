@@ -74,12 +74,13 @@ class AddressesController < ApplicationController
 
   def send_message
     address = Address.find(params[:id])
-    logger.debug "TO: "+address.mail
-    if address.mail?
+    logger.debug "TO: "+address.address
+    case address.address_type?
+    when "email", ""
       res = Mailer.send_mail(address.mail, "mukoyama", "メール送信テストです。").deliver_now
-    elsif address.phone?
+    when "phone"
       res = Mailer.make_call(address.mail, "電話通知のテストです。本日は晴天なり。")
-    else
+    when "LINE"
       res = Mailer.send_line(address.mail, "LINE通知のテストです。")
     end
     render text: res.body, status: 200
@@ -93,6 +94,6 @@ class AddressesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def address_params
-      params.require(:address).permit(:device_id, :mail, :snooze, :active, :motion_sensor)
+      params.require(:address).permit(:device_id, :address, :snooze, :active, :type)
     end
 end

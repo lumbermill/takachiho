@@ -151,7 +151,7 @@ class PicturesController < ApplicationController
 
     if params[:motion_sensor] == "true" # deprecated. use detected flag instead.
       msg = "#{time_stamp.hour}時#{time_stamp.min}分 センサーに反応あり"
-      addresses = Address.where(device_id: device.id,active: true,motion_sensor: true)
+      addresses = Address.where(device_id: device.id,active: true)
       send_message(addresses, msg, false)
     end
 
