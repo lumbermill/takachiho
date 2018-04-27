@@ -15,8 +15,8 @@
 
   <%= f.hidden_field :device_id, value: @device_id %>
   <div class="form-group">
-    <%= f.label :mail %>
-    <%= f.text_field :mail, class: "form-control" %>
+    <%= f.label :address %>
+    <%= f.text_field :address, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :snooze %>
@@ -25,10 +25,6 @@
   <div class="form-group">
     <%= f.label :active %>
     <%= f.check_box :active %>
-  </div>
-  <div class="form-group">
-    <%= f.label :motion_sensor %>
-    <%= f.check_box :motion_sensor %>
   </div>
     <%= f.submit "保存する", class: "btn btn-primary" %>
 <% end %>

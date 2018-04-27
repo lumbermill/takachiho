@@ -7,7 +7,7 @@
       </tr>
       <tr>
         <th>メール(電話番号)</th>
-        <td><%= @address.mail %>
+        <td><%= @address.address %>
           &nbsp;
           <%= button_tag '送信テスト', type: 'button', class: "btn btn-success btn-xs send_message" %>
         </td>
@@ -19,10 +19,6 @@
       <tr>
         <th>有効</th>
         <td><%= @address.active ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
-      </tr>
-      <tr>
-        <th>人感センサー反応時</th>
-        <td><%= @address.motion_sensor ? "<span class='glyphicon glyphicon-ok'></span>".html_safe : "" %></td>
       </tr>
     </table>
   </div>
