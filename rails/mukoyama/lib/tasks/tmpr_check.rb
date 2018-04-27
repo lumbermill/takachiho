@@ -8,16 +8,17 @@ class TmprCheck
   include ApplicationHelper
 
   def self.execute
+    helper = ApplicationController.helpers
     Device.all.each do |setting|
-      log = Temp.where(device_id: setting.device_id).order(:time_stamp).last
+      log = Temp.where(device_id: setting.id).order(:updated_at).last
       next if log.nil?
       now = Time.now
-      print "device_id:#{setting.device_id} ts:#{log.time_stamp} temp: #{log.temperature}"
+      print "device_id:#{setting.id} ts:#{log.updated_at} temp: #{log.temperature}"
       msg = "#{now.hour}時#{now.min}分 #{setting.name} "
-      addresses = Address.where(device_id: setting.device_id,active: true)
-      if log.time_stamp < now - Mailer.MAX_DELAY.minute
+      addresses = Address.where(device_id: setting.id, active: true)
+      if log.updated_at < now - Mailer::MAX_DELAY.minute
         puts " [too old]"
-        msg += "データの受信を確認できません。最終受信日時は、#{log.time_stamp.hour}時#{log.time_stamp.min}分です。"
+        msg += "データの受信を確認できません。最終受信日時は、#{log.updated_at.hour}時#{log.updated_at.min}分です。"
       elsif setting.temp_max < log.temperature
         puts " [over]"
         msg += "#{log.temperature}°Cです。設定を上回りました。"
@@ -29,7 +30,7 @@ class TmprCheck
         addresses = []
       end
       if addresses.count > 0
-        send_message(addresses, msg, true)
+        helper.send_message(addresses, msg, true)
       end
     end
   end
