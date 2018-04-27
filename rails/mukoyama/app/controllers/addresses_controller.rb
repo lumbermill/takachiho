@@ -75,15 +75,16 @@ class AddressesController < ApplicationController
   def send_message
     address = Address.find(params[:id])
     logger.debug "TO: "+address.address
-    case address.address_type?
+
+    case address.address_type
     when "email", ""
-      res = Mailer.send_mail(address.mail, "mukoyama", "メール送信テストです。").deliver_now
+      res = Mailer.send_mail(address.address, "mukoyama", "メール送信テストです。").deliver_later
     when "phone"
-      res = Mailer.make_call(address.mail, "電話通知のテストです。本日は晴天なり。")
+      res = Mailer.make_call(address.address, "電話通知のテストです。本日は晴天なり。")
     when "LINE"
-      res = Mailer.send_line(address.mail, "LINE通知のテストです。")
+      res = Mailer.send_line(address.address, "LINE通知のテストです。")
     end
-    render text: res.body, status: 200
+    render text: "OK", status: 200
   end
 
   private
