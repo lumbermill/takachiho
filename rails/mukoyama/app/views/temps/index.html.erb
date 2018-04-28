@@ -1,4 +1,4 @@
-<% content_for :title, "最新の受信データ" %>
+<% content_for :title, (@device ? "#{@device.name}" : "最新の受信データ") %>
 <% content_for :subtitle, (@device ? "ID:#{@device.id}" : "") %>
 
 <button class="btn btn-success" onclick="location.reload()"><span class="glyphicon glyphicon-refresh"></span> 再読み込み</button>
