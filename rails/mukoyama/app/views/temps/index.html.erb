@@ -7,6 +7,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>デバイス名</th>
           <th>デバイスID</th>
           <th>日時</th>
           <th>気温</th>
@@ -21,6 +22,7 @@
       <tbody>
         <% @temps.each do |temp| %>
           <tr>
+            <td><%= temp.device.name %></td>
             <td><%= temp.device_id %></td>
             <td><%= temp.dt %></td>
             <td><%= temp.temperature %></td>
@@ -41,6 +43,7 @@
         </tr>
         <% @temps_oldest.each do |temp| %>
           <tr>
+            <td><%= temp.device.name %></td>
             <td><%= temp.device_id %></td>
             <td><%= temp.dt %></td>
             <td><%= temp.temperature %></td>
@@ -81,6 +84,7 @@
       <tbody>
         <% @temps_dailies.each do |temp| %>
           <tr>
+            <td><%= temp.device.name %></td>
             <td><%= temp.device_id %></td>
             <td><%= temp.d %></td>
             <td><%= temp.temperature_average %></td>
@@ -101,6 +105,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>デバイス名</th>
           <th>デバイスID</th>
           <th>年月</th>
           <th>気温</th>
