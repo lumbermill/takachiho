@@ -18,3 +18,11 @@ git checkout --track origin/branch_name
 git branch -r -d origin/branch_name
 git push origin :branch_name
 ```
+
+## その他
+
+CSVの差分を見る
+```
+git diff --color-words="[^[:space:],]+" x.csv y.csv
+```
+
