@@ -21,10 +21,18 @@ class TmprCheck
         msg += "データの受信を確認できません。最終受信日時は、#{log.updated_at.hour}時#{log.updated_at.min}分です。"
       elsif setting.temp_max < log.temperature
         puts " [over]"
-        msg += "#{log.temperature}°Cです。設定を上回りました。"
+        if setting.custom_msg_over.empty?
+          msg += "#{log.temperature}°Cです。設定を上回りました。"
+        else
+          msg += setting.custom_msg_over
+        end
       elsif setting.temp_min > log.temperature
-        puts " [below]"
-        msg += "#{log.temperature}°Cです。設定を下回りました。"
+        puts " [under]"
+        if setting.custom_msg_under.empty?
+          msg += "#{log.temperature}°Cです。設定を下回りました。"
+        else
+          msg += setting.custom_msg_under
+        end
       else
         puts " [fine]"
         addresses = []
