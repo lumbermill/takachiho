@@ -20,8 +20,17 @@
     <td><%= @device.temp_max %></td>
   </tr>
   <tr>
+    <th><%= t("activerecord.attributes.device.custom_msg_over") %></th>
+    <td><%= @device.custom_msg_over %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.device.custom_msg_under") %></th>
+    <td><%= @device.custom_msg_under %></td>
+  </tr>
+  <tr>
     <th><%= t("activerecord.attributes.device.token4write") %></th>
-    <td><div class="well well-sm"><%= @device.token4write %></div>
+    <td>
+      <div class="well well-sm"><%= @device.token4write %></div>
     </td>
   </tr>
   <tr>
