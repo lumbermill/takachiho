@@ -39,11 +39,11 @@ module ApplicationHelper
     now = DateTime.now
     addresses.each do |address|
       next if (address.active != true)
+      # MailLogモデルクラスが無いのでエラーになる。関連するスヌーズ関係はコメントアウト(スヌーズの実装がやりかけ？)
 #      ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
       d_flg = false
       print "  #{address.address}"
 #      snz =  snooze ? (ts.nil? || ts + address.snooze.minute < now) : true
-      #スヌーズ関係はやりかけでよくわからんのでコメントアウト
 #      if snz
         d_flg = true
         case address.address_type
