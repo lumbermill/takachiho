@@ -39,26 +39,28 @@ module ApplicationHelper
     now = DateTime.now
     addresses.each do |address|
       next if (address.active != true)
-      ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
+      # MailLogモデルクラスが無いのでエラーになる。関連するスヌーズ関係はコメントアウト(スヌーズの実装がやりかけ？)
+#      ts = MailLog.where(address_id: address.id, delivered: true).maximum(:time_stamp)
       d_flg = false
-      print "  #{address.mail}"
-      snz =  snooze ? (ts.nil? || ts + address.snooze.minute < now) : true
-      if snz
+      print "  #{address.address}"
+#      snz =  snooze ? (ts.nil? || ts + address.snooze.minute < now) : true
+#      if snz
         d_flg = true
-        if address.phone?
+        case address.address_type
+        when "phone"
           puts " call"
-          Mailer.make_call(address.mail, msg).deliver_now
-        elsif address.mail?
+          Mailer.make_call(address.address, msg).deliver_now
+        when "email",""
           puts " mail"
-          Mailer.send_mail(address.mail, "Notificaton from Mukoyama", msg).deliver_now
-        else
+          Mailer.send_mail(address.address, "Notificaton from Mukoyama", msg).deliver_now
+        when "LINE"
           puts " line"
-          Mailer.send_line(address.mail, msg).deliver_now
+          Mailer.send_line(address.address, msg).deliver_now
         end
-      else
-        puts " snoozed"
-      end
-      MailLog.create(address_id: address.id, time_stamp: now, delivered: d_flg)
+#      else
+#        puts " snoozed"
+#      end
+#      MailLog.create(address_id: address.id, time_stamp: now, delivered: d_flg)
     end
   end
 end

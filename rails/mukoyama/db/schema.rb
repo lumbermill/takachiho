@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617231400) do
+ActiveRecord::Schema.define(version: 20180501022115) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "device_id",    limit: 4
@@ -26,23 +26,25 @@ ActiveRecord::Schema.define(version: 20170617231400) do
   add_index "addresses", ["device_id", "address"], name: "index_addresses_on_device_id_and_address", unique: true, using: :btree
 
   create_table "devices", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "city_id",        limit: 8
-    t.string   "device_type",    limit: 255,      default: "", null: false
-    t.integer  "disp_order",     limit: 4,        default: 0,  null: false
-    t.string   "name",           limit: 255,      default: "", null: false
-    t.string   "token4read",     limit: 255,      default: "", null: false
-    t.string   "token4write",    limit: 255,      default: "", null: false
-    t.string   "token4sakura",   limit: 255,      default: "", null: false
-    t.integer  "port4console",   limit: 4,        default: 0,  null: false
-    t.integer  "port4streaming", limit: 4,        default: 0,  null: false
-    t.float    "temp_min",       limit: 24
-    t.float    "temp_max",       limit: 24
-    t.float    "voltage_min",    limit: 24
-    t.binary   "picture",        limit: 16777215
-    t.string   "memo",           limit: 1024,     default: "", null: false
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "user_id",          limit: 4
+    t.integer  "city_id",          limit: 8
+    t.string   "device_type",      limit: 255,      default: "", null: false
+    t.integer  "disp_order",       limit: 4,        default: 0,  null: false
+    t.string   "name",             limit: 255,      default: "", null: false
+    t.string   "token4read",       limit: 255,      default: "", null: false
+    t.string   "token4write",      limit: 255,      default: "", null: false
+    t.string   "token4sakura",     limit: 255,      default: "", null: false
+    t.integer  "port4console",     limit: 4,        default: 0,  null: false
+    t.integer  "port4streaming",   limit: 4,        default: 0,  null: false
+    t.float    "temp_min",         limit: 24
+    t.float    "temp_max",         limit: 24
+    t.float    "voltage_min",      limit: 24
+    t.binary   "picture",          limit: 16777215
+    t.string   "memo",             limit: 1024,     default: "", null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "custom_msg_over",  limit: 255
+    t.string   "custom_msg_under", limit: 255
   end
 
   create_table "notifications", force: :cascade do |t|

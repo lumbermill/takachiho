@@ -21,6 +21,8 @@ ja:
         created_at: '登録日時'
         updated_at: '最終更新日時'
         picture: '写真'
+        custom_msg_over: '通知メッセージ(温度が上回った)'
+        custom_msg_under: '通知メッセージ(温度が下回った)'
       user:
         email: 'メールアドレス'
         password: 'パスワード'
