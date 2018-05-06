@@ -61,3 +61,4 @@ gem 'redcarpet', '~> 3.4'
 gem 'kaminari', '~> 1.0' # for pagenation
 gem 'devise', '~> 4.4.0'
 gem 'carrierwave', '~> 1.0' # for uploading
+gem 'barby', '~> 0.6.5' # barcode
