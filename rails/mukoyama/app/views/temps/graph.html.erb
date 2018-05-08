@@ -80,7 +80,6 @@ function draw_temp_and_humid(){
 	var chart = new google.charts.Line(document.getElementById('chart_latest'));
 
 	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
-		console.log(data);
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '温度');
@@ -92,6 +91,11 @@ function draw_temp_and_humid(){
 					} else {
 						dt.addRow([new Date(0),0,0]);
 					}
+		var formatter = new google.visualization.NumberFormat({
+			pattern: '#.00' //フォーマットの指定
+		});
+		formatter.format(dt, 1);
+		formatter.format(dt, 2);
 		chart.draw(dt, options);
 	});
 }
@@ -146,6 +150,10 @@ function draw_voltage(){
 					} else {
 						dt.addRow([new Date(0),0]);
 					}
+		var formatter = new google.visualization.NumberFormat({
+			pattern: '#.00' //フォーマットの指定
+		});
+		formatter.format(dt, 1);
 		chart.draw(dt, options);
 	});
 }
