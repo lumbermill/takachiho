@@ -14,6 +14,9 @@
           <th>湿度</th>
           <th>照度</th>
           <th>電圧</th>
+          <th>extra1</th>
+          <th>extra2</th>
+          <th>extra3</th>
           <th></th>
         </tr>
       </thead>
@@ -28,6 +31,9 @@
             <td><%= temp.humidity %></td>
             <td><%= temp.illuminance %></td>
             <td><%= temp.voltage %></td>
+            <td><%= temp.extra1 %></td>
+            <td><%= temp.extra2 %></td>
+            <td><%= temp.extra3 %></td>
             <% if temp.created_at == temp.updated_at %>
               <td><%= temp.created_at %></td>
             <% else %>
@@ -37,7 +43,7 @@
         <% end %>
         <tr class="text-muted">
           <td>:</td>
-          <td colspan="7">(<%= @temps_count %>件のレコード)</td>
+          <td colspan="10">(<%= @temps_count %>件のレコード)</td>
         </tr>
         <% @temps_oldest.each do |temp| %>
           <tr>
@@ -48,6 +54,9 @@
             <td><%= temp.humidity %></td>
             <td><%= temp.illuminance %></td>
             <td><%= temp.voltage %></td>
+            <td><%= temp.extra1 %></td>
+            <td><%= temp.extra2 %></td>
+            <td><%= temp.extra3 %></td>
             <% if temp.created_at == temp.updated_at %>
               <td><%= temp.created_at %></td>
             <% else %>
