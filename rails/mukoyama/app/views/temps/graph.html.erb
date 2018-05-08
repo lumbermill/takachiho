@@ -80,12 +80,17 @@ function draw_temp_and_humid(){
 	var chart = new google.charts.Line(document.getElementById('chart_latest'));
 
 	$.getJSON('../graph_data.json', <%= @t.html_safe %> ,function (data) {
+		console.log(data);
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '温度');
 					dt.addColumn('number', '湿度');
-					for(var i=0; i<data.length;i++){
-						dt.addRow([new Date(data[i][0]), data[i][1],data[i][2]]);
+					if (data.length > 0) {
+						for(var i=0; i<data.length;i++){
+							dt.addRow([new Date(data[i][0]), data[i][1],data[i][2]]);
+						}
+					} else {
+						dt.addRow([new Date(0),0,0]);
 					}
 		chart.draw(dt, options);
 	});
@@ -107,8 +112,12 @@ function draw_illuminance(){
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '照度');
-					for(var i=0; i<data.length;i++){
-						dt.addRow([new Date(data[i][0]), data[i][1]]);
+					if (data.length > 0) {
+						for(var i=0; i<data.length;i++){
+							dt.addRow([new Date(data[i][0]), data[i][1]]);
+						}
+					} else {
+						dt.addRow([new Date(0),0]);
 					}
 		chart.draw(dt, options);
 	});
@@ -130,8 +139,12 @@ function draw_voltage(){
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '電圧');
-					for(var i=0; i<data.length;i++){
-						dt.addRow([new Date(data[i][0]), data[i][1]]);
+					if (data.length > 0) {
+						for(var i=0; i<data.length;i++){
+							dt.addRow([new Date(data[i][0]), data[i][1]]);
+						} 
+					} else {
+						dt.addRow([new Date(0),0]);
 					}
 		chart.draw(dt, options);
 	});
