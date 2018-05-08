@@ -198,7 +198,7 @@ class TempsController < ApplicationController
       return
     end
 
-    @data = Temp.where(device_id: device_id).order("id")
+    @data = Temp.where(device_id: device_id).order("dt asc")
     logger.debug(@data)
   end
 
