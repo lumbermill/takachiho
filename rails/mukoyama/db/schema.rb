@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501022115) do
+ActiveRecord::Schema.define(version: 20180508071856) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "device_id",    limit: 4
@@ -92,6 +92,9 @@ ActiveRecord::Schema.define(version: 20180501022115) do
     t.string   "sender",      limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "extra1",      limit: 255
+    t.string   "extra2",      limit: 255
+    t.string   "extra3",      limit: 255
   end
 
   add_index "temps", ["device_id", "dt"], name: "index_temps_on_device_id_and_dt", unique: true, using: :btree

@@ -156,7 +156,7 @@ class TempsController < ApplicationController
 
   # GET /temps/upload
   def upload
-    fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage]
+    fnames = [:temperature, :pressure, :humidity, :illuminance, :voltage, :extra1, :extra2, :extra3]
     device = Device.find_by(id: params[:id])
     if device.nil?
       render status:404, text: "Device not found for id=#{params[:id]}"
