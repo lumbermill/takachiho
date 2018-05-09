@@ -9,9 +9,12 @@ class AddressesController < ApplicationController
       @device_id = 0
       return
     end
-    setting = Device.find_by(id: params[:device_id],user_id: current_user.id)
-    raise 'Device not found for current user.' unless setting
-    @addresses = setting.addresses
+    device = Device.find(params[:device_id])
+    unless current_user.admin?
+      # 他のユーザにメールアドレスを見られるのを防ぐ
+      raise 'The device is not yours.' if device.id != current_user.id
+    end
+    @addresses = device.addresses
     @device_id = params[:device_id]
   end
 
