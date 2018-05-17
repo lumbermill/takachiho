@@ -39,7 +39,7 @@ def check(d)
   end
 end
 
-device = Device.find_by(id: ARGV[0].to_i)
+device = Device.find_by(id: ARGV[-1].to_i) # 引数の最後尾
 if device
   # for debug
   check(device)
