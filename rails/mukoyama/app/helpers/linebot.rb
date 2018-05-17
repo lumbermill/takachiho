@@ -96,18 +96,18 @@ class Linebot
 
   def add_address(user_id,device_id)
     # Register
-    address = Address.find_by(device_id: device_id, mail: user_id)
+    address = Address.find_by(device_id: device_id, address: user_id)
     if address
       address.active = true
       address.save
     else
-      Address.create(device_id: device_id, mail: user_id, active: true)
+      Address.create(device_id: device_id, address: user_id, active: true)
     end
   end
 
   def remove_address(user_id,device_id)
     # Remove
-    address = Address.find_by(device_id: device_id, mail: user_id)
+    address = Address.find_by(device_id: device_id, address: user_id)
     if address
       address.active = false
       address.save
