@@ -18,14 +18,14 @@ Device.all.each do |d|
     msg += "データの受信を確認できません。最終受信日時は、#{log.updated_at.hour}時#{log.updated_at.min}分です。"
   elsif d.temp_max < log.temperature
     puts " [over]"
-    if d.custom_msg_over.present?
+    if d.custom_msg_over.blank?
       msg += "#{log.temperature}°Cです。設定を上回りました。"
     else
       msg += d.custom_msg_over
     end
   elsif d.temp_min > log.temperature
     puts " [under]"
-    if d.custom_msg_under.present?
+    if d.custom_msg_under.blank?
       msg += "#{log.temperature}°Cです。設定を下回りました。"
     else
       msg += d.custom_msg_under
