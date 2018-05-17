@@ -6,9 +6,9 @@ require 'uri'
 
 include ApplicationHelper  # for send_message
 
-Device.all.each do |d|
+def check(d)
   log = Temp.where(device_id: d.id).order(:updated_at).last
-  next if log.nil?
+  return if log.nil?
   now = Time.now
   print "device_id:#{d.id} ts:#{log.updated_at} temp: #{log.temperature}"
   msg = "#{now.hour}時#{now.min}分 #{d.name} "
@@ -36,5 +36,15 @@ Device.all.each do |d|
   end
   if addresses.count > 0
     send_message(addresses, msg, true)
+  end
+end
+
+device = Device.find_by(id: ARGV[0].to_i)
+if device
+  # for debug
+  check(device)
+else
+  Device.all.each do |d|
+    check(d)
   end
 end
