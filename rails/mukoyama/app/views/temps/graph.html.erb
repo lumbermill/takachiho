@@ -146,7 +146,7 @@ function draw_voltage(){
 					if (data.length > 0) {
 						for(var i=0; i<data.length;i++){
 							dt.addRow([new Date(data[i][0]), data[i][1]]);
-						} 
+						}
 					} else {
 						dt.addRow([new Date(0),0]);
 					}
@@ -170,9 +170,9 @@ function draw_daily(){
 			1: {targetAxisIndex: 1}
 		},
 		vAxes: {
-			0: {title: 'Temps'},
+			0: {title: ''},
 			1: {
-				title: 'Humidity',
+				title: '',
 				viewWindow: {
 					max:100,
 					min:0
@@ -187,7 +187,6 @@ function draw_daily(){
 	var chart = new google.visualization.LineChart(document.getElementById('chart_daily'));
 
 	$.getJSON('../graph_data.json?unit=day', <%= @t.html_safe %> ,function (data) {
-		console.log(data);
 		var dt = new google.visualization.DataTable();
 					dt.addColumn('datetime', 'Timestamp');
 					dt.addColumn('number', '温度');
@@ -211,9 +210,9 @@ function draw_monthly(){
 			1: {targetAxisIndex: 1}
 		},
 		vAxes: {
-			0: {title: 'Temps'},
+			0: {title: ''},
 			1: {
-				title: 'Humidity',
+				title: '',
 				viewWindow: {
 					max:100,
 					min:0
