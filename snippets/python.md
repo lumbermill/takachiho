@@ -34,4 +34,8 @@ if __name__ == "__main__":
 ```
 
 
+## URLs
 https://www.python.org/
+
+https://seaborn.pydata.org/
+https://parquet.apache.org/
