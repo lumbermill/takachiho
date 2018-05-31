@@ -41,7 +41,9 @@
       <p>
         <%= link_to '<span class="glyphicon glyphicon-signal"></span>'.html_safe, temps_graph_path(d.id),title: "温湿度グラフ", class: "btn btn-default disabled", id: "#{d.id}-nd" %>
         <%= link_to '<span class="glyphicon glyphicon-list"></span>'.html_safe, temps_path(device_id: d.id),title: "最新のデータ", class: "btn btn-default disabled", id: "#{d.id}-nt" %>
-        <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pictures_path(device_id: d.id), title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np" %>
+        <%  pic_path = d.google_drive_url.present? ? d.google_drive_url : pictures_path(device_id: d.id) %>
+        <%  pic_target = d.google_drive_url.present? ? "_blank" : "_self" %>
+        <%= link_to '<span class="glyphicon glyphicon-picture"></span>'.html_safe, pic_path, title: "写真", class: "btn btn-default disabled", id: "#{d.id}-np", target: pic_target %>
       </p>
       <table class="table device3">
         <tr>

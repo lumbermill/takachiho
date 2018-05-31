@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508071856) do
+ActiveRecord::Schema.define(version: 20180531102835) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "device_id",    limit: 4
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20180508071856) do
     t.datetime "updated_at",                                     null: false
     t.string   "custom_msg_over",  limit: 255
     t.string   "custom_msg_under", limit: 255
+    t.string   "google_drive_url", limit: 255
   end
 
   create_table "notifications", force: :cascade do |t|

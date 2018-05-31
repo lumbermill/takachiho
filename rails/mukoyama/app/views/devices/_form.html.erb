@@ -33,6 +33,14 @@
     <%= f.text_field :temp_max, class: "form-control" %>
   </div>
   <div class="form-group">
+    <%= f.label :custom_msg_over, t("activerecord.attributes.device.custom_msg_over") %>
+    <%= f.text_area :custom_msg_over, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :custom_msg_under, t("activerecord.attributes.device.custom_msg_under") %>
+    <%= f.text_area :custom_msg_under, class: "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :token4sakura, t("activerecord.attributes.device.token4sakura") %>
     <%= f.text_field :token4sakura, class: "form-control" %>
   </div>
@@ -46,12 +54,9 @@
     <%= f.file_field :picture, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :custom_msg_over, t("activerecord.attributes.device.custom_msg_over") %>
-    <%= f.text_area :custom_msg_over, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :custom_msg_under, t("activerecord.attributes.device.custom_msg_under") %>
-    <%= f.text_area :custom_msg_under, class: "form-control" %>
+    <%= f.label :google_drive_url, t("activerecord.attributes.device.google_drive_url") %>
+    <%= f.text_field :google_drive_url, class: "form-control" %>
+    <small>写真の保存にGoogleDriveを使用している場合、ここにURLを登録できます。</small>
   </div>
 
   <%= f.submit "保存する", class: "btn btn-primary" %>

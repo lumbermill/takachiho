@@ -58,11 +58,15 @@
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.device.token4sakura") %></th>
-    <td><div class="well well-sm"><%= @device.token4sakura %></td>
+    <td><div class="well well-sm"><%= @device.token4sakura %></div></td>
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.device.city_id") %></th>
     <td><%= @device.city_id %> <%= Mukoyama::CITY_IDS.invert[@device.city_id] %></td>
+  </tr>
+  <tr>
+    <th><%= t("activerecord.attributes.device.google_drive_url") %></th>
+    <td><%= @device.google_drive_url.present? ? @device.google_drive_url.truncate(20) : ""  %></td>
   </tr>
   <tr>
     <th><%= t("activerecord.attributes.device.created_at") %></th>
