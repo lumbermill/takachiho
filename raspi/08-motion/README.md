@@ -93,3 +93,5 @@ sudo service motion restart
 ```
 
 TODO: drive上から一定期間で削除するには？
+
+![sample][sample.png]
