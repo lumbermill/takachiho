@@ -12,7 +12,7 @@ class AddressesController < ApplicationController
     device = Device.find(params[:device_id])
     unless current_user.admin?
       # 他のユーザにメールアドレスを見られるのを防ぐ
-      raise 'The device is not yours.' if device.id != current_user.id
+      raise 'The device is not yours.' if device.user_id != current_user.id
     end
     @addresses = device.addresses
     @device_id = params[:device_id]
