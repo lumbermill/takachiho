@@ -78,15 +78,7 @@ class AddressesController < ApplicationController
   def send_message
     address = Address.find(params[:id])
     logger.debug "TO: "+address.address
-
-    case address.address_type
-    when "email", ""
-      res = Mailer.send_mail(address.address, "mukoyama", "メール送信テストです。").deliver_later
-    when "phone"
-      res = Mailer.make_call(address.address, "電話通知のテストです。本日は晴天なり。")
-    when "LINE"
-      res = Mailer.send_line(address.address, "LINE通知のテストです。")
-    end
+    view_context.send_message([address],"メール送信テストです。")
     render text: "OK", status: 200
   end
 
