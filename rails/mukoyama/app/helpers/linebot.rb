@@ -56,7 +56,7 @@ class Linebot
           return reply_about_weather(city_id) if city_id
           return reply_help
         else
-          tl = Temp.where(device_id: s.id).order("time_stamp desc").limit(1).first
+          tl = Temp.where(device_id: s.id).order("dt desc").limit(1).first
           if has_new_image(s.id)
             # 画像があれば、URLをセット
             @img_url = get_latest_image(s.id)
@@ -68,7 +68,7 @@ class Linebot
             w = ""
           end
           return "温度データが見つかりませんでした。" + w if tl.nil?
-          ts = tl.time_stamp.strftime("%H時%M分")
+          ts = tl.dt.strftime("%H時%M分")
           return "#{ts} 「#{s.name}」気温#{tl.temperature}、湿度#{tl.humidity}%です。" + w
         end
       end
