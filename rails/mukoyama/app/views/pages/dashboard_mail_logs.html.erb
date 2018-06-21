@@ -1,4 +1,4 @@
-<% if @mail_logs.count == 0 %>
+<% if @notifications.count == 0 %>
   <p>通知の発信履歴はありません。</p>
 <% else %>
   <style>
@@ -18,12 +18,12 @@
       <th>送信日時</th>
       <th></th>
     </tr>
-    <% @mail_logs.each do |m| %>
+    <% @notifications.each do |m| %>
     <% a = Address.find_by(id:m.address_id) %>
     <tr class="<%= m.delivered ? "maillog-active" : "maillog-muted" %>">
-      <td><%= a ? a.mail : m.address_id %></td>
+      <td><%= a ? a.address : m.address_id %></td>
       <td><%= a ? a.device_id : "" %></td>
-      <td><%= format_timestamp(m.time_stamp) %></td>
+      <td><%= format_timestamp(m.created_at) %></td>
       <td><%= m.delivered ? "" : "<span title='snoozed'>-<span>".html_safe %></td>
     </tr>
     <% end %>

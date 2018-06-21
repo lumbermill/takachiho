@@ -55,7 +55,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard_mail_logs
-    @mail_logs = Notification.order("ts desc,address_id desc").limit(100)
+    @notifications = Notification.order("created_at desc,address_id desc").limit(100)
     render layout: false
   end
 
