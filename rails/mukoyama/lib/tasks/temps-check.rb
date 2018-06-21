@@ -35,7 +35,7 @@ def check(d)
     addresses = []
   end
   if addresses.count > 0
-    send_message(addresses, msg, true)
+    send_message(addresses, msg)
   end
 end
 

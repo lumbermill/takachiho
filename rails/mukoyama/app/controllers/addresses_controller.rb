@@ -78,7 +78,7 @@ class AddressesController < ApplicationController
   def send_message
     address = Address.find(params[:id])
     logger.debug "TO: "+address.address
-    view_context.send_message([address],"メール送信テストです。")
+    view_context.send_message([address],"メール送信テストです。",force=true)
     render text: "OK", status: 200
   end
 

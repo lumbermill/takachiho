@@ -35,13 +35,13 @@ module ApplicationHelper
     return results
   end
 
-  def send_message(addresses, msg, snooze = true)
+  def send_message(addresses, msg, force=false)
     now = DateTime.now
     addresses.each do |address|
-      next if (address.active != true)
+      next if (!force && address.active != true)
       ts = Notification.where(address_id: address.id, delivered: true).maximum(:created_at)
       print "  #{address.address}"
-      deliver = snooze ? (ts.nil? || ts + address.snooze.minute < now) : true
+      deliver = force || ts.nil? || ts + address.snooze.minute < now
       if deliver
         case address.address_type
         when "phone"
