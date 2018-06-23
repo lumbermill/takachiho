@@ -66,3 +66,14 @@ en:
       user:
         name: 'Name'
 ```
+
+## Returns specific http status
+head method doesn't work.
+
+```
+send_file(Rails.root.join('app', 'assets', 'images', 'no-photo.png'), type: 'image/jpeg', disposition: "inline", status: 404)
+```
+
+```
+render status:404, text: "Resource not found."
+```
