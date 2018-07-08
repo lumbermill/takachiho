@@ -18,12 +18,13 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        overlayView.controller = self;
+        imageView.transform = imageView.transform.scaledBy(x: -1,y: 1) // 左右反転
+        overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1) // 左右反転
+        overlayView.controller = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // TODO: frontとbackを切り替え
         // TODO: シャッターを押すボタン付ける
         // TODO: 被り物を選べるように？
         let d = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: devicePosition)
@@ -73,10 +74,15 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
     }
     
     @IBAction func flipTouched(_ sender: Any) {
+        // カメラを切り替えて左右反転する
         if devicePosition == AVCaptureDevicePosition.front {
             devicePosition = AVCaptureDevicePosition.back
+            imageView.transform = imageView.transform.scaledBy(x: -1,y: 1)
+            overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1)
         }else{
             devicePosition = AVCaptureDevicePosition.front
+            imageView.transform = imageView.transform.scaledBy(x: 1,y: 1)
+            overlayView.transform = overlayView.transform.scaledBy(x: 1,y: 1)
         }
         self.viewDidDisappear(false)
         self.viewWillAppear(false)
