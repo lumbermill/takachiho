@@ -14,7 +14,7 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
     @IBOutlet weak var overlayView: OverlayView!
     var session: AVCaptureSession!
     var detector: CIDetector!
-    var devicePosition = AVCaptureDevicePosition.front
+    var devicePosition = AVCaptureDevice.Position.front
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +27,11 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
         super.viewWillAppear(animated)
         // TODO: シャッターを押すボタン付ける
         // TODO: 被り物を選べるように？
-        let d = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: devicePosition)
+        let d = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: devicePosition)
         
         let cdi:AVCaptureDeviceInput
         do {
-            cdi = try AVCaptureDeviceInput(device: d)
+            cdi = try AVCaptureDeviceInput(device: d!)
         } catch {
             NSLog("Can not initialize AVCaptureDeviceInput")
             return
@@ -41,7 +41,7 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
         cvdo.setSampleBufferDelegate(self, queue: DispatchQueue.main)
         cvdo.alwaysDiscardsLateVideoFrames = true
         session = AVCaptureSession()
-        session.sessionPreset = AVCaptureSessionPresetMedium
+        session.sessionPreset = AVCaptureSession.Preset.medium
         
         session.addInput(cdi)
         session.addOutput(cvdo)
@@ -66,21 +66,21 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
         }
     }
     
-    func captureOutput(_ captureOutput: AVCaptureOutput!,
-                       didOutputSampleBuffer sampleBuffer: CMSampleBuffer!,
-                       from connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput,
+                       didOutput sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
         connection.videoOrientation = .portrait
         self.imageView.image = UIImageFromCMSamleBuffer(sampleBuffer)
     }
     
     @IBAction func flipTouched(_ sender: Any) {
         // カメラを切り替えて左右反転する
-        if devicePosition == AVCaptureDevicePosition.front {
-            devicePosition = AVCaptureDevicePosition.back
+        if devicePosition == AVCaptureDevice.Position.front {
+            devicePosition = AVCaptureDevice.Position.back
             imageView.transform = imageView.transform.scaledBy(x: -1,y: 1)
             overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1)
         }else{
-            devicePosition = AVCaptureDevicePosition.front
+            devicePosition = AVCaptureDevice.Position.front
             imageView.transform = imageView.transform.scaledBy(x: 1,y: 1)
             overlayView.transform = overlayView.transform.scaledBy(x: 1,y: 1)
         }
