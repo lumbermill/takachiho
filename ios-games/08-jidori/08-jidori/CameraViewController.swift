@@ -74,16 +74,14 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
     }
     
     @IBAction func flipTouched(_ sender: Any) {
-        // カメラを切り替えて左右反転する
         if devicePosition == AVCaptureDevice.Position.front {
             devicePosition = AVCaptureDevice.Position.back
-            imageView.transform = imageView.transform.scaledBy(x: -1,y: 1)
-            overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1)
         }else{
             devicePosition = AVCaptureDevice.Position.front
-            imageView.transform = imageView.transform.scaledBy(x: 1,y: 1)
-            overlayView.transform = overlayView.transform.scaledBy(x: 1,y: 1)
         }
+        // カメラを切り替える度に左右反転する
+        imageView.transform = imageView.transform.scaledBy(x: -1,y: 1)
+        overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1)
         self.viewDidDisappear(false)
         self.viewWillAppear(false)
     }
