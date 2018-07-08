@@ -293,7 +293,7 @@
 				INFOPLIST_FILE = "08-jidori/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.-8-jidori";
+				PRODUCT_BUNDLE_IDENTIFIER = net.lmlab.jidori;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -307,7 +307,7 @@
 				INFOPLIST_FILE = "08-jidori/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.-8-jidori";
+				PRODUCT_BUNDLE_IDENTIFIER = net.lmlab.jidori;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

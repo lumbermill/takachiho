@@ -18,8 +18,8 @@ class OverlayView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        at = CGAffineTransform(scaleX: 1, y: -1);
-        at = at.translatedBy(x: 0, y: -self.bounds.size.height);
+        at = CGAffineTransform(scaleX: 1, y: -1)
+        at = at.translatedBy(x: 0, y: -self.bounds.size.height)
         headgear = UIImage(named: "chicken1")
         beak = UIImage(named: "beak1")
     }
