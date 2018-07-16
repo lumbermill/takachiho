@@ -43,13 +43,16 @@ module ApplicationHelper
       print "  #{address.address}"
       deliver = force || ts.nil? || ts + address.snooze.minute < now
       if deliver
-        case address.address_type
-        when "phone"
+        case address.type
+        when "電話"
           puts " call"
           Mailer.make_call(address.address, msg).deliver_now
-        when "email",""
+        when "メール",""
           puts " mail"
           Mailer.send_mail(address.address, "Notificaton from Mukoyama", msg).deliver_now
+        when "Slack"
+          puts " slack"
+          Mailer.send_slack(address.address,msg).deliver_now
         when "LINE"
           puts " line"
           Mailer.send_line(address.address, msg).deliver_now

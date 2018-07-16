@@ -45,4 +45,16 @@ class Mailer < ApplicationMailer
   def send_line(user_id,message)
     line_client.push_message(user_id,{type: 'text', text: message})
   end
+
+  def send_slack(url,message)
+    require 'net/https'
+    require 'uri'
+
+    uri = URI.parse(url)
+    req = Net::HTTP::Post.new(uri.path+"?"+uri.query)
+    req.body = message
+    http = Net::HTTP.new(uri.host,uri.port)
+    http.use_ssl = true
+    http.request(req)
+  end
 end

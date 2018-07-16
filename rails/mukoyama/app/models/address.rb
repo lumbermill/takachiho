@@ -10,11 +10,18 @@ class Address < ActiveRecord::Base
     address.match /^.+@.+$/
   end
 
+  def slack?
+    address.match /^https.+slack.com.+/
+  end
+
+  # アドレスのタイプ、address_type列は更新されていない…
   def type
     if phone?
       "電話"
     elsif mail?
       "メール"
+    elsif slack?
+      "Slack"
     else
       "LINE"
     end
