@@ -29,12 +29,12 @@ gpu_mem=128
 disable_camera_led=1
 ```
 
-motion_for_mukoyama/mukoyama.conf.sampleを複製して、mukoyama.confを作成し、IDやTOKENを設定します。各デバイスの設定画面から必要な情報を取得してください。
+`motion_for_mukoyama/mukoyama.conf.sample` を複製して、`mukoyama.conf`を作成し、IDやTOKENを設定します。各デバイスの設定画面から必要な情報を取得してください。
 
-/etc/rc.local
+crontabに以下の行を追加し、再起動しカメラが稼働することを確認します。
 
 ```
-cd /home/pi/motion_for_mukoyama && ./bin/start.sh
+@reboot cd /home/pi/motion_for_mukoyama && ./bin/start.sh
 ```
 
 ```
