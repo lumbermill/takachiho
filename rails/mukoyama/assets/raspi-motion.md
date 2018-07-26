@@ -11,7 +11,7 @@
 以下は設定の抜粋です（詳細は上記URLを）。
 
 ```
-sudo apt install -y motion
+sudo apt install -y git motion ruby 
 git clone https://github.com/koki-h/motion_for_mukoyama.git
 ```
 
