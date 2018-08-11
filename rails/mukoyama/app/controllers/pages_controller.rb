@@ -10,7 +10,13 @@ class PagesController < ApplicationController
 
   def dashboard
     if current_user.admin?
-      @devices = Device.all.order("id")
+      @user_id = params[:user_id]
+      @users = User.all.order("id")
+      if @user_id.present?
+        @devices = Device.where(user_id: @user_id).order("id")
+      else
+        @devices = Device.all.order("id")
+      end
       @all = true
     else
       @devices = Device.where(user_id: current_user.id).order("id")

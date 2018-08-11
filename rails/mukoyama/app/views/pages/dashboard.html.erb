@@ -1,4 +1,15 @@
 <% content_for :title, 'ダッシュボード' %>
+<% if @all %>
+  <div class="row">
+    <div class="col-sm-12">
+      <form method="get" action="" class="form-inline">
+        <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "email", @user_id), class:"form-control", include_blank: true %>
+        <button type="submit" class="btn btn-primary">更新</button>
+      </form>
+      <br/><br/>
+    </div>
+  </div>
+<% end %>
 <div class="row">
   <% @devices.each do |d| %>
   <div class="col-md-3 col-sm-6">
