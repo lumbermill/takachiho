@@ -1,4 +1,4 @@
-# RaspberryPi + tsl2561
+# RaspberryPi + am2320
 Raspberry PiのGPIOに温湿度センサ(AM2320)を接続する手順です。
 
 ## 部品リスト
