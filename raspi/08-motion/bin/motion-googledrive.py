@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import print_function
 import httplib2
-import os, re, sys, time
+import os, re, sys, time, datetime
 
 from apiclient import discovery
 from oauth2client import client
@@ -23,8 +23,10 @@ except:
 # at ~/.credentials/drive-python-quickstart.json
 #SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly'
 SCOPES = 'https://www.googleapis.com/auth/drive'
-CLIENT_SECRET_FILE = '/home/pi/bin/motion-googledrive-secret.json'
+BASEDIR = os.path.dirname(os.path.abspath(__file__))
+CLIENT_SECRET_FILE = BASEDIR+'/motion-googledrive-secret.json'
 APPLICATION_NAME = 'Motion for Google Drive'
+RETENTION_DAYS = 30  # Drive上に画像を保持する期間
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -74,8 +76,7 @@ def main():
     foldername = flags.folder
     filename = os.path.basename(filepath)
     delete_img = 'false'
-    print("local: %s" % (filepath))
-    print("remote: %s/%s" % (foldername,filename))
+    print("folder: %s" % (foldername))
 
     # Checks if the folder already exists and gets the ID.
     items = service.files().list(q="name = '%s'" % (foldername)).execute().get('files')
@@ -86,13 +87,27 @@ def main():
         fid = items[0]['id']
 
     if filepath == 'init' or filepath == '%f':
-        print("Initialized.")
+        print("Folder was created.")
+    elif filepath == '%d':
+        # Search and delete old pictures.
+        border = (datetime.date.today() - datetime.timedelta(RETENTION_DAYS)).strftime("%Y-%m-%d")
+        q4delete = "'%s' in parents and mimeType = 'image/jpeg' and starred != true and modifiedTime < '%sT00:00:00+09:00'" % (fid,border)
+        items = service.files().list(q=q4delete).execute().get('files')
+        if len(items) > 0:
+            print("%d files(older than %s and not starred) are going to be trashed." % (len(items),border))
+            for i in items:
+                print("  %s" % (i['name']))
+                service.files().delete(fileId=i['id']).execute()
+        else:
+            print("Nothing to be deleted.")
     else:
         # Sends the picture.
+        print("local: %s" % (filepath))
+        print("remote: %s/%s" % (foldername,filename))
         body = { 'name': filename, 'parents':[fid] }
         service.files().create(media_body=filepath, body=body).execute()
         if delete_img == 'true':
-            print(filename+" deleted on local.")
+            print(filename+" was deleted on local.")
             os.remove(filepath)
 
 if __name__ == '__main__':

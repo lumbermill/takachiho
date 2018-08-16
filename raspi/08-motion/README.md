@@ -88,10 +88,13 @@ sudo service motion restart
 画像は `/var/lib/motion` に蓄積されているので、適宜削除タスクを定義します。
 同ディレクトリ内の `.credentials` を削除してしまわないよう留意してください。
 
+上記スクリプトの第2引数に「%d」を指定することで、Drive上に保存されている画像のうち
+30日以上経過したものを削除します。日数を変更したい場合はスクリプトを直接編集してください。
+スターが付けられた画像はスキップされます。
+
 ```
 0 1 * * * sudo find /var/lib/motion/ -mtime +1 -name "*.jpg" -delete
+0 2 * * * python3 /home/pi/bin/motion-googledrive.py pictures-test %d
 ```
-
-TODO: drive上から一定期間で削除するには？
 
 ![sample][sample.png]
