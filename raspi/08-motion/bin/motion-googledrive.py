@@ -92,7 +92,7 @@ def main():
         # Search and delete old pictures.
         border = (datetime.date.today() - datetime.timedelta(RETENTION_DAYS)).strftime("%Y-%m-%d")
         q4delete = "'%s' in parents and mimeType = 'image/jpeg' and starred != true and modifiedTime < '%sT00:00:00+09:00'" % (fid,border)
-        items = service.files().list(q=q4delete).execute().get('files')
+        items = service.files().list(q=q4delete,pageSize=1000).execute().get('files')
         if len(items) > 0:
             print("%d files(older than %s and not starred) are going to be trashed." % (len(items),border))
             for i in items:
