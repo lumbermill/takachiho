@@ -47,7 +47,7 @@ locate_motion_mode on
 必要なライブラリをインストールします。
 ```
 sudo apt -y install python3-pip
-sudo pip3 install --upgrade httplib2 google-api-python-client
+sudo pip3 install --upgrade httplib2 oauth2client google-api-python-client
 ```
 
 [Drive API クイックスタート](https://developers.google.com/drive/v3/web/quickstart/python)の
