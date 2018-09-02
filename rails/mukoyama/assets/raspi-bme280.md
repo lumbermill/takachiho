@@ -31,11 +31,10 @@ i2c-dev
 
 ```
 sudo apt-get install python-smbus
-
 i2cdetect -y 1  # 76
 ```
 
 うまくいかない場合は、以下のURL等も参考にしてください。
 
-- <http://qiita.com/masato/items/16bf8b17ee4881179462#bme280">http://qiita.com/masato/items/16bf8b17ee4881179462#bme280>
-- <https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch">https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch>
+- <http://qiita.com/masato/items/16bf8b17ee4881179462#bme280>
+- <https://github.com/lumbermill/takachiho/tree/master/raspi/04-bosch>

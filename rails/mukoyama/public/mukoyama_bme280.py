@@ -1,7 +1,7 @@
 #coding: utf-8
 # Print temp,pressure,hum,timestamp in a line.
 
-import smbus
+import os, smbus
 from datetime import datetime, timedelta
 
 bus_number  = 1
@@ -164,18 +164,22 @@ def get_url_params():
   s += "&humidity=%s" % (h.strip())
   return s
 
+# If you see "IOError: [Errno 121] Remote I/O error", uncomment the following line.
+# os.system("/usr/sbin/i2cdetect -y 1 > /dev/null")
 setup()
 get_calib_param()
 
-
 if __name__ == '__main__':
   try:
-    import os
-    url = os.environ["MUKOYAMA_URL"]
-    id = os.environ["MUKOYAMA_ID"]
-    token = os.environ["MUKOYAMA_TOKEN"]
-    u = (url+"/temps/upload?id=%s&token=%s&"+get_url_params()) % (id,token)
-    cmd = 'curl -s -S "'+u+'"'
-    os.system(cmd)
+    if "MUKOYAMA_URL" in os.environ:
+      url = os.environ["MUKOYAMA_URL"]
+      id = os.environ["MUKOYAMA_ID"]
+      token = os.environ["MUKOYAMA_TOKEN"]
+      u = (url+"/temps/upload?id=%s&token=%s&"+get_url_params()) % (id,token)
+      cmd = 'curl -s -S "'+u+'"'
+      os.system(cmd)
+    else:
+      print("MUKOYAMA_URL is not set.")
+      print(get_url_params())
   except KeyboardInterrupt:
     pass

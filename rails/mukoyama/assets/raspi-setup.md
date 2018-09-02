@@ -29,6 +29,7 @@ reboot
 ```
 
 piユーザのHOMEにbinディレクトリを作っておきます。
+
 ```
 mkdir bin
 ```
@@ -54,6 +55,8 @@ ssh-keygen -R raspberrypi.local
 ## GPIO
 ピンの配置については、以下のURLなどを参照してください。
 
+<img src="/gpio-numbers-pi2.png" class="img img-responsive"/>
+
 <img src="/physical-pin-numbers.png" class="img img-responsive"/>
 
-<https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/>
+<https://www.raspberrypi.org/documentation/usage/gpio/README.md>
