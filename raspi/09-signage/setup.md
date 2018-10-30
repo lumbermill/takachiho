@@ -7,7 +7,7 @@ Raspbian Desktopをインストールした状態から開始します。まず�
 sudo apt remove -y wolfram-engine sonic-pi scratch scratch2 bluej libreoffice idle
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y unclutter fonts-noto
+sudo apt install -y unclutter fonts-noto xdotool
 ```
 
 `.config/lxsession/LXDE-pi/autostart` を下記の内容で書き換えます。
@@ -24,7 +24,7 @@ sudo apt install -y unclutter fonts-noto
 crontabを以下のように設定します。この例では1日に1回画面をリロードしています。
 
 ```
-1 0 * * * xte -x :0 "key F5"
+1 0 * * * export DISPLAY=":0" && xdotool key F5
 ```
 
 すべての設定が終わったら、端末を再起動します。
