@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>preview</title>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+    body{
+      margin: 0;
+      font-size: 5vh;
+      font-family: monospace;
+    }
+    header{
+      display: flex;
+      align-items: center;
+      padding: 1vh;
+      height: 8vh;
+      background-color: #eee;
+    }
+    div#brand img{
+      display: block;
+      height: 8vh;
+    }
+    div#brand{
+      margin-right: 4vh;
+    }
+    div#marquee{
+      color: #333;
+      flex: 1;
+    }
+    div#main{
+      display: flex;
+      justify-content: center;
+    }
+    div#main img{
+      display: block;
+      height: 90vh;
+    }
+
+    /* CSSアニメーションでmarquee https://qiita.com/nissuk/items/7d5545a9f6177ff965dc */
+    /** マーキーさせたい部分 */
+    .marquee {
+      padding: 0 !important; /* reset bootstrap */
+      overflow: hidden; /* スクロールバーが出ないように */
+      position: relative; /* マーキーの内容部分の位置の基準になるように */
+    }
+     /* マーキーの内容部分の高さ確保 */
+    .marquee::after {
+      content: "";
+      white-space: nowrap;
+      display: inline-block;
+    }
+    /* マーキーさせたい部分(内側) */
+    .marquee > .marquee-inner {
+      position: absolute;
+      top: 0;
+      white-space: nowrap;
+      animation-name: marquee;
+      animation-timing-function: linear;
+      animation-duration: 20s;
+      animation-iteration-count: infinite;
+    }
+    /* マウスオーバーでマーキーストップ */
+    .marquee > .marquee-inner:hover {
+      animation-play-state: paused;
+      cursor: default;
+    }
+    /** マーキーアニメーション */
+    @keyframes marquee {
+        0% { left: 100%; transform: translate(0); }
+      100% { left: 0; transform: translate(-100%); }
+    }
+  </style>
+  <script>
+    var current = -1;
+    var imgs = ["monogatari_izanami_izanagi.png","nigaoe_jinmu_tennou.png","japan_amaterasu_oomikami.png"];
+    function next_image(){
+      if (current < imgs.length-1) current++;
+      else current = 0;
+      var e = $("#main img");
+      e.fadeOut("slow",function(){
+        e.attr("src", imgs[current]);
+        e.fadeIn("slow");
+      });
+    }
+    setInterval(next_image,5000);
+  </script>
+</head>
+<body>
+  <header>
+    <div id="brand">
+      <img src="ito-manufacturing-logo.png"/>
+    </div>
+    <div id="marquee" class="marquee"><span class="marquee-inner">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </span></div>
+  </header>
+  <div id="main">
+    <img src=""/>
+<!--
+    <img src="nigaoe_jinmu_tennou.png"/>
+    <img src="japan_amaterasu_oomikami.png"/>
+-->
+  </div>
+</body>
+</html>
