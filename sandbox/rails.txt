@@ -1,0 +1,3 @@
+Removed because of many seciroty warnings. 18.11.22
+bme280_controller
+webcam_controller

@@ -1,2 +1,0 @@
-class Query < ApplicationRecord
-end

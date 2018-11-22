@@ -1,8 +1,0 @@
-development:
-  data_home:       "/home/ubuntu/src/takachiho/webapps/Recognition-Tester/data"
-
-test:
-  data_home:       "/home/ubuntu/src/takachiho/webapps/Recognition-Tester/data"
-
-production:
-  data_home:       "/home/ubuntu/src/takachiho/webapps/Recognition-Tester/data"

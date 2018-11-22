@@ -1,2 +1,0 @@
-module TrainDataHelper
-end
