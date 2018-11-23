@@ -9,6 +9,10 @@
     <% end %>
     <h1>Project Mukoyama</h1>
     <p>生産設備のモニタリングシステム</p>
+    <p>&nbsp;</p>
+    <div class="alert alert-success">
+      <%= link_to "端末リースお申込み", rules4tester_path %>受付を開始しました。18.11.23
+    </div>
   </div>
 </div>
 <div class="root2">
@@ -16,26 +20,30 @@
     <p></p>
     <div class="row">
       <div class="col-sm-6">
-        <h3>概要</h3>
+        <h3>じぶんでつくるIoT</h3>
         <p>
-        RaspberryPiやArduinoに各種センサと通信モジュール(3G,Wifi)をつけて、ビニールハウスや工場などの状態を監視するプラットフォームです。
+        RaspberryPiやArduinoに各種センサと通信モジュール(3G,Wifi)をつけて、
+        ビニールハウスや工場などの状態を監視するプラットフォームです。
         異常を検知したら設備管理者のところへメール、LINE、電話などでお知らせする仕組みを構築しています。
         廉価に購入できる部品を組み合わせて、DIY感覚で端末を構築でき、様々な環境やニーズに柔軟に適応できる仕組みを目指しています。
         </p>
         <p>
-          現在、<%= link_to "β版のテスト参加者", rules4tester_path %>を募集中です。機器の構築を代行しリース致します。
-          どなたでも自由にアカウントを登録してセンサのデータ蓄積を試して頂けます(電話通知は維持コストがかかるため予告なく終了する可能性があります)。
+          現在、<%= link_to "端末リース", rules4tester_path %>のお申込みを受付中です。
         </p>
-        <h3>ゴール</h3>
         <p>
-        まずはルールベースの異常検知とデータの可視化で実績を作ります。
-        気象データや周辺のセンサからの情報なども統合を進め（ビッグデータ化）、
-        最終的にはAIによるインテリジェントな異常判断や自律的な制御(温度を直接操作するなど)を目指します。
+          将来的には、気象データや周辺のセンサからの情報を統合、ビッグデータ化し、
+          最終的にはAIによる異常検知や自律的な制御を目指します。
         </p>
+        <h3>導入実績</h3>
+        <p>以下のような用途に利用されています。</p>
+        <ul style="font-size: medium">
+          <li>ビニルハウス・店舗の温湿度の監視と通知</li>
+          <li>店舗内の明るさの監視</li>
+          <li>動体検知機能付き監視カメラ</li>
+        </ul>
       </div>
       <div class="col-sm-6">
-        <%= image_tag 'graph.png', class: 'img img-responsive img-rounded' %>
-        <br/>
+        <%= render "carousel" %>
       </div>
     </div>
   </div>
@@ -45,32 +53,21 @@
     <p></p>
     <div class="row">
       <div class="col-sm-6">
-        <h3>開発者向け</h3>
-        <p>プロジェクトのコードや現在取り組んでいる課題はGitHubで公開しています。不明な点などあれば、お気軽にお問い合わせください。
-当初はRaspberryPiとホストサーバ間をrsyncでデータ転送していましたが、Arduino等の利用も視野に入れてhttpsベースのデータ転送方式に変更しています。
-<a href="https://www.twilio.com">Twilio API</a>で電話通知、
+        <h3>開発者・投資家の方へ</h3>
+        <p>もともとはオープンな取り組みとしてこのプロジェクトをスタートしています。
+          プロジェクトのコードや現在取り組んでいる課題はGitHubで公開しており、今後も基本的には、
+          プラットフォーム側のコードは全てオープンにした状態のままで開発を継続します。
+          つまり、このプロジェクトをフォーク・コピーして別のサービスを立ち上げることも自由ですし、
+          機能の追加や改善をプルリクエストして頂くことも可能です。</p>
+        <p>運用コストの都合で現在は無効化していますが、<a href="https://www.twilio.com">Twilio API</a>で電話通知、
 <a href="https://developers.line.me/">LINE Messaging API</a>でLINEによる通知も実装しています。
 詳細は<a href="howto">参加方法</a>や<a href="https://github.com/lumbermill/takachiho/blob/master/rails/mukoyama/README.md">README(GitHub)</a>を参照してください。
         </p>
-        <p>
-          <a href="https://github.com/lumbermill/takachiho">https://github.com/lumbermill/takachiho</a>
-        </p>
+        <p>&nbsp;</p>
       </div>
       <div class="col-sm-3">
-        <%= image_tag 'about.png', class: 'img img-responsive img-rounded' %>
-        <br/>
-        <%= image_tag 'IMG_0979.jpg', class: 'img img-responsive img-rounded' %>
-        <br/>
-        <%= image_tag 'pic3.jpg', class: 'img img-responsive img-rounded' %>
-        <br/>
       </div>
       <div class="col-sm-3">
-        <%= image_tag 'pic2.jpg', class: 'img img-responsive img-rounded' %>
-        <br/>
-        <%= image_tag 'IMG_0983.jpg', class: 'img img-responsive img-rounded' %>
-        <br/>
-        <%= image_tag 'pic4.png', class: 'img img-responsive img-rounded' %>
-        <br/>
       </div>
     </div>
   </div>
