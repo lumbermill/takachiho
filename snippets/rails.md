@@ -77,3 +77,9 @@ send_file(Rails.root.join('app', 'assets', 'images', 'no-photo.png'), type: 'ima
 ```
 render status:404, text: "Resource not found."
 ```
+
+
+```
+"this is a pen.".truncate(20)
+```
+
