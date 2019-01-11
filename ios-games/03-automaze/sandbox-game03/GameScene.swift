@@ -368,7 +368,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     func reportScore(elapsed: Int){
         // unless it is highest score(minimum time), do nothing.
         // Send Game Center
-        if (!GKLocalPlayer.localPlayer().isAuthenticated) { return }
+        if (!GKLocalPlayer.local.isAuthenticated) { return }
         let s = GKScore(leaderboardIdentifier: "grp.automaze."+level)
         s.value = Int64(elapsed)
         GKScore.report([s], withCompletionHandler: {(error: Error?) -> Void in

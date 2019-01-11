@@ -99,14 +99,14 @@ class TitleScene: SKScene, GKGameCenterControllerDelegate {
     }
     
     func authPlayer(){
-        let p = GKLocalPlayer.localPlayer()
+        let p = GKLocalPlayer.local
         p.authenticateHandler = {(viewController, error) -> Void in
             if (viewController != nil){
                 if let vc = UIApplication.shared.delegate?.window??.rootViewController {
                     vc.present(viewController!, animated: true, completion: nil)
                 }
             } else {
-                print("%d",GKLocalPlayer.localPlayer().isAuthenticated)
+                print("%d",GKLocalPlayer.local.isAuthenticated)
             }
         }
     }

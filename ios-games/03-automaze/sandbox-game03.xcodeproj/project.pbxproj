@@ -21,7 +21,6 @@
 		13FC2D951BC13FBB0007488F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2D931BC13FBB0007488F /* LaunchScreen.storyboard */; };
 		13FC2DA01BC13FBB0007488F /* sandbox_game03Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FC2D9F1BC13FBB0007488F /* sandbox_game03Tests.swift */; };
 		13FC2DAB1BC13FBB0007488F /* sandbox_game03UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FC2DAA1BC13FBB0007488F /* sandbox_game03UITests.swift */; };
-		13FC2DB91BC140FB0007488F /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13FC2DB81BC140FA0007488F /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +61,6 @@
 		13FC2DA61BC13FBB0007488F /* sandbox-game03UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sandbox-game03UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FC2DAA1BC13FBB0007488F /* sandbox_game03UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sandbox_game03UITests.swift; sourceTree = "<group>"; };
 		13FC2DAC1BC13FBB0007488F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13FC2DB81BC140FA0007488F /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +70,6 @@
 			files = (
 				1354BB9B1BE36CD600455AC9 /* GameKit.framework in Frameworks */,
 				133F349A1BCA89200019C3A8 /* CoreMotion.framework in Frameworks */,
-				13FC2DB91BC140FB0007488F /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +95,6 @@
 			children = (
 				1354BB9A1BE36CD600455AC9 /* GameKit.framework */,
 				133F34991BCA89200019C3A8 /* CoreMotion.framework */,
-				13FC2DB81BC140FA0007488F /* iAd.framework */,
 				13FC2D851BC13FBB0007488F /* sandbox-game03 */,
 				13FC2D9E1BC13FBB0007488F /* sandbox-game03Tests */,
 				13FC2DA91BC13FBB0007488F /* sandbox-game03UITests */,
@@ -220,6 +216,7 @@
 					13FC2D821BC13FBB0007488F = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = NU78774256;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -228,10 +225,12 @@
 					};
 					13FC2D9A1BC13FBB0007488F = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 1010;
 						TestTargetID = 13FC2D821BC13FBB0007488F;
 					};
 					13FC2DA51BC13FBB0007488F = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 1010;
 						TestTargetID = 13FC2D821BC13FBB0007488F;
 					};
 				};
@@ -466,6 +465,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -480,6 +480,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -492,6 +493,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sandbox-game03.app/sandbox-game03";
 			};
 			name = Debug;
@@ -504,6 +506,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sandbox-game03.app/sandbox-game03";
 			};
 			name = Release;
@@ -516,6 +519,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = "sandbox-game03";
 				USES_XCTRUNNER = YES;
 			};
@@ -528,6 +532,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.lmlab.sandbox-game03UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = "sandbox-game03";
 				USES_XCTRUNNER = YES;
 			};
