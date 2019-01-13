@@ -18,7 +18,7 @@ sudo apt install -y unclutter fonts-noto xdotool
 @xset s off
 @xset -dpms
 @unclutter
-@chromium-browser --kiosk --incognito https://places.lmlab.net/ensemble/signage
+@chromium-browser --kiosk --incognito https://places.lmlab.net/ensemble/signage?size=720p
 ```
 
 crontabを以下のように設定します。この例では1日に1回画面をリロードしています。
@@ -50,3 +50,16 @@ lcd_rotate=2
 ```
 killall chromium-browser
 ```
+
+### ディスプレイ外周の余白を無くす
+`raspi-config` を起動して、OverscanをDisableに設定し、再起動します。
+
+```
+$ sudo raspi-config
+```
+
+```
+9 Advanced Options -> A2 Overscan
+```
+
+- 参考 [参考リンク](https://qiita.com/KaiShoya/items/5c6e6313d0b3842dfbee)
