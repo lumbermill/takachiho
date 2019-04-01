@@ -63,3 +63,11 @@ $ sudo raspi-config
 ```
 
 - 参考 [参考リンク](https://qiita.com/KaiShoya/items/5c6e6313d0b3842dfbee)
+
+### 動画を再生する
+chromium-browserの代わりにomxplayerを使うと動画を再生することが出来ます。
+autostartを書き換えずに最後尾に以下を追加するのみです。
+
+```
+@omxplayer --refresh --loop -o both /home/pi/demo.mov
+```
