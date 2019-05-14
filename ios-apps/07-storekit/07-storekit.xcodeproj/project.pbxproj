@@ -12,6 +12,7 @@
 		13138612228AD592003E6D62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13138610228AD592003E6D62 /* Main.storyboard */; };
 		13138614228AD594003E6D62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13138613228AD594003E6D62 /* Assets.xcassets */; };
 		13138617228AD594003E6D62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13138615228AD594003E6D62 /* LaunchScreen.storyboard */; };
+		13138620228AD5DA003E6D62 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313861F228AD5DA003E6D62 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		13138613228AD594003E6D62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13138616228AD594003E6D62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13138618228AD594003E6D62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1313861F228AD5DA003E6D62 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13138620228AD5DA003E6D62 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +43,7 @@
 			children = (
 				1313860B228AD592003E6D62 /* 07-storekit */,
 				1313860A228AD592003E6D62 /* Products */,
+				1313861E228AD5DA003E6D62 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +66,14 @@
 				13138618228AD594003E6D62 /* Info.plist */,
 			);
 			path = "07-storekit";
+			sourceTree = "<group>";
+		};
+		1313861E228AD5DA003E6D62 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1313861F228AD5DA003E6D62 /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
