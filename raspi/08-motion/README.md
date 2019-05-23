@@ -96,7 +96,7 @@ sudo service motion restart
 
 ```
 0 1 * * * sudo find /var/lib/motion/ -mtime +1 -name "*.jpg" -delete
-0 2 * * * python3 /home/pi/bin/motion-googledrive.py pictures-test %d
+0 2 * * * python3 /home/pi/bin/motion-googledrive.py pictures-test \%d
 ```
 
 ## 再認証する
