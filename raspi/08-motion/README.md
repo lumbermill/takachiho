@@ -84,6 +84,8 @@ on_picture_save python3 /home/pi/bin/motion-googledrive.py pictures-test %f
 sudo service motion restart
 ```
 
+![sample](sample.png)
+
 ## 古い画像を削除する
 画像は `/var/lib/motion` に蓄積されているので、適宜削除タスクを定義します。
 同ディレクトリ内の `.credentials` を削除してしまわないよう留意してください。
@@ -97,4 +99,5 @@ sudo service motion restart
 0 2 * * * python3 /home/pi/bin/motion-googledrive.py pictures-test %d
 ```
 
-![sample][sample.png]
+## 再認証する
+半年ほど、問題なく稼働していましたが、何らかのきっかけでGoogleDrive側の認証がとれてしまうことがあるようです。セットアップ時のコマンド(--noauth_local_webserver)を再度実行して認証をやり直してください。
