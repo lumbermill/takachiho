@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ScoreActivity">
+
+    <TextView
+            android:text="High Scores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/highScore"
+            android:layout_weight="1"
+            android:textSize="25dp"
+            android:textColor="@android:color/black"
+            android:paddingTop="15dp"
+            android:paddingLeft="8dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/kaushanscript"
+            android:background="#fcfefb"
+    />
+    <ListView android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="8"
+              android:id="@+id/highScoreList"
+              android:background="@drawable/booger_throwing"></ListView>
+</LinearLayout>
