@@ -7,8 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".HomeActivity"
-        android:background="@drawable/booger_throw"
->
+        android:background="@drawable/booger_throw" >
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

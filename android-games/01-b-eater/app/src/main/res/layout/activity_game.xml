@@ -7,8 +7,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".GameActivity">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="550dp"
+                  android:orientation="horizontal" >
 
-    <ImageView android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:id="@+id/sonid"/>
+        <ImageView android:layout_width="205dp"
+                   android:layout_height="550dp"
+                   android:id="@+id/sonid"
+                   android:maxHeight="100dp"
+        />
+
+        <ImageView android:layout_width="205dp"
+                   android:layout_height="650dp"
+                   android:id="@+id/fatherid"
+        />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal"
+    >
+        <Button android:id="@+id/startPlay"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:text="Start"/>
+        <Button android:id="@+id/stop"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:text="Stop"
+                android:layout_marginLeft="70dp"
+        />
+    </LinearLayout>
+
+
+    />
+
+
+
 </LinearLayout>
