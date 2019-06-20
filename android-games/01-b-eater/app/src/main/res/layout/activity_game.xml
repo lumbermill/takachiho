@@ -8,11 +8,7 @@
         android:orientation="vertical"
         tools:context=".GameActivity">
 
-    <TextView
-            android:text="Game will be played...."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="68dp"
-            tools:layout_editor_absoluteX="77dp"
-            android:id="@+id/textView"/>
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/sonid"/>
 </LinearLayout>
