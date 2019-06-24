@@ -6,14 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.os.postDelayed
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
 import kotlin.random.Random
-import android.R.attr.delay
-import android.util.Log
-import androidx.core.os.HandlerCompat.postDelayed
-import androidx.core.os.HandlerCompat.postDelayed
+import android.media.MediaPlayer
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -24,6 +18,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var sonAnimation: AnimationDrawable
     private lateinit var fatherAnimation: AnimationDrawable
     var randomValues : Long = 0
+    var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
        
@@ -43,26 +38,39 @@ class GameActivity : AppCompatActivity() {
 //            toast.show()
 
         }
-        
-
-
-        
 
         startPlay.setOnClickListener {
             sonAnimation.start()
+
         }
+
+        val h = Handler()
+        h.postDelayed(object : Runnable {
+            var score = 0
+            override fun run() {
+                if(sonAnimation.current == sonAnimation.getFrame(2) && fatherAnimation.current == fatherAnimation.getFrame(2)){
+                    sonAnimation.stop()
+                    fatherAnimation.stop()
+                    val toast = Toast.makeText(applicationContext, score.toString(), Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                if(sonAnimation.current == sonAnimation.getFrame(1)){
+                    score = score+1
+                }
+                h.postDelayed(this, 235)
+            }
+        }, 235)
 
         stop.setOnClickListener {
             sonAnimation.stop()
+            var score = 0
         }
-
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
                 randomValues = Random.nextLong(0, 10)
                 fatherAnimation.start()
-                handler.postDelayed(this, (randomValues*1000)+941)
-               
+                handler.postDelayed(this, (randomValues*1000)+940)
             }
         }, 2000)
 
@@ -76,5 +84,6 @@ class GameActivity : AppCompatActivity() {
         }, 2940)
         
     }
+
     
 }
