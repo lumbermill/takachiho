@@ -17,11 +17,16 @@ import androidx.core.os.HandlerCompat.postDelayed
 import kotlinx.android.synthetic.main.activity_game.*
 
 
+
+
+
 class GameActivity : AppCompatActivity() {
     private lateinit var sonAnimation: AnimationDrawable
     private lateinit var fatherAnimation: AnimationDrawable
+    var randomValues : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+       
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
@@ -29,17 +34,19 @@ class GameActivity : AppCompatActivity() {
             setBackgroundResource(R.drawable.son)
             sonAnimation = background as AnimationDrawable
         }
-        
 
-//        sonAnimation.start()
 
         val fatherImage = findViewById<ImageView>(R.id.fatherid).apply {
             setBackgroundResource(R.drawable.father)
             fatherAnimation = background as AnimationDrawable
+//            val toast = Toast.makeText(applicationContext, fatherAnimation.getFrame(3).toString(), Toast.LENGTH_SHORT)
+//            toast.show()
 
         }
+        
 
-        val randomValues = Random.nextLong(0, 10)
+
+        
 
         startPlay.setOnClickListener {
             sonAnimation.start()
@@ -49,8 +56,25 @@ class GameActivity : AppCompatActivity() {
             sonAnimation.stop()
         }
 
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                randomValues = Random.nextLong(0, 10)
+                fatherAnimation.start()
+                handler.postDelayed(this, (randomValues*1000)+941)
+               
+            }
+        }, 2000)
+
+        val handler1 = Handler()
+        handler1.postDelayed(object : Runnable {
+            override fun run() {
+                fatherAnimation.stop()
+                handler1.postDelayed(this, (randomValues*1000)+940)
+                
+            }
+        }, 2940)
+        
     }
-
-
-
+    
 }
