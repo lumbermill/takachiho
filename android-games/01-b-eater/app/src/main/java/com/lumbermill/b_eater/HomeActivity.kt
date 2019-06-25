@@ -11,6 +11,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         buttonPlay.setOnClickListener {
+            var score = 0
             var play = Intent(this, GameActivity::class.java)
             startActivity(play)
         }

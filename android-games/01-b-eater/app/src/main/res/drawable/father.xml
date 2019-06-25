@@ -3,5 +3,5 @@
                 android:oneshot="false" >
     <item android:drawable="@drawable/father1" android:duration="235" />
     <item android:drawable="@drawable/father2" android:duration="235" />
-    <item android:drawable="@drawable/father3" android:duration="235" />
+    <item android:drawable="@drawable/father3" android:duration="500" />
 </animation-list>
