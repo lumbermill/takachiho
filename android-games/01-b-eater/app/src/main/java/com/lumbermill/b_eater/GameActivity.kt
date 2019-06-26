@@ -17,7 +17,8 @@ class GameActivity : AppCompatActivity() {
     private lateinit var sonAnimation: AnimationDrawable
     private lateinit var fatherAnimation: AnimationDrawable
     var randomValues: Long = 0
-    var mediaPlayer: MediaPlayer? = null
+    var cMediaPlayer: MediaPlayer? = null
+    var bMediaPlayer: MediaPlayer? = null
     var score = 0
     var flag = 0
 
@@ -27,6 +28,9 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         scoreView.setText("Score: "+score.toString())
+
+        bMediaPlayer = MediaPlayer.create(this, R.raw.pixel_island)
+        bMediaPlayer?.start()
 
         val sonImage = findViewById<ImageView>(R.id.sonid).apply {
             setBackgroundResource(R.drawable.son)
@@ -53,6 +57,8 @@ class GameActivity : AppCompatActivity() {
                         2
                     )
                 ) {
+                    bMediaPlayer?.stop()
+                    caughtMusic()
                     sonAnimation.stop()
                     fatherAnimation.stop()
                     flag = 1
@@ -63,9 +69,13 @@ class GameActivity : AppCompatActivity() {
                 if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0) {
                     score += 1
                     scoreView.setText("Score: "+score.toString())
+//                    backgroudMusic()
 
                 }
                 if (flag == 0) {
+                    if(bMediaPlayer?.isPlaying == false){
+                        bMediaPlayer?.start()
+                    }
                     h.postDelayed(this, 235)
                 }
 
@@ -114,6 +124,16 @@ class GameActivity : AppCompatActivity() {
         dialog.show()
         score = 0
     }
+
+    fun caughtMusic(){
+        cMediaPlayer = MediaPlayer.create(this, R.raw.se_maoudamashii_onepoint33)
+        cMediaPlayer?.start()
+    }
+
+//    fun backgroudMusic(){
+//        mediaPlayer = MediaPlayer.create(this, R.raw.pixel_island)
+//        mediaPlayer?.start()
+//    }
 
 
 }
