@@ -11,6 +11,10 @@ import kotlin.random.Random
 import android.media.MediaPlayer
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_game.*
+import android.R.id.edit
+import android.content.SharedPreferences
+
+
 
 
 class GameActivity : AppCompatActivity() {
@@ -21,6 +25,7 @@ class GameActivity : AppCompatActivity() {
     var bMediaPlayer: MediaPlayer? = null
     var score = 0
     var flag = 0
+    var myArray = Array<Int>(5){0}
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -63,13 +68,16 @@ class GameActivity : AppCompatActivity() {
                     fatherAnimation.stop()
                     flag = 1
                     showDialog()
+                    highScores()
 
                 }
 
                 if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0) {
                     score += 1
                     scoreView.setText("Score: "+score.toString())
-//                    backgroudMusic()
+//                    myArray.sortDescending()
+//                    myArray.set(4,score)
+
 
                 }
                 if (flag == 0) {
@@ -130,10 +138,18 @@ class GameActivity : AppCompatActivity() {
         cMediaPlayer?.start()
     }
 
-//    fun backgroudMusic(){
-//        mediaPlayer = MediaPlayer.create(this, R.raw.pixel_island)
-//        mediaPlayer?.start()
-//    }
+    fun highScores() {
+        val pref = applicationContext.getSharedPreferences("MyPref", 0)
+        val editor = pref.edit()
+        editor.putInt("score1", score)
+        editor.commit()
+        Toast.makeText(applicationContext, pref.getInt("score1",-1), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        bMediaPlayer?.stop()
+    }
 
 
 }
