@@ -7,9 +7,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".GameActivity">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scoreView"
+                android:layout_weight="1"/>
+    </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="550dp"
-                  android:orientation="horizontal" >
+                  android:layout_height="530dp"
+                  android:orientation="horizontal">
 
         <ImageView android:layout_width="205dp"
                    android:layout_height="550dp"

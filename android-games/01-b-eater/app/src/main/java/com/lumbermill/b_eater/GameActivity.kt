@@ -26,6 +26,8 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        scoreView.setText("Score: "+score.toString())
+
         val sonImage = findViewById<ImageView>(R.id.sonid).apply {
             setBackgroundResource(R.drawable.son)
             sonAnimation = background as AnimationDrawable
@@ -40,6 +42,7 @@ class GameActivity : AppCompatActivity() {
 
         startPlay.setOnClickListener {
             sonAnimation.start()
+
         }
 
 
@@ -59,6 +62,7 @@ class GameActivity : AppCompatActivity() {
 
                 if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0) {
                     score += 1
+                    scoreView.setText("Score: "+score.toString())
 
                 }
                 if (flag == 0) {
@@ -93,6 +97,7 @@ class GameActivity : AppCompatActivity() {
                 handler1.postDelayed(this, (randomValues * 1000) + 1205)
             }
         }, 2970)
+
 
 
     }
