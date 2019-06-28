@@ -11,10 +11,9 @@
     <TextView
             android:text="High Scores"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:id="@+id/highScore"
-            android:layout_weight="1"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textColor="@android:color/black"
             android:paddingTop="15dp"
             android:paddingLeft="8dp"
@@ -22,9 +21,18 @@
             android:fontFamily="@font/kaushanscript"
             android:background="#fcfefb"
     />
-    <ListView android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight="8"
-              android:id="@+id/highScoreList"
-              android:background="@drawable/booger_throwing"></ListView>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/scoreText1"
+              android:textSize="15sp"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/scoreText2"
+              android:textSize="15sp"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/scoreText3"
+              android:textSize="15sp"/>
 </LinearLayout>

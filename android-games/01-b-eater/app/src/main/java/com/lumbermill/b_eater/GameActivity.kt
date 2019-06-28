@@ -13,8 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_game.*
 import android.R.id.edit
 import android.content.SharedPreferences
-
-
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 
 
 class GameActivity : AppCompatActivity() {
@@ -25,14 +25,15 @@ class GameActivity : AppCompatActivity() {
     var bMediaPlayer: MediaPlayer? = null
     var score = 0
     var flag = 0
-    var myArray = Array<Int>(5){0}
+    var pause = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        scoreView.setText("Score: "+score.toString())
+        scoreView.setText("Score: " + score.toString())
 
         bMediaPlayer = MediaPlayer.create(this, R.raw.pixel_island)
         bMediaPlayer?.start()
@@ -51,6 +52,8 @@ class GameActivity : AppCompatActivity() {
 
         startPlay.setOnClickListener {
             sonAnimation.start()
+            pause = 1
+
 
         }
 
@@ -67,21 +70,17 @@ class GameActivity : AppCompatActivity() {
                     sonAnimation.stop()
                     fatherAnimation.stop()
                     flag = 1
-                    showDialog()
                     highScores()
+                    showDialog()
 
                 }
 
-                if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0) {
+                if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0 && pause == 1) {
                     score += 1
-                    scoreView.setText("Score: "+score.toString())
-//                    myArray.sortDescending()
-//                    myArray.set(4,score)
-
-
+                    scoreView.setText("Score: " + score.toString())
                 }
                 if (flag == 0) {
-                    if(bMediaPlayer?.isPlaying == false){
+                    if (bMediaPlayer?.isPlaying == false) {
                         bMediaPlayer?.start()
                     }
                     h.postDelayed(this, 235)
@@ -92,6 +91,7 @@ class GameActivity : AppCompatActivity() {
 
         stop.setOnClickListener {
             sonAnimation.stop()
+            pause = 0
         }
 
 
@@ -116,8 +116,6 @@ class GameActivity : AppCompatActivity() {
             }
         }, 2970)
 
-
-
     }
 
     fun showDialog() {
@@ -133,17 +131,31 @@ class GameActivity : AppCompatActivity() {
         score = 0
     }
 
-    fun caughtMusic(){
+    fun caughtMusic() {
         cMediaPlayer = MediaPlayer.create(this, R.raw.se_maoudamashii_onepoint33)
         cMediaPlayer?.start()
     }
 
     fun highScores() {
+
         val pref = applicationContext.getSharedPreferences("MyPref", 0)
         val editor = pref.edit()
-        editor.putInt("score1", score)
-        editor.commit()
-        Toast.makeText(applicationContext, pref.getInt("score1",-1), Toast.LENGTH_LONG).show()
+            if(pref.getInt("score1",-1) < score && pref.getInt("score2",-2)<score && pref.getInt("score3",-3)<score){
+                editor.putInt("score3",pref.getInt("score2",-3))
+                editor.putInt("score2",pref.getInt("score1",-1))
+                editor.putInt("score1", score)
+                editor.commit()
+            }
+            else if(pref.getInt("score2",-2) < score && pref.getInt("score3",-3) < score){
+                editor.putInt("score3",pref.getInt("score2",-2))
+                editor.putInt("score2", score)
+                editor.commit()
+            }
+            else if(pref.getInt("score3",-3) < score){
+                editor.putInt("score3", score)
+                editor.commit()
+            }
+
     }
 
     override fun onBackPressed() {
