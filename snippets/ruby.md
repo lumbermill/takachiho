@@ -88,7 +88,6 @@ end
 
 ## optparse
 ```
-Ruby optparse
 require 'optparse'
 Version = "1.0.0"
 
@@ -159,7 +158,7 @@ EOT
 
 ```
 require 'csv'
-  
+
 
 data = <<EOT
 a,b,c
