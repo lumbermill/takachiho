@@ -7,3 +7,4 @@ build
 /webapps/01-tensorflow/webapp/histories/*
 /webapps/01-tensorflow/webapp/models/*
 /raspi/07-coffee/letters/*
+/android-games/.idea/*
