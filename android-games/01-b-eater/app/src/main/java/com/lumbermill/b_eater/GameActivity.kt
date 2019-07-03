@@ -51,8 +51,16 @@ class GameActivity : AppCompatActivity() {
         }
 
         startPlay.setOnClickListener {
-            sonAnimation.start()
-            pause = 1
+            if(sonAnimation.isRunning == false){
+                sonAnimation.start()
+                pause = 1
+                startPlay.setText("Stop")
+            }
+            else{
+                sonAnimation.stop()
+                pause = 0
+                startPlay.setText("Start")
+            }
 
 
         }
@@ -88,11 +96,6 @@ class GameActivity : AppCompatActivity() {
 
             }
         }, 235)
-
-        stop.setOnClickListener {
-            sonAnimation.stop()
-            pause = 0
-        }
 
 
         val handler = Handler()
