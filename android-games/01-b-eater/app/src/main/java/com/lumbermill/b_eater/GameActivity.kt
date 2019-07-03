@@ -15,6 +15,10 @@ import android.R.id.edit
 import android.content.SharedPreferences
 import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
+import android.content.pm.PackageManager
+import android.content.ComponentName
+import android.R.attr.button
+import android.widget.Button
 
 
 class GameActivity : AppCompatActivity() {
@@ -66,58 +70,62 @@ class GameActivity : AppCompatActivity() {
         }
 
 
-        val h = Handler()
-        h.postDelayed(object : Runnable {
-            override fun run() {
-                if (sonAnimation.current == sonAnimation.getFrame(2) && fatherAnimation.current == fatherAnimation.getFrame(
-                        2
-                    )
-                ) {
-                    bMediaPlayer?.stop()
-                    caughtMusic()
-                    sonAnimation.stop()
-                    fatherAnimation.stop()
-                    flag = 1
-                    highScores()
-                    showDialog()
+        gameControll()
 
-                }
+//        val h = Handler()
+//        h.postDelayed(object : Runnable {
+//            override fun run() {
+//                if (sonAnimation.current == sonAnimation.getFrame(2) && fatherAnimation.current == fatherAnimation.getFrame(
+//                        2
+//                    )
+//                ) {
+//                    bMediaPlayer?.stop()
+//                    caughtMusic()
+//                    sonAnimation.stop()
+//                    fatherAnimation.stop()
+//                    flag = 1
+//                    highScores()
+//                    showDialog()
+//                    startPlay.isEnabled = false
+//
+//                }
+//
+//                if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0 && pause == 1) {
+//                    score += 1
+//                    scoreView.setText("Score: " + score.toString())
+//                }
+//                if (flag == 0) {
+//                    if (bMediaPlayer?.isPlaying == false) {
+//                        bMediaPlayer?.start()
+//                    }
+//                    h.postDelayed(this, 235)
+//                }
+//
+//            }
+//        }, 235)
 
-                if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0 && pause == 1) {
-                    score += 1
-                    scoreView.setText("Score: " + score.toString())
-                }
-                if (flag == 0) {
-                    if (bMediaPlayer?.isPlaying == false) {
-                        bMediaPlayer?.start()
-                    }
-                    h.postDelayed(this, 235)
-                }
+        fatherControll()
 
-            }
-        }, 235)
-
-
-        val handler = Handler()
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                randomValues = Random.nextLong(0, 10)
-                if (flag == 0) {
-                    fatherAnimation.start()
-                    handler.postDelayed(this, (randomValues * 1000) + 970)
-                }
-
-            }
-        }, 2000)
-
-
-        val handler1 = Handler()
-        handler1.postDelayed(object : Runnable {
-            override fun run() {
-                fatherAnimation.stop()
-                handler1.postDelayed(this, (randomValues * 1000) + 1205)
-            }
-        }, 2970)
+//        val handler = Handler()
+//        handler.postDelayed(object : Runnable {
+//            override fun run() {
+//                randomValues = Random.nextLong(0, 10)
+//                if (flag == 0) {
+//                    fatherAnimation.start()
+//                    handler.postDelayed(this, (randomValues * 1000) + 970)
+//                }
+//
+//            }
+//        }, 2000)
+//
+//
+//        val handler1 = Handler()
+//        handler1.postDelayed(object : Runnable {
+//            override fun run() {
+//                fatherAnimation.stop()
+//                handler1.postDelayed(this, (randomValues * 1000) + 1205)
+//            }
+//        }, 2970)
 
     }
 
@@ -159,6 +167,63 @@ class GameActivity : AppCompatActivity() {
                 editor.commit()
             }
 
+    }
+
+    fun gameControll(){
+        val h = Handler()
+        h.postDelayed(object : Runnable {
+            override fun run() {
+                if (sonAnimation.current == sonAnimation.getFrame(2) && fatherAnimation.current == fatherAnimation.getFrame(
+                        2
+                    )
+                ) {
+                    bMediaPlayer?.stop()
+                    caughtMusic()
+                    sonAnimation.stop()
+                    fatherAnimation.stop()
+                    flag = 1
+                    highScores()
+                    showDialog()
+                    startPlay.isEnabled = false
+
+                }
+
+                if (sonAnimation.current == sonAnimation.getFrame(1) && flag == 0 && pause == 1) {
+                    score += 1
+                    scoreView.setText("Score: " + score.toString())
+                }
+                if (flag == 0) {
+                    if (bMediaPlayer?.isPlaying == false) {
+                        bMediaPlayer?.start()
+                    }
+                    h.postDelayed(this, 235)
+                }
+
+            }
+        }, 235)
+    }
+
+    fun fatherControll(){
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                randomValues = Random.nextLong(0, 10)
+                if (flag == 0) {
+                    fatherAnimation.start()
+                    handler.postDelayed(this, (randomValues * 1000) + 970)
+                }
+
+            }
+        }, 2000)
+
+
+        val handler1 = Handler()
+        handler1.postDelayed(object : Runnable {
+            override fun run() {
+                fatherAnimation.stop()
+                handler1.postDelayed(this, (randomValues * 1000) + 1205)
+            }
+        }, 2970)
     }
 
     override fun onBackPressed() {
