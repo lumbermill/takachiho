@@ -28,7 +28,7 @@ started_at = None
 # https://www.data.jma.go.jp/svd/eqev/data/kyoshin/kaisetsu/calc_sindo.htm
 # FFT
 # https://momonoki2017.blogspot.com/2018/03/pythonfft-1-fft.html
-def stlength(data):
+def strength(data):
     fx = np.abs(np.fft.fft(data[0]))[len(data[0])/2+1:]
     return 1.0
 

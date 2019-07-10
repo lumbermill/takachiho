@@ -1,4 +1,19 @@
+# 11-earthquake
+Raspi + Pimoroni で地震計
 
+Installation:
+```
+sudo rasip-config  # Enable I2C interface.
+sudo apt-get install pimoroni
+pimoroni-dashboard
+sudo apt-get install python3-envirophat
+```
+
+How to use the library:
+```
+from envirophat import weather
+print(weather.temperature())
+```
 
 ## リンク
 
