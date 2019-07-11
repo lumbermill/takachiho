@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-import time
+import os, time, requests, json
 import numpy as np
 from envirophat import motion, leds
-import requests, json
 
 print("""This example will detect motion using the accelerometer.
 
@@ -11,8 +10,12 @@ Press Ctrl+C to exit.
 
 """)
 
-SLACK_WEBHOOK = ENV["SLACK_WEBHOOK"]
+# For debug use:
+SLACK_WEBHOOK = os.environ.get("SLACK_WEBHOOK")
 SLACK_THRESH = 30.0
+
+# TODO: implements function to send push notifications to iOS app.
+PUSH_THRESH = 30.0
 
 DETECT_THRESH = 0.01
 DETECT_NUM = 4
@@ -60,7 +63,7 @@ try:
             print("ended! %.2f %.2f" % (elapsed,s))
             started_at = None
             leds.off()
-            if elapsed > SLACK_THRESH:
+            if SLACK_WEBHOOK and elapsed > SLACK_THRESH:
                 requests.post(SLACK_WEBHOOK, data = json.dumps({
                   'text': "An earthquake detected! %.2f %.2f" % (elapsed,s) ,
                 }))
