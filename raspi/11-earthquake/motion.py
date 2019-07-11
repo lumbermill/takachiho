@@ -4,12 +4,6 @@ import os, time, requests, json
 import numpy as np
 from envirophat import motion, leds
 
-print("""This example will detect motion using the accelerometer.
-
-Press Ctrl+C to exit.
-
-""")
-
 # For debug use:
 SLACK_WEBHOOK = os.environ.get("SLACK_WEBHOOK")
 SLACK_THRESH = 30.0
@@ -32,11 +26,20 @@ started_at = None
 # https://www.data.jma.go.jp/svd/eqev/data/kyoshin/kaisetsu/calc_sindo.htm
 # FFT
 # https://momonoki2017.blogspot.com/2018/03/pythonfft-1-fft.html
+# rpi-seismometer
+# https://github.com/p2pquake/rpi-seismometer
 def strength(data):
-    fx = np.abs(np.fft.fft(data[0]))[len(data[0])/2+1:]
+    fx = np.fft.fft(data[0])
+    fy = np.fft.fft(data[1])
+    fz = np.fft.fft(data[2])
+    print(fx)
+    print(fy)
+    print(fz)
     return 1.0
 
 def main():
+    print("Press Ctrl+C to exit.")
+
     try:
         while True:
             v = motion.accelerometer()
