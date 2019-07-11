@@ -36,37 +36,41 @@ def strength(data):
     fx = np.abs(np.fft.fft(data[0]))[len(data[0])/2+1:]
     return 1.0
 
-try:
-    while True:
-        v = motion.accelerometer()
-        data[0].append(v.x)
-        data[1].append(v.y)
-        data[2].append(v.z)
-        shaked = False
-        for i in range(3):
-            data[i] = data[i][-DATA_MAX:]
-            if len(data[i]) < DETECT_NUM: continue
-            d = sum(data[i][-DETECT_NUM:]) / DETECT_NUM
-            if last_d[i] > 0 and abs(d - last_d[i]) > DETECT_THRESH:
-                shaked = True
-            last_d[i] = d
-        if shaked:
-            started = DETECT_NOOP
-            if started_at == None:
-                started_at = time.time()
-                print("detected the quake!")
-                leds.on()
-        time.sleep(DETECT_INTERVAL)
-        started -= 1
-        if started == 0:
-            elapsed = time.time() - started_at
-            s = strength(data)
-            print("ended! %.2f %.2f" % (elapsed,s))
-            started_at = None
-            leds.off()
-            if SLACK_WEBHOOK and elapsed > SLACK_THRESH:
-                requests.post(SLACK_WEBHOOK, data = json.dumps({
-                  'text': "An earthquake detected! %.2f %.2f" % (elapsed,s) ,
-                }))
-except KeyboardInterrupt:
-    pass
+def main():
+    try:
+        while True:
+            v = motion.accelerometer()
+            data[0].append(v.x)
+            data[1].append(v.y)
+            data[2].append(v.z)
+            shaked = False
+            for i in range(3):
+                data[i] = data[i][-DATA_MAX:]
+                if len(data[i]) < DETECT_NUM: continue
+                d = sum(data[i][-DETECT_NUM:]) / DETECT_NUM
+                if last_d[i] > 0 and abs(d - last_d[i]) > DETECT_THRESH:
+                    shaked = True
+                last_d[i] = d
+            if shaked:
+                started = DETECT_NOOP
+                if started_at == None:
+                    started_at = time.time()
+                    print("detected the quake!")
+                    leds.on()
+            time.sleep(DETECT_INTERVAL)
+            started -= 1
+            if started == 0:
+                elapsed = time.time() - started_at
+                s = strength(data)
+                print("ended! %.2f %.2f" % (elapsed,s))
+                started_at = None
+                leds.off()
+                if SLACK_WEBHOOK and elapsed > SLACK_THRESH:
+                    requests.post(SLACK_WEBHOOK, data = json.dumps({
+                      'text': "An earthquake detected! %.2f %.2f" % (elapsed,s) ,
+                    }))
+    except KeyboardInterrupt:
+        pass
+
+if __name__ == "__main__":
+    main()
