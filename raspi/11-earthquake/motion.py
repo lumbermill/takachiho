@@ -18,9 +18,10 @@ SLACK_THRESH = 30.0
 PUSH_THRESH = 30.0
 
 DETECT_THRESH = 0.01
+DETECT_INTERVAL = 0.01
 DETECT_NUM = 4
-DETECT_NOOP = 10 #  0.1 sec
-DATA_MAX = 6000  # 60.0 sec
+DETECT_NOOP = int(0.1 / DETECT_INTERVAL) #  0.1 sec
+DATA_MAX = int(60 / DETECT_INTERVAL)  # 60.0 sec
 data = [[],[],[]]
 last_d = [-1,-1,-1]
 started = -1
@@ -55,7 +56,7 @@ try:
                 started_at = time.time()
                 print("detected the quake!")
                 leds.on()
-        time.sleep(0.01)
+        time.sleep(DETECT_INTERVAL)
         started -= 1
         if started == 0:
             elapsed = time.time() - started_at
