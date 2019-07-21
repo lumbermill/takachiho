@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, time, requests, json
+import math, os, time, requests, json
 import numpy as np
 from envirophat import motion, leds
 
@@ -14,31 +14,56 @@ PUSH_THRESH = 30.0
 DETECT_THRESH = 0.01
 DETECT_INTERVAL = 0.01
 DETECT_NUM = 4
-DETECT_NOOP = int(0.1 / DETECT_INTERVAL) #  0.1 sec
+DETECT_NOOP = int(0.3 / DETECT_INTERVAL) #  0.3 sec
 DATA_MAX = int(60 / DETECT_INTERVAL)  # 60.0 sec
-data = [[],[],[]]
-last_d = [-1,-1,-1]
-started = -1
-started_at = None
 
-## TODO: 揺れ終わり後、フーリエ変換を使って、震度を求める
-# 気象庁
-# https://www.data.jma.go.jp/svd/eqev/data/kyoshin/kaisetsu/calc_sindo.htm
-# FFT
-# https://momonoki2017.blogspot.com/2018/03/pythonfft-1-fft.html
-# rpi-seismometer
-# https://github.com/p2pquake/rpi-seismometer
-def strength(data):
-    fx = np.fft.fft(data[0])
-    fy = np.fft.fft(data[1])
-    fz = np.fft.fft(data[2])
-    print(fx)
-    print(fy)
-    print(fz)
-    return 1.0
+def strength(data,l):
+    """
+    Returns the strength of earthquake as tuple (P(z),S(xy))
+    """
+
+    # FFT
+    # https://momonoki2017.blogspot.com/2018/03/pythonfft-1-fft.html
+    # Fast Fourier Transform
+    # fx = np.fft.fft(data[0])
+    # fy = np.fft.fft(data[1])
+    # fz = np.fft.fft(data[2])
+    # What's is the filter??
+    # https://www.data.jma.go.jp/svd/eqev/data/kyoshin/kaisetsu/calc_sindo.htm
+    # Inverse Fast Fourier Transform
+    # ifx = np.fft.ifft(fx)
+    # ify = np.fft.ifft(fy)
+    # ifz = np.fft.ifft(fz)
+
+    # rpi-seismometer
+    # https://github.com/p2pquake/rpi-seismometer
+    # for i in range(3):
+    #     rv[i] = rv[i] * 0.94 + d[i]*0.06
+    #     gals[i] = (rv[i] - avgs[i]) * 1.13426
+    avgs = [0,0,0]
+    for i in range(3):
+        avgs[i] = sum(data[i][-l:]) / len(data[i][-l:])
+
+    gals_z = [] # P wave?
+    gals_xy = [] # S wave?
+    for d in np.array(data).T[-l:]:
+        dd = 0
+        for i in range(2):
+            dd += (d[i] - avgs[i])**2
+        gals_xy.append(math.sqrt(dd))
+        gals_z.append(math.sqrt((d[2]-avgs[2])**2))
+    avg_z = sum(gals_z) / len(gals_z) * 100
+    avg_xy = sum(gals_xy) / len(gals_xy) * 100
+    return avg_z,avg_xy
+
 
 def main():
     print("Press Ctrl+C to exit.")
+
+    data = [[],[],[]]
+    last_d = [-1,-1,-1]
+    started = -1
+    started_at = None
 
     try:
         while True:
@@ -64,16 +89,17 @@ def main():
             started -= 1
             if started == 0:
                 elapsed = time.time() - started_at
-                s = strength(data)
-                print("ended! %.2f %.2f" % (elapsed,s))
+                sp,ss = strength(data,int(elapsed / DETECT_INTERVAL))
+                msg = "An earthquake detected! %.2f P:%.2f S:%.2f" % (elapsed,sp,ss)
+                print(msg)
                 started_at = None
                 leds.off()
                 if SLACK_WEBHOOK and elapsed > SLACK_THRESH:
                     requests.post(SLACK_WEBHOOK, data = json.dumps({
-                      'text': "An earthquake detected! %.2f %.2f" % (elapsed,s) ,
+                      'text': msg ,
                     }))
     except KeyboardInterrupt:
-        pass
+        leds.off()
 
 if __name__ == "__main__":
     main()
