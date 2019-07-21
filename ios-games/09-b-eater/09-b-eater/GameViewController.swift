@@ -114,13 +114,13 @@ class GameViewController: UIViewController {
     }
 
     func updateFather() -> Bool {
-        if self.father_pos == 0 {
+        if self.father_pos == 0 { // 向こうむき
             if Int.random(in: 0..<10) < 2 { // 20 %
                 self.father_pos = 1
             } else {
                 self.father_pos = 0
             }
-        } else if self.father_pos == 1 {
+        } else if self.father_pos == 1 { // 横向き
             let r = Int.random(in: 0..<10)
             if r < 2 { // 20 %
                 self.father_pos = 2
@@ -129,7 +129,7 @@ class GameViewController: UIViewController {
             } else {
                 self.father_pos = 0
             }
-        } else if self.father_pos == 2 {
+        } else if self.father_pos == 2 { // 息子向き
             // Judge!!
             if (eating) { return false }
             if Int.random(in: 0..<10) < 5 { // 50 %
