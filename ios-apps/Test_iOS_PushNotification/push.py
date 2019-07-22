@@ -7,7 +7,7 @@ client = APNSSandboxClient(certificate='pushcert.pem',
                     default_batch_size=100,
                     default_retries=5)
 
-token = '67d3e0ff1be0aa211e9ad045fb36d8d3bd3e375dd8bc172853e0379b408fe099'
+token = 'generated_DEVICE_TOKEN_OF_IOS_APP'
 alert = 'Hello world.'
 
 # Send to single device.
