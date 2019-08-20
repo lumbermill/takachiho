@@ -78,8 +78,37 @@ send_file(Rails.root.join('app', 'assets', 'images', 'no-photo.png'), type: 'ima
 render status:404, text: "Resource not found."
 ```
 
+## Date(actionsupport)
+
+```
+> Time.new(2019,8,20) + 1.month
+=> 2019-09-20 00:00:00 +0000
+> Time.new(2005,1,1) - 1.week
+=> 2004-12-25 00:00:00 +0000
+> Time.new(2019,8,20) - Time.new(2019,8,19)
+=> 86400.0
+```
+
+ISO yearweek
+
+```
+> Time.new(2005,1,1).strftime("%G%V")
+=> "200453"
+> Time.new(2005,1,3).strftime("%G%V")
+=> "200501"
+```
+
+```
+> 1800 * 1.08
+=> 1944.0000000000002
+> 1800 * Rational("1.08")
+=> (1944/1)
+> 1800 * BigDecimal("1.08")
+=> 0.1944e4
+```
+
+## Misc
 
 ```
 "this is a pen.".truncate(20)
 ```
-
