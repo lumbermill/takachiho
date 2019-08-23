@@ -6,8 +6,8 @@
   "data" : [
     {
       "idiom" : "universal",
-      "filename" : "bgm_maoudamashii_cyber44.mp3",
-      "universal-type-identifier" : "public.mp3"
+      "filename" : "beater1.m4a",
+      "universal-type-identifier" : "com.apple.m4a-audio"
     }
   ]
 }
