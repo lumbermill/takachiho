@@ -1,6 +1,11 @@
 # 11-earthquake
 Raspi + Pimoroni で地震計
 
+---
+2019.09.03 code4miyazakiのm-tsunami-iosプロジェクトにコードを移管しました。
+https://github.com/codeformiyazaki/m-tsunami-ios
+---
+
 Installation:
 ```
 sudo rasip-config  # Enable I2C interface.
