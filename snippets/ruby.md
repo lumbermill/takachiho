@@ -141,6 +141,10 @@ my_hash = JSON.parse('{"hello": "goodbye"}')
 puts my_hash["hello"] => "goodbye"
 ```
 
+```
+puts JSON.pretty_generate(my_hash)
+```
+
 ## here document
 ```
 html = <<-"EOT"
