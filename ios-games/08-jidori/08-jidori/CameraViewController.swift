@@ -103,7 +103,7 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
         imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        if let data = UIImageJPEGRepresentation(image, 1.0) {
+        if let data = image.jpegData(compressionQuality: 1.0) {
             let df = DateFormatter()
             df.dateFormat = "yyMMddhhmmss"
             let p = NSHomeDirectory() + "/Documents/"+df.string(from: Date())+".jpg"

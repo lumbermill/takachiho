@@ -50,7 +50,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let l = locations.last {
             if(targetButton.isEnabled == false){
-                let cr = MKCoordinateRegionMake(l.coordinate, MKCoordinateSpanMake(0.05, 0.05))
+                let cr = MKCoordinateRegion.init(center: l.coordinate, span: MKCoordinateSpan.init(latitudeDelta: 0.05, longitudeDelta: 0.05))
                 mapView.setRegion(cr, animated: true)
                 targetButton.isEnabled = true
             }
