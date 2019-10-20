@@ -1,6 +1,0 @@
-framework module Pods_08_jidori {
-  umbrella header "Pods-08-jidori-umbrella.h"
-
-  export *
-  module * { export * }
-}
