@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Firebase
 
 class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDelegate{
     @IBOutlet weak var imageView: UIImageView!
@@ -15,12 +16,18 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
     var session: AVCaptureSession!
     var detector: CIDetector!
     var devicePosition = AVCaptureDevice.Position.front
-    
+    var cameraPlayer: AVAudioPlayer!
+    let storage = Storage.storage()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.transform = imageView.transform.scaledBy(x: -1,y: 1) // 左右反転
         overlayView.transform = overlayView.transform.scaledBy(x: -1,y: 1) // 左右反転
         overlayView.controller = self
+        // Prepare shutter sound
+        let ad = NSDataAsset(name: "camera-sound")!
+        cameraPlayer = try! AVAudioPlayer(data: ad.data)
+        cameraPlayer?.prepareToPlay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,11 +116,26 @@ class CameraViewController: UIViewController,AVCaptureVideoDataOutputSampleBuffe
             let p = NSHomeDirectory() + "/Documents/"+df.string(from: Date())+".jpg"
             do {
                 try data.write(to: URL(fileURLWithPath: p))
+                cameraPlayer?.play()
+                upload2firebase(data: data)
             } catch {
                 print(error)
             }
         }
-        // TODO:シャッター音！
+    }
+
+    func upload2firebase(data: Data){
+        let storageRef = storage.reference()
+        let jidoriRef = storageRef.child("testuser/testimage.jpg")
+        let _ = jidoriRef.putData(data, metadata: nil) { (m, e) in
+            guard let metadata = m else {
+                return
+            }
+            print(metadata.size)
+            if let error = e {
+                print(error)
+            }
+        }
     }
 }
 
