@@ -2,7 +2,7 @@
 
 desc 'Deploy to sakura15'
 task :deploy do
-  host = "sakura15"
-  path = "/opt/lmlab.net/public/maps/"
+  host = "sakura26"
+  path = "/var/www/lmlab.net/pro/public/maps/"
   puts `rsync -avz --delete lmlab.net/maps/ #{host}:#{path}`
 end
