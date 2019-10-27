@@ -51,6 +51,9 @@ attr_accessor
 
 require_relative の方法。
 
+note.muにひとつずつ掲載していこうかとトライしてみたが、コードの扱いがどうにも定まりません。
+全部書いてからepubで出したほうが良いかも。
+
 ## まとめてロード(reqire)する
 ```
 Dir[File.expand_path('../commands', __FILE__) << '/*.rb'].each do |file|
