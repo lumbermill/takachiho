@@ -1,6 +1,6 @@
 
 
-desc 'Deploy to sakura15'
+desc 'Deploy to sakura26'
 task :deploy do
   host = "sakura26"
   path = "/var/www/lmlab.net/pro/public/maps/"
