@@ -310,8 +310,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             }
         }
     }
-    
-    func didBeginContact(contact: SKPhysicsContact) {
+
+    func didBegin(_ contact: SKPhysicsContact) {
         let b = contact.bodyA.categoryBitMask & contact.bodyB.categoryBitMask
         if (b == (CAT_GOAL & CAT_BALL)) {
             NSLog("Goal!")
