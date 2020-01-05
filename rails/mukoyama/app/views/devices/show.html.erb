@@ -121,10 +121,11 @@ MUKOYAMA_URL=<%= baseurl %>
 MUKOYAMA_ID=<%= @device.id %>
 MUKOYAMA_TOKEN=<%= @device.token4write %>
 */10 * * * * python $HOME/bin/mukoyama_bme280.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
+*/10 * * * * python3 $HOME/bin/mukoyama-pimoroni-enviro.py 2>&amp;1 | logger -p cron.info -t "mukoyama"
 *    * * * * ruby $HOME/bin/mukoyama_camera.rb 2>&amp;1 | logger -p cron.info -t "mukoyama"
 </pre>
 </figure>
-<p>Raspbianではloggerの出力は <code>/var/log/syslog</code> に記録されます。</p>
+<p>設置するセンサに応じた行を使用してください。Raspbianではloggerの出力は <code>/var/log/syslog</code> に記録されます。</p>
 <h3>ESP8266</h3>
 <figure>
 <figcaption>For .ino</figcaption>
