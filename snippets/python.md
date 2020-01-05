@@ -33,6 +33,17 @@ if __name__ == "__main__":
     main()
 ```
 
+```
+with open(path) as f:
+    line = f.readline()
+    print(line)
+```
+
+```
+with open(path, mode='w') as f:
+    f.write(s)
+```
+
 
 ## URLs
 https://www.python.org/
