@@ -8,8 +8,7 @@ def get_url_params():
   l = light.light()
   # Python's datetmie doesn't have timezone info.
   # You may need to set system timezone as JST. (hint: sudo raspi-config)
-  # FIXME: the code will post wrong datetime. should be keep in UTC??(is the hint wrong?)
-  ts = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z")
+  ts = time.strftime("%Y-%m-%dT%H:%M:%S%z")
   s = "dt=%s" % (ts)
   s += "&temperature=%f" % (t)
   s += "&pressure=%f" % (p)
