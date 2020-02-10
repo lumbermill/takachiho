@@ -44,6 +44,10 @@ with open(path, mode='w') as f:
     f.write(s)
 ```
 
+## The Zen of Python
+```
+import this
+```
 
 ## URLs
 https://www.python.org/

@@ -23,3 +23,20 @@ from envirophat import weather
 print(weather.temperature())
 ```
 
+## Sparkfun Qwiic
+
+```
+sudo pip3 install sparkfun-qwiic
+```
+
+```
+import qwiic_bme280
+qbme = qwiic_bme280.QwiicBme280()
+qbme.begin()
+print(qbme.temperature_celsius)
+print(qbme.humidity)
+print(qbme.pressure)
+```
+
+- https://www.sparkfun.com/news/2958
+- https://github.com/sparkfun/Qwiic_Py
