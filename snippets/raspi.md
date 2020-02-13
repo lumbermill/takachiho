@@ -40,3 +40,12 @@ print(qbme.pressure)
 
 - https://www.sparkfun.com/news/2958
 - https://github.com/sparkfun/Qwiic_Py
+
+
+## Misc
+
+```
+vcgencmd measure_temp
+```
+
+https://qiita.com/kouhe1/items/5f3f0e6fdb55e7164deb
