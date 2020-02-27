@@ -15,6 +15,11 @@ When the query is for updating(inserting). (How to get the number of affected ro
 ActiveRecord::Base.connection.execute(sql)
 ```
 
+Don't forget to sanitize..!
+```
+ActiveRecord::Base.sanitize_sql_like
+```
+
 ## Use blob as response.
 ```
 response.headers['Content-Length'] = @picture.data.length.to_s
@@ -111,4 +116,19 @@ ISO yearweek
 
 ```
 "this is a pen.".truncate(20)
+```
+
+```
+<% text = "<b>1</b>\n<i>2</i>\n3 >= a" %>
+<%= text %> <%# そのまま(タグはエスケープされる) %>
+<hr/>
+<%= h(text) %> <%# そのままと一緒(使う意味ない？) %>
+<hr/>
+<%= simple_format(text) %> <%# 勝手に改行 & pタグが付く(お好みで..) %>
+<hr/>
+<%= strip_tags(text) %> <%# タグが消える %>
+<hr/>
+<%= sanitize(text) %> <%# 危ないタグだけ消える %>
+<hr/>
+<%= sanitize(text.gsub("\n","<br>")) %> <%# タグが消える %>
 ```
