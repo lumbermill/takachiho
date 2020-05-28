@@ -58,6 +58,6 @@ gem 'font-awesome-rails', '~> 4.7'
 gem 'twitter-bootstrap-rails', '~> 3.2'
 gem 'rmagick', '~> 2.16'
 gem 'redcarpet', '~> 3.4'
-gem 'kaminari', '~> 1.0' # for pagenation
+gem 'kaminari', '~> 1.2' # for pagenation
 gem 'carrierwave', '~> 1.0' # for uploading
 gem 'paper_trail', '~> 8.1.2' # for versioning
