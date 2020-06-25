@@ -18,21 +18,21 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
     var data = Array<Array<String>>()
     var images :[String:String] = [:]
     var ans_data = Array<Bool>()
-    var time: NSTimeInterval = 0
+    var time: TimeInterval = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         ans_count.text = String(ans) + "/" + String(data.count)
         time_label.text = String(format: "%.2f", time) + " sec"
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let testCell:UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let testCell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath)
         let imageView = testCell.contentView.viewWithTag(1) as! UIImageView
         let ansImageView = testCell.contentView.viewWithTag(2) as! UIImageView
         imageView.image = UIImage(contentsOfFile: Downloader.BASEDIR+images[data[indexPath.row][0]]!)
@@ -48,12 +48,12 @@ class CheckAnswerController: UIViewController,UICollectionViewDataSource,UIColle
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
     }
     
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        print(error)
+    private func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        print(error ?? "")
     }
     
 }

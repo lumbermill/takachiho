@@ -10,76 +10,84 @@ import Foundation
 
 class Downloader {
     // Englishoose or Japaneese
-    static let TARGET = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as! String
+    static let TARGET = Bundle.main.infoDictionary?["CFBundleName"] as! String
 
-    static let fm = NSFileManager.defaultManager()
+    static let fm = FileManager.default
     static let BASEURL = "https://lmlab.net/englishoose/"
     static let BASEDIR = NSHomeDirectory()+"/Documents/"
     static let INDEX = "index.json"
     static let SERIAL = "serial.json"
     static var latest_serial = 0
     
-    class func fetch_file(file:String, completion: (path:String)->Void) {
+    class func fetch_file(file:String, completion: @escaping (_ path:String)->Void) {
         // ファイルが既に存在する場合、ダウンロードしない
-        if fm.fileExistsAtPath(BASEDIR+file) {
-            completion(path: BASEDIR+file)
+        if fm.fileExists(atPath: BASEDIR+file) {
+            completion(BASEDIR+file)
             return
         }
-        
+
         // TODO:ネットに繋がっていない場合、どうエラーを返す？
-        
-        let urlstr = BASEURL+file.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
-            + "?rand=" + String(rand())
-        guard let URL = NSURL(string: urlstr) else {
+        let urlstr = BASEURL+file.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+            + "?rand=" + String(arc4random())
+
+        guard let url = URL(string: urlstr) else {
             print("Invalid url: "+urlstr)
             return
         }
-        let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-        let request = NSMutableURLRequest(URL: URL)
-        request.HTTPMethod = "GET"
-        let task = session.dataTaskWithRequest(request, completionHandler:  {
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let task = session.dataTask(with: request, completionHandler: {
             (data, resp, err) in
-            data?.writeToFile(BASEDIR+file, atomically: true)
+            guard let d = data else {
+                print("can not get data for \(file)")
+                return
+            }
+            fm.createFile(atPath: BASEDIR+file, contents: d, attributes: nil)
             print("Saved to "+BASEDIR+file)
-            completion(path: BASEDIR+file)
+            completion(BASEDIR+file)
         })
         task.resume()
     }
     
-    class func fetch_files(files:[String], completion: (paths:[String]) ->Void) {
+    class func fetch_files(files:[String], completion: @escaping (_ paths:[String]) ->Void) {
         var flags:[String:Bool] = [:]
         for file in files {
             flags[file] = false
-            Downloader.fetch_file(file, completion: {(path) in
+            Downloader.fetch_file(file: file, completion: {(path) in
                 flags[file] = true
             })
         }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        DispatchQueue.global().async {
             let paths = [String](flags.keys)
             while true {
-                var green = true
+                var n_green = 0
                 for p in paths {
-                    if (flags[p] == false) { green = false }
+                    print(p)
+                    if let b = flags[p] {
+                        if (b) { n_green += 1 }
+                    }
                 }
-                if (green) { break }
+                if (n_green == paths.count) { break }
+                print("\(n_green) / \(paths.count)")
             }
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(paths: paths)
-            })
-        })
+            DispatchQueue.main.async {
+                completion(paths)
+            }
+        }
     }
     
-    class func check_update(completion: (Bool) -> Void) {
-        let ud = NSUserDefaults.standardUserDefaults()
-        let current_serial = ud.integerForKey("serial")
-        fetch_file(SERIAL, completion: { (path) in
+    class func check_update(completion: @escaping (Bool) -> Void) {
+        let ud = UserDefaults.standard
+        let current_serial = ud.integer(forKey: "serial")
+        fetch_file(file: SERIAL, completion: { (path) in
             guard let data = NSData(contentsOfFile: path) else {
                 print("Could not get data from "+path)
                 return
             }
             do {
-                guard let s = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary else {
+                guard let s = try JSONSerialization.jsonObject(with: data as Data, options: []) as? NSDictionary else {
                     print("Could not parse data from "+path)
                     return
                 }
@@ -87,11 +95,11 @@ class Downloader {
                     print("Could not obrain serial from "+path)
                     return
                 }
-                print("current: %d, remote: %d",current_serial,remote_serial)
+                print("current: \(current_serial), remote: \(remote_serial)")
                 latest_serial = remote_serial
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     completion(current_serial < remote_serial)
-                })
+                }
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -99,9 +107,9 @@ class Downloader {
     }
     
     // 全ファイルダウンロード
-    class func fetch_all(completion: ([Drill]) -> Void) {
+    class func fetch_all(completion: @escaping ([Drill]) -> Void) {
         // index.jsonを取得、パースしてさらに関連する画像も全部取得する。
-        fetch_file(INDEX, completion: { (path) in
+        fetch_file(file: INDEX, completion: { (path) in
             guard let data = NSData(contentsOfFile: path) else {
                 print("Could not get data from "+path)
                 return
@@ -109,7 +117,7 @@ class Downloader {
             do {
                 var drills:[Drill] = []
                 var files:[String] = []
-                guard let root = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary else {
+                guard let root = try JSONSerialization.jsonObject(with: data as Data, options: []) as? NSDictionary else {
                     print("Could not parse data from "+path)
                     clear_all() //  Erase all!
                     completion([])
@@ -179,13 +187,13 @@ class Downloader {
                     }
                     drills += [d]
                 }
-                fetch_files(files, completion: { (paths) in
-                    dispatch_async(dispatch_get_main_queue(), {
+                fetch_files(files: files, completion: { (paths) in
+                    DispatchQueue.main.async {
                         completion(drills)
-                    })
-                    let ud = NSUserDefaults.standardUserDefaults()
-                    if(ud.integerForKey("serial") == 0){
-                        ud.setInteger(latest_serial, forKey: "serial")
+                    }
+                    let ud = UserDefaults.standard
+                    if(ud.integer(forKey: "serial") == 0){
+                        ud.set(latest_serial, forKey: "serial")
                         ud.synchronize()
                     }
                 })
@@ -197,15 +205,15 @@ class Downloader {
     
     class func clear_all() {
         do {
-        let contents = try fm.contentsOfDirectoryAtPath(BASEDIR)
+            let contents = try fm.contentsOfDirectory(atPath: BASEDIR)
             for c in contents{
-                try fm.removeItemAtPath(BASEDIR+c)
+                try fm.removeItem(atPath: BASEDIR+c)
             }
         }catch let error as NSError {
             print(error.localizedDescription)
         }
-        let ud = NSUserDefaults.standardUserDefaults()
-        ud.setInteger(0, forKey: "serial")
+        let ud = UserDefaults.standard
+        ud.set(0, forKey: "serial")
         ud.synchronize()
 
     }

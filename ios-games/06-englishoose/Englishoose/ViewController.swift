@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import iAd
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,ADBannerViewDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var drills:[Drill] = []
     
     @IBOutlet weak var table: UITableView!
@@ -19,22 +18,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drills = [Drill]()
-        self.refreshButton.enabled = false
+        self.refreshButton.isEnabled = false
         // 問題の更新有無をチェック
-        Downloader.check_update({ (has_newer) in
+        Downloader.check_update(completion: { (has_newer) in
             if (has_newer) {
-                self.refreshButton.setTitle("Update", forState: UIControlState.Normal)
+                self.refreshButton.setTitle("Update", for: .normal)
             }
         })
         // 問題の一覧と画像をダウンロードする（更新をしない限りはローカルのキャッシュ優先
-        Downloader.fetch_all({ (drills) in
+        Downloader.fetch_all(completion: { (drills) in
             self.drills = drills
             self.table.reloadData()
-            self.refreshButton.enabled = true
+            self.refreshButton.isEnabled = true
         })
 
-        let f = (Downloader.TARGET as NSString).substringToIndex(1).capitalizedString
-        let o = (Downloader.TARGET as NSString).substringFromIndex(1)
+        let f = Downloader.TARGET.prefix(1).capitalized
+        let o = Downloader.TARGET.suffix(Downloader.TARGET.count - 1)
         titleLabel.text = f + o
     }
 
@@ -42,9 +41,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
     }
 
-    func tableView(tableView: UITableView,
-                     cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = table.dequeueReusableCellWithIdentifier("cell")!
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = table.dequeueReusableCell(withIdentifier: "cell")!
         let d = drills[indexPath.row]
         cell.textLabel!.text = d.title
         if(d.isValid()){
@@ -56,7 +55,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func tableView(tableView: UITableView,
+    func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         return drills.count
     }
@@ -64,28 +63,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func refreshPushed(sender: AnyObject) {
         Downloader.clear_all()
         self.drills = [Drill]()
-        self.refreshButton.enabled = false
-        Downloader.fetch_all({ (drills) in
+        self.refreshButton.isEnabled = false
+        Downloader.fetch_all(completion: { (drills) in
             self.drills = drills
             self.table.reloadData()
-            self.refreshButton.enabled = true
-            self.refreshButton.setTitle("Refresh", forState: UIControlState.Normal)
+            self.refreshButton.isEnabled = true
+            self.refreshButton.setTitle("Refresh", for: .normal)
         })
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "start") {
-            if(self.refreshButton.enabled == false){
+            if(self.refreshButton.isEnabled == false){
                 // 更新中は何もしない
                 return
             }
-            let quizController:QuizController = segue.destinationViewController as! QuizController
+            let quizController:QuizController = segue.destination as! QuizController
             let i = table.indexPathForSelectedRow!.row
-            quizController.loadDrill(drills[i])
+            quizController.loadDrill(drill: drills[i])
         }
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
     }
 }
 
