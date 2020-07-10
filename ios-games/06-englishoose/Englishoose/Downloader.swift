@@ -53,29 +53,17 @@ class Downloader {
     
     class func fetch_files(files:[String], completion: @escaping (_ paths:[String]) ->Void) {
         var flags:[String:Bool] = [:]
+        let semaphore = DispatchSemaphore(value: files.count)
         for file in files {
             flags[file] = false
             Downloader.fetch_file(file: file, completion: {(path) in
                 flags[file] = true
+                semaphore.signal()
             })
         }
-        DispatchQueue.global().async {
-            let paths = [String](flags.keys)
-            while true {
-                var n_green = 0
-                for p in paths {
-                    print(p)
-                    if let b = flags[p] {
-                        if (b) { n_green += 1 }
-                    }
-                }
-                if (n_green == paths.count) { break }
-                print("\(n_green) / \(paths.count)")
-            }
-            DispatchQueue.main.async {
-                completion(paths)
-            }
-        }
+        semaphore.wait()
+        let paths = [String](flags.keys)
+        completion(paths)
     }
     
     class func check_update(completion: @escaping (Bool) -> Void) {
