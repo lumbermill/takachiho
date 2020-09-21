@@ -181,6 +181,12 @@ end
 ```
 ~                              
 
+### IO
+```
+IO.read("file")
+
+IO.write("file",text)
+```
 
 ## その他
 
