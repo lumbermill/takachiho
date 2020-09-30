@@ -10,12 +10,12 @@ Experimental various projects.
 - rails: Ruby on Railsの実験プロジェクト
   - mukoyama: Raspberry Pi + BME280 で温度データを収集し、データベース化します。
   - Rails framework does not allow us to add any numbers as prefix.  
-    So we decided to use the name to the land in Takachiho as a project name.
-- raspi: RaspberryPiを利用したプログラム
-- sandbox: ??
-- snippets: 小ネタ集
-- tips: ??
-- webapps: Rails以外のウェブアプリ(PHPなど)  
+    So, we decided to use the name to the land in Takachiho as a project name.
+- Raspi: RaspberryPiを利用したプログラム
+- Sandbox: ??
+- Snippets: 小ネタ集
+- Tips: ??
+- Webapps: Rails以外のウェブアプリ(PHPなど)  
 
 ## Raspberry Pi
 - 01-detector:
@@ -28,5 +28,5 @@ Experimental various projects.
   温度センサの記録を累積
 
 ## Swift Games
-We are trying to create simple but funny games!
-See swift-games/README.md for datails.
+We are trying to create a few simple but funny games!
+See swift-games/README.md for further details.
