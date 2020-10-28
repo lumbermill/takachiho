@@ -1,8 +1,0 @@
-<h1>Dashboard</h1>
-<p><%= link_to '商品一覧', items_path, class: "btn btn-success" %></p>
-<% @items.each do |item| %>
-<div class="col-sm-4">
-  <%= item.code %>
-  <%= item.name %>
-</div>
-<% end %>
