@@ -5,7 +5,6 @@ set :application, 'mukoyama'
 set :repo_url, 'https://github.com/lumbermill/takachiho.git'
 set :repo_tree, 'rails/mukoyama'
 
-ask :branch, 'master'
 ask :user, `whoami`.chomp
 
 # Default branch is :master
