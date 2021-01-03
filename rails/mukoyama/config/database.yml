@@ -13,9 +13,10 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: ubuntu
-  password:
   socket: /var/run/mysqld/mysqld.sock
+  host: db
+  username: root
+  password: secret
 
 development:
   <<: *default
@@ -52,6 +53,7 @@ production:
   database: mukoyama_production
   host: localhost
   username: lmuser
+  password:
 
 staging:
   <<: *default
