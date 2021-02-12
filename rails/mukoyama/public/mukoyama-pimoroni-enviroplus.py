@@ -4,10 +4,11 @@ from ltr559 import LTR559
 
 def get_url_params():
   bme280 = BME280()
+  ltr559 = LTR559()
+  time.sleep(2) # ad hoc. needed to wait for a while to get values..
   t = bme280.get_temperature()
   p = bme280.get_pressure()
   h = bme280.get_humidity()
-  ltr559 = LTR559()
   l = ltr559.get_lux()
   # Python's datetmie doesn't have timezone info.
   # You may need to set system timezone as JST. (hint: sudo raspi-config)
