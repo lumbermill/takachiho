@@ -15,7 +15,7 @@ def get_url_params():
   s = "dt=%s" % (ts)
   s += "&temperature=%f" % (t)
   s += "&pressure=%f" % (p)
-  # s += "&humidity=%f" % (h)
+  s += "&humidity=%f" % (h)
   s += "&illuminance=%f" % (l)
   # s += "&voltage=#{v}"
   return s
