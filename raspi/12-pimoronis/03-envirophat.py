@@ -6,7 +6,6 @@ import argparse, sys, time
 from envirophat import light, weather, motion, analog
 
 INTERVAL = 1 # sec
-DRAW_GRAPH = True
 
 def write(line):
     print(line)
