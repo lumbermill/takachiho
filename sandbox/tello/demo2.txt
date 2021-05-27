@@ -1,12 +1,11 @@
 command
 takeoff
-speed?
-battery?
 down 30
 left 60
 forward 60
-right 60
+right 120
 back 60
+left 60
 down 30
 land
 time?

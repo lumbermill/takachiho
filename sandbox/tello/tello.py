@@ -1,6 +1,8 @@
 #
 # Based on Tello3.py
 #
+# USAGE: python3 tello.py demo2.txt
+#
 # http://www.ryzerobotics.com/
 # https://dl-cdn.ryzerobotics.com/downloads/tello/0228/Tello+SDK+Readme.pdf#
 
@@ -50,7 +52,7 @@ for msg in fileinput.input():
         # Send data
         msg = msg.encode(encoding="utf-8")
         sent = sock.sendto(msg, tello_address)
-        time.sleep(4) # TODO: Make it adjustable. and allow comment lines.
+        time.sleep(3) # TODO: Make it adjustable. and allow comment lines.
     except KeyboardInterrupt:
         print ('\n . . .\n')
         sock.close()
