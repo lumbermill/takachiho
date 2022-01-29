@@ -1,0 +1,6 @@
+command
+takeoff
+flip f
+down 30
+land
+end
