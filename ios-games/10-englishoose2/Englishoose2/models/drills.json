@@ -1,0 +1,192 @@
+[
+  {
+    "title":"Animals 1",
+    "created_at":"2016-06-29",
+    "created_by":"LM",
+    "options":[
+      ["hedgehog","dog","turkey","cow"],
+      ["cow","shrimp","squid","horse"],
+      ["pig","bonito","crab","squid"],
+      ["cat","monkey","mouse","deer"],
+      ["dog","mouse","deer","panda"],
+      ["monkey","money","monk","mosquito"],
+      ["mouse","monkey","crab","tuna"],
+      ["giraffe","deer","tuna","squid"],
+      ["bird","sheep","shrimp","bonito"],
+      ["horse","bonito","mouse","sheep"],
+      ["deer","bear","lion","cow"],
+      ["panda","bird","monkey","punk"]
+    ]
+  },
+  {
+    "title":"Fruits 1",
+    "created_at":"2016-06-29",
+    "created_by":"LM",
+    "options":[
+      ["apple","banana","carrot","onion"],
+      ["orange","banana","strawberry","soy"],
+      ["banana","butter","eggplant","apple"],
+      ["grape","mango","cherry","carrot"],
+      ["melon","strawberry","cherry","carrot"],
+      ["watermelon","pineapple","mashroom","wombat"],
+      ["strawberry","soy","pumpkin","onion"],
+      ["pineapple","cherry","grape","banana"],
+      ["mango","banana","watermelon","grape"],
+      ["pear","banana","strawberry","raspberry"],
+      ["cherry","carrot","cucumber","cranberry"],
+      ["peach","banana","raspberry","pig"]
+    ]
+  },
+  {
+    "title":"Insects 1",
+    "created_at":"2016-07-11",
+    "created_by":"LM",
+    "options":[
+      ["stag beetle","iron beetle","scarab beetle","ladybug"],
+      ["butterfly","dragonfly","mantis","shrimp"],
+      ["beetle","ladybug","mole","python"],
+      ["mantis","python","cow","ant"],
+      ["ant","butterfly","leopard","weasel"],
+      ["bee","firefly","grasshopper","goat"],
+      ["grasshopper","dragonfly","bat","bear"],
+      ["dragonfly","tuna","weasel","bat"],
+      ["spider","snake","snowman","sheep"],
+      ["ladybug","dragonfly","grasshopper","pig"],
+      ["cicada","mole","mantis","beetle"],
+      ["caterpillar","dragonfly","butterfly","cicada"]
+    ]
+  },
+  {
+    "title":"Vehicles 1",
+    "created_at":"2016-06-29",
+    "created_by":"LM",
+    "options":[
+      ["car","horse","camel","kayak"],
+      ["bus","pig","airplane","ski"],
+      ["kayak","airplane","horse","elephant"],
+      ["airplane","shoes","hotplate","pig"],
+      ["rocket","elephant","locomotive","carriage"],
+      ["skateboard","horse","car","boat"],
+      ["motorbike","ski","bus","boat"],
+      ["bike","bowl","bus","airplane"],
+      ["locomotive","sleigh","bike","submarine"],
+      ["tram","boat","camel","bike"],
+      ["carriage","bike","camel","airplane"],
+      ["submarine","carriage","sleigh","airplane"]
+    ]
+  },
+  {
+    "title":"Fish 1",
+    "created_at":"2016-07-16",
+    "created_by":"LM",
+    "options":[
+      ["tuna","clam","tuba","tulip"],
+      ["sunfish","manta","sunflower","squid"],
+      ["eel","owl","bowl","soul"],
+      ["goldfish","squid","jellyfish","clam"],
+      ["guppy","manta","octopus","jellyfish"],
+      ["shark","sunfish","eel","octopus"],
+      ["manta","tuna","sunfish","goldfish"],
+      ["catfish","jellyfish","dogfish","bonito"],
+      ["octopus","dogfish","squid","clam"],
+      ["squid","dogfish","potato","eel"],
+      ["jellyfish","cucumber","dogfish","goldfish"],
+      ["clam","shark","whale","tomato"]
+    ]
+  },
+  {
+    "title":"Vegetables 1",
+    "created_at":"2016-07-16",
+    "created_by":"LM",
+    "options":[
+      ["cabbage","corn","orange","peach"],
+      ["carrot","potato","parrot","balloon"],
+      ["corn","eggplant","balloon","potato"],
+      ["eggplant","cucumber","melon","squid"],
+      ["green-pepper","cherry-blossom","cucumber","pumpkin"],
+      ["onion","cabbage","octopus","owl"],
+      ["pumpkin","eggplant","soy","cherry"],
+      ["tomato","potato","pepper","zucchini"],
+      ["garlic","orange","melon","beetle"],
+      ["potato","tomato","zucchini","pepper"],
+      ["radish","potato","tomato","pumpkin"],
+      ["broccoli","doughnut","bean","momonga"]
+    ]
+  },
+  {
+    "title":"Gadgets 1",
+    "created_at":"2016-07-16",
+    "created_by":"LM",
+    "options":[
+      ["laptop","squirrel","lizard","watch"],
+      ["desktop","watch","smart phone","blender"],
+      ["smart phone","keyboard","kettle","stove"],
+      ["tablet","bathtub","turbine","fan"],
+      ["watch","see","look","gaze"],
+      ["cell phone","stove","shell","clam"],
+      ["display","whale","dolphin","dryer"],
+      ["wifi router","iron","airplane","ice cream"],
+      ["keyboard","skateboard","cardboard","bear"],
+      ["mouse ","cat","dog","monkey"],
+      ["digital camera","mouse","elephant","hedgehog"],
+      ["radio","camera","mouse","rock"]
+    ]
+   },
+   {
+    "title":"Appliances 1",
+    "created_at":"2016-07-16",
+    "created_by":"LM",
+    "options":[
+      ["hair dryer","elephant","cucumber","scissors"],
+      ["washing machine","fan","lightbulb","cell phone"],
+      ["dryer","watch","radio","mouse"],
+      ["microwave","shoes","poet","kettle"],
+      ["kettle","saddle","paddle","mouse"],
+      ["toaster","fridge","laptop(pc)","keyboard"],
+      ["blender","printer","router","watch"],
+      ["television","cucumber","elephant","fan"],
+      ["stove","pillow","swallow","steel"],
+      ["fan","stone","scissors","paper"],
+      ["telephone","elephant","television","kettle"],
+      ["fridge","cat","friday","cucumber"]
+    ]
+   },
+   {
+    "title":"Sea animal 1",
+    "created_at":"2016-07-27",
+    "created_by":"LM",
+    "options":[
+      ["clownfish","catfish","jellyfish","goldfish"],
+      ["sea horse","horse","goldfish","cutlass fish"],
+      ["dolphin","whale","sea otter","sunfish"],
+      ["sea otter","dolphin","koala","turtle"],
+      ["killer whale","whale","dolphin","shark"],
+      ["whale","killer whale","manta","elephant"],
+      ["starfish","jellyfish","sunfish","clownfish"],
+      ["turtle","shrimp","crab","camera"],
+      ["penguin","bird","polar bear","sea otter"],
+      ["shrimp","crab","octopus","goldfish"],
+      ["crab","squid","starfish","shrimp"],
+      ["globefish","goldfish","sunfish","clownfish"]
+    ]
+  },
+  {
+    "title":"Body 1",
+    "created_at":"2016-07-27",
+    "created_by":"LM",
+    "options":[
+      ["eye","nose","eel","ear"],
+      ["mouth","mouse","tooth","horse"],
+      ["nose","nail","note","mouth"],
+      ["hair","bear","dear","nail"],
+      ["arm","elbow","foot","ant"],
+      ["hand","head","hair","hoot"],
+      ["nail","hair","nose","near"],
+      ["stomach","straight","stretch","watch"],
+      ["ear","eye","air","where"],
+      ["navel","button","stomach","hip"],
+      ["neck","kick","nose","check"],
+      ["head","foot","hand","shoulder"]
+    ]
+   }
+]
