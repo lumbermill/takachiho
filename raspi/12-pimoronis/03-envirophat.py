@@ -6,6 +6,7 @@ import argparse, sys, time
 from envirophat import light, weather, motion, analog
 
 INTERVAL = 1 # sec
+COLOR = 91  # 90:gray, 91:red , 92:green, 93:yellow, 94:purple
 
 def write(line):
     print(line)
@@ -16,7 +17,7 @@ def write(line):
 def draw_graph(v,max_v):
     w = 60
     i = int(v * (w / max_v))
-    sys.stderr.write("\033[92m")
+    sys.stderr.write("\033[92m") # TODO: use COLOR constant.
     sys.stderr.write('\r' + ('o' * i) + ' ' * (60-i))
     sys.stderr.write("\033[0m")
     sys.stderr.write(' ' + ('%04d' % (v)))
