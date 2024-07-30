@@ -1,6 +1,7 @@
 # takachiho
 *2020.11.29* [後継のプロジェクト(private)]((https://github.com/lumbermill/notes))に移転を開始しました。
 移行を実施しなかったコンテンツの参照のために残しています。snippets内のデータ等は[伊藤製作所](https://lmlab.net)で引き続き掲載されているものがあります。
+- sandbox/opencv を notes/projects/2407-opencvに移動しました。
 
 Experimental various projects.
 実験プロジェクト。
